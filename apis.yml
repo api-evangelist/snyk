@@ -33,6 +33,8 @@ apis:
     properties:
       - type: Documentation
         url: https://apidocs.snyk.io/?version=2024-10-15
+      - type: OpenAPI
+        url: openapi/snyk-rest-openapi.json
   - aid: snyk:rest-organizations
     name: Snyk REST API - Organizations
     description: >-
@@ -48,6 +50,8 @@ apis:
     properties:
       - type: Documentation
         url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+      - type: OpenAPI
+        url: openapi/snyk-rest-openapi.json
   - aid: snyk:rest-projects
     name: Snyk REST API - Projects
     description: >-
@@ -62,6 +66,8 @@ apis:
     properties:
       - type: Documentation
         url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+      - type: OpenAPI
+        url: openapi/snyk-rest-openapi.json
   - aid: snyk:rest-issues
     name: Snyk REST API - Issues
     description: >-
@@ -77,6 +83,8 @@ apis:
     properties:
       - type: Documentation
         url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+      - type: OpenAPI
+        url: openapi/snyk-rest-openapi.json
   - aid: snyk:rest-targets
     name: Snyk REST API - Targets
     description: >-
@@ -92,6 +100,8 @@ apis:
     properties:
       - type: Documentation
         url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+      - type: OpenAPI
+        url: openapi/snyk-rest-openapi.json
   - aid: snyk:rest-integrations
     name: Snyk REST API - Integrations
     description: >-
@@ -108,6 +118,8 @@ apis:
     properties:
       - type: Documentation
         url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+      - type: OpenAPI
+        url: openapi/snyk-rest-openapi.json
   - aid: snyk:rest-audit-logs
     name: Snyk REST API - Audit Logs
     description: >-
@@ -122,6 +134,8 @@ apis:
     properties:
       - type: Documentation
         url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+      - type: OpenAPI
+        url: openapi/snyk-rest-openapi.json
   - aid: snyk:rest-sboms
     name: Snyk REST API - SBOMs
     description: >-
@@ -137,6 +151,8 @@ apis:
     properties:
       - type: Documentation
         url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+      - type: OpenAPI
+        url: openapi/snyk-rest-openapi.json
   - aid: snyk:rest-container-images
     name: Snyk REST API - Container Images
     description: >-
@@ -151,6 +167,8 @@ apis:
     properties:
       - type: Documentation
         url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+      - type: OpenAPI
+        url: openapi/snyk-rest-openapi.json
   - aid: snyk:rest-custom-base-images
     name: Snyk REST API - Custom Base Images
     description: >-
@@ -165,6 +183,8 @@ apis:
     properties:
       - type: Documentation
         url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+      - type: OpenAPI
+        url: openapi/snyk-rest-openapi.json
   - aid: snyk:rest-webhooks
     name: Snyk REST API - Webhooks
     description: >-
@@ -179,6 +199,8 @@ apis:
     properties:
       - type: Documentation
         url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+      - type: OpenAPI
+        url: openapi/snyk-rest-openapi.json
   - aid: snyk:rest-export
     name: Snyk REST API - Export
     description: >-
@@ -195,6 +217,8 @@ apis:
     properties:
       - type: Documentation
         url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+      - type: OpenAPI
+        url: openapi/snyk-rest-openapi.json
   - aid: snyk:rest-apps
     name: Snyk REST API - Apps (OAuth)
     description: >-
