@@ -1,0 +1,29 @@
+aid: snyk
+url: https://raw.githubusercontent.com/api-evangelist/snyk/refs/heads/main/apis.yml
+name: Snyk
+x-type: company
+description: >-
+  Snyk is a developer-first security platform covering code, open-source dependencies, container images, and infrastructure-as-code. The Snyk API exposes projects, issues, organizations, and integrations for application security teams.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Security
+  - DevSecOps
+  - Vulnerability Management
+  - Application Security
+  - SCA
+created: '2026-05-08'
+modified: '2026-05-08'
+specificationVersion: '0.19'
+apis: []
+common:
+  - type: Website
+    url: https://snyk.io/
+  - type: Plans
+    url: plans/snyk-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/snyk-rate-limits.yml
+  - type: FinOps
+    url: finops/snyk-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
