@@ -5,38 +5,216 @@ provider: Snyk
 providerId: snyk
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
-- Security
-- DevSecOps
-- Vulnerability Management
-- Application Security
-- SCA
-- Plans
-description: Placeholder plans/pricing artifact for Snyk. Replace with real published pricing once
-  the pipeline researches the provider's plans page.
-notes: Initial scaffold — plans/pricing have not yet been reconciled against the provider's documentation.
+  - Security
+  - DevSecOps
+  - Vulnerability Management
+  - Application Security
+  - SCA
+  - SAST
+  - Container Security
+  - IaC
+  - Plans
+description: >-
+  Snyk's commercial offer is structured around four tiers - Free, Team, Ignite, and
+  Enterprise - priced per "contributing developer" (a developer who has committed to a
+  Snyk-monitored private repo in the last 90 days). Free is hard-capped on test counts
+  per product. Team is published self-serve from $25 per contributing developer per
+  month, with a five-developer minimum and a ten-developer maximum. Ignite is a small
+  business package at $1,260/year per contributing developer covering up to 50
+  developers, bundling SCA, SAST, IaC, and Container plus 10 DAST targets. Enterprise
+  is custom-quoted with full platform access and add-ons (Snyk Learning Management,
+  Snyk API & Web). API access is gated to Team and above.
 sources:
-- https://snyk.io/
+  - https://snyk.io/plans/
+  - https://docs.snyk.io/snyk-api/authentication-for-api
 plans:
-- id: snyk-default
-  name: To Be Reconciled
-  type: enterprise
-  description: Initial scaffold; replace with provider plan tiers (Free / Pro / Enterprise / pay-as-you-go,
-    etc.) once pricing is reconciled.
-  entries:
-  - label: API Access
-    name: api_access
-    type: flat
-    metric: varies
-    limit: -1
-    timeFrame: usage
-    geo: global
-    unit: 1
-    price: see https://snyk.io/
-    userMultiplied: false
-  elements:
-  - name: Pending Reconciliation
+  - id: snyk-free
+    name: Free
+    type: freemium
+    description: >-
+      Free tier. $0 per contributing developer with unlimited contributing developers,
+      but with hard test-count caps per product per month and basic IDE/SCM coverage.
+      API access is not included on the Free plan with personal tokens.
+    entries:
+      - label: Monthly Subscription
+        name: subscription
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+      - label: Contributing Developers
+        name: contributing_developers
+        type: included
+        metric: developer
+        limit: -1
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: API Access
+        name: api_access
+        type: flat
+        metric: requests
+        limit: 0
+        timeFrame: month
+        unit: 1
+        price: not available
+        userMultiplied: false
+    elements:
+      - name: Limited Tests Per Product Per Month
+      - name: SCA, SAST, IaC, Container Basic Tests
+      - name: IDE and SCM Integrations
+      - name: Community Support
+  - id: snyk-team
+    name: Team
+    type: subscription
+    description: >-
+      Self-serve paid tier from $25 per contributing developer per month (annual
+      payment yields one month free). Five-developer minimum, ten-developer maximum.
+      API access enabled. Includes Jira integration and license compliance.
+    entries:
+      - label: Monthly Subscription Per Contributing Developer
+        name: subscription_per_dev
+        type: subscription
+        metric: developer_month
+        limit: 1
+        timeFrame: month
+        unit: 1
+        price: '$25'
+        userMultiplied: true
+      - label: Minimum Contributing Developers
+        name: contributing_developers_min
+        type: included
+        metric: developer
+        limit: 5
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Maximum Contributing Developers
+        name: contributing_developers_max
+        type: quota
+        metric: developer
+        limit: 10
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: API Access
+        name: api_access
+        type: included
+        metric: requests
+        limit: -1
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+    elements:
+      - name: SCA, SAST, IaC, Container Tests
+      - name: Jira Integration
+      - name: License Compliance
+      - name: API Access
+      - name: Standard Support
+  - id: snyk-ignite
+    name: Ignite
+    type: subscription
+    description: >-
+      Annual package targeting growing organizations under 50 contributing developers.
+      $1,260 per contributing developer per year covering SCA, SAST, IaC, Container,
+      plus 10 DAST targets. Adds advanced risk prioritization and analytics.
+    entries:
+      - label: Annual Subscription Per Contributing Developer
+        name: subscription_per_dev_annual
+        type: subscription
+        metric: developer_year
+        limit: 1
+        timeFrame: year
+        unit: 1
+        price: '$1260'
+        userMultiplied: true
+      - label: Maximum Contributing Developers
+        name: contributing_developers_max
+        type: quota
+        metric: developer
+        limit: 50
+        timeFrame: year
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: DAST Targets
+        name: dast_targets
+        type: quota
+        metric: target
+        limit: 10
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: API Access
+        name: api_access
+        type: included
+        metric: requests
+        limit: -1
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+    elements:
+      - name: SCA, SAST, IaC, Container Across SDLC
+      - name: 10 DAST Targets
+      - name: Advanced Risk Prioritization
+      - name: Advanced Analytics
+      - name: API Access
+  - id: snyk-enterprise
+    name: Enterprise
+    type: enterprise
+    description: >-
+      Custom-quoted enterprise plan. Unlimited platform access, all scan types, advanced
+      compliance (FedRAMP, data-residency choices), SSO/SAML, group-level governance,
+      service accounts, advanced support. Add-ons include Snyk Learning Management and
+      Snyk API & Web.
+    entries:
+      - label: Subscription
+        name: subscription
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        unit: 1
+        price: custom
+        userMultiplied: false
+      - label: Contributing Developers
+        name: contributing_developers
+        type: included
+        metric: developer
+        limit: -1
+        timeFrame: month
+        unit: 1
+        price: custom
+        userMultiplied: false
+      - label: API Access
+        name: api_access
+        type: included
+        metric: requests
+        limit: -1
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+    elements:
+      - name: All Snyk Scan Types
+      - name: Service Accounts (Group / Org Scope)
+      - name: SSO and SAML
+      - name: FedRAMP and Data-Residency Choices
+      - name: Group-Level Governance and Reporting
+      - name: Add-On - Snyk Learning Management
+      - name: Add-On - Snyk API & Web
+      - name: Premium Support
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -7,30 +7,68 @@ created: '2026-05-08'
 modified: '2026-05-08'
 reconciled: false
 tags:
-- Security
-- DevSecOps
-- Vulnerability Management
-- Application Security
-- SCA
-- Rate Limiting
-- Quotas
-- Throttling
-description: Placeholder rate-limit artifact for Snyk. Replace with real limits once the pipeline
-  researches the provider's rate-limit documentation.
-notes: Initial scaffold — limits have not yet been reconciled against the provider's documentation.
+  - Security
+  - DevSecOps
+  - Vulnerability Management
+  - Application Security
+  - Rate Limiting
+  - Throttling
+description: >-
+  Snyk applies a per-token request-rate limit to both the REST and V1 APIs. Numeric
+  ceilings are not exhaustively published; documented behaviour is that 429 Too Many
+  Requests is returned when the bucket is exhausted, with Retry-After indicating when
+  the caller may resume. Free and Team tier API access varies - per Snyk auth docs Free
+  and Team users cannot use personal access tokens for API calls; Enterprise/Ignite use
+  service accounts for automation. Regional endpoints serve US, EU, and AU traffic.
 sources:
-- https://snyk.io/
+  - https://docs.snyk.io/snyk-api/authentication-for-api
+  - https://docs.snyk.io/snyk-api/api-urls-snyk-api
 responseCodes:
   throttled: 429
+  unauthorized: 401
+  serverError: 5xx
 limits:
-- name: Default
-  scope: account
-  metric: varies
-  limit: see provider documentation
-  notes: Pending reconciliation.
+  - name: Per-Token Throttle
+    scope: token
+    metric: requests
+    limit: dynamic
+    timeFrame: minute
+    notes: >-
+      Snyk applies per-token rate limits. The numeric ceiling is not published; 429 is
+      returned when exceeded.
+  - name: Free / Team Personal Token API Access
+    scope: token
+    metric: tier_eligibility
+    limit: restricted
+    notes: >-
+      Free and Team plans do not permit personal access tokens to call the API for
+      automation. Use of the API is gated to Enterprise (and Ignite) plans, with
+      service accounts recommended for non-interactive use.
+  - name: Bulk Export Job Concurrency
+    scope: organization
+    metric: export_jobs
+    limit: dynamic
+    notes: >-
+      Issue and dependency exports are processed asynchronously; only a small number of
+      concurrent exports per organization are accepted before subsequent jobs queue.
 policies:
-- name: Backoff Strategy
-  description: Clients should implement exponential backoff with jitter and honor any Retry-After header.
+  - name: 429 Throttling
+    description: >-
+      When the per-token bucket is exhausted Snyk returns 429 Too Many Requests with a
+      Retry-After header indicating the wait time.
+  - name: Backoff Strategy
+    description: >-
+      Implement exponential backoff with jitter on 429 and 5xx responses. Cache
+      idempotent reads (org list, project list) and prefer the bulk Export API for
+      large exports rather than paginating individual issue lists.
+  - name: Service Accounts For Automation
+    description: >-
+      Use a service account scoped to an organization or group for CI/CD and automation
+      flows; reserve personal tokens for interactive CLI/IDE use.
+  - name: Regional Endpoint Selection
+    description: >-
+      Use the regional endpoint matching your tenant's region - api.snyk.io (US),
+      api.eu.snyk.io (EU), or api.au.snyk.io (AU) - to comply with data residency.
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com
