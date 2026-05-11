@@ -264,6 +264,10 @@ common:
     url: rate-limits/snyk-rate-limits.yml
   - type: FinOps
     url: finops/snyk-finops.yml
+  - type: Integrations
+    url: https://snyk.io/integrations/
+integrations:
+  - name: View partner solutions
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
