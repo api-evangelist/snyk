@@ -1,0 +1,586 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — BrokerConnections
+  description: 'Snyk API — BrokerConnections. 12 operations. Lead operation: List Broker connections for a given organization.
+    Self-contained Naftiko capability covering one Snyk business surface.'
+  tags:
+  - Snyk
+  - BrokerConnections
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-brokerconnections
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — BrokerConnections business capability. Self-contained, no shared references.
+    resources:
+    - name: orgs-org_id-brokers-connections
+      path: /orgs/{org_id}/brokers/connections
+      operations:
+      - name: listbrokerconnectionsfororg
+        method: GET
+        description: List Broker connections for a given organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: Number of results to return per page
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+    - name: tenants-tenant_id-brokers-connections-connection_id-integrations
+      path: /tenants/{tenant_id}/brokers/connections/{connection_id}/integrations
+      operations:
+      - name: getbrokerconnectionintegrations
+        method: GET
+        description: Get Integrations using the current Broker connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: Number of results to return per page
+    - name: tenants-tenant_id-brokers-connections-connection_id-orgs-org_id-integration
+      path: /tenants/{tenant_id}/brokers/connections/{connection_id}/orgs/{org_id}/integration
+      operations:
+      - name: createbrokerconnectionintegration
+        method: POST
+        description: Creates Broker connection Integration Configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: tenants-tenant_id-brokers-connections-connection_id-orgs-org_id-integrations-int
+      path: /tenants/{tenant_id}/brokers/connections/{connection_id}/orgs/{org_id}/integrations/{integration_id}
+      operations:
+      - name: deletebrokerconnectionintegration
+        method: DELETE
+        description: Deletes an Integration for a Broker connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+    - name: tenants-tenant_id-brokers-installs-install_id-deployments-deployment_id-connecti
+      path: /tenants/{tenant_id}/brokers/installs/{install_id}/deployments/{deployment_id}/connections
+      operations:
+      - name: deletebrokerconnections
+        method: DELETE
+        description: Deletes Broker connections
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+      - name: listbrokerconnections
+        method: GET
+        description: List Broker connections
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Number of results to return per page
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+      - name: createbrokerconnection
+        method: POST
+        description: Creates Broker connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: tenants-tenant_id-brokers-installs-install_id-deployments-deployment_id-connecti
+      path: /tenants/{tenant_id}/brokers/installs/{install_id}/deployments/{deployment_id}/connections/{connection_id}
+      operations:
+      - name: deletebrokerconnection
+        method: DELETE
+        description: Deletes Broker connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+      - name: getbrokerconnection
+        method: GET
+        description: Get Broker connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: Number of results to return per page
+      - name: updatebrokerconnection
+        method: PATCH
+        description: Updates Broker connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: tenants-tenant_id-brokers-installs-install_id-deployments-deployment_id-connecti
+      path: /tenants/{tenant_id}/brokers/installs/{install_id}/deployments/{deployment_id}/connections/{connection_id}/bulk_migration
+      operations:
+      - name: listbrokerorgsforbulkmigration
+        method: GET
+        description: List organizations for bulk migration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: Number of results to return per page
+      - name: createbrokerorgsforbulkmigration
+        method: POST
+        description: Performs bulk migration integrations to universal broker
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-brokerconnections-rest
+    port: 8080
+    description: REST adapter for Snyk API — BrokerConnections. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/orgs/{org-id}/brokers/connections
+      name: orgs-org-id-brokers-connections
+      description: REST surface for orgs-org_id-brokers-connections.
+      operations:
+      - method: GET
+        name: listbrokerconnectionsfororg
+        description: List Broker connections for a given organization
+        call: rest-brokerconnections.listbrokerconnectionsfororg
+        with:
+          org_id: rest.org_id
+          limit: rest.limit
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tenants/{tenant-id}/brokers/connections/{connection-id}/integrations
+      name: tenants-tenant-id-brokers-connections-connection-id-integrations
+      description: REST surface for tenants-tenant_id-brokers-connections-connection_id-integrations.
+      operations:
+      - method: GET
+        name: getbrokerconnectionintegrations
+        description: Get Integrations using the current Broker connection
+        call: rest-brokerconnections.getbrokerconnectionintegrations
+        with:
+          version: rest.version
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tenants/{tenant-id}/brokers/connections/{connection-id}/orgs/{org-id}/integration
+      name: tenants-tenant-id-brokers-connections-connection-id-orgs-org-id-integration
+      description: REST surface for tenants-tenant_id-brokers-connections-connection_id-orgs-org_id-integration.
+      operations:
+      - method: POST
+        name: createbrokerconnectionintegration
+        description: Creates Broker connection Integration Configuration
+        call: rest-brokerconnections.createbrokerconnectionintegration
+        with:
+          org_id: rest.org_id
+          version: rest.version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tenants/{tenant-id}/brokers/connections/{connection-id}/orgs/{org-id}/integrations/{integration-id}
+      name: tenants-tenant-id-brokers-connections-connection-id-orgs-org-id-integrations-int
+      description: REST surface for tenants-tenant_id-brokers-connections-connection_id-orgs-org_id-integrations-int.
+      operations:
+      - method: DELETE
+        name: deletebrokerconnectionintegration
+        description: Deletes an Integration for a Broker connection
+        call: rest-brokerconnections.deletebrokerconnectionintegration
+        with:
+          org_id: rest.org_id
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tenants/{tenant-id}/brokers/installs/{install-id}/deployments/{deployment-id}/connections
+      name: tenants-tenant-id-brokers-installs-install-id-deployments-deployment-id-connecti
+      description: REST surface for tenants-tenant_id-brokers-installs-install_id-deployments-deployment_id-connecti.
+      operations:
+      - method: DELETE
+        name: deletebrokerconnections
+        description: Deletes Broker connections
+        call: rest-brokerconnections.deletebrokerconnections
+        with:
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listbrokerconnections
+        description: List Broker connections
+        call: rest-brokerconnections.listbrokerconnections
+        with:
+          limit: rest.limit
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createbrokerconnection
+        description: Creates Broker connection
+        call: rest-brokerconnections.createbrokerconnection
+        with:
+          version: rest.version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tenants/{tenant-id}/brokers/installs/{install-id}/deployments/{deployment-id}/connections/{connection-id}
+      name: tenants-tenant-id-brokers-installs-install-id-deployments-deployment-id-connecti
+      description: REST surface for tenants-tenant_id-brokers-installs-install_id-deployments-deployment_id-connecti.
+      operations:
+      - method: DELETE
+        name: deletebrokerconnection
+        description: Deletes Broker connection
+        call: rest-brokerconnections.deletebrokerconnection
+        with:
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getbrokerconnection
+        description: Get Broker connection
+        call: rest-brokerconnections.getbrokerconnection
+        with:
+          version: rest.version
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatebrokerconnection
+        description: Updates Broker connection
+        call: rest-brokerconnections.updatebrokerconnection
+        with:
+          version: rest.version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tenants/{tenant-id}/brokers/installs/{install-id}/deployments/{deployment-id}/connections/{connection-id}/bulk-migration
+      name: tenants-tenant-id-brokers-installs-install-id-deployments-deployment-id-connecti
+      description: REST surface for tenants-tenant_id-brokers-installs-install_id-deployments-deployment_id-connecti.
+      operations:
+      - method: GET
+        name: listbrokerorgsforbulkmigration
+        description: List organizations for bulk migration
+        call: rest-brokerconnections.listbrokerorgsforbulkmigration
+        with:
+          version: rest.version
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createbrokerorgsforbulkmigration
+        description: Performs bulk migration integrations to universal broker
+        call: rest-brokerconnections.createbrokerorgsforbulkmigration
+        with:
+          version: rest.version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-brokerconnections-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — BrokerConnections. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-broker-connections-given-organization
+      description: List Broker connections for a given organization
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-brokerconnections.listbrokerconnectionsfororg
+      with:
+        org_id: tools.org_id
+        limit: tools.limit
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-integrations-using-current-broker
+      description: Get Integrations using the current Broker connection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-brokerconnections.getbrokerconnectionintegrations
+      with:
+        version: tools.version
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: creates-broker-connection-integration-configuration
+      description: Creates Broker connection Integration Configuration
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-brokerconnections.createbrokerconnectionintegration
+      with:
+        org_id: tools.org_id
+        version: tools.version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletes-integration-broker-connection
+      description: Deletes an Integration for a Broker connection
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-brokerconnections.deletebrokerconnectionintegration
+      with:
+        org_id: tools.org_id
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletes-broker-connections
+      description: Deletes Broker connections
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-brokerconnections.deletebrokerconnections
+      with:
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-broker-connections
+      description: List Broker connections
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-brokerconnections.listbrokerconnections
+      with:
+        limit: tools.limit
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: creates-broker-connection
+      description: Creates Broker connection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-brokerconnections.createbrokerconnection
+      with:
+        version: tools.version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletes-broker-connection
+      description: Deletes Broker connection
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-brokerconnections.deletebrokerconnection
+      with:
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-broker-connection
+      description: Get Broker connection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-brokerconnections.getbrokerconnection
+      with:
+        version: tools.version
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updates-broker-connection
+      description: Updates Broker connection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-brokerconnections.updatebrokerconnection
+      with:
+        version: tools.version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-organizations-bulk-migration
+      description: List organizations for bulk migration
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-brokerconnections.listbrokerorgsforbulkmigration
+      with:
+        version: tools.version
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: performs-bulk-migration-integrations-universal
+      description: Performs bulk migration integrations to universal broker
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-brokerconnections.createbrokerorgsforbulkmigration
+      with:
+        version: tools.version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

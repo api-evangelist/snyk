@@ -1,0 +1,219 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — Targets
+  description: 'Snyk API — Targets. 3 operations. Lead operation: Get targets by org ID. Self-contained Naftiko capability
+    covering one Snyk business surface.'
+  tags:
+  - Snyk
+  - Targets
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-targets
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — Targets business capability. Self-contained, no shared references.
+    resources:
+    - name: orgs-org_id-targets
+      path: /orgs/{org_id}/targets
+      operations:
+      - name: getorgstargets
+        method: GET
+        description: Get targets by org ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: count
+          in: query
+          type: boolean
+          description: Calculate total amount of filtered results
+        - name: limit
+          in: query
+          type: integer
+          description: Number of results to return per page
+        - name: org_id
+          in: path
+          type: string
+          description: The id of the org to return a list of targets
+          required: true
+        - name: is_private
+          in: query
+          type: boolean
+          description: Return targets that match the provided value of is_private
+        - name: exclude_empty
+          in: query
+          type: boolean
+          description: Return only the targets that has projects
+        - name: url
+          in: query
+          type: string
+          description: Return targets that match the provided remote_url.
+        - name: source_types
+          in: query
+          type: array
+          description: Return targets that match the provided source_types
+        - name: display_name
+          in: query
+          type: string
+          description: Return targets with display names starting with the provided string
+        - name: created_gte
+          in: query
+          type: string
+          description: Return only targets which have been created at or after the specified date.
+    - name: orgs-org_id-targets-target_id
+      path: /orgs/{org_id}/targets/{target_id}
+      operations:
+      - name: deleteorgstarget
+        method: DELETE
+        description: Delete target by target ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: The id of the org to delete
+          required: true
+        - name: target_id
+          in: path
+          type: string
+          description: The id of the target to delete
+          required: true
+      - name: getorgstarget
+        method: GET
+        description: Get target by target ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: The id of the org to return the target from
+          required: true
+        - name: target_id
+          in: path
+          type: string
+          description: The id of the target to return
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-targets-rest
+    port: 8080
+    description: REST adapter for Snyk API — Targets. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/orgs/{org-id}/targets
+      name: orgs-org-id-targets
+      description: REST surface for orgs-org_id-targets.
+      operations:
+      - method: GET
+        name: getorgstargets
+        description: Get targets by org ID
+        call: rest-targets.getorgstargets
+        with:
+          count: rest.count
+          limit: rest.limit
+          org_id: rest.org_id
+          is_private: rest.is_private
+          exclude_empty: rest.exclude_empty
+          url: rest.url
+          source_types: rest.source_types
+          display_name: rest.display_name
+          created_gte: rest.created_gte
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/targets/{target-id}
+      name: orgs-org-id-targets-target-id
+      description: REST surface for orgs-org_id-targets-target_id.
+      operations:
+      - method: DELETE
+        name: deleteorgstarget
+        description: Delete target by target ID
+        call: rest-targets.deleteorgstarget
+        with:
+          org_id: rest.org_id
+          target_id: rest.target_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getorgstarget
+        description: Get target by target ID
+        call: rest-targets.getorgstarget
+        with:
+          org_id: rest.org_id
+          target_id: rest.target_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-targets-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — Targets. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-targets-org-id
+      description: Get targets by org ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-targets.getorgstargets
+      with:
+        count: tools.count
+        limit: tools.limit
+        org_id: tools.org_id
+        is_private: tools.is_private
+        exclude_empty: tools.exclude_empty
+        url: tools.url
+        source_types: tools.source_types
+        display_name: tools.display_name
+        created_gte: tools.created_gte
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-target-target-id
+      description: Delete target by target ID
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-targets.deleteorgstarget
+      with:
+        org_id: tools.org_id
+        target_id: tools.target_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-target-target-id
+      description: Get target by target ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-targets.getorgstarget
+      with:
+        org_id: tools.org_id
+        target_id: tools.target_id
+      outputParameters:
+      - type: object
+        mapping: $.

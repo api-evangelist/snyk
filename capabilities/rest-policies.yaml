@@ -1,0 +1,469 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — Policies
+  description: 'Snyk API — Policies. 10 operations. Lead operation: Get group level policies (Early Access). Self-contained
+    Naftiko capability covering one Snyk business surface.'
+  tags:
+  - Snyk
+  - Policies
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-policies
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — Policies business capability. Self-contained, no shared references.
+    resources:
+    - name: groups-group_id-policies
+      path: /groups/{group_id}/policies
+      operations:
+      - name: listgrouppolicies
+        method: GET
+        description: Get group level policies (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: Group ID
+          required: true
+      - name: creategrouppolicy
+        method: POST
+        description: Create a new group level policy (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: Group ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: groups-group_id-policies-policy_id
+      path: /groups/{group_id}/policies/{policy_id}
+      operations:
+      - name: deletegrouppolicy
+        method: DELETE
+        description: Delete an group-level policy (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: Group ID
+          required: true
+      - name: updategrouppolicy
+        method: PATCH
+        description: Update a group-level policy (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: Group ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: orgs-org_id-policies
+      path: /orgs/{org_id}/policies
+      operations:
+      - name: getorgpolicies
+        method: GET
+        description: Get org-level policies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: expires_before
+          in: query
+          type: string
+          description: Select only policies with an expiry strictly before the given time.
+        - name: expires_after
+          in: query
+          type: string
+          description: Select only policies with an expiry strictly past the given time.
+        - name: expires_never
+          in: query
+          type: boolean
+          description: Select only policies that never expire.
+      - name: createorgpolicy
+        method: POST
+        description: Create a new org-level policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: orgs-org_id-policies-policy_id
+      path: /orgs/{org_id}/policies/{policy_id}
+      operations:
+      - name: deleteorgpolicy
+        method: DELETE
+        description: Delete an org-level policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+      - name: getorgpolicy
+        method: GET
+        description: Get an org-level policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+      - name: updateorgpolicy
+        method: PATCH
+        description: Update an org-level policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: orgs-org_id-policies-policy_id-events
+      path: /orgs/{org_id}/policies/{policy_id}/events
+      operations:
+      - name: getorgpolicyevents
+        method: GET
+        description: List org policy events (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-policies-rest
+    port: 8080
+    description: REST adapter for Snyk API — Policies. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/groups/{group-id}/policies
+      name: groups-group-id-policies
+      description: REST surface for groups-group_id-policies.
+      operations:
+      - method: GET
+        name: listgrouppolicies
+        description: Get group level policies (Early Access)
+        call: rest-policies.listgrouppolicies
+        with:
+          group_id: rest.group_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: creategrouppolicy
+        description: Create a new group level policy (Early Access)
+        call: rest-policies.creategrouppolicy
+        with:
+          group_id: rest.group_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/groups/{group-id}/policies/{policy-id}
+      name: groups-group-id-policies-policy-id
+      description: REST surface for groups-group_id-policies-policy_id.
+      operations:
+      - method: DELETE
+        name: deletegrouppolicy
+        description: Delete an group-level policy (Early Access)
+        call: rest-policies.deletegrouppolicy
+        with:
+          group_id: rest.group_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updategrouppolicy
+        description: Update a group-level policy (Early Access)
+        call: rest-policies.updategrouppolicy
+        with:
+          group_id: rest.group_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/policies
+      name: orgs-org-id-policies
+      description: REST surface for orgs-org_id-policies.
+      operations:
+      - method: GET
+        name: getorgpolicies
+        description: Get org-level policies
+        call: rest-policies.getorgpolicies
+        with:
+          org_id: rest.org_id
+          expires_before: rest.expires_before
+          expires_after: rest.expires_after
+          expires_never: rest.expires_never
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createorgpolicy
+        description: Create a new org-level policy
+        call: rest-policies.createorgpolicy
+        with:
+          org_id: rest.org_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/policies/{policy-id}
+      name: orgs-org-id-policies-policy-id
+      description: REST surface for orgs-org_id-policies-policy_id.
+      operations:
+      - method: DELETE
+        name: deleteorgpolicy
+        description: Delete an org-level policy
+        call: rest-policies.deleteorgpolicy
+        with:
+          org_id: rest.org_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getorgpolicy
+        description: Get an org-level policy
+        call: rest-policies.getorgpolicy
+        with:
+          org_id: rest.org_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateorgpolicy
+        description: Update an org-level policy
+        call: rest-policies.updateorgpolicy
+        with:
+          org_id: rest.org_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/policies/{policy-id}/events
+      name: orgs-org-id-policies-policy-id-events
+      description: REST surface for orgs-org_id-policies-policy_id-events.
+      operations:
+      - method: GET
+        name: getorgpolicyevents
+        description: List org policy events (Early Access)
+        call: rest-policies.getorgpolicyevents
+        with:
+          org_id: rest.org_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-policies-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — Policies. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-group-level-policies-early
+      description: Get group level policies (Early Access)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-policies.listgrouppolicies
+      with:
+        group_id: tools.group_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-group-level-policy
+      description: Create a new group level policy (Early Access)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-policies.creategrouppolicy
+      with:
+        group_id: tools.group_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-group-level-policy-early
+      description: Delete an group-level policy (Early Access)
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-policies.deletegrouppolicy
+      with:
+        group_id: tools.group_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-group-level-policy-early
+      description: Update a group-level policy (Early Access)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-policies.updategrouppolicy
+      with:
+        group_id: tools.group_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-org-level-policies
+      description: Get org-level policies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-policies.getorgpolicies
+      with:
+        org_id: tools.org_id
+        expires_before: tools.expires_before
+        expires_after: tools.expires_after
+        expires_never: tools.expires_never
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-org-level-policy
+      description: Create a new org-level policy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-policies.createorgpolicy
+      with:
+        org_id: tools.org_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-org-level-policy
+      description: Delete an org-level policy
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-policies.deleteorgpolicy
+      with:
+        org_id: tools.org_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-org-level-policy
+      description: Get an org-level policy
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-policies.getorgpolicy
+      with:
+        org_id: tools.org_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-org-level-policy
+      description: Update an org-level policy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-policies.updateorgpolicy
+      with:
+        org_id: tools.org_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-org-policy-events-early
+      description: List org policy events (Early Access)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-policies.getorgpolicyevents
+      with:
+        org_id: tools.org_id
+      outputParameters:
+      - type: object
+        mapping: $.

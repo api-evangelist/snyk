@@ -1,0 +1,224 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — Custom Base Images
+  description: 'Snyk API — Custom Base Images. 5 operations. Lead operation: Get a custom base image collection. Self-contained
+    Naftiko capability covering one Snyk business surface.'
+  tags:
+  - Snyk
+  - Custom Base Images
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-custom-base-images
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — Custom Base Images business capability. Self-contained, no shared references.
+    resources:
+    - name: custom_base_images
+      path: /custom_base_images
+      operations:
+      - name: getcustombaseimages
+        method: GET
+        description: Get a custom base image collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: query
+          type: string
+          description: The ID of the container project that the custom base image is based off of.
+        - name: org_id
+          in: query
+          type: string
+          description: The organization ID of the custom base image
+        - name: group_id
+          in: query
+          type: string
+          description: The group ID of the custom base image
+        - name: sort_by
+          in: query
+          type: string
+          description: 'Which column to sort by. '
+      - name: createcustombaseimage
+        method: POST
+        description: Create a Custom Base Image from an existing container project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: custom_base_images-custombaseimage_id
+      path: /custom_base_images/{custombaseimage_id}
+      operations:
+      - name: deletecustombaseimage
+        method: DELETE
+        description: Delete a custom base image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: getcustombaseimage
+        method: GET
+        description: Get a custom base image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatecustombaseimage
+        method: PATCH
+        description: Update a custom base image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-custom-base-images-rest
+    port: 8080
+    description: REST adapter for Snyk API — Custom Base Images. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/custom-base-images
+      name: custom-base-images
+      description: REST surface for custom_base_images.
+      operations:
+      - method: GET
+        name: getcustombaseimages
+        description: Get a custom base image collection
+        call: rest-custom-base-images.getcustombaseimages
+        with:
+          project_id: rest.project_id
+          org_id: rest.org_id
+          group_id: rest.group_id
+          sort_by: rest.sort_by
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcustombaseimage
+        description: Create a Custom Base Image from an existing container project
+        call: rest-custom-base-images.createcustombaseimage
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/custom-base-images/{custombaseimage-id}
+      name: custom-base-images-custombaseimage-id
+      description: REST surface for custom_base_images-custombaseimage_id.
+      operations:
+      - method: DELETE
+        name: deletecustombaseimage
+        description: Delete a custom base image
+        call: rest-custom-base-images.deletecustombaseimage
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getcustombaseimage
+        description: Get a custom base image
+        call: rest-custom-base-images.getcustombaseimage
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatecustombaseimage
+        description: Update a custom base image
+        call: rest-custom-base-images.updatecustombaseimage
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-custom-base-images-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — Custom Base Images. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: get-custom-base-image-collection
+      description: Get a custom base image collection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-custom-base-images.getcustombaseimages
+      with:
+        project_id: tools.project_id
+        org_id: tools.org_id
+        group_id: tools.group_id
+        sort_by: tools.sort_by
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-custom-base-image-existing
+      description: Create a Custom Base Image from an existing container project
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-custom-base-images.createcustombaseimage
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-custom-base-image
+      description: Delete a custom base image
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-custom-base-images.deletecustombaseimage
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-custom-base-image
+      description: Get a custom base image
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-custom-base-images.getcustombaseimage
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-custom-base-image
+      description: Update a custom base image
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-custom-base-images.updatecustombaseimage
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

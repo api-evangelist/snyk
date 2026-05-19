@@ -1,0 +1,112 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — OpenAPI
+  description: 'Snyk API — OpenAPI. 2 operations. Lead operation: OpenAPI. Self-contained Naftiko capability covering one
+    Snyk business surface.'
+  tags:
+  - Snyk
+  - OpenAPI
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-openapi
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — OpenAPI business capability. Self-contained, no shared references.
+    resources:
+    - name: openapi
+      path: /openapi
+      operations:
+      - name: listapiversions
+        method: GET
+        description: List available versions of OpenAPI specification
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: openapi-version
+      path: /openapi/{version}
+      operations:
+      - name: getapiversion
+        method: GET
+        description: Get OpenAPI specification effective at version.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: path
+          type: string
+          description: The requested version of the API
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-openapi-rest
+    port: 8080
+    description: REST adapter for Snyk API — OpenAPI. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/openapi
+      name: openapi
+      description: REST surface for openapi.
+      operations:
+      - method: GET
+        name: listapiversions
+        description: List available versions of OpenAPI specification
+        call: rest-openapi.listapiversions
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/openapi/{version}
+      name: openapi-version
+      description: REST surface for openapi-version.
+      operations:
+      - method: GET
+        name: getapiversion
+        description: Get OpenAPI specification effective at version.
+        call: rest-openapi.getapiversion
+        with:
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-openapi-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — OpenAPI. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-available-versions-openapi-specification
+      description: List available versions of OpenAPI specification
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-openapi.listapiversions
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-openapi-specification-effective-version
+      description: Get OpenAPI specification effective at version.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-openapi.getapiversion
+      with:
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.

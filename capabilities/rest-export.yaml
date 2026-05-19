@@ -1,0 +1,250 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — Export
+  description: 'Snyk API — Export. 6 operations. Lead operation: Start an export. Self-contained Naftiko capability covering
+    one Snyk business surface.'
+  tags:
+  - Snyk
+  - Export
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-export
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — Export business capability. Self-contained, no shared references.
+    resources:
+    - name: groups-group_id-export
+      path: /groups/{group_id}/export
+      operations:
+      - name: creategroupexport
+        method: POST
+        description: Start an export
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: groups-group_id-export-export_id
+      path: /groups/{group_id}/export/{export_id}
+      operations:
+      - name: getgroupexport
+        method: GET
+        description: Get export results
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: groups-group_id-jobs-export-export_id
+      path: /groups/{group_id}/jobs/export/{export_id}
+      operations:
+      - name: getgroupexportjobstatus
+        method: GET
+        description: Get export status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: orgs-org_id-export
+      path: /orgs/{org_id}/export
+      operations:
+      - name: createexport
+        method: POST
+        description: Start an export
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: orgs-org_id-export-export_id
+      path: /orgs/{org_id}/export/{export_id}
+      operations:
+      - name: getexport
+        method: GET
+        description: Get export results
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: orgs-org_id-jobs-export-export_id
+      path: /orgs/{org_id}/jobs/export/{export_id}
+      operations:
+      - name: getexportjobstatus
+        method: GET
+        description: Get export status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-export-rest
+    port: 8080
+    description: REST adapter for Snyk API — Export. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/groups/{group-id}/export
+      name: groups-group-id-export
+      description: REST surface for groups-group_id-export.
+      operations:
+      - method: POST
+        name: creategroupexport
+        description: Start an export
+        call: rest-export.creategroupexport
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/groups/{group-id}/export/{export-id}
+      name: groups-group-id-export-export-id
+      description: REST surface for groups-group_id-export-export_id.
+      operations:
+      - method: GET
+        name: getgroupexport
+        description: Get export results
+        call: rest-export.getgroupexport
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/groups/{group-id}/jobs/export/{export-id}
+      name: groups-group-id-jobs-export-export-id
+      description: REST surface for groups-group_id-jobs-export-export_id.
+      operations:
+      - method: GET
+        name: getgroupexportjobstatus
+        description: Get export status
+        call: rest-export.getgroupexportjobstatus
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/export
+      name: orgs-org-id-export
+      description: REST surface for orgs-org_id-export.
+      operations:
+      - method: POST
+        name: createexport
+        description: Start an export
+        call: rest-export.createexport
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/export/{export-id}
+      name: orgs-org-id-export-export-id
+      description: REST surface for orgs-org_id-export-export_id.
+      operations:
+      - method: GET
+        name: getexport
+        description: Get export results
+        call: rest-export.getexport
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/jobs/export/{export-id}
+      name: orgs-org-id-jobs-export-export-id
+      description: REST surface for orgs-org_id-jobs-export-export_id.
+      operations:
+      - method: GET
+        name: getexportjobstatus
+        description: Get export status
+        call: rest-export.getexportjobstatus
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-export-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — Export. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: start-export
+      description: Start an export
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-export.creategroupexport
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-export-results
+      description: Get export results
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-export.getgroupexport
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-export-status
+      description: Get export status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-export.getgroupexportjobstatus
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: start-export-2
+      description: Start an export
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-export.createexport
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-export-results-2
+      description: Get export results
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-export.getexport
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-export-status-2
+      description: Get export status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-export.getexportjobstatus
+      outputParameters:
+      - type: object
+        mapping: $.

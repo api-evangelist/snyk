@@ -1,0 +1,392 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — BrokerContexts
+  description: 'Snyk API — BrokerContexts. 8 operations. Lead operation: List Connection contexts. Self-contained Naftiko
+    capability covering one Snyk business surface.'
+  tags:
+  - Snyk
+  - BrokerContexts
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-brokercontexts
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — BrokerContexts business capability. Self-contained, no shared references.
+    resources:
+    - name: tenants-tenant_id-brokers-installs-install_id-connections-connection_id-contexts
+      path: /tenants/{tenant_id}/brokers/installs/{install_id}/connections/{connection_id}/contexts
+      operations:
+      - name: listconnectioncontexts
+        method: GET
+        description: List Connection contexts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Number of results to return per page
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+    - name: tenants-tenant_id-brokers-installs-install_id-contexts-context_id
+      path: /tenants/{tenant_id}/brokers/installs/{install_id}/contexts/{context_id}
+      operations:
+      - name: deletebrokercontext
+        method: DELETE
+        description: Deletes broker context
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+      - name: getconnectioncontext
+        method: GET
+        description: List Connection context
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Number of results to return per page
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+      - name: updatebrokercontext
+        method: PATCH
+        description: Updates Broker Context
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: tenants-tenant_id-brokers-installs-install_id-contexts-context_id-integration
+      path: /tenants/{tenant_id}/brokers/installs/{install_id}/contexts/{context_id}/integration
+      operations:
+      - name: updatebrokercontextintegration
+        method: PATCH
+        description: Updates an integration to be associated with a Broker context
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: tenants-tenant_id-brokers-installs-install_id-contexts-context_id-integrations-i
+      path: /tenants/{tenant_id}/brokers/installs/{install_id}/contexts/{context_id}/integrations/{integration_id}
+      operations:
+      - name: deletebrokercontextintegration
+        method: DELETE
+        description: Deletes the Broker context association with an Integration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+    - name: tenants-tenant_id-brokers-installs-install_id-deployments-deployment_id-contexts
+      path: /tenants/{tenant_id}/brokers/installs/{install_id}/deployments/{deployment_id}/contexts
+      operations:
+      - name: listdeploymentcontexts
+        method: GET
+        description: List Deployment contexts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Number of results to return per page
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+      - name: createbrokercontext
+        method: POST
+        description: Create broker Context
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-brokercontexts-rest
+    port: 8080
+    description: REST adapter for Snyk API — BrokerContexts. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/tenants/{tenant-id}/brokers/installs/{install-id}/connections/{connection-id}/contexts
+      name: tenants-tenant-id-brokers-installs-install-id-connections-connection-id-contexts
+      description: REST surface for tenants-tenant_id-brokers-installs-install_id-connections-connection_id-contexts.
+      operations:
+      - method: GET
+        name: listconnectioncontexts
+        description: List Connection contexts
+        call: rest-brokercontexts.listconnectioncontexts
+        with:
+          limit: rest.limit
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tenants/{tenant-id}/brokers/installs/{install-id}/contexts/{context-id}
+      name: tenants-tenant-id-brokers-installs-install-id-contexts-context-id
+      description: REST surface for tenants-tenant_id-brokers-installs-install_id-contexts-context_id.
+      operations:
+      - method: DELETE
+        name: deletebrokercontext
+        description: Deletes broker context
+        call: rest-brokercontexts.deletebrokercontext
+        with:
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getconnectioncontext
+        description: List Connection context
+        call: rest-brokercontexts.getconnectioncontext
+        with:
+          limit: rest.limit
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatebrokercontext
+        description: Updates Broker Context
+        call: rest-brokercontexts.updatebrokercontext
+        with:
+          version: rest.version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tenants/{tenant-id}/brokers/installs/{install-id}/contexts/{context-id}/integration
+      name: tenants-tenant-id-brokers-installs-install-id-contexts-context-id-integration
+      description: REST surface for tenants-tenant_id-brokers-installs-install_id-contexts-context_id-integration.
+      operations:
+      - method: PATCH
+        name: updatebrokercontextintegration
+        description: Updates an integration to be associated with a Broker context
+        call: rest-brokercontexts.updatebrokercontextintegration
+        with:
+          version: rest.version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tenants/{tenant-id}/brokers/installs/{install-id}/contexts/{context-id}/integrations/{integration-id}
+      name: tenants-tenant-id-brokers-installs-install-id-contexts-context-id-integrations-i
+      description: REST surface for tenants-tenant_id-brokers-installs-install_id-contexts-context_id-integrations-i.
+      operations:
+      - method: DELETE
+        name: deletebrokercontextintegration
+        description: Deletes the Broker context association with an Integration
+        call: rest-brokercontexts.deletebrokercontextintegration
+        with:
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tenants/{tenant-id}/brokers/installs/{install-id}/deployments/{deployment-id}/contexts
+      name: tenants-tenant-id-brokers-installs-install-id-deployments-deployment-id-contexts
+      description: REST surface for tenants-tenant_id-brokers-installs-install_id-deployments-deployment_id-contexts.
+      operations:
+      - method: GET
+        name: listdeploymentcontexts
+        description: List Deployment contexts
+        call: rest-brokercontexts.listdeploymentcontexts
+        with:
+          limit: rest.limit
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createbrokercontext
+        description: Create broker Context
+        call: rest-brokercontexts.createbrokercontext
+        with:
+          version: rest.version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-brokercontexts-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — BrokerContexts. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-connection-contexts
+      description: List Connection contexts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-brokercontexts.listconnectioncontexts
+      with:
+        limit: tools.limit
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletes-broker-context
+      description: Deletes broker context
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-brokercontexts.deletebrokercontext
+      with:
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-connection-context
+      description: List Connection context
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-brokercontexts.getconnectioncontext
+      with:
+        limit: tools.limit
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updates-broker-context
+      description: Updates Broker Context
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-brokercontexts.updatebrokercontext
+      with:
+        version: tools.version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updates-integration-be-associated-broker
+      description: Updates an integration to be associated with a Broker context
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-brokercontexts.updatebrokercontextintegration
+      with:
+        version: tools.version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletes-broker-context-association-integration
+      description: Deletes the Broker context association with an Integration
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-brokercontexts.deletebrokercontextintegration
+      with:
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-deployment-contexts
+      description: List Deployment contexts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-brokercontexts.listdeploymentcontexts
+      with:
+        limit: tools.limit
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-broker-context
+      description: Create broker Context
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-brokercontexts.createbrokercontext
+      with:
+        version: tools.version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

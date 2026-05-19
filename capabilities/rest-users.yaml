@@ -1,0 +1,175 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — Users
+  description: 'Snyk API — Users. 3 operations. Lead operation: Update a user''s role in a group (Early Access). Self-contained
+    Naftiko capability covering one Snyk business surface.'
+  tags:
+  - Snyk
+  - Users
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-users
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — Users business capability. Self-contained, no shared references.
+    resources:
+    - name: groups-group_id-users-id
+      path: /groups/{group_id}/users/{id}
+      operations:
+      - name: updateuser
+        method: PATCH
+        description: Update a user's role in a group (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: The id of the group
+          required: true
+        - name: id
+          in: path
+          type: string
+          description: The id of the user
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: orgs-org_id-users-id
+      path: /orgs/{org_id}/users/{id}
+      operations:
+      - name: getuser
+        method: GET
+        description: Get user by ID (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: The id of the org
+          required: true
+        - name: id
+          in: path
+          type: string
+          description: The id of the user
+          required: true
+    - name: self
+      path: /self
+      operations:
+      - name: getself
+        method: GET
+        description: My User Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-users-rest
+    port: 8080
+    description: REST adapter for Snyk API — Users. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/groups/{group-id}/users/{id}
+      name: groups-group-id-users-id
+      description: REST surface for groups-group_id-users-id.
+      operations:
+      - method: PATCH
+        name: updateuser
+        description: Update a user's role in a group (Early Access)
+        call: rest-users.updateuser
+        with:
+          group_id: rest.group_id
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/users/{id}
+      name: orgs-org-id-users-id
+      description: REST surface for orgs-org_id-users-id.
+      operations:
+      - method: GET
+        name: getuser
+        description: Get user by ID (Early Access)
+        call: rest-users.getuser
+        with:
+          org_id: rest.org_id
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/self
+      name: self
+      description: REST surface for self.
+      operations:
+      - method: GET
+        name: getself
+        description: My User Details
+        call: rest-users.getself
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-users-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — Users. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: update-user-s-role-group-early
+      description: Update a user's role in a group (Early Access)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-users.updateuser
+      with:
+        group_id: tools.group_id
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-user-id-early-access
+      description: Get user by ID (Early Access)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-users.getuser
+      with:
+        org_id: tools.org_id
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: my-user-details
+      description: My User Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-users.getself
+      outputParameters:
+      - type: object
+        mapping: $.

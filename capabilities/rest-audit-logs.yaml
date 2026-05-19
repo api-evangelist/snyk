@@ -1,0 +1,102 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — Audit Logs
+  description: 'Snyk API — Audit Logs. 2 operations. Lead operation: Search Group audit logs.. Self-contained Naftiko capability
+    covering one Snyk business surface.'
+  tags:
+  - Snyk
+  - Audit Logs
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-audit-logs
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — Audit Logs business capability. Self-contained, no shared references.
+    resources:
+    - name: groups-group_id-audit_logs-search
+      path: /groups/{group_id}/audit_logs/search
+      operations:
+      - name: listgroupauditlogs
+        method: GET
+        description: Search Group audit logs.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: orgs-org_id-audit_logs-search
+      path: /orgs/{org_id}/audit_logs/search
+      operations:
+      - name: listorgauditlogs
+        method: GET
+        description: Search Organization audit logs.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-audit-logs-rest
+    port: 8080
+    description: REST adapter for Snyk API — Audit Logs. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/groups/{group-id}/audit-logs/search
+      name: groups-group-id-audit-logs-search
+      description: REST surface for groups-group_id-audit_logs-search.
+      operations:
+      - method: GET
+        name: listgroupauditlogs
+        description: Search Group audit logs.
+        call: rest-audit-logs.listgroupauditlogs
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/audit-logs/search
+      name: orgs-org-id-audit-logs-search
+      description: REST surface for orgs-org_id-audit_logs-search.
+      operations:
+      - method: GET
+        name: listorgauditlogs
+        description: Search Organization audit logs.
+        call: rest-audit-logs.listorgauditlogs
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-audit-logs-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — Audit Logs. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: search-group-audit-logs
+      description: Search Group audit logs.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-audit-logs.listgroupauditlogs
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: search-organization-audit-logs
+      description: Search Organization audit logs.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-audit-logs.listorgauditlogs
+      outputParameters:
+      - type: object
+        mapping: $.

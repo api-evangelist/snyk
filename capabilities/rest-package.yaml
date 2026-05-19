@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — Package
+  description: 'Snyk API — Package. 1 operations. Lead operation: Get a package (Early Access). Self-contained Naftiko capability
+    covering one Snyk business surface.'
+  tags:
+  - Snyk
+  - Package
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-package
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — Package business capability. Self-contained, no shared references.
+    resources:
+    - name: orgs-org_id-ecosystems-ecosystem-packages-package_name
+      path: /orgs/{org_id}/ecosystems/{ecosystem}/packages/{package_name}
+      operations:
+      - name: getpackage
+        method: GET
+        description: Get a package (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-package-rest
+    port: 8080
+    description: REST adapter for Snyk API — Package. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/orgs/{org-id}/ecosystems/{ecosystem}/packages/{package-name}
+      name: orgs-org-id-ecosystems-ecosystem-packages-package-name
+      description: REST surface for orgs-org_id-ecosystems-ecosystem-packages-package_name.
+      operations:
+      - method: GET
+        name: getpackage
+        description: Get a package (Early Access)
+        call: rest-package.getpackage
+        with:
+          org_id: rest.org_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-package-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — Package. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-package-early-access
+      description: Get a package (Early Access)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-package.getpackage
+      with:
+        org_id: tools.org_id
+      outputParameters:
+      - type: object
+        mapping: $.

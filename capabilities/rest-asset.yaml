@@ -1,0 +1,521 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — Asset
+  description: 'Snyk API — Asset. 11 operations. Lead operation: Bulk remove aliases from repository assets in group (Early
+    Access). Self-contained Naftiko capability covering one Snyk business surface.'
+  tags:
+  - Snyk
+  - Asset
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-asset
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — Asset business capability. Self-contained, no shared references.
+    resources:
+    - name: groups-group_id-assets-repository-aliases
+      path: /groups/{group_id}/assets/repository/aliases
+      operations:
+      - name: deletealiasesingroup
+        method: DELETE
+        description: Bulk remove aliases from repository assets in group (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: Group ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listrepositoryaliasesingroup
+        method: GET
+        description: List repository aliases in group (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: Group ID
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of alias items to return per page. A single canonical document with multiple aliases
+            may span more than one page.
+      - name: createaliasingroup
+        method: POST
+        description: Add alias for a repository asset in group (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: Group ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: groups-group_id-assets-search
+      path: /groups/{group_id}/assets/search
+      operations:
+      - name: listassets
+        method: POST
+        description: List Assets with filters (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: Group ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: groups-group_id-assets-asset_id
+      path: /groups/{group_id}/assets/{asset_id}
+      operations:
+      - name: getasset
+        method: GET
+        description: Get an Asset by its ID (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: Group ID
+          required: true
+      - name: updateasset
+        method: PATCH
+        description: Update asset attributes (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: Group ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: groups-group_id-assets-asset_id-relationships-assets
+      path: /groups/{group_id}/assets/{asset_id}/relationships/assets
+      operations:
+      - name: listrelatedassets
+        method: GET
+        description: List related assets with pagination (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: Group ID
+          required: true
+    - name: groups-group_id-assets-asset_id-relationships-projects
+      path: /groups/{group_id}/assets/{asset_id}/relationships/projects
+      operations:
+      - name: listassetprojects
+        method: GET
+        description: List asset projects with pagination (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: Group ID
+          required: true
+    - name: orgs-org_id-assets-repository-aliases
+      path: /orgs/{org_id}/assets/repository/aliases
+      operations:
+      - name: deletealiasesinorg
+        method: DELETE
+        description: Bulk remove aliases from repository assets in org (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listrepositoryaliasesinorg
+        method: GET
+        description: List repository aliases in org (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of alias items to return per page. A single canonical document with multiple aliases
+            may span more than one page.
+      - name: createaliasinorg
+        method: POST
+        description: Add alias for a repository asset in org (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-asset-rest
+    port: 8080
+    description: REST adapter for Snyk API — Asset. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/groups/{group-id}/assets/repository/aliases
+      name: groups-group-id-assets-repository-aliases
+      description: REST surface for groups-group_id-assets-repository-aliases.
+      operations:
+      - method: DELETE
+        name: deletealiasesingroup
+        description: Bulk remove aliases from repository assets in group (Early Access)
+        call: rest-asset.deletealiasesingroup
+        with:
+          group_id: rest.group_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listrepositoryaliasesingroup
+        description: List repository aliases in group (Early Access)
+        call: rest-asset.listrepositoryaliasesingroup
+        with:
+          group_id: rest.group_id
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createaliasingroup
+        description: Add alias for a repository asset in group (Early Access)
+        call: rest-asset.createaliasingroup
+        with:
+          group_id: rest.group_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/groups/{group-id}/assets/search
+      name: groups-group-id-assets-search
+      description: REST surface for groups-group_id-assets-search.
+      operations:
+      - method: POST
+        name: listassets
+        description: List Assets with filters (Early Access)
+        call: rest-asset.listassets
+        with:
+          group_id: rest.group_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/groups/{group-id}/assets/{asset-id}
+      name: groups-group-id-assets-asset-id
+      description: REST surface for groups-group_id-assets-asset_id.
+      operations:
+      - method: GET
+        name: getasset
+        description: Get an Asset by its ID (Early Access)
+        call: rest-asset.getasset
+        with:
+          group_id: rest.group_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateasset
+        description: Update asset attributes (Early Access)
+        call: rest-asset.updateasset
+        with:
+          group_id: rest.group_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/groups/{group-id}/assets/{asset-id}/relationships/assets
+      name: groups-group-id-assets-asset-id-relationships-assets
+      description: REST surface for groups-group_id-assets-asset_id-relationships-assets.
+      operations:
+      - method: GET
+        name: listrelatedassets
+        description: List related assets with pagination (Early Access)
+        call: rest-asset.listrelatedassets
+        with:
+          group_id: rest.group_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/groups/{group-id}/assets/{asset-id}/relationships/projects
+      name: groups-group-id-assets-asset-id-relationships-projects
+      description: REST surface for groups-group_id-assets-asset_id-relationships-projects.
+      operations:
+      - method: GET
+        name: listassetprojects
+        description: List asset projects with pagination (Early Access)
+        call: rest-asset.listassetprojects
+        with:
+          group_id: rest.group_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/assets/repository/aliases
+      name: orgs-org-id-assets-repository-aliases
+      description: REST surface for orgs-org_id-assets-repository-aliases.
+      operations:
+      - method: DELETE
+        name: deletealiasesinorg
+        description: Bulk remove aliases from repository assets in org (Early Access)
+        call: rest-asset.deletealiasesinorg
+        with:
+          org_id: rest.org_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listrepositoryaliasesinorg
+        description: List repository aliases in org (Early Access)
+        call: rest-asset.listrepositoryaliasesinorg
+        with:
+          org_id: rest.org_id
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createaliasinorg
+        description: Add alias for a repository asset in org (Early Access)
+        call: rest-asset.createaliasinorg
+        with:
+          org_id: rest.org_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-asset-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — Asset. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: bulk-remove-aliases-repository-assets
+      description: Bulk remove aliases from repository assets in group (Early Access)
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-asset.deletealiasesingroup
+      with:
+        group_id: tools.group_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-repository-aliases-group-early
+      description: List repository aliases in group (Early Access)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-asset.listrepositoryaliasesingroup
+      with:
+        group_id: tools.group_id
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-alias-repository-asset-group
+      description: Add alias for a repository asset in group (Early Access)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-asset.createaliasingroup
+      with:
+        group_id: tools.group_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-assets-filters-early-access
+      description: List Assets with filters (Early Access)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: rest-asset.listassets
+      with:
+        group_id: tools.group_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-asset-its-id-early
+      description: Get an Asset by its ID (Early Access)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-asset.getasset
+      with:
+        group_id: tools.group_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-asset-attributes-early-access
+      description: Update asset attributes (Early Access)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-asset.updateasset
+      with:
+        group_id: tools.group_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-related-assets-pagination-early
+      description: List related assets with pagination (Early Access)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-asset.listrelatedassets
+      with:
+        group_id: tools.group_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-asset-projects-pagination-early
+      description: List asset projects with pagination (Early Access)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-asset.listassetprojects
+      with:
+        group_id: tools.group_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-remove-aliases-repository-assets-2
+      description: Bulk remove aliases from repository assets in org (Early Access)
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-asset.deletealiasesinorg
+      with:
+        org_id: tools.org_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-repository-aliases-org-early
+      description: List repository aliases in org (Early Access)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-asset.listrepositoryaliasesinorg
+      with:
+        org_id: tools.org_id
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-alias-repository-asset-org
+      description: Add alias for a repository asset in org (Early Access)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-asset.createaliasinorg
+      with:
+        org_id: tools.org_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

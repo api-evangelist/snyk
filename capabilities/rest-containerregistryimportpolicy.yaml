@@ -1,0 +1,339 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — ContainerRegistryImportPolicy
+  description: 'Snyk API — ContainerRegistryImportPolicy. 6 operations. Lead operation: Delete a container registry import
+    policy. Self-contained Naftiko capability covering one Snyk business surface.'
+  tags:
+  - Snyk
+  - ContainerRegistryImportPolicy
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-containerregistryimportpolicy
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — ContainerRegistryImportPolicy business capability. Self-contained, no shared references.
+    resources:
+    - name: orgs-org_id-container_import-integration_id-policy
+      path: /orgs/{org_id}/container_import/{integration_id}/policy
+      operations:
+      - name: deletecontainerregistryimportpolicy
+        method: DELETE
+        description: Delete a container registry import policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: integration_id
+          in: path
+          type: string
+          description: Container Registry Integration ID
+          required: true
+      - name: getcontainerregistryimportpolicy
+        method: GET
+        description: Get a container registry import policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: integration_id
+          in: path
+          type: string
+          description: Container Registry Integration ID
+          required: true
+      - name: updatecontainerregistryimportpolicy
+        method: PATCH
+        description: Update a container registry import policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: integration_id
+          in: path
+          type: string
+          description: Container Registry Integration ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: createcontainerregistryimportpolicy
+        method: POST
+        description: Create a container registry import policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: integration_id
+          in: path
+          type: string
+          description: Container Registry Integration ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: orgs-org_id-container_import-integration_id-policy-dry_run
+      path: /orgs/{org_id}/container_import/{integration_id}/policy/dry_run
+      operations:
+      - name: createcontainerregistryimportpolicydryrun
+        method: POST
+        description: Create a dry run job for a container registry import policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: integration_id
+          in: path
+          type: string
+          description: Container Registry Integration ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: orgs-org_id-container_import-integration_id-policy-dry_run-job_id
+      path: /orgs/{org_id}/container_import/{integration_id}/policy/dry_run/{job_id}
+      operations:
+      - name: getdryrunjob
+        method: GET
+        description: Get a dry run job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: integration_id
+          in: path
+          type: string
+          description: Container Registry Integration ID
+          required: true
+        - name: job_id
+          in: path
+          type: string
+          description: Dry run job ID
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-containerregistryimportpolicy-rest
+    port: 8080
+    description: REST adapter for Snyk API — ContainerRegistryImportPolicy. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/orgs/{org-id}/container-import/{integration-id}/policy
+      name: orgs-org-id-container-import-integration-id-policy
+      description: REST surface for orgs-org_id-container_import-integration_id-policy.
+      operations:
+      - method: DELETE
+        name: deletecontainerregistryimportpolicy
+        description: Delete a container registry import policy
+        call: rest-containerregistryimportpolicy.deletecontainerregistryimportpolicy
+        with:
+          org_id: rest.org_id
+          integration_id: rest.integration_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getcontainerregistryimportpolicy
+        description: Get a container registry import policy
+        call: rest-containerregistryimportpolicy.getcontainerregistryimportpolicy
+        with:
+          org_id: rest.org_id
+          integration_id: rest.integration_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatecontainerregistryimportpolicy
+        description: Update a container registry import policy
+        call: rest-containerregistryimportpolicy.updatecontainerregistryimportpolicy
+        with:
+          org_id: rest.org_id
+          integration_id: rest.integration_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcontainerregistryimportpolicy
+        description: Create a container registry import policy
+        call: rest-containerregistryimportpolicy.createcontainerregistryimportpolicy
+        with:
+          org_id: rest.org_id
+          integration_id: rest.integration_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/container-import/{integration-id}/policy/dry-run
+      name: orgs-org-id-container-import-integration-id-policy-dry-run
+      description: REST surface for orgs-org_id-container_import-integration_id-policy-dry_run.
+      operations:
+      - method: POST
+        name: createcontainerregistryimportpolicydryrun
+        description: Create a dry run job for a container registry import policy
+        call: rest-containerregistryimportpolicy.createcontainerregistryimportpolicydryrun
+        with:
+          org_id: rest.org_id
+          integration_id: rest.integration_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/container-import/{integration-id}/policy/dry-run/{job-id}
+      name: orgs-org-id-container-import-integration-id-policy-dry-run-job-id
+      description: REST surface for orgs-org_id-container_import-integration_id-policy-dry_run-job_id.
+      operations:
+      - method: GET
+        name: getdryrunjob
+        description: Get a dry run job
+        call: rest-containerregistryimportpolicy.getdryrunjob
+        with:
+          org_id: rest.org_id
+          integration_id: rest.integration_id
+          job_id: rest.job_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-containerregistryimportpolicy-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — ContainerRegistryImportPolicy. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: delete-container-registry-import-policy
+      description: Delete a container registry import policy
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-containerregistryimportpolicy.deletecontainerregistryimportpolicy
+      with:
+        org_id: tools.org_id
+        integration_id: tools.integration_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-container-registry-import-policy
+      description: Get a container registry import policy
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-containerregistryimportpolicy.getcontainerregistryimportpolicy
+      with:
+        org_id: tools.org_id
+        integration_id: tools.integration_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-container-registry-import-policy
+      description: Update a container registry import policy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-containerregistryimportpolicy.updatecontainerregistryimportpolicy
+      with:
+        org_id: tools.org_id
+        integration_id: tools.integration_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-container-registry-import-policy
+      description: Create a container registry import policy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-containerregistryimportpolicy.createcontainerregistryimportpolicy
+      with:
+        org_id: tools.org_id
+        integration_id: tools.integration_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-dry-run-job-container
+      description: Create a dry run job for a container registry import policy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-containerregistryimportpolicy.createcontainerregistryimportpolicydryrun
+      with:
+        org_id: tools.org_id
+        integration_id: tools.integration_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-dry-run-job
+      description: Get a dry run job
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-containerregistryimportpolicy.getdryrunjob
+      with:
+        org_id: tools.org_id
+        integration_id: tools.integration_id
+        job_id: tools.job_id
+      outputParameters:
+      - type: object
+        mapping: $.

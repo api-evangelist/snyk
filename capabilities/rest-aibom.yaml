@@ -1,0 +1,220 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — AiBom
+  description: 'Snyk API — AiBom. 4 operations. Lead operation: Get an AI-BOM job status (Early Access). Self-contained Naftiko
+    capability covering one Snyk business surface.'
+  tags:
+  - Snyk
+  - AiBom
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-aibom
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — AiBom business capability. Self-contained, no shared references.
+    resources:
+    - name: orgs-org_id-ai_bom_jobs-job_id
+      path: /orgs/{org_id}/ai_bom_jobs/{job_id}
+      operations:
+      - name: getaibomjob
+        method: GET
+        description: Get an AI-BOM job status (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+    - name: orgs-org_id-ai_boms
+      path: /orgs/{org_id}/ai_boms
+      operations:
+      - name: createaibom
+        method: POST
+        description: Create a new AI-BOM (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: orgs-org_id-ai_boms-upload
+      path: /orgs/{org_id}/ai_boms/upload
+      operations:
+      - name: createanduploadaibom
+        method: POST
+        description: Create and upload an AI-BOM (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: orgs-org_id-ai_boms-ai_bom_id
+      path: /orgs/{org_id}/ai_boms/{ai_bom_id}
+      operations:
+      - name: getaibom
+        method: GET
+        description: Get an AI-BOM. (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: The requested version of the endpoint to process the request
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-aibom-rest
+    port: 8080
+    description: REST adapter for Snyk API — AiBom. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/orgs/{org-id}/ai-bom-jobs/{job-id}
+      name: orgs-org-id-ai-bom-jobs-job-id
+      description: REST surface for orgs-org_id-ai_bom_jobs-job_id.
+      operations:
+      - method: GET
+        name: getaibomjob
+        description: Get an AI-BOM job status (Early Access)
+        call: rest-aibom.getaibomjob
+        with:
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/ai-boms
+      name: orgs-org-id-ai-boms
+      description: REST surface for orgs-org_id-ai_boms.
+      operations:
+      - method: POST
+        name: createaibom
+        description: Create a new AI-BOM (Early Access)
+        call: rest-aibom.createaibom
+        with:
+          version: rest.version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/ai-boms/upload
+      name: orgs-org-id-ai-boms-upload
+      description: REST surface for orgs-org_id-ai_boms-upload.
+      operations:
+      - method: POST
+        name: createanduploadaibom
+        description: Create and upload an AI-BOM (Early Access)
+        call: rest-aibom.createanduploadaibom
+        with:
+          version: rest.version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/ai-boms/{ai-bom-id}
+      name: orgs-org-id-ai-boms-ai-bom-id
+      description: REST surface for orgs-org_id-ai_boms-ai_bom_id.
+      operations:
+      - method: GET
+        name: getaibom
+        description: Get an AI-BOM. (Early Access)
+        call: rest-aibom.getaibom
+        with:
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-aibom-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — AiBom. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-ai-bom-job-status
+      description: Get an AI-BOM job status (Early Access)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-aibom.getaibomjob
+      with:
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-ai-bom-early
+      description: Create a new AI-BOM (Early Access)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-aibom.createaibom
+      with:
+        version: tools.version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-and-upload-ai-bom
+      description: Create and upload an AI-BOM (Early Access)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-aibom.createanduploadaibom
+      with:
+        version: tools.version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-ai-bom-early-access
+      description: Get an AI-BOM. (Early Access)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-aibom.getaibom
+      with:
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,374 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — OpensourceSettings
+  description: 'Snyk API — OpensourceSettings. 8 operations. Lead operation: Delete opensource broker setting for group. Self-contained
+    Naftiko capability covering one Snyk business surface.'
+  tags:
+  - Snyk
+  - OpensourceSettings
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-opensourcesettings-2
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — OpensourceSettings business capability. Self-contained, no shared references.
+    resources:
+    - name: groups-group_id-settings-opensource-broker
+      path: /groups/{group_id}/settings/opensource/broker
+      operations:
+      - name: deleteopensourcebrokersettingforgroup
+        method: DELETE
+        description: Delete opensource broker setting for group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: Group ID
+          required: true
+      - name: getopensourcebrokersettingforgroup
+        method: GET
+        description: Get opensource broker setting for group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: Group ID
+          required: true
+      - name: enableopensourcebrokerforgroup
+        method: POST
+        description: Enable opensource broker for group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: Group ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: orgs-org_id-settings-opensource-broker
+      path: /orgs/{org_id}/settings/opensource/broker
+      operations:
+      - name: deleteopensourcebrokersettingfororg
+        method: DELETE
+        description: Delete opensource broker setting for organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+      - name: getopensourcebrokersetting
+        method: GET
+        description: Get opensource broker setting for organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+      - name: enableopensourcebrokerfororg
+        method: POST
+        description: Enable opensource broker for organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: orgs-org_id-settings-opensource-ecosystem-broker
+      path: /orgs/{org_id}/settings/opensource/{ecosystem}/broker
+      operations:
+      - name: getopensourcebrokerecosystemsettingsfororg
+        method: GET
+        description: Get opensource broker settings of ecosystem for organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: ecosystem
+          in: path
+          type: string
+          description: The ecosystem identifier
+          required: true
+      - name: updateopensourcebrokerecosystemsettingsfororg
+        method: PATCH
+        description: Update opensource broker settings of ecosystem for organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: Org ID
+          required: true
+        - name: ecosystem
+          in: path
+          type: string
+          description: The ecosystem identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-opensourcesettings-2-rest
+    port: 8080
+    description: REST adapter for Snyk API — OpensourceSettings. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/groups/{group-id}/settings/opensource/broker
+      name: groups-group-id-settings-opensource-broker
+      description: REST surface for groups-group_id-settings-opensource-broker.
+      operations:
+      - method: DELETE
+        name: deleteopensourcebrokersettingforgroup
+        description: Delete opensource broker setting for group
+        call: rest-opensourcesettings-2.deleteopensourcebrokersettingforgroup
+        with:
+          group_id: rest.group_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getopensourcebrokersettingforgroup
+        description: Get opensource broker setting for group
+        call: rest-opensourcesettings-2.getopensourcebrokersettingforgroup
+        with:
+          group_id: rest.group_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: enableopensourcebrokerforgroup
+        description: Enable opensource broker for group
+        call: rest-opensourcesettings-2.enableopensourcebrokerforgroup
+        with:
+          group_id: rest.group_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/settings/opensource/broker
+      name: orgs-org-id-settings-opensource-broker
+      description: REST surface for orgs-org_id-settings-opensource-broker.
+      operations:
+      - method: DELETE
+        name: deleteopensourcebrokersettingfororg
+        description: Delete opensource broker setting for organization
+        call: rest-opensourcesettings-2.deleteopensourcebrokersettingfororg
+        with:
+          org_id: rest.org_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getopensourcebrokersetting
+        description: Get opensource broker setting for organization
+        call: rest-opensourcesettings-2.getopensourcebrokersetting
+        with:
+          org_id: rest.org_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: enableopensourcebrokerfororg
+        description: Enable opensource broker for organization
+        call: rest-opensourcesettings-2.enableopensourcebrokerfororg
+        with:
+          org_id: rest.org_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/settings/opensource/{ecosystem}/broker
+      name: orgs-org-id-settings-opensource-ecosystem-broker
+      description: REST surface for orgs-org_id-settings-opensource-ecosystem-broker.
+      operations:
+      - method: GET
+        name: getopensourcebrokerecosystemsettingsfororg
+        description: Get opensource broker settings of ecosystem for organization
+        call: rest-opensourcesettings-2.getopensourcebrokerecosystemsettingsfororg
+        with:
+          org_id: rest.org_id
+          ecosystem: rest.ecosystem
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateopensourcebrokerecosystemsettingsfororg
+        description: Update opensource broker settings of ecosystem for organization
+        call: rest-opensourcesettings-2.updateopensourcebrokerecosystemsettingsfororg
+        with:
+          org_id: rest.org_id
+          ecosystem: rest.ecosystem
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-opensourcesettings-2-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — OpensourceSettings. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: delete-opensource-broker-setting-group
+      description: Delete opensource broker setting for group
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-opensourcesettings-2.deleteopensourcebrokersettingforgroup
+      with:
+        group_id: tools.group_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-opensource-broker-setting-group
+      description: Get opensource broker setting for group
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-opensourcesettings-2.getopensourcebrokersettingforgroup
+      with:
+        group_id: tools.group_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: enable-opensource-broker-group
+      description: Enable opensource broker for group
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-opensourcesettings-2.enableopensourcebrokerforgroup
+      with:
+        group_id: tools.group_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-opensource-broker-setting-organization
+      description: Delete opensource broker setting for organization
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-opensourcesettings-2.deleteopensourcebrokersettingfororg
+      with:
+        org_id: tools.org_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-opensource-broker-setting-organization
+      description: Get opensource broker setting for organization
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-opensourcesettings-2.getopensourcebrokersetting
+      with:
+        org_id: tools.org_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: enable-opensource-broker-organization
+      description: Enable opensource broker for organization
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-opensourcesettings-2.enableopensourcebrokerfororg
+      with:
+        org_id: tools.org_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-opensource-broker-settings-ecosystem
+      description: Get opensource broker settings of ecosystem for organization
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-opensourcesettings-2.getopensourcebrokerecosystemsettingsfororg
+      with:
+        org_id: tools.org_id
+        ecosystem: tools.ecosystem
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-opensource-broker-settings-ecosystem
+      description: Update opensource broker settings of ecosystem for organization
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-opensourcesettings-2.updateopensourcebrokerecosystemsettingsfororg
+      with:
+        org_id: tools.org_id
+        ecosystem: tools.ecosystem
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

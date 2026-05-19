@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — AccessRequests
+  description: 'Snyk API — AccessRequests. 1 operations. Lead operation: Get access requests (Early Access). Self-contained
+    Naftiko capability covering one Snyk business surface.'
+  tags:
+  - Snyk
+  - AccessRequests
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-accessrequests
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — AccessRequests business capability. Self-contained, no shared references.
+    resources:
+    - name: self-access_requests
+      path: /self/access_requests
+      operations:
+      - name: getaccessrequests
+        method: GET
+        description: Get access requests (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-accessrequests-rest
+    port: 8080
+    description: REST adapter for Snyk API — AccessRequests. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/self/access-requests
+      name: self-access-requests
+      description: REST surface for self-access_requests.
+      operations:
+      - method: GET
+        name: getaccessrequests
+        description: Get access requests (Early Access)
+        call: rest-accessrequests.getaccessrequests
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-accessrequests-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — AccessRequests. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-access-requests-early-access
+      description: Get access requests (Early Access)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-accessrequests.getaccessrequests
+      outputParameters:
+      - type: object
+        mapping: $.

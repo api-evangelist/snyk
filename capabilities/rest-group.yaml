@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — Group
+  description: 'Snyk API — Group. 1 operations. Lead operation: Get Group (Early Access). Self-contained Naftiko capability
+    covering one Snyk business surface.'
+  tags:
+  - Snyk
+  - Group
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-group
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — Group business capability. Self-contained, no shared references.
+    resources:
+    - name: groups-group_id
+      path: /groups/{group_id}
+      operations:
+      - name: getgroup
+        method: GET
+        description: Get Group (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: Unique identifier of the group.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-group-rest
+    port: 8080
+    description: REST adapter for Snyk API — Group. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/groups/{group-id}
+      name: groups-group-id
+      description: REST surface for groups-group_id.
+      operations:
+      - method: GET
+        name: getgroup
+        description: Get Group (Early Access)
+        call: rest-group.getgroup
+        with:
+          group_id: rest.group_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-group-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — Group. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-group-early-access
+      description: Get Group (Early Access)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-group.getgroup
+      with:
+        group_id: tools.group_id
+      outputParameters:
+      - type: object
+        mapping: $.

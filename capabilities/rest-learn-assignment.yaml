@@ -1,0 +1,255 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Snyk API — Learn assignment
+  description: 'Snyk API — Learn assignment. 5 operations. Lead operation: Bulk deletion of assignments in an organization
+    (Early Access). Self-contained Naftiko capability covering one Snyk business surface.'
+  tags:
+  - Snyk
+  - Learn assignment
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SNYK_API_KEY: SNYK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-learn-assignment
+    baseUri: https://api.snyk.io/rest
+    description: Snyk API — Learn assignment business capability. Self-contained, no shared references.
+    resources:
+    - name: orgs-org_id-learn-assignments
+      path: /orgs/{org_id}/learn/assignments
+      operations:
+      - name: deleteorgassignments
+        method: DELETE
+        description: Bulk deletion of assignments in an organization (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: The unique identifier of the organization.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listorgassignments
+        method: GET
+        description: Retrieve a list of assignments for an organization (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: The unique identifier of the organization.
+          required: true
+      - name: updateorgassignments
+        method: PATCH
+        description: Update due date for assignments in an organization. (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: The unique identifier of the organization.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: createorgassignments
+        method: POST
+        description: Bulk creation of assignments for users in an organization. (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: The unique identifier of the organization.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: orgs-org_id-learn-assignments-bulk_delete
+      path: /orgs/{org_id}/learn/assignments/bulk_delete
+      operations:
+      - name: deleteorgassignmentsbulk
+        method: POST
+        description: Bulk deletion of assignments in an organization (Early Access)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: The unique identifier of the organization.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SNYK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-learn-assignment-rest
+    port: 8080
+    description: REST adapter for Snyk API — Learn assignment. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/orgs/{org-id}/learn/assignments
+      name: orgs-org-id-learn-assignments
+      description: REST surface for orgs-org_id-learn-assignments.
+      operations:
+      - method: DELETE
+        name: deleteorgassignments
+        description: Bulk deletion of assignments in an organization (Early Access)
+        call: rest-learn-assignment.deleteorgassignments
+        with:
+          org_id: rest.org_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listorgassignments
+        description: Retrieve a list of assignments for an organization (Early Access)
+        call: rest-learn-assignment.listorgassignments
+        with:
+          org_id: rest.org_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateorgassignments
+        description: Update due date for assignments in an organization. (Early Access)
+        call: rest-learn-assignment.updateorgassignments
+        with:
+          org_id: rest.org_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createorgassignments
+        description: Bulk creation of assignments for users in an organization. (Early Access)
+        call: rest-learn-assignment.createorgassignments
+        with:
+          org_id: rest.org_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orgs/{org-id}/learn/assignments/bulk-delete
+      name: orgs-org-id-learn-assignments-bulk-delete
+      description: REST surface for orgs-org_id-learn-assignments-bulk_delete.
+      operations:
+      - method: POST
+        name: deleteorgassignmentsbulk
+        description: Bulk deletion of assignments in an organization (Early Access)
+        call: rest-learn-assignment.deleteorgassignmentsbulk
+        with:
+          org_id: rest.org_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-learn-assignment-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Snyk API — Learn assignment. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: bulk-deletion-assignments-organization-early
+      description: Bulk deletion of assignments in an organization (Early Access)
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-learn-assignment.deleteorgassignments
+      with:
+        org_id: tools.org_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-list-assignments-organization-early
+      description: Retrieve a list of assignments for an organization (Early Access)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-learn-assignment.listorgassignments
+      with:
+        org_id: tools.org_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-due-date-assignments-organization
+      description: Update due date for assignments in an organization. (Early Access)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-learn-assignment.updateorgassignments
+      with:
+        org_id: tools.org_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-creation-assignments-users-organization
+      description: Bulk creation of assignments for users in an organization. (Early Access)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-learn-assignment.createorgassignments
+      with:
+        org_id: tools.org_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-deletion-assignments-organization-early-2
+      description: Bulk deletion of assignments in an organization (Early Access)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-learn-assignment.deleteorgassignmentsbulk
+      with:
+        org_id: tools.org_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
