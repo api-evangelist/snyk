@@ -7,342 +7,344 @@ description: Snyk is a developer-first security platform covering code, open-sou
   images, custom base images, webhooks, and exports for application-security teams.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-- Security
-- DevSecOps
-- Vulnerability Management
-- Application Security
-- SCA
-- SAST
-- Container Security
-- IaC
+  - Security
+  - DevSecOps
+  - Vulnerability Management
+  - Application Security
+  - SCA
+  - SAST
+  - Container Security
+  - IaC
 created: '2026-05-08'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-- aid: snyk:rest-groups
-  name: Snyk REST API - Groups
-  description: Group-level resource for managing top-level Snyk tenancy. Lists groups, lists organizations within a group,
-    manages group memberships, group-level service accounts, and group-level settings.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Groups
-  - Tenancy
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-  - type: NaftikoCapability
-    url: capabilities/rest-accessrequests.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-aibom.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-apps.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-asset.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-audit-logs.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-brokerconnections.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-brokercontexts.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-brokerdeployments.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-catalog-resource.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-cloud.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-collection.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-containerimage.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-containerregistryimportpolicy.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-custom-base-images.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-deploymentcredentials.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-export.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-findings.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-group.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-groups.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-iacsettings.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-integrations.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-inventory-assets.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-invites.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-issues.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-languagessettings.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-learn-assignment.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-learn-progress.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-openapi.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-opensourcesettings.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-opensourcesettings-2.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-orgs.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-package.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-package-version.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-personalaccesstoken.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-policies.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-projects.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-pull-request-templates.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-sbom.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-sastsettings.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-serviceaccounts.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-slack.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-slacksettings.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-targets.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-tenantrole.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-tenants.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-tests.yaml
-  - type: NaftikoCapability
-    url: capabilities/rest-users.yaml
-- aid: snyk:rest-organizations
-  name: Snyk REST API - Organizations
-  description: Manages organizations, organization-level memberships, organization roles, and service accounts. Organizations
-    are the unit at which projects, integrations, and most policy and reporting are scoped.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Organizations
-  - Memberships
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-projects
-  name: Snyk REST API - Projects
-  description: Lists, retrieves, updates, deletes, and re-tests Snyk projects. A project represents a single tracked artifact
-    (code repo, container image, IaC manifest, package manifest). Includes per-project settings, attributes, tags, and policy
-    attachment.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Projects
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-issues
-  name: Snyk REST API - Issues
-  description: Queries open and resolved issues (vulnerabilities, license violations, code weaknesses) across organizations
-    and groups. Supports rich filters by severity, type, project, target, status, and ignore reason for vulnerability management.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Issues
-  - Vulnerabilities
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-targets
-  name: Snyk REST API - Targets
-  description: Lists and manages targets (the upstream import sources - e.g. GitHub repositories, ECR registries, Terraform
-    sources). Each target may carry many projects under different scan types (SCA, SAST, Container, IaC).
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Targets
-  - Import Sources
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-integrations
-  name: Snyk REST API - Integrations
-  description: Manages connections to source-code managers (GitHub, GitLab, Bitbucket, Azure Repos), CI/CD systems, container
-    registries (ECR, ACR, GCR, Docker Hub), and cloud providers used as ingest sources for Snyk scans.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Integrations
-  - SCM
-  - Registries
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-audit-logs
-  name: Snyk REST API - Audit Logs
-  description: Streams group- and organization-scoped audit log events for security and compliance use cases. Returns event
-    type, actor, timestamp, and content hash.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Audit Logs
-  - Compliance
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-sboms
-  name: Snyk REST API - SBOMs
-  description: Generates and exports Software Bill of Materials documents in CycloneDX or SPDX format for a Snyk project,
-    captured from the resolved dependency graph.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - SBOM
-  - CycloneDX
-  - SPDX
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-container-images
-  name: Snyk REST API - Container Images
-  description: Lists and inspects scanned container images and their relationships to projects and target images, including
-    vulnerability and base-image-recommendation views.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Container Images
-  - Container Security
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-custom-base-images
-  name: Snyk REST API - Custom Base Images
-  description: Registers custom base images so Snyk can recommend internal-approved base-image upgrades for container projects.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Custom Base Images
-  - Container Security
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-webhooks
-  name: Snyk REST API - Webhooks
-  description: Subscribes a partner application to Snyk events (project added, issue created, issue ignored, test completed).
-    Each delivery is signed for verification.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Webhooks
-  - Events
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-export
-  name: Snyk REST API - Export
-  description: Asynchronous bulk-export of issues, projects, dependencies, and license data for large estates. Supports column
-    filtering and produces CSV files retrievable from a generated URL.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Export
-  - Reporting
-  - Bulk
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-apps
-  name: Snyk REST API - Apps (OAuth)
-  description: Manages Snyk Apps, the OAuth2-based extensibility surface that lets third-party applications act on behalf
-    of Snyk users, organizations, and groups.
-  humanURL: https://docs.snyk.io/snyk-api/snyk-apps
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Apps
-  - OAuth
-  - Extensibility
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://docs.snyk.io/snyk-api/snyk-apps
-- aid: snyk:v1
-  name: Snyk V1 API (Legacy)
-  description: The original Snyk REST API. Still in use for project import, monitor, test, and certain reporting endpoints
-    not yet ported to the dated REST API. Subject to end-of-life migration; new integrations should prefer the REST API where
-    coverage exists.
-  humanURL: https://snyk.docs.apiary.io/
-  baseURL: https://api.snyk.io/v1
-  tags:
-  - V1
-  - Legacy
-  - Test
-  - Monitor
-  properties:
-  - type: Documentation
-    url: https://snyk.docs.apiary.io/
+  - aid: snyk:rest-groups
+    name: Snyk REST API - Groups
+    description: Group-level resource for managing top-level Snyk tenancy. Lists groups, lists organizations within a group,
+      manages group memberships, group-level service accounts, and group-level settings.
+    humanURL: https://apidocs.snyk.io/?version=2024-10-15
+    baseURL: https://api.snyk.io/rest
+    tags:
+    - Groups
+    - Tenancy
+    - REST API
+    properties:
+    - type: Documentation
+      url: https://apidocs.snyk.io/?version=2024-10-15
+    - type: OpenAPI
+      url: openapi/snyk-rest-openapi.json
+    - type: NaftikoCapability
+      url: capabilities/rest-accessrequests.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-aibom.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-apps.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-asset.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-audit-logs.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-brokerconnections.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-brokercontexts.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-brokerdeployments.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-catalog-resource.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-cloud.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-collection.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-containerimage.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-containerregistryimportpolicy.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-custom-base-images.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-deploymentcredentials.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-export.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-findings.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-group.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-groups.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-iacsettings.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-integrations.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-inventory-assets.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-invites.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-issues.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-languagessettings.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-learn-assignment.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-learn-progress.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-openapi.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-opensourcesettings.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-opensourcesettings-2.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-orgs.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-package.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-package-version.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-personalaccesstoken.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-policies.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-projects.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-pull-request-templates.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-sbom.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-sastsettings.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-serviceaccounts.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-slack.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-slacksettings.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-targets.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-tenantrole.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-tenants.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-tests.yaml
+    - type: NaftikoCapability
+      url: capabilities/rest-users.yaml
+  - aid: snyk:rest-organizations
+    name: Snyk REST API - Organizations
+    description: Manages organizations, organization-level memberships, organization roles, and service accounts. Organizations
+      are the unit at which projects, integrations, and most policy and reporting are scoped.
+    humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+    baseURL: https://api.snyk.io/rest
+    tags:
+    - Organizations
+    - Memberships
+    - REST API
+    properties:
+    - type: Documentation
+      url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+    - type: OpenAPI
+      url: openapi/snyk-rest-openapi.json
+  - aid: snyk:rest-projects
+    name: Snyk REST API - Projects
+    description: Lists, retrieves, updates, deletes, and re-tests Snyk projects. A project represents a single tracked artifact
+      (code repo, container image, IaC manifest, package manifest). Includes per-project settings, attributes, tags, and policy
+      attachment.
+    humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+    baseURL: https://api.snyk.io/rest
+    tags:
+    - Projects
+    - REST API
+    properties:
+    - type: Documentation
+      url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+    - type: OpenAPI
+      url: openapi/snyk-rest-openapi.json
+  - aid: snyk:rest-issues
+    name: Snyk REST API - Issues
+    description: Queries open and resolved issues (vulnerabilities, license violations, code weaknesses) across organizations
+      and groups. Supports rich filters by severity, type, project, target, status, and ignore reason for vulnerability management.
+    humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+    baseURL: https://api.snyk.io/rest
+    tags:
+    - Issues
+    - Vulnerabilities
+    - REST API
+    properties:
+    - type: Documentation
+      url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+    - type: OpenAPI
+      url: openapi/snyk-rest-openapi.json
+  - aid: snyk:rest-targets
+    name: Snyk REST API - Targets
+    description: Lists and manages targets (the upstream import sources - e.g. GitHub repositories, ECR registries, Terraform
+      sources). Each target may carry many projects under different scan types (SCA, SAST, Container, IaC).
+    humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+    baseURL: https://api.snyk.io/rest
+    tags:
+    - Targets
+    - Import Sources
+    - REST API
+    properties:
+    - type: Documentation
+      url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+    - type: OpenAPI
+      url: openapi/snyk-rest-openapi.json
+  - aid: snyk:rest-integrations
+    name: Snyk REST API - Integrations
+    description: Manages connections to source-code managers (GitHub, GitLab, Bitbucket, Azure Repos), CI/CD systems, container
+      registries (ECR, ACR, GCR, Docker Hub), and cloud providers used as ingest sources for Snyk scans.
+    humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+    baseURL: https://api.snyk.io/rest
+    tags:
+    - Integrations
+    - SCM
+    - Registries
+    - REST API
+    properties:
+    - type: Documentation
+      url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+    - type: OpenAPI
+      url: openapi/snyk-rest-openapi.json
+  - aid: snyk:rest-audit-logs
+    name: Snyk REST API - Audit Logs
+    description: Streams group- and organization-scoped audit log events for security and compliance use cases. Returns event
+      type, actor, timestamp, and content hash.
+    humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+    baseURL: https://api.snyk.io/rest
+    tags:
+    - Audit Logs
+    - Compliance
+    - REST API
+    properties:
+    - type: Documentation
+      url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+    - type: OpenAPI
+      url: openapi/snyk-rest-openapi.json
+  - aid: snyk:rest-sboms
+    name: Snyk REST API - SBOMs
+    description: Generates and exports Software Bill of Materials documents in CycloneDX or SPDX format for a Snyk project,
+      captured from the resolved dependency graph.
+    humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+    baseURL: https://api.snyk.io/rest
+    tags:
+    - SBOM
+    - CycloneDX
+    - SPDX
+    - REST API
+    properties:
+    - type: Documentation
+      url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+    - type: OpenAPI
+      url: openapi/snyk-rest-openapi.json
+  - aid: snyk:rest-container-images
+    name: Snyk REST API - Container Images
+    description: Lists and inspects scanned container images and their relationships to projects and target images, including
+      vulnerability and base-image-recommendation views.
+    humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+    baseURL: https://api.snyk.io/rest
+    tags:
+    - Container Images
+    - Container Security
+    - REST API
+    properties:
+    - type: Documentation
+      url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+    - type: OpenAPI
+      url: openapi/snyk-rest-openapi.json
+  - aid: snyk:rest-custom-base-images
+    name: Snyk REST API - Custom Base Images
+    description: Registers custom base images so Snyk can recommend internal-approved base-image upgrades for container projects.
+    humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+    baseURL: https://api.snyk.io/rest
+    tags:
+    - Custom Base Images
+    - Container Security
+    - REST API
+    properties:
+    - type: Documentation
+      url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+    - type: OpenAPI
+      url: openapi/snyk-rest-openapi.json
+  - aid: snyk:rest-webhooks
+    name: Snyk REST API - Webhooks
+    description: Subscribes a partner application to Snyk events (project added, issue created, issue ignored, test completed).
+      Each delivery is signed for verification.
+    humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+    baseURL: https://api.snyk.io/rest
+    tags:
+    - Webhooks
+    - Events
+    - REST API
+    properties:
+    - type: Documentation
+      url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+    - type: OpenAPI
+      url: openapi/snyk-rest-openapi.json
+  - aid: snyk:rest-export
+    name: Snyk REST API - Export
+    description: Asynchronous bulk-export of issues, projects, dependencies, and license data for large estates. Supports column
+      filtering and produces CSV files retrievable from a generated URL.
+    humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+    baseURL: https://api.snyk.io/rest
+    tags:
+    - Export
+    - Reporting
+    - Bulk
+    - REST API
+    properties:
+    - type: Documentation
+      url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+    - type: OpenAPI
+      url: openapi/snyk-rest-openapi.json
+  - aid: snyk:rest-apps
+    name: Snyk REST API - Apps (OAuth)
+    description: Manages Snyk Apps, the OAuth2-based extensibility surface that lets third-party applications act on behalf
+      of Snyk users, organizations, and groups.
+    humanURL: https://docs.snyk.io/snyk-api/snyk-apps
+    baseURL: https://api.snyk.io/rest
+    tags:
+    - Apps
+    - OAuth
+    - Extensibility
+    - REST API
+    properties:
+    - type: Documentation
+      url: https://docs.snyk.io/snyk-api/snyk-apps
+  - aid: snyk:v1
+    name: Snyk V1 API (Legacy)
+    description: The original Snyk REST API. Still in use for project import, monitor, test, and certain reporting endpoints
+      not yet ported to the dated REST API. Subject to end-of-life migration; new integrations should prefer the REST API where
+      coverage exists.
+    humanURL: https://snyk.docs.apiary.io/
+    baseURL: https://api.snyk.io/v1
+    tags:
+    - V1
+    - Legacy
+    - Test
+    - Monitor
+    properties:
+    - type: Documentation
+      url: https://snyk.docs.apiary.io/
 common:
-- type: LinkedIn
-  url: https://www.linkedin.com/company/snyk
-- type: Website
-  url: https://snyk.io/
-- type: Documentation
-  url: https://docs.snyk.io/snyk-api
-- type: APIReference
-  url: https://apidocs.snyk.io/
-- type: Plans
-  url: plans/snyk-plans-pricing.yml
-- type: RateLimits
-  url: rate-limits/snyk-rate-limits.yml
-- type: FinOps
-  url: finops/snyk-finops.yml
-- type: Integrations
-  url: https://snyk.io/integrations/
+  - type: GitHubOrganization
+    url: https://github.com/snyk
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/snyk
+  - type: Website
+    url: https://snyk.io/
+  - type: Documentation
+    url: https://docs.snyk.io/snyk-api
+  - type: APIReference
+    url: https://apidocs.snyk.io/
+  - type: Plans
+    url: plans/snyk-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/snyk-rate-limits.yml
+  - type: FinOps
+    url: finops/snyk-finops.yml
+  - type: Integrations
+    url: https://snyk.io/integrations/
 integrations:
-- name: View partner solutions
+  - name: View partner solutions
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com
