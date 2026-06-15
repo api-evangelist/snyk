@@ -1,0 +1,1320 @@
+"""
+Snyk GraphQL API Schema
+Conceptual schema derived from the Snyk REST API and V1 API.
+Covers groups, organizations, projects, issues, targets, integrations,
+audit logs, SBOMs, container images, webhooks, and exports.
+"""
+
+# ─────────────────────────────────────────────
+# Scalars
+# ─────────────────────────────────────────────
+
+scalar DateTime
+scalar JSON
+scalar URL
+scalar UUID
+
+# ─────────────────────────────────────────────
+# Enums
+# ─────────────────────────────────────────────
+
+enum SeverityLevel {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+  NONE
+}
+
+enum IssueType {
+  VULNERABILITY
+  LICENSE
+  CODE
+  CONFIGURATION
+}
+
+enum IssueStatus {
+  OPEN
+  RESOLVED
+  IGNORED
+}
+
+enum ProjectType {
+  NPM
+  MAVEN
+  GRADLE
+  PYPI
+  RUBYGEMS
+  GOLANG
+  NUGET
+  COMPOSER
+  COCOAPODS
+  HEX
+  DOCKER
+  DOCKERFILE
+  TERRAFORM
+  CLOUDFORMATION
+  ARM
+  SAST
+  IaC
+}
+
+enum ScanType {
+  SCA
+  SAST
+  CONTAINER
+  IaC
+}
+
+enum IntegrationStatus {
+  CONNECTED
+  DISCONNECTED
+  ERROR
+  PENDING
+}
+
+enum AuditLogEventType {
+  PROJECT_ADDED
+  PROJECT_REMOVED
+  PROJECT_UPDATED
+  ISSUE_IGNORED
+  ISSUE_RESOLVED
+  MEMBER_ADDED
+  MEMBER_REMOVED
+  INTEGRATION_CONNECTED
+  INTEGRATION_DISCONNECTED
+  API_KEY_CREATED
+  API_KEY_DELETED
+  WEBHOOK_CREATED
+  WEBHOOK_DELETED
+  SETTINGS_UPDATED
+}
+
+enum SBOMFormat {
+  CYCLONEDX_JSON
+  CYCLONEDX_XML
+  SPDX_JSON
+  SPDX_TAG_VALUE
+}
+
+enum WebhookEvent {
+  PROJECT_SNAPSHOT
+  TEST_COMPLETED
+  ISSUE_CREATED
+  ISSUE_UPDATED
+}
+
+enum WebhookStatus {
+  ACTIVE
+  INACTIVE
+  FAILING
+}
+
+enum IgnoreReason {
+  NOT_VULNERABLE
+  WONT_FIX
+  TEMPORARY_IGNORE
+}
+
+enum PolicyAction {
+  FAIL
+  WARN
+  IGNORE
+}
+
+enum LicenseRisk {
+  HIGH
+  MEDIUM
+  LOW
+  UNKNOWN
+}
+
+enum ExportStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum RoleType {
+  ADMIN
+  COLLABORATOR
+  VIEWER
+  RESTRICTED_COLLABORATOR
+}
+
+enum ServiceAccountType {
+  API_KEY
+  OAUTH
+}
+
+# ─────────────────────────────────────────────
+# Core Node Interface
+# ─────────────────────────────────────────────
+
+interface Node {
+  id: UUID!
+}
+
+# ─────────────────────────────────────────────
+# Pagination
+# ─────────────────────────────────────────────
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+  total: Int
+}
+
+type ConnectionMeta {
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+# ─────────────────────────────────────────────
+# Group
+# ─────────────────────────────────────────────
+
+type Group implements Node {
+  id: UUID!
+  name: String!
+  url: URL
+  created: DateTime!
+  modified: DateTime!
+  settings: GroupSettings
+  organizations(first: Int, after: String): OrganizationConnection!
+  members(first: Int, after: String): GroupMemberConnection!
+  serviceAccounts(first: Int, after: String): ServiceAccountConnection!
+  auditLogs(
+    first: Int
+    after: String
+    from: DateTime
+    to: DateTime
+    eventType: AuditLogEventType
+  ): AuditLogConnection!
+}
+
+type GroupSettings {
+  requestAccess: Boolean
+  planType: String
+  isPrivileged: Boolean
+  samlEnabled: Boolean
+}
+
+type GroupMember {
+  user: User!
+  role: RoleType!
+  joinedAt: DateTime!
+}
+
+type GroupMemberConnection {
+  nodes: [GroupMember!]!
+  meta: ConnectionMeta!
+}
+
+# ─────────────────────────────────────────────
+# Organization
+# ─────────────────────────────────────────────
+
+type Organization implements Node {
+  id: UUID!
+  name: String!
+  slug: String!
+  url: URL
+  created: DateTime!
+  modified: DateTime!
+  group: Group
+  settings: OrganizationSettings
+  members(first: Int, after: String): OrgMemberConnection!
+  projects(
+    first: Int
+    after: String
+    type: ProjectType
+    scanType: ScanType
+    tags: [TagInput!]
+  ): ProjectConnection!
+  targets(first: Int, after: String): TargetConnection!
+  integrations(first: Int, after: String): IntegrationConnection!
+  serviceAccounts(first: Int, after: String): ServiceAccountConnection!
+  issues(
+    first: Int
+    after: String
+    severity: [SeverityLevel!]
+    type: [IssueType!]
+    status: IssueStatus
+  ): IssueConnection!
+  webhooks(first: Int, after: String): WebhookConnection!
+  sbomExports(first: Int, after: String): SBOMExportConnection!
+}
+
+type OrganizationSettings {
+  requestAccess: Boolean
+  ignorePolicy: IgnorePolicy
+  pullRequestTestingEnabled: Boolean
+  failOnSeverity: SeverityLevel
+  autoDepUpgradeEnabled: Boolean
+  autoRemediationEnabled: Boolean
+}
+
+type IgnorePolicy {
+  window: Int
+  requireReason: Boolean
+}
+
+type OrgMember {
+  user: User!
+  role: RoleType!
+  joinedAt: DateTime!
+}
+
+type OrgMemberConnection {
+  nodes: [OrgMember!]!
+  meta: ConnectionMeta!
+}
+
+type OrganizationConnection {
+  nodes: [Organization!]!
+  meta: ConnectionMeta!
+}
+
+# ─────────────────────────────────────────────
+# User & Service Accounts
+# ─────────────────────────────────────────────
+
+type User implements Node {
+  id: UUID!
+  name: String
+  email: String!
+  username: String
+  avatarUrl: URL
+  created: DateTime
+}
+
+type ServiceAccount implements Node {
+  id: UUID!
+  name: String!
+  type: ServiceAccountType!
+  created: DateTime!
+  modified: DateTime!
+  organization: Organization
+  group: Group
+  roleType: RoleType!
+}
+
+type ServiceAccountConnection {
+  nodes: [ServiceAccount!]!
+  meta: ConnectionMeta!
+}
+
+# ─────────────────────────────────────────────
+# Target
+# ─────────────────────────────────────────────
+
+type Target implements Node {
+  id: UUID!
+  displayName: String!
+  url: URL
+  remoteUrl: URL
+  created: DateTime!
+  modified: DateTime!
+  organization: Organization!
+  integration: Integration
+  projectCount: Int!
+  projects(first: Int, after: String): ProjectConnection!
+  origin: String
+}
+
+type TargetConnection {
+  nodes: [Target!]!
+  meta: ConnectionMeta!
+}
+
+# ─────────────────────────────────────────────
+# Project
+# ─────────────────────────────────────────────
+
+type Project implements Node {
+  id: UUID!
+  name: String!
+  type: ProjectType!
+  scanType: ScanType!
+  status: String!
+  created: DateTime!
+  lastTestedAt: DateTime
+  browseUrl: URL
+  origin: String
+  remoteRepoUrl: URL
+  branch: String
+  targetReference: String
+  target: Target
+  organization: Organization!
+  tags: [Tag!]!
+  attributes: ProjectAttributes
+  settings: ProjectSettings
+  issues(
+    first: Int
+    after: String
+    severity: [SeverityLevel!]
+    type: [IssueType!]
+    status: IssueStatus
+    ignored: Boolean
+  ): IssueConnection!
+  dependencyGraph: DependencyGraph
+  sbom(format: SBOMFormat!): SBOMExport
+  importingUser: User
+}
+
+type ProjectAttributes {
+  criticality: [String!]
+  environment: [String!]
+  lifecycle: [String!]
+}
+
+type ProjectSettings {
+  pullRequestTestEnabled: Boolean
+  failOnSeverity: SeverityLevel
+  autoDepUpgradeEnabled: Boolean
+  ignorePolicy: IgnorePolicy
+  recurring: Boolean
+}
+
+type ProjectConnection {
+  nodes: [Project!]!
+  meta: ConnectionMeta!
+}
+
+type Tag {
+  key: String!
+  value: String!
+}
+
+input TagInput {
+  key: String!
+  value: String!
+}
+
+# ─────────────────────────────────────────────
+# Issue
+# ─────────────────────────────────────────────
+
+type Issue implements Node {
+  id: UUID!
+  type: IssueType!
+  status: IssueStatus!
+  severity: SeverityLevel!
+  title: String!
+  description: String
+  url: URL
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  resolvedAt: DateTime
+  ignored: Boolean!
+  ignoreDetails: IgnoreDetails
+  project: Project!
+  vulnerability: Vulnerability
+  licenseIssue: LicenseIssue
+  codeIssue: CodeIssue
+  fixInfo: FixInfo
+  coordinates: [IssueCoordinate!]!
+  priorityScore: Float
+  cvssScore: Float
+  cvssVector: String
+  cwe: [String!]
+  cve: [String!]
+}
+
+type IgnoreDetails {
+  reason: IgnoreReason!
+  comment: String
+  ignoredBy: User
+  ignoredAt: DateTime!
+  expiresAt: DateTime
+  source: String
+}
+
+type IssueCoordinate {
+  representations: [JSON!]!
+  remedies: [Remedy!]!
+  isUpgradable: Boolean
+  isPatchable: Boolean
+  isPinnable: Boolean
+}
+
+type Remedy {
+  description: String
+  type: String
+  details: JSON
+}
+
+type FixInfo {
+  isUpgradable: Boolean!
+  isPatchable: Boolean!
+  isPinnable: Boolean!
+  nearestFixedInVersion: String
+  fixedIn: [String!]
+  upgradePaths: [UpgradePath!]
+}
+
+type UpgradePath {
+  isUpgradable: Boolean!
+  path: [UpgradePathEntry!]!
+}
+
+type UpgradePathEntry {
+  name: String!
+  version: String!
+  newVersion: String
+  isDropped: Boolean
+}
+
+type IssueConnection {
+  nodes: [Issue!]!
+  meta: ConnectionMeta!
+}
+
+# ─────────────────────────────────────────────
+# Vulnerability
+# ─────────────────────────────────────────────
+
+type Vulnerability implements Node {
+  id: UUID!
+  title: String!
+  description: String
+  severity: SeverityLevel!
+  cvssScore: Float
+  cvssVector: String
+  cve: [String!]
+  cwe: [String!]
+  references: [VulnerabilityReference!]!
+  disclosureTime: DateTime
+  publicationTime: DateTime
+  modificationTime: DateTime
+  package: PackageInfo
+  semver: SemverInfo
+  patches: [Patch!]!
+  exploit: ExploitDetails
+  credit: [String!]
+  language: String
+  packageManager: String
+  identifiers: VulnerabilityIdentifiers
+}
+
+type VulnerabilityReference {
+  url: URL!
+  title: String
+}
+
+type VulnerabilityIdentifiers {
+  cve: [String!]
+  cwe: [String!]
+  osvdb: [String!]
+  ghsa: [String!]
+  alternativeIds: [String!]
+}
+
+type PackageInfo {
+  name: String!
+  version: String!
+  ecosystem: String!
+}
+
+type SemverInfo {
+  vulnerable: [String!]!
+  unaffected: [String!]
+}
+
+type Patch {
+  id: String!
+  urls: [URL!]!
+  version: String!
+  modificationTime: DateTime
+  comments: [String!]
+}
+
+type ExploitDetails {
+  maturity: String
+  isInTheWild: Boolean
+  isInExploitKit: Boolean
+}
+
+# ─────────────────────────────────────────────
+# License Issue
+# ─────────────────────────────────────────────
+
+type LicenseIssue {
+  id: String!
+  title: String!
+  severity: SeverityLevel!
+  package: PackageInfo!
+  license: License!
+  policyRules: [PolicyRule!]!
+}
+
+type License {
+  id: String!
+  name: String!
+  risk: LicenseRisk!
+  url: URL
+  instructions: String
+}
+
+type PolicyRule {
+  action: PolicyAction!
+  licenseType: String
+  notes: String
+}
+
+# ─────────────────────────────────────────────
+# Code Issue (SAST)
+# ─────────────────────────────────────────────
+
+type CodeIssue {
+  id: String!
+  title: String!
+  message: String!
+  ruleId: String!
+  severity: SeverityLevel!
+  filePath: String!
+  startLine: Int
+  endLine: Int
+  startColumn: Int
+  endColumn: Int
+  primaryFilePath: String
+  priorityScore: Float
+  markers: [CodeMarker!]!
+  dataFlow: [DataFlowElement!]
+  exampleCommitFixes: [CommitFix!]
+}
+
+type CodeMarker {
+  message: String
+  filePath: String
+  startLine: Int
+  endLine: Int
+}
+
+type DataFlowElement {
+  position: Int!
+  filePath: String!
+  startLine: Int!
+  endLine: Int!
+  startColumn: Int
+  endColumn: Int
+  content: String
+}
+
+type CommitFix {
+  commitUrl: URL!
+  lines: [CommitFixLine!]!
+}
+
+type CommitFixLine {
+  line: String!
+  lineNumber: Int!
+  lineChange: String!
+}
+
+# ─────────────────────────────────────────────
+# Dependency Graph
+# ─────────────────────────────────────────────
+
+type DependencyGraph {
+  schemaVersion: String!
+  pkgManager: PackageManagerInfo!
+  pkgs: [DependencyPackage!]!
+  graph: GraphData!
+}
+
+type PackageManagerInfo {
+  name: String!
+  version: String
+}
+
+type DependencyPackage {
+  id: String!
+  info: PackageInfo!
+}
+
+type GraphData {
+  rootNodeId: String!
+  nodes: [GraphNode!]!
+}
+
+type GraphNode {
+  nodeId: String!
+  pkgId: String!
+  deps: [GraphEdge!]!
+}
+
+type GraphEdge {
+  nodeId: String!
+}
+
+# ─────────────────────────────────────────────
+# Integration
+# ─────────────────────────────────────────────
+
+type Integration implements Node {
+  id: UUID!
+  name: String!
+  type: String!
+  status: IntegrationStatus!
+  credentials: IntegrationCredentials
+  settings: IntegrationSettings
+  organization: Organization!
+  created: DateTime!
+  modified: DateTime!
+  tokenExpiresAt: DateTime
+}
+
+type IntegrationCredentials {
+  type: String!
+  url: URL
+  username: String
+}
+
+type IntegrationSettings {
+  pullRequestFailureEnabled: Boolean
+  autoDepUpgradeEnabled: Boolean
+  autoRemediationEnabled: Boolean
+  pullRequestAssignment: Boolean
+  issueType: [IssueType!]
+}
+
+type IntegrationConnection {
+  nodes: [Integration!]!
+  meta: ConnectionMeta!
+}
+
+# ─────────────────────────────────────────────
+# Audit Log
+# ─────────────────────────────────────────────
+
+type AuditLog implements Node {
+  id: UUID!
+  groupId: UUID
+  orgId: UUID
+  userId: UUID
+  projectId: UUID
+  event: AuditLogEventType!
+  content: JSON
+  created: DateTime!
+  contentHash: String
+  user: User
+}
+
+type AuditLogConnection {
+  nodes: [AuditLog!]!
+  meta: ConnectionMeta!
+}
+
+# ─────────────────────────────────────────────
+# SBOM
+# ─────────────────────────────────────────────
+
+type SBOMExport implements Node {
+  id: UUID!
+  format: SBOMFormat!
+  status: ExportStatus!
+  url: URL
+  created: DateTime!
+  completed: DateTime
+  project: Project!
+  version: String
+  components: [SBOMComponent!]
+}
+
+type SBOMComponent {
+  type: String!
+  name: String!
+  version: String
+  purl: String
+  bom_ref: String
+  licenses: [License!]
+  vulnerabilities: [Vulnerability!]
+  hashes: [ComponentHash!]
+  externalReferences: [VulnerabilityReference!]
+}
+
+type ComponentHash {
+  alg: String!
+  content: String!
+}
+
+type SBOMExportConnection {
+  nodes: [SBOMExport!]!
+  meta: ConnectionMeta!
+}
+
+# ─────────────────────────────────────────────
+# Container Image
+# ─────────────────────────────────────────────
+
+type ContainerImage implements Node {
+  id: UUID!
+  name: String!
+  tag: String
+  digest: String
+  registry: String
+  baseImage: BaseImageInfo
+  created: DateTime!
+  lastScannedAt: DateTime
+  organization: Organization!
+  project: Project
+  vulnerabilities(
+    first: Int
+    after: String
+    severity: [SeverityLevel!]
+  ): IssueConnection!
+  layers: [ImageLayer!]
+  platform: ImagePlatform
+}
+
+type BaseImageInfo {
+  name: String!
+  tag: String!
+  digest: String
+  recommendations: [BaseImageRecommendation!]!
+}
+
+type BaseImageRecommendation {
+  name: String!
+  tag: String!
+  type: String!
+  severityDelta: JSON
+  vulnerabilityCountDelta: Int
+}
+
+type ImageLayer {
+  id: String!
+  instruction: String
+  size: Int
+  createdAt: DateTime
+}
+
+type ImagePlatform {
+  os: String!
+  architecture: String!
+  variant: String
+}
+
+type ContainerImageConnection {
+  nodes: [ContainerImage!]!
+  meta: ConnectionMeta!
+}
+
+# ─────────────────────────────────────────────
+# Custom Base Image
+# ─────────────────────────────────────────────
+
+type CustomBaseImage implements Node {
+  id: UUID!
+  project: Project!
+  includeInRecommendations: Boolean!
+  versionScheme: String
+  created: DateTime!
+  modified: DateTime!
+}
+
+type CustomBaseImageConnection {
+  nodes: [CustomBaseImage!]!
+  meta: ConnectionMeta!
+}
+
+# ─────────────────────────────────────────────
+# Webhook
+# ─────────────────────────────────────────────
+
+type Webhook implements Node {
+  id: UUID!
+  url: URL!
+  status: WebhookStatus!
+  events: [WebhookEvent!]!
+  secret: String
+  created: DateTime!
+  modified: DateTime!
+  organization: Organization!
+  consecutiveFailureCount: Int
+  lastDelivery: WebhookDelivery
+  deliveries(first: Int, after: String): WebhookDeliveryConnection!
+}
+
+type WebhookDelivery {
+  id: UUID!
+  event: WebhookEvent!
+  status: Int!
+  requestBody: JSON
+  responseBody: String
+  deliveredAt: DateTime!
+  duration: Int
+}
+
+type WebhookDeliveryConnection {
+  nodes: [WebhookDelivery!]!
+  meta: ConnectionMeta!
+}
+
+type WebhookConnection {
+  nodes: [Webhook!]!
+  meta: ConnectionMeta!
+}
+
+# ─────────────────────────────────────────────
+# Export (Async Bulk)
+# ─────────────────────────────────────────────
+
+type BulkExport implements Node {
+  id: UUID!
+  status: ExportStatus!
+  type: String!
+  url: URL
+  created: DateTime!
+  completed: DateTime
+  organization: Organization!
+  filters: ExportFilters
+  columns: [String!]
+}
+
+type ExportFilters {
+  severity: [SeverityLevel!]
+  issueType: [IssueType!]
+  projectIds: [UUID!]
+  from: DateTime
+  to: DateTime
+}
+
+type BulkExportConnection {
+  nodes: [BulkExport!]!
+  meta: ConnectionMeta!
+}
+
+# ─────────────────────────────────────────────
+# Snyk App (OAuth Application)
+# ─────────────────────────────────────────────
+
+type SnykApp implements Node {
+  id: UUID!
+  name: String!
+  clientId: String!
+  redirectUris: [URL!]!
+  scopes: [String!]!
+  created: DateTime!
+  modified: DateTime!
+  organization: Organization
+  group: Group
+  installs(first: Int, after: String): AppInstallConnection!
+}
+
+type AppInstall implements Node {
+  id: UUID!
+  app: SnykApp!
+  organization: Organization
+  group: Group
+  created: DateTime!
+  status: String!
+}
+
+type AppInstallConnection {
+  nodes: [AppInstall!]!
+  meta: ConnectionMeta!
+}
+
+type SnykAppConnection {
+  nodes: [SnykApp!]!
+  meta: ConnectionMeta!
+}
+
+# ─────────────────────────────────────────────
+# Policy
+# ─────────────────────────────────────────────
+
+type Policy implements Node {
+  id: UUID!
+  name: String!
+  description: String
+  created: DateTime!
+  modified: DateTime!
+  organization: Organization!
+  rules: [PolicyRule!]!
+  projects: [Project!]!
+}
+
+type PolicyConnection {
+  nodes: [Policy!]!
+  meta: ConnectionMeta!
+}
+
+# ─────────────────────────────────────────────
+# Notification
+# ─────────────────────────────────────────────
+
+type NotificationSettings {
+  newIssues: Boolean!
+  reminders: Boolean!
+  weeklyReport: Boolean!
+  emailFrequency: String
+}
+
+# ─────────────────────────────────────────────
+# Query
+# ─────────────────────────────────────────────
+
+type Query {
+  # Group queries
+  group(id: UUID!): Group
+  groups(first: Int, after: String): GroupConnection!
+
+  # Organization queries
+  organization(id: UUID!): Organization
+  organizations(
+    groupId: UUID
+    first: Int
+    after: String
+  ): OrganizationConnection!
+
+  # Project queries
+  project(orgId: UUID!, projectId: UUID!): Project
+  projects(
+    orgId: UUID!
+    first: Int
+    after: String
+    type: ProjectType
+    scanType: ScanType
+    tags: [TagInput!]
+  ): ProjectConnection!
+
+  # Target queries
+  target(orgId: UUID!, targetId: UUID!): Target
+  targets(
+    orgId: UUID!
+    first: Int
+    after: String
+  ): TargetConnection!
+
+  # Issue queries
+  issue(orgId: UUID!, issueId: UUID!): Issue
+  issues(
+    orgId: UUID!
+    first: Int
+    after: String
+    severity: [SeverityLevel!]
+    type: [IssueType!]
+    status: IssueStatus
+    projectId: UUID
+  ): IssueConnection!
+
+  groupIssues(
+    groupId: UUID!
+    first: Int
+    after: String
+    severity: [SeverityLevel!]
+    type: [IssueType!]
+    status: IssueStatus
+  ): IssueConnection!
+
+  # Vulnerability queries
+  vulnerability(id: UUID!): Vulnerability
+  vulnerabilities(
+    packageName: String
+    packageVersion: String
+    ecosystem: String
+    first: Int
+    after: String
+  ): VulnerabilityConnection!
+
+  # Integration queries
+  integration(orgId: UUID!, integrationId: UUID!): Integration
+  integrations(orgId: UUID!, first: Int, after: String): IntegrationConnection!
+
+  # Audit log queries
+  groupAuditLogs(
+    groupId: UUID!
+    first: Int
+    after: String
+    from: DateTime
+    to: DateTime
+    eventType: AuditLogEventType
+    userId: UUID
+  ): AuditLogConnection!
+
+  orgAuditLogs(
+    orgId: UUID!
+    first: Int
+    after: String
+    from: DateTime
+    to: DateTime
+    eventType: AuditLogEventType
+    userId: UUID
+  ): AuditLogConnection!
+
+  # SBOM queries
+  sbomExport(orgId: UUID!, exportId: UUID!): SBOMExport
+
+  # Container image queries
+  containerImage(orgId: UUID!, imageId: UUID!): ContainerImage
+  containerImages(
+    orgId: UUID!
+    first: Int
+    after: String
+    name: String
+  ): ContainerImageConnection!
+
+  # Custom base image queries
+  customBaseImage(orgId: UUID!, imageId: UUID!): CustomBaseImage
+  customBaseImages(
+    orgId: UUID!
+    first: Int
+    after: String
+  ): CustomBaseImageConnection!
+
+  # Webhook queries
+  webhook(orgId: UUID!, webhookId: UUID!): Webhook
+  webhooks(orgId: UUID!, first: Int, after: String): WebhookConnection!
+
+  # Export queries
+  bulkExport(orgId: UUID!, exportId: UUID!): BulkExport
+  bulkExports(orgId: UUID!, first: Int, after: String): BulkExportConnection!
+
+  # Snyk App queries
+  snykApp(orgId: UUID!, appId: UUID!): SnykApp
+  snykApps(orgId: UUID!, first: Int, after: String): SnykAppConnection!
+
+  # User queries
+  user(id: UUID!): User
+  me: User
+
+  # Policy queries
+  policy(orgId: UUID!, policyId: UUID!): Policy
+  policies(orgId: UUID!, first: Int, after: String): PolicyConnection!
+
+  # Dependency graph
+  dependencyGraph(orgId: UUID!, projectId: UUID!): DependencyGraph
+
+  # Service accounts
+  serviceAccount(orgId: UUID!, serviceAccountId: UUID!): ServiceAccount
+  serviceAccounts(
+    orgId: UUID!
+    first: Int
+    after: String
+  ): ServiceAccountConnection!
+}
+
+# ─────────────────────────────────────────────
+# Supporting connection types for Query fields
+# ─────────────────────────────────────────────
+
+type GroupConnection {
+  nodes: [Group!]!
+  meta: ConnectionMeta!
+}
+
+type VulnerabilityConnection {
+  nodes: [Vulnerability!]!
+  meta: ConnectionMeta!
+}
+
+# ─────────────────────────────────────────────
+# Mutation
+# ─────────────────────────────────────────────
+
+type Mutation {
+  # Project mutations
+  updateProject(orgId: UUID!, projectId: UUID!, input: UpdateProjectInput!): Project!
+  deleteProject(orgId: UUID!, projectId: UUID!): DeleteResult!
+  addProjectTags(orgId: UUID!, projectId: UUID!, tags: [TagInput!]!): Project!
+  removeProjectTags(orgId: UUID!, projectId: UUID!, tags: [TagInput!]!): Project!
+  testProject(orgId: UUID!, projectId: UUID!): TestResult!
+
+  # Issue mutations
+  ignoreIssue(orgId: UUID!, issueId: UUID!, input: IgnoreIssueInput!): Issue!
+  unignoreIssue(orgId: UUID!, issueId: UUID!): Issue!
+  resolveIssue(orgId: UUID!, issueId: UUID!): Issue!
+
+  # Integration mutations
+  createIntegration(orgId: UUID!, input: CreateIntegrationInput!): Integration!
+  updateIntegration(orgId: UUID!, integrationId: UUID!, input: UpdateIntegrationInput!): Integration!
+  deleteIntegration(orgId: UUID!, integrationId: UUID!): DeleteResult!
+
+  # Webhook mutations
+  createWebhook(orgId: UUID!, input: CreateWebhookInput!): Webhook!
+  deleteWebhook(orgId: UUID!, webhookId: UUID!): DeleteResult!
+  pingWebhook(orgId: UUID!, webhookId: UUID!): WebhookDelivery!
+
+  # SBOM mutations
+  createSBOMExport(orgId: UUID!, projectId: UUID!, format: SBOMFormat!): SBOMExport!
+
+  # Bulk export mutations
+  createBulkExport(orgId: UUID!, input: CreateBulkExportInput!): BulkExport!
+
+  # Custom base image mutations
+  createCustomBaseImage(orgId: UUID!, input: CreateCustomBaseImageInput!): CustomBaseImage!
+  updateCustomBaseImage(orgId: UUID!, imageId: UUID!, input: UpdateCustomBaseImageInput!): CustomBaseImage!
+  deleteCustomBaseImage(orgId: UUID!, imageId: UUID!): DeleteResult!
+
+  # Snyk App mutations
+  createSnykApp(orgId: UUID!, input: CreateSnykAppInput!): SnykApp!
+  updateSnykApp(orgId: UUID!, appId: UUID!, input: UpdateSnykAppInput!): SnykApp!
+  deleteSnykApp(orgId: UUID!, appId: UUID!): DeleteResult!
+  revokeAppInstall(orgId: UUID!, appId: UUID!, installId: UUID!): DeleteResult!
+
+  # Service account mutations
+  createServiceAccount(orgId: UUID!, input: CreateServiceAccountInput!): ServiceAccount!
+  deleteServiceAccount(orgId: UUID!, serviceAccountId: UUID!): DeleteResult!
+
+  # Organization member mutations
+  inviteOrgMember(orgId: UUID!, input: InviteMemberInput!): OrgMember!
+  removeOrgMember(orgId: UUID!, userId: UUID!): DeleteResult!
+  updateOrgMemberRole(orgId: UUID!, userId: UUID!, role: RoleType!): OrgMember!
+
+  # Policy mutations
+  createPolicy(orgId: UUID!, input: CreatePolicyInput!): Policy!
+  updatePolicy(orgId: UUID!, policyId: UUID!, input: UpdatePolicyInput!): Policy!
+  deletePolicy(orgId: UUID!, policyId: UUID!): DeleteResult!
+}
+
+# ─────────────────────────────────────────────
+# Input Types
+# ─────────────────────────────────────────────
+
+input UpdateProjectInput {
+  name: String
+  targetReference: String
+  tags: [TagInput!]
+  attributes: ProjectAttributesInput
+  settings: ProjectSettingsInput
+}
+
+input ProjectAttributesInput {
+  criticality: [String!]
+  environment: [String!]
+  lifecycle: [String!]
+}
+
+input ProjectSettingsInput {
+  pullRequestTestEnabled: Boolean
+  failOnSeverity: SeverityLevel
+  autoDepUpgradeEnabled: Boolean
+}
+
+input IgnoreIssueInput {
+  reason: IgnoreReason!
+  comment: String
+  expiresAt: DateTime
+}
+
+input CreateIntegrationInput {
+  type: String!
+  credentials: IntegrationCredentialsInput!
+  settings: IntegrationSettingsInput
+}
+
+input IntegrationCredentialsInput {
+  type: String!
+  url: URL
+  username: String
+  token: String
+}
+
+input IntegrationSettingsInput {
+  pullRequestFailureEnabled: Boolean
+  autoDepUpgradeEnabled: Boolean
+  autoRemediationEnabled: Boolean
+}
+
+input UpdateIntegrationInput {
+  credentials: IntegrationCredentialsInput
+  settings: IntegrationSettingsInput
+}
+
+input CreateWebhookInput {
+  url: URL!
+  secret: String!
+  events: [WebhookEvent!]!
+}
+
+input CreateBulkExportInput {
+  type: String!
+  filters: ExportFiltersInput
+  columns: [String!]
+}
+
+input ExportFiltersInput {
+  severity: [SeverityLevel!]
+  issueType: [IssueType!]
+  projectIds: [UUID!]
+  from: DateTime
+  to: DateTime
+}
+
+input CreateCustomBaseImageInput {
+  projectId: UUID!
+  includeInRecommendations: Boolean!
+  versionScheme: String
+}
+
+input UpdateCustomBaseImageInput {
+  includeInRecommendations: Boolean
+  versionScheme: String
+}
+
+input CreateSnykAppInput {
+  name: String!
+  redirectUris: [URL!]!
+  scopes: [String!]!
+}
+
+input UpdateSnykAppInput {
+  name: String
+  redirectUris: [URL!]
+  scopes: [String!]
+}
+
+input CreateServiceAccountInput {
+  name: String!
+  roleType: RoleType!
+  type: ServiceAccountType!
+}
+
+input InviteMemberInput {
+  email: String!
+  role: RoleType!
+}
+
+input CreatePolicyInput {
+  name: String!
+  description: String
+  rules: [PolicyRuleInput!]!
+}
+
+input PolicyRuleInput {
+  action: PolicyAction!
+  licenseType: String
+  notes: String
+}
+
+input UpdatePolicyInput {
+  name: String
+  description: String
+  rules: [PolicyRuleInput!]
+}
+
+# ─────────────────────────────────────────────
+# Result Types
+# ─────────────────────────────────────────────
+
+type DeleteResult {
+  success: Boolean!
+  id: UUID!
+}
+
+type TestResult {
+  issuesFound: Int!
+  vulnerabilitiesFound: Int!
+  licenseIssuesFound: Int!
+  codeIssuesFound: Int!
+  timestamp: DateTime!
+  projectId: UUID!
+  status: String!
+}
