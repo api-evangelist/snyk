@@ -7,7 +7,7 @@ description: Snyk is a developer-first security platform covering code, open-sou
   V1 API expose groups, organizations, projects, issues, targets, integrations, audit
   logs, SBOMs, container images, custom base images, webhooks, and exports for application-security
   teams.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Security
 - DevSecOps
