@@ -263,7 +263,7 @@ common:
   url: finops/snyk-finops.yml
 - type: Integrations
   url: https://snyk.io/integrations/
-- type: LLMsTxt
+- type: LlmsText
   url: https://docs.snyk.io/llms.txt
 integrations:
 - name: View partner solutions
