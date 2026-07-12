@@ -245,6 +245,14 @@ apis:
   - type: Documentation
     url: https://snyk.docs.apiary.io/
 common:
+- type: TrustCenter
+  url: security/snyk-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/snyk-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/snyk-domain-security.yml
+- type: Authentication
+  url: authentication/snyk-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/snyk
 - type: LinkedIn
@@ -265,6 +273,8 @@ common:
   url: https://snyk.io/integrations/
 - type: LlmsText
   url: https://docs.snyk.io/llms.txt
+- url: https://snyk.io/blog/feed/
+  type: Blog
 integrations:
 - name: View partner solutions
 maintainers:
