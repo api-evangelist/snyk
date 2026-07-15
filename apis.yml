@@ -245,6 +245,8 @@ apis:
   - type: Documentation
     url: https://snyk.docs.apiary.io/
 common:
+- type: AgenticAccess
+  url: agentic-access/snyk-agentic-access.yml
 - type: TrustCenter
   url: security/snyk-trust-center.yml
 - type: VulnerabilityDisclosure
