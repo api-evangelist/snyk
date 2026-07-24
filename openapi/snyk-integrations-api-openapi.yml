@@ -1,0 +1,1549 @@
+openapi: 3.0.3
+info:
+  title: Snyk AccessRequests Integrations API
+  version: REST
+servers:
+- description: Snyk REST API
+  url: https://api.snyk.io/rest
+security:
+- APIToken: []
+- BearerAuth: []
+tags:
+- name: Integrations
+paths:
+  /orgs/{org_id}/integrations:
+    get:
+      description: 'Get all integrations for an organization with cursor-based pagination
+
+
+        #### Required permissions
+
+
+        - `View integrations (org.integration.read)`'
+      operationId: listIntegrations
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - $ref: '#/components/parameters/StartingAfter'
+      - $ref: '#/components/parameters/EndingBefore'
+      - $ref: '#/components/parameters/Limit'
+      - description: The organization public ID
+        in: path
+        name: org_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                additionalProperties: false
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/Integration'
+                    type: array
+                  jsonapi:
+                    $ref: '#/components/schemas/JsonApi'
+                  links:
+                    $ref: '#/components/schemas/PaginatedLinks'
+                required:
+                - jsonapi
+                - data
+                - links
+                type: object
+          description: List of integrations successfully retrieved
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: List all integrations for an organization (Early Access)
+      tags:
+      - Integrations
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-10-15~beta
+      x-snyk-api-resource: integrations
+      x-snyk-api-stability: beta
+      x-snyk-api-version: 2024-10-15~beta
+      x-stability-level: beta
+    post:
+      description: 'Create a new integration with specified credentials and profile name
+
+
+        #### Required permissions
+
+
+        - `Edit integrations (org.integration.edit)`'
+      operationId: createIntegration
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - description: The organization public ID
+        in: path
+        name: org_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/IntegrationRequestData'
+        required: true
+      responses:
+        '201':
+          content:
+            application/vnd.api+json:
+              schema:
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Integration'
+                  jsonapi:
+                    $ref: '#/components/schemas/JsonApi'
+                  links:
+                    $ref: '#/components/schemas/SelfLink'
+                required:
+                - jsonapi
+                - data
+                type: object
+          description: Integration successfully created
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            location:
+              $ref: '#/components/headers/LocationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Create an integration for an organization (Early Access)
+      tags:
+      - Integrations
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-10-15~beta
+      x-snyk-api-resource: integrations
+      x-snyk-api-stability: beta
+      x-snyk-api-version: 2024-10-15~beta
+      x-stability-level: beta
+  /orgs/{org_id}/integrations/{integration_id}:
+    delete:
+      description: 'Permanently delete a container registry integration from an organization.
+
+        Brokered integrations must have broker mode disabled via the V1 API first.
+
+        NOTE: This endpoint performs a hard delete of the integration. The integration
+
+        will be permanently removed from the database and all associated targets and
+
+        projects will be orphaned and need to be manually removed.
+
+
+        #### Required permissions
+
+
+        - `Edit integrations (org.integration.edit)`'
+      operationId: deleteIntegration
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - description: The organization public ID
+        in: path
+        name: org_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: The unique identifier for the integration
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '204':
+          description: Integration successfully deleted. No content is returned.
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Delete an integration (Early Access)
+      tags:
+      - Integrations
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-10-15~beta
+      x-snyk-api-resource: integrations
+      x-snyk-api-stability: beta
+      x-snyk-api-version: 2024-10-15~beta
+      x-stability-level: beta
+    get:
+      description: 'Retrieve details for a single integration by its ID
+
+
+        #### Required permissions
+
+
+        - `View integrations (org.integration.read)`'
+      operationId: getIntegration
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - description: The organization public ID
+        in: path
+        name: org_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: The unique identifier for the integration
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Integration'
+                  jsonapi:
+                    $ref: '#/components/schemas/JsonApi'
+                  links:
+                    $ref: '#/components/schemas/SelfLink'
+                required:
+                - jsonapi
+                - data
+                type: object
+          description: Integration successfully retrieved
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Get a specific integration (Early Access)
+      tags:
+      - Integrations
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-10-15~beta
+      x-snyk-api-resource: integrations
+      x-snyk-api-stability: beta
+      x-snyk-api-version: 2024-10-15~beta
+      x-stability-level: beta
+    patch:
+      description: 'Update attributes of an integration. Supports partial updates - only provided fields will be modified.
+
+
+        **Updateable fields:**
+
+        - `profile_name`: Change the user-defined name for the integration
+
+        - `credentials`: Update AWS region, IAM role ARN, or both
+
+
+        **Immutable fields:**
+
+        - `integration_type`: Cannot be changed after creation
+
+
+        Only include fields you want to update in the request body. Omitted fields remain unchanged.
+
+
+        #### Required permissions
+
+
+        - `Edit integrations (org.integration.edit)`'
+      operationId: updateIntegration
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - description: The organization public ID
+        in: path
+        name: org_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: The unique identifier for the integration
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/IntegrationPatchRequestData'
+        required: true
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Integration'
+                  jsonapi:
+                    $ref: '#/components/schemas/JsonApi'
+                  links:
+                    $ref: '#/components/schemas/SelfLink'
+                required:
+                - jsonapi
+                - data
+                type: object
+          description: Integration successfully updated
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Update an existing integration (Early Access)
+      tags:
+      - Integrations
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-10-15~beta
+      x-snyk-api-resource: integrations
+      x-snyk-api-stability: beta
+      x-snyk-api-version: 2024-10-15~beta
+      x-stability-level: beta
+  /orgs/{org_id}/integrations/{integration_id}/settings:
+    get:
+      description: 'Get the settings for a specific integration.
+
+
+        #### Required permissions
+
+
+        - `View integrations (org.integration.read)`'
+      operationId: getIntegrationSettings
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - $ref: '#/components/parameters/StartingAfter'
+      - $ref: '#/components/parameters/EndingBefore'
+      - $ref: '#/components/parameters/Limit'
+      - description: The organization public ID
+        in: path
+        name: org_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: The unique identifier for the integration
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/IntegrationSettings'
+                  jsonapi:
+                    $ref: '#/components/schemas/JsonApi'
+                  links:
+                    $ref: '#/components/schemas/SelfLink'
+                required:
+                - jsonapi
+                - data
+                type: object
+          description: Integration settings successfully retrieved
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Get integration settings (Early Access)
+      tags:
+      - Integrations
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-10-15~beta
+      x-snyk-api-resource: integrations
+      x-snyk-api-stability: beta
+      x-snyk-api-version: 2024-10-15~beta
+      x-stability-level: beta
+    patch:
+      description: 'Update the settings for a specific integration. Supports partial updates.
+
+
+        **Updateable fields:**
+
+        - `container_app_scan_enabled`: Enable or disable container application scanning (only applicable to container registry integrations)
+
+
+        #### Required permissions
+
+
+        - `Edit integrations (org.integration.edit)`'
+      operationId: updateIntegrationSettings
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - description: The organization public ID
+        in: path
+        name: org_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: The unique identifier for the integration
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/IntegrationSettingsPatchRequestData'
+        required: true
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/IntegrationSettings'
+                  jsonapi:
+                    $ref: '#/components/schemas/JsonApi'
+                  links:
+                    $ref: '#/components/schemas/SelfLink'
+                required:
+                - jsonapi
+                - data
+                type: object
+          description: Integration settings successfully updated
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Update integration settings (Early Access)
+      tags:
+      - Integrations
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-10-15~beta
+      x-snyk-api-resource: integrations
+      x-snyk-api-stability: beta
+      x-snyk-api-version: 2024-10-15~beta
+      x-stability-level: beta
+components:
+  schemas:
+    Integration:
+      additionalProperties: false
+      description: Integration resource returned in API responses
+      properties:
+        attributes:
+          additionalProperties: false
+          properties:
+            created_at:
+              description: When the integration was created
+              example: '2025-10-31T10:30:00Z'
+              format: date-time
+              type: string
+            has_broker:
+              description: Whether this integration uses Snyk Broker
+              example: false
+              type: boolean
+            integration_type:
+              $ref: '#/components/schemas/IntegrationType'
+            profile_name:
+              description: User-defined name for the integration. Null for integrations created via V1 API.
+              example: my-aws-prod-account
+              nullable: true
+              type: string
+            updated_at:
+              description: When the integration was last updated
+              example: '2025-10-31T10:30:00Z'
+              format: date-time
+              nullable: true
+              type: string
+          required:
+          - integration_type
+          - profile_name
+          - created_at
+          type: object
+        id:
+          description: The unique identifier for the integration
+          example: 9a3e5d90-b782-468a-a042-9a2073736f0b
+          format: uuid
+          type: string
+        relationships:
+          additionalProperties: false
+          properties:
+            org:
+              additionalProperties: false
+              properties:
+                data:
+                  additionalProperties: false
+                  properties:
+                    id:
+                      example: 331ede0a-de94-468a-a042-9a2073736f0b
+                      format: uuid
+                      type: string
+                    type:
+                      enum:
+                      - org
+                      type: string
+                  required:
+                  - type
+                  - id
+                  type: object
+              required:
+              - data
+              type: object
+          type: object
+        type:
+          description: Resource type
+          enum:
+          - integration
+          type: string
+      required:
+      - type
+      - id
+      - attributes
+      type: object
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
+    EcrCredentials:
+      additionalProperties: false
+      description: Credentials for AWS Elastic Container Registry (ECR) integration
+      properties:
+        region:
+          description: AWS region where the ECR registry is located
+          example: us-east-1
+          pattern: ^[a-z]{2}-[a-z]+-\d{1}$
+          type: string
+        role_arn:
+          description: AWS IAM role ARN for cross-account access to ECR
+          example: arn:aws:iam::123456789012:role/SnykEcrRole
+          maxLength: 2048
+          minLength: 20
+          pattern: ^arn:aws:iam::\d{12}:role/.+$
+          type: string
+      required:
+      - region
+      - role_arn
+      type: object
+    JsonApi:
+      additionalProperties: false
+      example:
+        version: '1.0'
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
+      type: object
+    DigitalOceanCredentials:
+      additionalProperties: false
+      description: Credentials for DigitalOcean Container Registry
+      properties:
+        token:
+          description: DigitalOcean API token with read/write access to container registry
+          example: dop_v1_1234567890abcdef1234567890abcdef1234567890abcdef1234567890ab
+          maxLength: 500
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          type: string
+      required:
+      - token
+      type: object
+    GcrAttributes:
+      additionalProperties: false
+      properties:
+        credentials:
+          $ref: '#/components/schemas/GcrCredentials'
+        integration_type:
+          enum:
+          - gcr
+          - google-artifact-cr
+          type: string
+        profile_name:
+          description: User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.
+          example: my-aws-prod-account
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$
+          type: string
+      required:
+      - integration_type
+      - profile_name
+      - credentials
+      type: object
+    IntegrationType:
+      description: 'Integration type identifier.
+
+
+        Container registry types (V3 CREATE/UPDATE supported):
+
+        - acr (Azure Container Registry)
+
+        - artifactory-cr (Artifactory Container Registry)
+
+        - digitalocean-cr (DigitalOcean Container Registry)
+
+        - docker-hub (Docker Hub)
+
+        - ecr (AWS Elastic Container Registry)
+
+        - gcr (Google Container Registry)
+
+        - github-cr (GitHub Container Registry)
+
+        - gitlab-cr (GitLab Container Registry)
+
+        - google-artifact-cr (Google Artifact Registry)
+
+        - harbor-cr (Harbor)
+
+        - nexus-cr (Nexus Container Registry)
+
+        - quay-cr (Quay Container Registry)
+
+
+        SCM (Source Control Management) types (V3 GET/LIST only, create via V1):
+
+        - azure-repos (Azure Repos)
+
+        - bitbucket-cloud (Bitbucket Cloud)
+
+        - bitbucket-connect-app (Bitbucket Connect App)
+
+        - bitbucket-server (Bitbucket Server/Data Center)
+
+        - github (GitHub.com)
+
+        - github-cloud-app (GitHub Cloud App)
+
+        - github-enterprise (GitHub Enterprise Server)
+
+        - github-server-app (GitHub Server App)
+
+        - gitlab (GitLab)
+
+
+        Other integration types (V3 GET/LIST only, create via V1):
+
+        - kubernetes (Kubernetes)
+
+        - terraform-cloud (Terraform Cloud)
+
+        '
+      enum:
+      - acr
+      - artifactory-cr
+      - digitalocean-cr
+      - docker-hub
+      - ecr
+      - gcr
+      - github-cr
+      - gitlab-cr
+      - google-artifact-cr
+      - harbor-cr
+      - nexus-cr
+      - quay-cr
+      - azure-repos
+      - bitbucket-cloud
+      - bitbucket-connect-app
+      - bitbucket-server
+      - github
+      - github-cloud-app
+      - github-enterprise
+      - github-server-app
+      - gitlab
+      - kubernetes
+      - terraform-cloud
+      type: string
+    GenericContainerRegistryCredentials:
+      additionalProperties: false
+      description: Credentials for generic container registries (ACR, Artifactory, Harbor, Quay, etc.)
+      properties:
+        password:
+          description: Registry password or access token
+          example: mypassword123
+          format: password
+          minLength: 1
+          type: string
+        registry_base:
+          description: Registry base URL - hostname only, no protocol (e.g., myregistry.azurecr.io, artifactory.company.com, harbor.example.com, quay.io)
+          example: myregistry.azurecr.io
+          format: hostname
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?)*$
+          type: string
+        username:
+          description: Registry username
+          example: admin
+          maxLength: 255
+          minLength: 1
+          type: string
+      required:
+      - username
+      - password
+      - registry_base
+      type: object
+    QueryVersion:
+      description: Requested API version
+      example: '2026-03-25'
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+      type: string
+    IntegrationSettings:
+      additionalProperties: false
+      description: Integration settings resource
+      properties:
+        attributes:
+          additionalProperties: false
+          description: 'For container registry integrations, includes `container_app_scan_enabled` (defaults to true when unset in storage). For other integration types the object is empty because this setting does not apply.
+
+            '
+          properties:
+            container_app_scan_enabled:
+              description: Whether container application scanning is enabled. Only present for container registry integrations; defaults to true when unset in storage.
+              example: true
+              type: boolean
+          type: object
+        id:
+          description: The integration ID this settings resource belongs to
+          example: 9a3e5d90-b782-468a-a042-9a2073736f0b
+          format: uuid
+          type: string
+        type:
+          description: Resource type
+          enum:
+          - integration_settings
+          type: string
+      required:
+      - type
+      - id
+      - attributes
+      type: object
+    GcrCredentials:
+      additionalProperties: false
+      description: Credentials for Google Container Registry (GCR) and Google Artifact Registry (GAR)
+      properties:
+        password:
+          description: JSON key file content for Google Cloud service account (as a string)
+          example: '{"type":"service_account","project_id":"my-project",...}'
+          format: password
+          minLength: 1
+          type: string
+        registry_base:
+          description: Registry base URL for GCR or GAR (e.g., gcr.io, us.gcr.io, eu.gcr.io, asia.gcr.io, us-docker.pkg.dev, europe-docker.pkg.dev)
+          example: gcr.io
+          format: hostname
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?)*$
+          type: string
+      required:
+      - password
+      - registry_base
+      type: object
+    EcrAttributes:
+      additionalProperties: false
+      properties:
+        credentials:
+          $ref: '#/components/schemas/EcrCredentials'
+        integration_type:
+          enum:
+          - ecr
+          type: string
+        profile_name:
+          description: User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.
+          example: my-aws-prod-account
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$
+          type: string
+      required:
+      - integration_type
+      - profile_name
+      - credentials
+      type: object
+    ErrorDocument:
+      additionalProperties: false
+      example:
+        errors:
+        - detail: Permission denied for this resource
+          status: '403'
+        jsonapi:
+          version: '1.0'
+      properties:
+        errors:
+          example:
+          - detail: Permission denied for this resource
+            status: '403'
+          items:
+            additionalProperties: false
+            example:
+              detail: Not Found
+              status: '404'
+            properties:
+              code:
+                description: An application-specific error code, expressed as a string value.
+                example: entity-not-found
+                type: string
+              detail:
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: 'The request was missing these required fields: ...'
+                type: string
+              id:
+                description: A unique identifier for this particular occurrence of the problem.
+                example: f16c31b5-6129-4571-add8-d589da9be524
+                format: uuid
+                type: string
+              links:
+                additionalProperties: false
+                description: A link that leads to further details about this particular occurrance of the problem.
+                example:
+                  about: https://example.com/about_this_error
+                properties:
+                  about:
+                    example: https://example.com/api/resource
+                    oneOf:
+                    - description: A string containing the link’s URL.
+                      example: https://example.com/api/resource
+                      type: string
+                    - additionalProperties: false
+                      example:
+                        href: https://example.com/api/resource
+                      properties:
+                        href:
+                          description: A string containing the link’s URL.
+                          example: https://example.com/api/resource
+                          type: string
+                        meta:
+                          additionalProperties: true
+                          description: Free-form object that may contain non-standard information.
+                          example:
+                            key1: value1
+                            key2:
+                              sub_key: sub_value
+                            key3:
+                            - array_value1
+                            - array_value2
+                          type: object
+                      required:
+                      - href
+                      type: object
+                type: object
+              meta:
+                additionalProperties: true
+                example:
+                  key: value
+                type: object
+              source:
+                additionalProperties: false
+                example:
+                  pointer: /data/attributes
+                properties:
+                  parameter:
+                    description: A string indicating which URI query parameter caused the error.
+                    example: param1
+                    type: string
+                  pointer:
+                    description: A JSON Pointer [RFC6901] to the associated entity in the request document.
+                    example: /data/attributes
+                    type: string
+                type: object
+              status:
+                description: The HTTP status code applicable to this problem, expressed as a string value.
+                example: '400'
+                pattern: ^[45]\d\d$
+                type: string
+              title:
+                description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+                example: Bad request
+                type: string
+            required:
+            - status
+            - detail
+            type: object
+          minItems: 1
+          type: array
+        jsonapi:
+          additionalProperties: false
+          example:
+            version: '1.0'
+          properties:
+            version:
+              description: Version of the JSON API specification this server supports.
+              example: '1.0'
+              pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+              type: string
+          required:
+          - version
+          type: object
+      required:
+      - jsonapi
+      - errors
+      type: object
+    SelfLink:
+      additionalProperties: false
+      example:
+        self: https://example.com/api/this_resource
+      properties:
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    DigitalOceanAttributes:
+      additionalProperties: false
+      properties:
+        credentials:
+          $ref: '#/components/schemas/DigitalOceanCredentials'
+        integration_type:
+          enum:
+          - digitalocean-cr
+          type: string
+        profile_name:
+          description: User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.
+          example: my-aws-prod-account
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$
+          type: string
+      required:
+      - integration_type
+      - profile_name
+      - credentials
+      type: object
+    IntegrationRequestData:
+      additionalProperties: false
+      description: Request body for creating an integration
+      properties:
+        data:
+          additionalProperties: false
+          description: The integration data
+          properties:
+            attributes:
+              description: 'Integration attributes including type, profile name, and credentials.
+
+                The credentials structure varies by integration_type:
+
+                - ECR: role_arn + region
+
+                - Docker Hub: username + password
+
+                - Generic (ACR, Artifactory, Harbor, etc.): username + password + registry_base
+
+                - DigitalOcean: token
+
+                - GCR/GAR: password (JSON key) + registry_base
+
+                '
+              discriminator:
+                mapping:
+                  acr: '#/components/schemas/GenericAttributes'
+                  artifactory-cr: '#/components/schemas/GenericAttributes'
+                  digitalocean-cr: '#/components/schemas/DigitalOceanAttributes'
+                  docker-hub: '#/components/schemas/DockerHubAttributes'
+                  ecr: '#/components/schemas/EcrAttributes'
+                  gcr: '#/components/schemas/GcrAttributes'
+                  github-cr: '#/components/schemas/GenericAttributes'
+                  gitlab-cr: '#/components/schemas/GenericAttributes'
+                  google-artifact-cr: '#/components/schemas/GcrAttributes'
+                  harbor-cr: '#/components/schemas/GenericAttributes'
+                  nexus-cr: '#/components/schemas/GenericAttributes'
+                  quay-cr: '#/components/schemas/GenericAttributes'
+                propertyName: integration_type
+              oneOf:
+              - $ref: '#/components/schemas/EcrAttributes'
+              - $ref: '#/components/schemas/DockerHubAttributes'
+              - $ref: '#/components/schemas/GenericAttributes'
+              - $ref: '#/components/schemas/GcrAttributes'
+              - $ref: '#/components/schemas/DigitalOceanAttributes'
+            type:
+              description: Resource type (must be 'integration')
+              enum:
+              - integration
+              type: string
+          required:
+          - type
+          - attributes
+          type: object
+      required:
+      - data
+      type: object
+    IntegrationSettingsPatchRequestData:
+      additionalProperties: false
+      description: Request body for updating integration settings
+      properties:
+        data:
+          additionalProperties: false
+          properties:
+            attributes:
+              additionalProperties: false
+              description: Settings to update. Only include fields you want to modify.
+              properties:
+                container_app_scan_enabled:
+                  description: Whether container application scanning is enabled for this integration
+                  type: boolean
+              type: object
+            id:
+              description: The integration ID (must match `integration_id` in the path)
+              example: 9a3e5d90-b782-468a-a042-9a2073736f0b
+              format: uuid
+              type: string
+            type:
+              description: Resource type (must be 'integration_settings')
+              enum:
+              - integration_settings
+              type: string
+          required:
+          - type
+          - id
+          - attributes
+          type: object
+      required:
+      - data
+      type: object
+    DockerHubCredentials:
+      additionalProperties: false
+      description: Credentials for Docker Hub container registry
+      properties:
+        password:
+          description: Docker Hub password or access token
+          example: dckr_pat_1234567890abcdef
+          format: password
+          minLength: 1
+          type: string
+        username:
+          description: Docker Hub username
+          example: myusername
+          maxLength: 255
+          minLength: 1
+          type: string
+      required:
+      - username
+      - password
+      type: object
+    DockerHubAttributes:
+      additionalProperties: false
+      properties:
+        credentials:
+          $ref: '#/components/schemas/DockerHubCredentials'
+        integration_type:
+          enum:
+          - docker-hub
+          type: string
+        profile_name:
+          description: User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.
+          example: my-aws-prod-account
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$
+          type: string
+      required:
+      - integration_type
+      - profile_name
+      - credentials
+      type: object
+    PaginatedLinks:
+      additionalProperties: false
+      example:
+        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
+        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
+        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    IntegrationPatchRequestData:
+      additionalProperties: false
+      description: Request body for updating an integration (partial update supported)
+      properties:
+        data:
+          additionalProperties: false
+          description: The integration data
+          properties:
+            attributes:
+              additionalProperties: false
+              description: 'Integration attributes to update. Only include fields you want to modify.
+
+                Note: integration_type cannot be changed after creation.
+
+                '
+              properties:
+                credentials:
+                  description: 'Integration credentials (structure varies by integration_type).
+
+                    Only include fields you want to update.
+
+
+                    Credential types:
+
+                    - ECR: role_arn + region
+
+                    - Docker Hub: username + password
+
+                    - Generic (ACR, Artifactory, Harbor, etc.): username + password + registry_base
+
+                    - DigitalOcean: token
+
+                    - GCR/GAR: password (JSON key) + registry_base
+
+                    '
+                  oneOf:
+                  - $ref: '#/components/schemas/EcrCredentials'
+                  - $ref: '#/components/schemas/DockerHubCredentials'
+                  - $ref: '#/components/schemas/GenericContainerRegistryCredentials'
+                  - $ref: '#/components/schemas/DigitalOceanCredentials'
+                  - $ref: '#/components/schemas/GcrCredentials'
+                profile_name:
+                  description: User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.
+                  example: my-aws-prod-account
+                  maxLength: 255
+                  minLength: 1
+                  pattern: ^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$
+                  type: string
+              type: object
+            id:
+              description: The integration ID
+              format: uuid
+              type: string
+            type:
+              description: Resource type (must be 'integration')
+              enum:
+              - integration
+              type: string
+          type: object
+      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
+    GenericAttributes:
+      additionalProperties: false
+      properties:
+        credentials:
+          $ref: '#/components/schemas/GenericContainerRegistryCredentials'
+        integration_type:
+          enum:
+          - acr
+          - artifactory-cr
+          - github-cr
+          - gitlab-cr
+          - harbor-cr
+          - nexus-cr
+          - quay-cr
+          type: string
+        profile_name:
+          description: User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.
+          example: my-aws-prod-account
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$
+          type: string
+      required:
+      - integration_type
+      - profile_name
+      - credentials
+      type: object
+  parameters:
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
+        type: string
+    Version:
+      description: The requested version of the endpoint to process the request
+      example: '2026-03-25'
+      in: query
+      name: version
+      required: true
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    Limit:
+      description: Number of results to return per page
+      example: 10
+      in: query
+      name: limit
+      schema:
+        default: 10
+        format: int32
+        maximum: 100
+        minimum: 10
+        multipleOf: 10
+        type: integer
+  headers:
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    VersionStageResponseHeader:
+      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
+
+        '
+      schema:
+        enum:
+        - wip
+        - experimental
+        - beta
+        - ga
+        - deprecated
+        - sunset
+        example: ga
+        type: string
+    RequestIdResponseHeader:
+      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
+
+        '
+      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
+      schema:
+        format: uuid
+        type: string
+    LocationHeader:
+      description: 'A header providing a URL for the location of a resource
+
+        '
+      example: https://example.com/resource/4
+      schema:
+        format: url
+        type: string
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
+  responses:
+    '400':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Bad Request: A parameter provided as a part of the request was invalid.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '409':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Conflict: The requested operation conflicts with the current state of the resource in some way.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '500':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '404':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Not Found: The resource being operated on could not be found.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '401':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Unauthorized: the request requires an authentication token.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+  securitySchemes:
+    APIToken:
+      description: API key value must be prefixed with \"Token \".
+      in: header
+      name: Authorization
+      type: apiKey
+    BearerAuth:
+      scheme: bearer
+      type: http
+x-snyk-api-version: '2024-10-15'

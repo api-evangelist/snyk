@@ -1,0 +1,917 @@
+openapi: 3.0.3
+info:
+  title: Snyk AccessRequests ContainerImage API
+  version: REST
+servers:
+- description: Snyk REST API
+  url: https://api.snyk.io/rest
+security:
+- APIToken: []
+- BearerAuth: []
+tags:
+- name: ContainerImage
+paths:
+  /orgs/{org_id}/container_images:
+    get:
+      description: 'List instances of container image
+
+
+        #### Required permissions
+
+
+        - `View container images (org.container_image.read)`'
+      operationId: listContainerImage
+      parameters:
+      - description: Org ID
+        in: path
+        name: org_id
+        required: true
+        schema:
+          example: f59045b3-f093-40c3-871d-a334ae30c568
+          format: uuid
+          type: string
+      - $ref: '#/components/parameters/ImageIds'
+      - description: The image Operating System and processor architecture
+        example: linux/amd64
+        in: query
+        name: platform
+        schema:
+          enum:
+          - aix/ppc64
+          - android/386
+          - android/amd64
+          - android/arm
+          - android/arm/v5
+          - android/arm/v6
+          - android/arm/v7
+          - android/arm64
+          - android/arm64/v8
+          - darwin/amd64
+          - darwin/arm
+          - darwin/arm/v5
+          - darwin/arm/v6
+          - darwin/arm/v7
+          - darwin/arm64
+          - darwin/arm64/v8
+          - dragonfly/amd64
+          - freebsd/386
+          - freebsd/amd64
+          - freebsd/arm
+          - freebsd/arm/v5
+          - freebsd/arm/v6
+          - freebsd/arm/v7
+          - illumos/amd64
+          - ios/arm64
+          - ios/arm64/v8
+          - js/wasm
+          - linux/386
+          - linux/amd64
+          - linux/arm
+          - linux/arm/v5
+          - linux/arm/v6
+          - linux/arm/v7
+          - linux/arm64
+          - linux/arm64/v8
+          - linux/loong64
+          - linux/mips
+          - linux/mipsle
+          - linux/mips64
+          - linux/mips64le
+          - linux/ppc64
+          - linux/ppc64le
+          - linux/riscv64
+          - linux/s390x
+          - linux/x86_64
+          - netbsd/386
+          - netbsd/amd64
+          - netbsd/arm
+          - netbsd/arm/v5
+          - netbsd/arm/v6
+          - netbsd/arm/v7
+          - openbsd/386
+          - openbsd/amd64
+          - openbsd/arm
+          - openbsd/arm/v5
+          - openbsd/arm/v6
+          - openbsd/arm/v7
+          - openbsd/arm64
+          - openbsd/arm64/v8
+          - plan9/386
+          - plan9/amd64
+          - plan9/arm
+          - plan9/arm/v5
+          - plan9/arm/v6
+          - plan9/arm/v7
+          - solaris/amd64
+          - windows/386
+          - windows/amd64
+          - windows/arm
+          - windows/arm/v5
+          - windows/arm/v6
+          - windows/arm/v7
+          - windows/arm64
+          - windows/arm64/v8
+          example: linux/amd64
+          type: string
+      - $ref: '#/components/parameters/Names'
+      - $ref: '#/components/parameters/Version'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/StartingAfter'
+      - $ref: '#/components/parameters/EndingBefore'
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/Image'
+                    type: array
+                  jsonapi:
+                    $ref: '#/components/schemas/JsonApi'
+                  links:
+                    $ref: '#/components/schemas/PaginatedLinks'
+                type: object
+          description: Returns a list of container image instances
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: List instances of container image
+      tags:
+      - ContainerImage
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2023-03-08~beta
+      - 2023-08-18~beta
+      - '2023-11-02'
+      x-snyk-api-resource: container_images
+      x-snyk-api-stability: ga
+      x-snyk-api-version: '2023-11-02'
+      x-stability-level: stable
+  /orgs/{org_id}/container_images/{image_id}:
+    get:
+      description: 'Get instance of container image
+
+
+        #### Required permissions
+
+
+        - `View container images (org.container_image.read)`'
+      operationId: getContainerImage
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - description: Org ID
+        in: path
+        name: org_id
+        required: true
+        schema:
+          example: f59045b3-f093-40c3-871d-a334ae30c568
+          format: uuid
+          type: string
+      - $ref: '#/components/parameters/ImageId20231102'
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Image'
+                  jsonapi:
+                    $ref: '#/components/schemas/JsonApi'
+                  links:
+                    $ref: '#/components/schemas/SelfLink'
+                type: object
+          description: Returns an instance of container image
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Get instance of container image
+      tags:
+      - ContainerImage
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2023-03-08~beta
+      - '2023-11-02'
+      x-snyk-api-resource: container_images
+      x-snyk-api-stability: ga
+      x-snyk-api-version: '2023-11-02'
+      x-stability-level: stable
+  /orgs/{org_id}/container_images/{image_id}/relationships/image_target_refs:
+    get:
+      description: 'List instances of image target references for a container image
+
+
+        #### Required permissions
+
+
+        - `View container images (org.container_image.read)`'
+      operationId: listImageTargetRefs
+      parameters:
+      - description: Org ID
+        in: path
+        name: org_id
+        required: true
+        schema:
+          example: f59045b3-f093-40c3-871d-a334ae30c568
+          format: uuid
+          type: string
+      - $ref: '#/components/parameters/ImageId20231102'
+      - $ref: '#/components/parameters/Version'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/StartingAfter'
+      - $ref: '#/components/parameters/EndingBefore'
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/ImageTargetRef'
+                    type: array
+                  jsonapi:
+                    $ref: '#/components/schemas/JsonApi'
+                  links:
+                    $ref: '#/components/schemas/PaginatedLinks'
+                type: object
+          description: Returns a list of image target references for a container image
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: List instances of image target references for a container image
+      tags:
+      - ContainerImage
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2023-08-18~beta
+      - '2023-11-02'
+      x-snyk-api-resource: container_images
+      x-snyk-api-stability: ga
+      x-snyk-api-version: '2023-11-02'
+      x-stability-level: stable
+components:
+  parameters:
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
+    ImageId20231102:
+      description: Image ID
+      in: path
+      name: image_id
+      required: true
+      schema:
+        example: sha256:2bd864580926b790a22c8b96fd74496fe87b3c59c0774fe144bab2788e78e676
+        format: uri
+        pattern: ^sha256(:|%3A)[a-f0-9]{64}$
+        type: string
+    ImageIds:
+      description: A comma-separated list of Image IDs
+      example:
+      - sha256:b26f21f90920dba8401e30b89ad803587f81cce9bd1f92750f963556da2f930f
+      - sha256:28984a62eb713aa5fff922ba06e8689f20e4b2f07de30f3d753b868389c0904f
+      explode: false
+      in: query
+      name: image_ids
+      schema:
+        items:
+          format: uri
+          pattern: ^sha256(:|%3A)[a-f0-9]{64}$
+          type: string
+        maxItems: 100
+        type: array
+      style: form
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
+        type: string
+    Version:
+      description: The requested version of the endpoint to process the request
+      example: '2026-03-25'
+      in: query
+      name: version
+      required: true
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    Limit:
+      description: Number of results to return per page
+      example: 10
+      in: query
+      name: limit
+      schema:
+        default: 10
+        format: int32
+        maximum: 100
+        minimum: 10
+        multipleOf: 10
+        type: integer
+    Names:
+      description: The container registry names
+      example:
+      - gcr.io/snyk/redis:5
+      explode: false
+      in: query
+      name: names
+      schema:
+        items:
+          $ref: '#/components/schemas/ImageName'
+        maxItems: 1
+        type: array
+      style: form
+  headers:
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    VersionStageResponseHeader:
+      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
+
+        '
+      schema:
+        enum:
+        - wip
+        - experimental
+        - beta
+        - ga
+        - deprecated
+        - sunset
+        example: ga
+        type: string
+    RequestIdResponseHeader:
+      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
+
+        '
+      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
+      schema:
+        format: uuid
+        type: string
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
+  schemas:
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
+    ImageDigest:
+      example: sha256:2bd864580926b790a22c8b96fd74496fe87b3c59c0774fe144bab2788e78e676
+      format: uri
+      pattern: ^sha256(:|%3A)[a-f0-9]{64}$
+      type: string
+    Platform:
+      enum:
+      - aix/ppc64
+      - android/386
+      - android/amd64
+      - android/arm
+      - android/arm/v5
+      - android/arm/v6
+      - android/arm/v7
+      - android/arm64
+      - android/arm64/v8
+      - darwin/amd64
+      - darwin/arm
+      - darwin/arm/v5
+      - darwin/arm/v6
+      - darwin/arm/v7
+      - darwin/arm64
+      - darwin/arm64/v8
+      - dragonfly/amd64
+      - freebsd/386
+      - freebsd/amd64
+      - freebsd/arm
+      - freebsd/arm/v5
+      - freebsd/arm/v6
+      - freebsd/arm/v7
+      - illumos/amd64
+      - ios/arm64
+      - ios/arm64/v8
+      - js/wasm
+      - linux/386
+      - linux/amd64
+      - linux/arm
+      - linux/arm/v5
+      - linux/arm/v6
+      - linux/arm/v7
+      - linux/arm64
+      - linux/arm64/v8
+      - linux/loong64
+      - linux/mips
+      - linux/mipsle
+      - linux/mips64
+      - linux/mips64le
+      - linux/ppc64
+      - linux/ppc64le
+      - linux/riscv64
+      - linux/s390x
+      - linux/x86_64
+      - netbsd/386
+      - netbsd/amd64
+      - netbsd/arm
+      - netbsd/arm/v5
+      - netbsd/arm/v6
+      - netbsd/arm/v7
+      - openbsd/386
+      - openbsd/amd64
+      - openbsd/arm
+      - openbsd/arm/v5
+      - openbsd/arm/v6
+      - openbsd/arm/v7
+      - openbsd/arm64
+      - openbsd/arm64/v8
+      - plan9/386
+      - plan9/amd64
+      - plan9/arm
+      - plan9/arm/v5
+      - plan9/arm/v6
+      - plan9/arm/v7
+      - solaris/amd64
+      - windows/386
+      - windows/amd64
+      - windows/arm
+      - windows/arm/v5
+      - windows/arm/v6
+      - windows/arm/v7
+      - windows/arm64
+      - windows/arm64/v8
+      example: linux/amd64
+      type: string
+    JsonApi:
+      additionalProperties: false
+      example:
+        version: '1.0'
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
+      type: object
+    ImageTargetRefAttributes:
+      properties:
+        platform:
+          $ref: '#/components/schemas/Platform'
+        target_id:
+          format: uuid
+          type: string
+        target_reference:
+          type: string
+      type: object
+    QueryVersion:
+      description: Requested API version
+      example: '2026-03-25'
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+      type: string
+    Image:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/ImageAttributes'
+        id:
+          $ref: '#/components/schemas/ImageDigest'
+        relationships:
+          properties:
+            image_target_refs:
+              properties:
+                links:
+                  $ref: '#/components/schemas/SelfLink'
+              type: object
+          type: object
+        type:
+          enum:
+          - container_image
+          type: string
+      required:
+      - type
+      - id
+      - attributes
+      type: object
+    ImageAttributes:
+      properties:
+        layers:
+          items:
+            $ref: '#/components/schemas/ImageDigest'
+          minItems: 1
+          type: array
+        names:
+          items:
+            $ref: '#/components/schemas/ImageName'
+          type: array
+        platform:
+          $ref: '#/components/schemas/Platform'
+      required:
+      - platform
+      - layers
+      type: object
+    ErrorDocument:
+      additionalProperties: false
+      example:
+        errors:
+        - detail: Permission denied for this resource
+          status: '403'
+        jsonapi:
+          version: '1.0'
+      properties:
+        errors:
+          example:
+          - detail: Permission denied for this resource
+            status: '403'
+          items:
+            additionalProperties: false
+            example:
+              detail: Not Found
+              status: '404'
+            properties:
+              code:
+                description: An application-specific error code, expressed as a string value.
+                example: entity-not-found
+                type: string
+              detail:
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: 'The request was missing these required fields: ...'
+                type: string
+              id:
+                description: A unique identifier for this particular occurrence of the problem.
+                example: f16c31b5-6129-4571-add8-d589da9be524
+                format: uuid
+                type: string
+              links:
+                additionalProperties: false
+                description: A link that leads to further details about this particular occurrance of the problem.
+                example:
+                  about: https://example.com/about_this_error
+                properties:
+                  about:
+                    example: https://example.com/api/resource
+                    oneOf:
+                    - description: A string containing the link’s URL.
+                      example: https://example.com/api/resource
+                      type: string
+                    - additionalProperties: false
+                      example:
+                        href: https://example.com/api/resource
+                      properties:
+                        href:
+                          description: A string containing the link’s URL.
+                          example: https://example.com/api/resource
+                          type: string
+                        meta:
+                          additionalProperties: true
+                          description: Free-form object that may contain non-standard information.
+                          example:
+                            key1: value1
+                            key2:
+                              sub_key: sub_value
+                            key3:
+                            - array_value1
+                            - array_value2
+                          type: object
+                      required:
+                      - href
+                      type: object
+                type: object
+              meta:
+                additionalProperties: true
+                example:
+                  key: value
+                type: object
+              source:
+                additionalProperties: false
+                example:
+                  pointer: /data/attributes
+                properties:
+                  parameter:
+                    description: A string indicating which URI query parameter caused the error.
+                    example: param1
+                    type: string
+                  pointer:
+                    description: A JSON Pointer [RFC6901] to the associated entity in the request document.
+                    example: /data/attributes
+                    type: string
+                type: object
+              status:
+                description: The HTTP status code applicable to this problem, expressed as a string value.
+                example: '400'
+                pattern: ^[45]\d\d$
+                type: string
+              title:
+                description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+                example: Bad request
+                type: string
+            required:
+            - status
+            - detail
+            type: object
+          minItems: 1
+          type: array
+        jsonapi:
+          additionalProperties: false
+          example:
+            version: '1.0'
+          properties:
+            version:
+              description: Version of the JSON API specification this server supports.
+              example: '1.0'
+              pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+              type: string
+          required:
+          - version
+          type: object
+      required:
+      - jsonapi
+      - errors
+      type: object
+    ImageTargetRef:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/ImageTargetRefAttributes'
+        id:
+          example: 3cd4af4c-fb15-45c4-9acd-8e8fcc6690af
+          format: uuid
+          type: string
+        type:
+          enum:
+          - image_target_reference
+          type: string
+      type: object
+    SelfLink:
+      additionalProperties: false
+      example:
+        self: https://example.com/api/this_resource
+      properties:
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    ImageName:
+      example: gcr.io/snyk/redis:5
+      pattern: ^((?:(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9])(?:(?:\.(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]))+)?(?::[0-9]+)?\/)?[a-z0-9]+(?:(?:(?:[._]|__|[-]*)[a-z0-9]+)+)?(?:(?:\/[a-z0-9]+(?:(?:(?:[._]|__|[-]*)[a-z0-9]+)+)?)+)?)(?::([\w][\w.-]{0,127}))?(?:@([A-Za-z][A-Za-z0-9]*(?:[-_+.][A-Za-z][A-Za-z0-9]*)*[:][A-Fa-f0-9]{32,}))?$
+      type: string
+    PaginatedLinks:
+      additionalProperties: false
+      example:
+        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
+        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
+        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
+  responses:
+    '400':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Bad Request: A parameter provided as a part of the request was invalid.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '500':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '409':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Conflict: The requested operation conflicts with the current state of the resource in some way.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '404':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Not Found: The resource being operated on could not be found.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '401':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Unauthorized: the request requires an authentication token.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+  securitySchemes:
+    APIToken:
+      description: API key value must be prefixed with \"Token \".
+      in: header
+      name: Authorization
+      type: apiKey
+    BearerAuth:
+      scheme: bearer
+      type: http
+x-snyk-api-version: '2024-10-15'

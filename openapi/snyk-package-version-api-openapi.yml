@@ -1,0 +1,872 @@
+openapi: 3.0.3
+info:
+  title: Snyk AccessRequests Package Version API
+  version: REST
+servers:
+- description: Snyk REST API
+  url: https://api.snyk.io/rest
+security:
+- APIToken: []
+- BearerAuth: []
+tags:
+- name: Package Version
+paths:
+  /orgs/{org_id}/ecosystems/{ecosystem}/packages/{package_name}/versions/{package_version}:
+    get:
+      description: 'Get package version metadata for a specific version of a package from an ecosystem.
+
+
+        **Important:** The security section of `package_health` refers to the **specific version in the request**, not the latest version. Since the `overall_rating` is computed from all health sections (including security), it is also influenced by this version''s security data.
+
+
+        **Supported Ecosystems:** npm, pypi, maven, nuget, golang
+
+
+        **Version Format:** Accepts standard semantic versioning formats (e.g., `1.2.3`, `v1.2.3`). **Note:** Golang commit hashes are NOT supported as version identifiers. Use tagged versions only.
+
+
+        #### Required permissions
+
+
+        - `View Organization (org.read)`'
+      operationId: getPackageVersion
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - description: Org ID
+        in: path
+        name: org_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - $ref: '#/components/parameters/Ecosystem'
+      - $ref: '#/components/parameters/PackageName'
+      - $ref: '#/components/parameters/PackageVersion'
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                additionalProperties: false
+                properties:
+                  data:
+                    additionalProperties: false
+                    description: package version resource object
+                    properties:
+                      attributes:
+                        $ref: '#/components/schemas/PackageVersionAttributes'
+                      id:
+                        description: Package version identifier in PURL format (e.g., pkg:npm/express@4.19.2)
+                        example: pkg:npm/express@4.19.2
+                        format: uri
+                        type: string
+                      package_version:
+                        description: The specific version string of this package
+                        example: 4.19.2
+                        type: string
+                      type:
+                        description: Resource type identifier
+                        example: package_version
+                        type: string
+                    required:
+                    - id
+                    - type
+                    - package_version
+                    type: object
+                  jsonapi:
+                    $ref: '#/components/schemas/JsonApi'
+                  links:
+                    additionalProperties: false
+                    properties:
+                      self:
+                        example: https://api.snyk.io/rest/orgs/12345/ecosystems/npm/packages/express/versions/4.19.2?version=2024-10-15
+                        format: uri
+                        type: string
+                    type: object
+                type: object
+          description: Returns package version metadata
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Get a package version (Early Access)
+      tags:
+      - Package Version
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-10-15~beta
+      x-snyk-api-resource: versions
+      x-snyk-api-stability: beta
+      x-snyk-api-version: 2024-10-15~beta
+      x-stability-level: beta
+components:
+  parameters:
+    PackageVersion:
+      description: 'Package version (URL encoded if needed). Accepts semantic versioning formats (e.g., 1.2.3, v1.2.3).
+
+        Note: Golang commit hashes are NOT supported.
+
+        '
+      in: path
+      name: package_version
+      required: true
+      schema:
+        example: 4.19.2
+        type: string
+    PackageName:
+      description: Package name (URL encoded if needed)
+      in: path
+      name: package_name
+      required: true
+      schema:
+        example: express
+        type: string
+    Version:
+      description: The requested version of the endpoint to process the request
+      example: '2026-03-25'
+      in: query
+      name: version
+      required: true
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    Ecosystem:
+      description: The package ecosystem
+      in: path
+      name: ecosystem
+      required: true
+      schema:
+        enum:
+        - npm
+        - pypi
+        - maven
+        - nuget
+        - golang
+        example: npm
+        type: string
+  schemas:
+    MaintenanceDetails:
+      additionalProperties: false
+      description: Maintenance health signals for the package as a whole, based on repository-level activity. These signals reflect the overall project status. They do not represent the maintenance state of specific versions or version lines.
+      properties:
+        description:
+          description: Human-readable explanation of the maintenance rating
+          type: string
+        first_release_published_at:
+          description: Timestamp of the first release
+          format: date-time
+          type: string
+        forks_count:
+          description: Number of repository forks (>= 0)
+          minimum: 0
+          type: integer
+        is_archived:
+          description: Whether the source repository is archived. This is a repository-level signal. It does not represent the maintenance state of specific versions or version lines.
+          type: boolean
+        is_forked:
+          description: Whether the repository is a fork
+          type: boolean
+        latest_release_number:
+          description: Latest release version string
+          type: string
+        latest_release_published_at:
+          description: Timestamp of the latest release
+          format: date-time
+          type: string
+        lifecycle:
+          description: Package-level lifecycle status as reported by the registry. Reflects the overall package state. It does not represent the maintenance state of specific versions or version lines.
+          enum:
+          - active
+          - archived
+          - deprecated
+          - removed
+          - unpublished
+          type: string
+        rating:
+          description: Package-level maintenance health, reflecting how actively the package repository is being developed and updated. This applies to the project as a whole. It does not represent the maintenance state of specific versions or version lines.
+          enum:
+          - Healthy
+          - Sustainable
+          - Inactive
+          type: string
+        total_versions_count:
+          description: Total number of versions published (>= 0)
+          minimum: 0
+          type: integer
+      required:
+      - is_archived
+      - is_forked
+      - total_versions_count
+      - forks_count
+      type: object
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
+    JsonApi:
+      additionalProperties: false
+      example:
+        version: '1.0'
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
+      type: object
+    BasePackageAttributes:
+      description: Common attributes shared between package and package version resources
+      properties:
+        description:
+          description: Package description from the registry (max 255 characters)
+          example: Fast, unopinionated, minimalist web framework
+          type: string
+        ecosystem:
+          description: The package ecosystem
+          enum:
+          - npm
+          - pypi
+          - maven
+          - nuget
+          - golang
+          example: npm
+          type: string
+        keywords:
+          description: Searchable terms defined by the package maintainer in the registry (e.g., in package.json for npm). Used for package discovery (max 20 keywords).
+          example:
+          - node
+          - javascript
+          - express
+          - server
+          items:
+            type: string
+          type: array
+        language:
+          description: Primary programming language of the package
+          example: JavaScript
+          type: string
+        owner_details:
+          $ref: '#/components/schemas/OwnerDetails'
+        package_health:
+          $ref: '#/components/schemas/PackageHealth'
+        package_id:
+          description: Package identifier in PURL format
+          example: pkg:npm/express
+          type: string
+        package_name:
+          description: Name of the package
+          example: express
+          type: string
+      required:
+      - package_id
+      - ecosystem
+      - package_name
+      - language
+      type: object
+    SecurityDetails:
+      additionalProperties: false
+      description: Security signals for the package
+      properties:
+        description:
+          description: Human-readable explanation of the security rating
+          type: string
+        direct_vulnerabilities:
+          description: Whether the package has direct vulnerabilities
+          type: boolean
+        direct_vulnerabilities_counts:
+          $ref: '#/components/schemas/DirectVulnerabilitiesCounts'
+        direct_vulnerabilities_total:
+          description: Total count of direct vulnerabilities (>= 0)
+          minimum: 0
+          type: integer
+        rating:
+          description: Security rating based on known vulnerabilities
+          enum:
+          - No known security issues
+          - Minor security issues found
+          - Security issues found
+          type: string
+      required:
+      - direct_vulnerabilities
+      - direct_vulnerabilities_total
+      type: object
+    QueryVersion:
+      description: Requested API version
+      example: '2026-03-25'
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+      type: string
+    PackageDetails:
+      description: Base package details with URLs
+      properties:
+        homepage_url:
+          description: Package homepage URL
+          example: https://expressjs.com
+          type: string
+        registry_url:
+          description: Package registry URL
+          example: https://www.npmjs.com/package/express
+          type: string
+        repository_url:
+          description: Source repository URL
+          example: https://github.com/expressjs/express
+          type: string
+      type: object
+    DirectVulnerabilitiesCounts:
+      additionalProperties: false
+      description: Breakdown of direct vulnerabilities by Snyk severity level
+      properties:
+        critical:
+          description: Number of critical severity vulnerabilities (>= 0)
+          minimum: 0
+          type: integer
+        high:
+          description: Number of high severity vulnerabilities (>= 0)
+          minimum: 0
+          type: integer
+        low:
+          description: Number of low severity vulnerabilities (>= 0)
+          minimum: 0
+          type: integer
+        medium:
+          description: Number of medium severity vulnerabilities (>= 0)
+          minimum: 0
+          type: integer
+      required:
+      - critical
+      - high
+      - medium
+      - low
+      type: object
+    ErrorDocument:
+      additionalProperties: false
+      example:
+        errors:
+        - detail: Permission denied for this resource
+          status: '403'
+        jsonapi:
+          version: '1.0'
+      properties:
+        errors:
+          example:
+          - detail: Permission denied for this resource
+            status: '403'
+          items:
+            additionalProperties: false
+            example:
+              detail: Not Found
+              status: '404'
+            properties:
+              code:
+                description: An application-specific error code, expressed as a string value.
+                example: entity-not-found
+                type: string
+              detail:
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: 'The request was missing these required fields: ...'
+                type: string
+              id:
+                description: A unique identifier for this particular occurrence of the problem.
+                example: f16c31b5-6129-4571-add8-d589da9be524
+                format: uuid
+                type: string
+              links:
+                additionalProperties: false
+                description: A link that leads to further details about this particular occurrance of the problem.
+                example:
+                  about: https://example.com/about_this_error
+                properties:
+                  about:
+                    example: https://example.com/api/resource
+                    oneOf:
+                    - description: A string containing the link’s URL.
+                      example: https://example.com/api/resource
+                      type: string
+                    - additionalProperties: false
+                      example:
+                        href: https://example.com/api/resource
+                      properties:
+                        href:
+                          description: A string containing the link’s URL.
+                          example: https://example.com/api/resource
+                          type: string
+                        meta:
+                          additionalProperties: true
+                          description: Free-form object that may contain non-standard information.
+                          example:
+                            key1: value1
+                            key2:
+                              sub_key: sub_value
+                            key3:
+                            - array_value1
+                            - array_value2
+                          type: object
+                      required:
+                      - href
+                      type: object
+                type: object
+              meta:
+                additionalProperties: true
+                example:
+                  key: value
+                type: object
+              source:
+                additionalProperties: false
+                example:
+                  pointer: /data/attributes
+                properties:
+                  parameter:
+                    description: A string indicating which URI query parameter caused the error.
+                    example: param1
+                    type: string
+                  pointer:
+                    description: A JSON Pointer [RFC6901] to the associated entity in the request document.
+                    example: /data/attributes
+                    type: string
+                type: object
+              status:
+                description: The HTTP status code applicable to this problem, expressed as a string value.
+                example: '400'
+                pattern: ^[45]\d\d$
+                type: string
+              title:
+                description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+                example: Bad request
+                type: string
+            required:
+            - status
+            - detail
+            type: object
+          minItems: 1
+          type: array
+        jsonapi:
+          additionalProperties: false
+          example:
+            version: '1.0'
+          properties:
+            version:
+              description: Version of the JSON API specification this server supports.
+              example: '1.0'
+              pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+              type: string
+          required:
+          - version
+          type: object
+      required:
+      - jsonapi
+      - errors
+      type: object
+    PackageVersionAttributes:
+      allOf:
+      - $ref: '#/components/schemas/BasePackageAttributes'
+      - properties:
+          latest_version_indicator:
+            description: Whether this is the latest version of the package
+            example: true
+            type: boolean
+          package_details:
+            $ref: '#/components/schemas/PackageVersionDetails'
+          package_version:
+            description: The specific version string of this package
+            example: 4.19.2
+            type: string
+          package_version_id:
+            description: Package version identifier in PURL format (e.g., pkg:npm/express@4.19.2)
+            example: pkg:npm/express@4.19.2
+            type: string
+          published_at:
+            description: Timestamp when this version was published
+            example: '2024-10-08T00:00:00Z'
+            format: date-time
+            type: string
+        required:
+        - package_version_id
+        - package_version
+        - latest_version_indicator
+        type: object
+      description: Attributes for a package version resource
+      example:
+        ecosystem: npm
+        language: JavaScript
+        latest_version_indicator: true
+        owner_details:
+          followers_count: 123
+          location: somewhere
+          name: expressjs
+          repositories_count: 45
+          total_stars: 65000
+        package_details:
+          download_url: https://registry.npmjs.org/express/-/express-4.19.2.tgz
+          homepage_url: https://expressjs.com
+          registry_url: https://www.npmjs.com/package/express
+          registry_version_url: https://www.npmjs.com/package/express/v/4.19.2
+          repository_url: https://github.com/expressjs/express
+        package_health:
+          community:
+            description: '...'
+            has_code_of_conduct_file: true
+            has_contributing_file: true
+            has_funding_file: false
+            has_readme_file: true
+            rating: Active
+            stargazers_count: 75000
+          description: The package has mixed or concerning signals that require closer review. Applies to medium, high, and critical vulnerabilities. Low-severity vulnerabilities are excluded.
+          maintenance:
+            description: '...'
+            first_release_published_at: '2010-01-03T00:00:00Z'
+            forks_count: 66
+            is_archived: false
+            is_forked: false
+            latest_release_number: 4.19.2
+            latest_release_published_at: '2024-10-08T00:00:00Z'
+            lifecycle: active
+            rating: Healthy
+            total_versions_count: 760
+          overall_rating: Review recommended
+          popularity:
+            dependent_packages_count: 280
+            dependent_repos_count: 65000
+            description: '...'
+            downloads: 12000
+            rating: Influential project
+          security:
+            description: '...'
+            direct_vulnerabilities: true
+            direct_vulnerabilities_total: 3
+            rating: Security issues found
+        package_id: pkg:npm/express
+        package_name: express
+        package_version: 4.19.2
+        package_version_id: pkg:npm/express@4.19.2
+        published_at: '2024-10-08T00:00:00Z'
+    PackageVersionDetails:
+      allOf:
+      - $ref: '#/components/schemas/PackageDetails'
+      - properties:
+          download_url:
+            description: Direct download URL for this version
+            example: https://registry.npmjs.org/express/-/express-4.19.2.tgz
+            type: string
+          registry_version_url:
+            description: Registry URL for this specific version
+            example: https://www.npmjs.com/package/express/v/4.19.2
+            type: string
+        type: object
+    CommunityDetails:
+      additionalProperties: false
+      description: Community health signals for the package
+      properties:
+        description:
+          description: Human-readable explanation of the community rating
+          type: string
+        has_code_of_conduct_file:
+          description: Whether the repository has a CODE_OF_CONDUCT file
+          type: boolean
+        has_contributing_file:
+          description: Whether the repository has a CONTRIBUTING file
+          type: boolean
+        has_funding_file:
+          description: Whether the repository has a FUNDING file
+          type: boolean
+        has_readme_file:
+          description: Whether the repository has a README file
+          type: boolean
+        rating:
+          description: Overall community health level, reflecting how active and engaged the package's community appears to be
+          enum:
+          - Active
+          - Sustainable
+          - Limited
+          type: string
+        stargazers_count:
+          description: Number of GitHub stars (>= 0)
+          minimum: 0
+          type: integer
+      required:
+      - has_code_of_conduct_file
+      - has_contributing_file
+      - has_funding_file
+      - has_readme_file
+      - stargazers_count
+      type: object
+    OwnerDetails:
+      additionalProperties: false
+      description: Details about the package owner/maintainer
+      properties:
+        followers_count:
+          description: Number of followers the package owner has on the source platform (e.g., GitHub) (>= 0)
+          minimum: 0
+          type: integer
+        location:
+          description: Owner location
+          type: string
+        name:
+          description: Owner/maintainer name
+          type: string
+        repositories_count:
+          description: Number of repositories owned by the package owner on the source platform (>= 0)
+          minimum: 0
+          type: integer
+        total_stars:
+          description: Total number of stars across all repositories owned by the package owner (>= 0)
+          minimum: 0
+          type: integer
+      required:
+      - followers_count
+      - repositories_count
+      - total_stars
+      type: object
+    PackageHealth:
+      additionalProperties: false
+      description: Overall health assessment of the package based on multiple signals
+      properties:
+        community:
+          $ref: '#/components/schemas/CommunityDetails'
+        description:
+          description: Human-readable explanation of the overall rating
+          type: string
+        maintenance:
+          $ref: '#/components/schemas/MaintenanceDetails'
+        overall_rating:
+          description: Overall health assessment of the package based on security, maintenance, community, and popularity signals
+          enum:
+          - Healthy
+          - Review recommended
+          - Not recommended
+          - Not enough data to compute health status
+          type: string
+        popularity:
+          $ref: '#/components/schemas/PopularityDetails'
+        security:
+          $ref: '#/components/schemas/SecurityDetails'
+      type: object
+    PopularityDetails:
+      additionalProperties: false
+      description: Popularity signals for the package
+      properties:
+        dependent_packages_count:
+          description: Number of packages that depend on this package (>= 0)
+          minimum: 0
+          type: integer
+        dependent_repos_count:
+          description: Number of repositories that depend on this package (>= 0)
+          minimum: 0
+          type: integer
+        description:
+          description: Human-readable explanation of the popularity rating
+          type: string
+        downloads:
+          description: Download count (>= 0)
+          minimum: 0
+          type: integer
+        rating:
+          description: Popularity rating based on downloads and ecosystem usage
+          enum:
+          - Limited
+          - Small
+          - Recognized
+          - Popular
+          - Influential project
+          - Key ecosystem project
+          type: string
+      required:
+      - dependent_packages_count
+      - dependent_repos_count
+      - downloads
+      type: object
+  headers:
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    VersionStageResponseHeader:
+      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
+
+        '
+      schema:
+        enum:
+        - wip
+        - experimental
+        - beta
+        - ga
+        - deprecated
+        - sunset
+        example: ga
+        type: string
+    RequestIdResponseHeader:
+      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
+
+        '
+      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
+      schema:
+        format: uuid
+        type: string
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
+  responses:
+    '400':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Bad Request: A parameter provided as a part of the request was invalid.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '409':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Conflict: The requested operation conflicts with the current state of the resource in some way.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '500':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '404':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Not Found: The resource being operated on could not be found.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '401':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Unauthorized: the request requires an authentication token.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+  securitySchemes:
+    APIToken:
+      description: API key value must be prefixed with \"Token \".
+      in: header
+      name: Authorization
+      type: apiKey
+    BearerAuth:
+      scheme: bearer
+      type: http
+x-snyk-api-version: '2024-10-15'

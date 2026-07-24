@@ -1,0 +1,1031 @@
+openapi: 3.0.3
+info:
+  title: Snyk AccessRequests Learn assignment API
+  version: REST
+servers:
+- description: Snyk REST API
+  url: https://api.snyk.io/rest
+security:
+- APIToken: []
+- BearerAuth: []
+tags:
+- name: Learn assignment
+paths:
+  /orgs/{org_id}/learn/assignments:
+    delete:
+      deprecated: true
+      description: 'Allows an admin to delete multiple assignments within their organization.
+
+
+        **Note**: Assignments that are part of a Learning Program cannot be deleted through this endpoint.
+
+
+        #### Required permissions
+
+
+        - `Delete assignments (org.learn_assignment.delete)`'
+      operationId: deleteOrgAssignments
+      parameters:
+      - description: The unique identifier of the organization.
+        in: path
+        name: org_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/DeleteAssignmentsRequest'
+        required: true
+      responses:
+        '204':
+          description: Assignments were successfully deleted.
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ErrorDocument'
+          description: Conflict - The assignment cannot be deleted because it is part of a Learning Program.
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Bulk deletion of assignments in an organization (Early Access)
+      tags:
+      - Learn assignment
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-10-13~beta
+      x-snyk-api-resource: assignments
+      x-snyk-api-stability: beta
+      x-snyk-api-version: 2024-10-13~beta
+      x-snyk-deprecated-by: 2024-10-15~beta
+      x-snyk-documentation:
+        category: learn
+      x-stability-level: beta
+    get:
+      description: 'Allows an admin to obtain a comprehensive list of all assignments within their organization.
+
+
+        #### Required permissions
+
+
+        - `View Organization assignments (org.learn_assignment.read)`'
+      operationId: listOrgAssignments
+      parameters:
+      - description: The unique identifier of the organization.
+        in: path
+        name: org_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/StartingAfter'
+      - $ref: '#/components/parameters/EndingBefore'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/LessonAssignmentDecoratedResource'
+                    type: array
+                  jsonapi:
+                    $ref: '#/components/schemas/JsonApi'
+                  links:
+                    $ref: '#/components/schemas/PaginatedLinks'
+                required:
+                - jsonapi
+                - links
+                - data
+                type: object
+          description: A list of assignments was successfully retrieved.
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Retrieve a list of assignments for an organization (Early Access)
+      tags:
+      - Learn assignment
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-10-13~beta
+      x-snyk-api-resource: assignments
+      x-snyk-api-stability: beta
+      x-snyk-api-version: 2024-10-13~beta
+      x-snyk-documentation:
+        category: learn
+      x-stability-level: beta
+    patch:
+      description: 'Allows an admin to update the due date for existing assignments within their organization.
+
+
+        #### Required permissions
+
+
+        - `Edit assignments (org.learn_assignment.edit)`'
+      operationId: updateOrgAssignments
+      parameters:
+      - description: The unique identifier of the organization.
+        in: path
+        name: org_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              properties:
+                data:
+                  additionalProperties: false
+                  properties:
+                    attributes:
+                      $ref: '#/components/schemas/UpdateAssignmentsPayload'
+                    id:
+                      format: uuid
+                      type: string
+                    type:
+                      $ref: '#/components/schemas/Types'
+                  required:
+                  - id
+                  - type
+                  - attributes
+                  type: object
+              required:
+              - data
+              type: object
+        required: true
+      responses:
+        '204':
+          description: Assignments due date was successfully updated.
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Update due date for assignments in an organization. (Early Access)
+      tags:
+      - Learn assignment
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-10-15~beta
+      x-snyk-api-resource: assignments
+      x-snyk-api-stability: beta
+      x-snyk-api-version: 2024-10-15~beta
+      x-snyk-documentation:
+        category: learn
+      x-stability-level: beta
+    post:
+      description: 'Allows an admin to create assignments in bulk for all or a subset of users within their organization.
+
+
+        #### Required permissions
+
+
+        - `Create assignments (org.learn_assignment.create)`'
+      operationId: createOrgAssignments
+      parameters:
+      - description: The unique identifier of the organization.
+        in: path
+        name: org_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/CreateAssignmentsPayload'
+        required: true
+      responses:
+        '204':
+          description: Assignments were successfully created.
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Bulk creation of assignments for users in an organization. (Early Access)
+      tags:
+      - Learn assignment
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-10-14~experimental
+      - 2024-10-15~beta
+      x-snyk-api-resource: assignments
+      x-snyk-api-stability: beta
+      x-snyk-api-version: 2024-10-15~beta
+      x-snyk-documentation:
+        category: learn
+      x-stability-level: beta
+  /orgs/{org_id}/learn/assignments/bulk_delete:
+    post:
+      description: 'Allows an admin to delete multiple assignments within their organization.
+
+
+        **Note**: Assignments that are part of a Learning Program cannot be deleted through this endpoint.
+
+
+        #### Required permissions
+
+
+        - `Delete assignments (org.learn_assignment.delete)`'
+      operationId: deleteOrgAssignmentsBulk
+      parameters:
+      - description: The unique identifier of the organization.
+        in: path
+        name: org_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/DeleteOrgAssignmentsBulkRequest'
+        required: true
+      responses:
+        '204':
+          description: Assignments were successfully deleted.
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ErrorDocument'
+          description: Conflict - The assignment cannot be deleted because it is part of a Learning Program.
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Bulk deletion of assignments in an organization (Early Access)
+      tags:
+      - Learn assignment
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-10-15~beta
+      x-snyk-api-resource: assignments
+      x-snyk-api-stability: beta
+      x-snyk-api-version: 2024-10-15~beta
+      x-snyk-documentation:
+        category: learn
+      x-stability-level: beta
+components:
+  parameters:
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
+        type: string
+    Limit:
+      description: Number of results to return per page
+      example: 10
+      in: query
+      name: limit
+      schema:
+        default: 10
+        format: int32
+        maximum: 100
+        minimum: 10
+        multipleOf: 10
+        type: integer
+    ApiVersion:
+      description: The requested version of the endpoint to process the request
+      example: '2025-11-05'
+      in: query
+      name: version
+      required: true
+      schema:
+        default: '2025-11-05'
+        description: Requested API version
+        pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+        type: string
+  headers:
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    VersionStageResponseHeader:
+      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
+
+        '
+      schema:
+        enum:
+        - wip
+        - experimental
+        - beta
+        - ga
+        - deprecated
+        - sunset
+        example: ga
+        type: string
+    RequestIdResponseHeader:
+      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
+
+        '
+      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
+      schema:
+        format: uuid
+        type: string
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
+  schemas:
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
+    AssignmentCreationAttributes:
+      properties:
+        learning_path_ids:
+          description: "Optional array of learning path IDs for tracking and metadata purposes only.\n\n**Important:** This field does NOT automatically expand learning paths into lessons. \nYou must explicitly provide all lesson IDs in the **lesson_ids** field.\n\nUse this field to record which learning paths these lessons belong to for reporting \nand analytics purposes.\n"
+          example:
+          - 30526dd7-efbd-4254-a963-3e6383c6ebdc
+          items:
+            type: string
+          type: array
+        lesson_ids:
+          description: 'Array of lesson IDs to assign. Must contain at least one lesson ID.
+
+
+            **To assign all lessons from a learning path:**
+
+            1. Call [List Snyk Learn''s resources](#operation/listLearnCatalog) (GET /rest/learn/catalog)
+
+            2. Find the learning path in the response data array
+
+            3. Extract the **lesson_ids** array from the learning path''s **attributes**
+
+            4. Pass those lesson IDs to this field
+
+            '
+          example:
+          - 215947a8-d678-50aa-56e0-270c983b4c48
+          - 12cde434-5fcb-4c9c-92d0-c4040b735a77
+          - 83bc3aa6-df84-478c-8b46-f8499a60129f
+          - eb44604a-48e2-49af-d86b-8ddc2ead52b0
+          - 2bcea8ed-fb48-4563-9c1a-10e37bbf70c6
+          - af794526-aa3b-476b-9d20-6806ea87f0b6
+          - f654aed0-4c94-4e83-791f-6d39630ce0ed
+          - 7ebd499c-973e-4ec0-4d93-07dbe68a9d9b
+          - cd0b4c2b-b6c9-4c04-f3dd-4094a2819b36
+          - ab3f6f4c-3a45-4388-32b0-5f97e24d46b6
+          items:
+            type: string
+          minItems: 1
+          type: array
+        user_ids:
+          description: Array of user IDs (UUIDs) to assign lessons to. Must contain at least one user ID.
+          example:
+          - 00000000-0000-0000-0000-000000000001
+          items:
+            format: uuid
+            type: string
+          minItems: 1
+          type: array
+      required:
+      - user_ids
+      - lesson_ids
+      type: object
+    JsonApi:
+      additionalProperties: false
+      example:
+        version: '1.0'
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
+      type: object
+    LessonAssignmentDecoratedAttributes:
+      allOf:
+      - $ref: '#/components/schemas/LessonAssignmentRecordAttributes'
+      - properties:
+          assigning_user_email:
+            type: string
+          is_active:
+            type: boolean
+          learning_path_ids:
+            items:
+              format: uuid
+              type: string
+            type: array
+          learning_program_id:
+            format: uuid
+            type: string
+          lesson_created_at:
+            format: date-time
+            type: string
+          lesson_slug:
+            type: string
+          lesson_title:
+            type: string
+          lesson_updated_at:
+            format: date-time
+            type: string
+          user_email:
+            format: email
+            type: string
+        required:
+        - user_email
+        - lesson_title
+        - lesson_slug
+        - lesson_created_at
+        - lesson_updated_at
+        type: object
+    LessonAssignmentCreationAttributes:
+      properties:
+        due_date:
+          format: date
+          type: string
+        lesson_id:
+          type: string
+        user_id:
+          format: uuid
+          type: string
+      required:
+      - user_id
+      - lesson_id
+      type: object
+    QueryVersion:
+      description: Requested API version
+      example: '2026-03-25'
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+      type: string
+    DeleteAssignmentsRequest:
+      properties:
+        data:
+          items:
+            properties:
+              id:
+                format: uuid
+                type: string
+              type:
+                enum:
+                - lesson_assignment
+                type: string
+            required:
+            - id
+            - type
+            type: object
+          type: array
+      required:
+      - data
+      type: object
+    LessonAssignmentRecordAttributes:
+      allOf:
+      - $ref: '#/components/schemas/LessonAssignmentCreationAttributes'
+      - properties:
+          assigning_user_id:
+            format: uuid
+            type: string
+          completed_date:
+            format: date-time
+            type: string
+          created_at:
+            format: date-time
+            type: string
+          updated_at:
+            format: date-time
+            type: string
+        required:
+        - created_at
+        - updated_at
+        - assigning_user_id
+        type: object
+    CreateAssignmentsPayload:
+      properties:
+        contact_email:
+          description: Custom contact email to display in email templates when customized_contact_details is true
+          format: email
+          type: string
+        contact_name:
+          description: Custom contact name to display in email templates when customized_contact_details is true
+          type: string
+        customized_contact_details:
+          default: false
+          description: Flag to indicate if custom contact details should be used in email templates
+          type: boolean
+        data:
+          description: Array of assignment creation objects. Must contain at least one assignment.
+          items:
+            $ref: '#/components/schemas/AssignmentCreationResource'
+          minItems: 1
+          type: array
+        due_date:
+          format: date
+          type: string
+        email_custom_message:
+          description: Custom message given by assignment creator for email notification.
+          type: string
+        email_notification:
+          description: Email notification is enabled or not for new assignment creation
+          type: boolean
+        email_receive_copy:
+          description: Assigner will receive a copy of the email
+          type: boolean
+        reset_learning_progress:
+          description: Global flag to reset progress for all lesson assignments in the request
+          type: boolean
+        reset_progress_before:
+          description: Reset progress for all lesson assignments before this date (exclusive)
+          format: date
+          type: string
+      required:
+      - data
+      type: object
+    ErrorDocument:
+      additionalProperties: false
+      example:
+        errors:
+        - detail: Permission denied for this resource
+          status: '403'
+        jsonapi:
+          version: '1.0'
+      properties:
+        errors:
+          example:
+          - detail: Permission denied for this resource
+            status: '403'
+          items:
+            additionalProperties: false
+            example:
+              detail: Not Found
+              status: '404'
+            properties:
+              code:
+                description: An application-specific error code, expressed as a string value.
+                example: entity-not-found
+                type: string
+              detail:
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: 'The request was missing these required fields: ...'
+                type: string
+              id:
+                description: A unique identifier for this particular occurrence of the problem.
+                example: f16c31b5-6129-4571-add8-d589da9be524
+                format: uuid
+                type: string
+              links:
+                additionalProperties: false
+                description: A link that leads to further details about this particular occurrance of the problem.
+                example:
+                  about: https://example.com/about_this_error
+                properties:
+                  about:
+                    example: https://example.com/api/resource
+                    oneOf:
+                    - description: A string containing the link’s URL.
+                      example: https://example.com/api/resource
+                      type: string
+                    - additionalProperties: false
+                      example:
+                        href: https://example.com/api/resource
+                      properties:
+                        href:
+                          description: A string containing the link’s URL.
+                          example: https://example.com/api/resource
+                          type: string
+                        meta:
+                          additionalProperties: true
+                          description: Free-form object that may contain non-standard information.
+                          example:
+                            key1: value1
+                            key2:
+                              sub_key: sub_value
+                            key3:
+                            - array_value1
+                            - array_value2
+                          type: object
+                      required:
+                      - href
+                      type: object
+                type: object
+              meta:
+                additionalProperties: true
+                example:
+                  key: value
+                type: object
+              source:
+                additionalProperties: false
+                example:
+                  pointer: /data/attributes
+                properties:
+                  parameter:
+                    description: A string indicating which URI query parameter caused the error.
+                    example: param1
+                    type: string
+                  pointer:
+                    description: A JSON Pointer [RFC6901] to the associated entity in the request document.
+                    example: /data/attributes
+                    type: string
+                type: object
+              status:
+                description: The HTTP status code applicable to this problem, expressed as a string value.
+                example: '400'
+                pattern: ^[45]\d\d$
+                type: string
+              title:
+                description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+                example: Bad request
+                type: string
+            required:
+            - status
+            - detail
+            type: object
+          minItems: 1
+          type: array
+        jsonapi:
+          additionalProperties: false
+          example:
+            version: '1.0'
+          properties:
+            version:
+              description: Version of the JSON API specification this server supports.
+              example: '1.0'
+              pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+              type: string
+          required:
+          - version
+          type: object
+      required:
+      - jsonapi
+      - errors
+      type: object
+    AssignmentCreationResource:
+      properties:
+        attributes:
+          $ref: '#/components/schemas/AssignmentCreationAttributes'
+        type:
+          enum:
+          - lesson_assignment
+          type: string
+      required:
+      - type
+      - attributes
+      type: object
+    DeleteOrgAssignmentsBulkRequest:
+      properties:
+        data:
+          description: Array of assignment resource identifiers to delete. Must contain at least one assignment.
+          items:
+            additionalProperties: false
+            properties:
+              id:
+                format: uuid
+                type: string
+              type:
+                enum:
+                - lesson_assignment
+                type: string
+            required:
+            - id
+            - type
+            type: object
+          minItems: 1
+          type: array
+      required:
+      - data
+      type: object
+    Types:
+      example: resource
+      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
+      type: string
+    PaginatedLinks:
+      additionalProperties: false
+      example:
+        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
+        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
+        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    LessonAssignmentDecoratedResource:
+      properties:
+        attributes:
+          $ref: '#/components/schemas/LessonAssignmentDecoratedAttributes'
+        id:
+          format: uuid
+          type: string
+        type:
+          enum:
+          - lesson_assignment
+          type: string
+      required:
+      - id
+      - type
+      - attributes
+      type: object
+    UpdateAssignmentsPayload:
+      properties:
+        assignments_ids:
+          items:
+            format: uuid
+            type: string
+          type: array
+        due_date:
+          format: date
+          type: string
+      required:
+      - assignments_ids
+      - due_date
+      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
+  responses:
+    '400':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Bad Request: A parameter provided as a part of the request was invalid.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '500':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '404':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Not Found: The resource being operated on could not be found.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '401':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Unauthorized: the request requires an authentication token.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+  securitySchemes:
+    APIToken:
+      description: API key value must be prefixed with \"Token \".
+      in: header
+      name: Authorization
+      type: apiKey
+    BearerAuth:
+      scheme: bearer
+      type: http
+x-snyk-api-version: '2024-10-15'

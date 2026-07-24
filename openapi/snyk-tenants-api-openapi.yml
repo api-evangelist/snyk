@@ -1,0 +1,1328 @@
+openapi: 3.0.3
+info:
+  title: Snyk AccessRequests Tenants API
+  version: REST
+servers:
+- description: Snyk REST API
+  url: https://api.snyk.io/rest
+security:
+- APIToken: []
+- BearerAuth: []
+tags:
+- name: Tenants
+paths:
+  /tenants:
+    get:
+      description: Get a list of all Tenants which the calling user is a member of
+      operationId: listTenants
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - $ref: '#/components/parameters/StartingAfter'
+      - $ref: '#/components/parameters/EndingBefore'
+      - $ref: '#/components/parameters/Limit'
+      - description: Only return tenants whose name contains this value.
+        in: query
+        name: name
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                additionalProperties: false
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/TenantResponseData'
+                    type: array
+                  jsonapi:
+                    $ref: '#/components/schemas/JsonApi'
+                  links:
+                    $ref: '#/components/schemas/PaginatedLinks'
+                required:
+                - data
+                - jsonapi
+                - links
+                type: object
+          description: Returns a list of tenants.
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Get a list of all accessible Tenants
+      tags:
+      - Tenants
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-04-11~experimental
+      - '2024-10-15'
+      x-snyk-api-resource: tenants
+      x-snyk-api-stability: ga
+      x-snyk-api-version: '2024-10-15'
+      x-stability-level: stable
+  /tenants/{tenant_id}:
+    get:
+      description: 'Get the full details of a Tenant.
+
+
+        #### Required permissions
+
+
+        - `View Tenant Details (tenant.read)`'
+      operationId: getTenant
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - $ref: '#/components/parameters/TenantId20240411'
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/TenantResponseData'
+                  jsonapi:
+                    $ref: '#/components/schemas/JsonApi'
+                  links:
+                    $ref: '#/components/schemas/SelfLink'
+                type: object
+          description: Returns an instance of a tenant.
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Get a single Tenant by ID
+      tags:
+      - Tenants
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-04-11~experimental
+      - '2024-10-15'
+      x-snyk-api-resource: tenants
+      x-snyk-api-stability: ga
+      x-snyk-api-version: '2024-10-15'
+      x-stability-level: stable
+    patch:
+      description: 'Update the details of a tenant
+
+
+        #### Required permissions
+
+
+        - `Edit Tenant Details (tenant.edit)`'
+      operationId: updateTenant
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - $ref: '#/components/parameters/TenantId20240411'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              properties:
+                data:
+                  additionalProperties: false
+                  properties:
+                    attributes:
+                      $ref: '#/components/schemas/TenantUpdateAttributes'
+                    id:
+                      format: uuid
+                      type: string
+                    type:
+                      $ref: '#/components/schemas/Types'
+                  type: object
+              required:
+              - data
+              type: object
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                additionalProperties: false
+                properties:
+                  data:
+                    additionalProperties: false
+                    description: tenant resource object
+                    properties:
+                      attributes:
+                        $ref: '#/components/schemas/TenantAttributes'
+                      id:
+                        example: d5b640e5-d88c-4c17-9bf0-93597b7a1ce2
+                        format: uuid
+                        type: string
+                      type:
+                        $ref: '#/components/schemas/Types'
+                    required:
+                    - id
+                    - type
+                    type: object
+                  jsonapi:
+                    $ref: '#/components/schemas/JsonApi'
+                  links:
+                    $ref: '#/components/schemas/SelfLink'
+                type: object
+          description: Instance of tenant is updated
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Update tenant
+      tags:
+      - Tenants
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-04-11~experimental
+      - '2024-10-15'
+      x-snyk-api-resource: tenants
+      x-snyk-api-stability: ga
+      x-snyk-api-version: '2024-10-15'
+      x-stability-level: stable
+  /tenants/{tenant_id}/memberships:
+    get:
+      description: 'Returns all memberships of the tenant
+
+
+        #### Required permissions
+
+
+        - `View Tenant Memberships (tenant.membership.read)`'
+      operationId: getTenantMemberships
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - $ref: '#/components/parameters/TenantId__0'
+      - $ref: '#/components/parameters/StartingAfter'
+      - $ref: '#/components/parameters/EndingBefore'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/SortBy'
+      - description: Order in which results are returned.
+        example: ASC
+        in: query
+        name: sort_order
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+      - $ref: '#/components/parameters/EmailFilter'
+      - $ref: '#/components/parameters/UserIdSearchFilter'
+      - $ref: '#/components/parameters/NameFilter'
+      - $ref: '#/components/parameters/UsernameFilter'
+      - $ref: '#/components/parameters/ConnectionTypeFilter'
+      - $ref: '#/components/parameters/RoleFilter'
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ListTenantMembershipResponseData'
+                  jsonapi:
+                    $ref: '#/components/schemas/JsonApi'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                type: object
+          description: List of tenant memberships is returned
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Get all memberships of the tenant (Early Access)
+      tags:
+      - Tenants
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-05-09~experimental
+      - 2024-09-03~beta
+      x-snyk-api-resource: memberships
+      x-snyk-api-stability: beta
+      x-snyk-api-version: 2024-09-03~beta
+      x-stability-level: beta
+  /tenants/{tenant_id}/memberships/{membership_id}:
+    delete:
+      description: 'Delete an individual tenant membership for a single user.
+
+
+        #### Required permissions
+
+
+        - `View Tenant Memberships (tenant.membership.read)`
+
+
+        - `Delete Tenant Memberships (tenant.membership.delete)`'
+      operationId: deleteTenantMembership
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - $ref: '#/components/parameters/MembershipId'
+      - $ref: '#/components/parameters/TenantId__0'
+      responses:
+        '204':
+          description: successfully deleting an individual membership for a single user
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            location:
+              $ref: '#/components/headers/LocationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Delete an individual tenant membership for a single user. (Early Access)
+      tags:
+      - Tenants
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-06-04~experimental
+      - 2024-09-03~beta
+      x-snyk-api-resource: memberships
+      x-snyk-api-stability: beta
+      x-snyk-api-version: 2024-09-03~beta
+      x-stability-level: beta
+    patch:
+      description: 'Update the tenant membership with the new role
+
+
+        #### Required permissions
+
+
+        - `View Tenant Details (tenant.read)`
+
+
+        - `View Tenant Memberships (tenant.membership.read)`
+
+
+        - `Edit Tenant Memberships (tenant.membership.edit)`'
+      operationId: updateTenantMembership
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - $ref: '#/components/parameters/TenantId__0'
+      - $ref: '#/components/parameters/MembershipId'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              properties:
+                data:
+                  $ref: '#/components/schemas/UpdateTenantMembershipRequestData'
+              required:
+              - data
+              type: object
+      responses:
+        '204':
+          description: successfully updated the tenant membership
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            location:
+              schema:
+                type: string
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Update tenant membership (Early Access)
+      tags:
+      - Tenants
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - 2024-06-09~experimental
+      - 2024-09-03~beta
+      x-snyk-api-resource: memberships
+      x-snyk-api-stability: beta
+      x-snyk-api-version: 2024-09-03~beta
+      x-stability-level: beta
+components:
+  parameters:
+    TenantId20240411:
+      description: Unique identifier for tenant
+      in: path
+      name: tenant_id
+      required: true
+      schema:
+        example: b667f176-df52-4b0a-9954-117af6b05ab7
+        format: uuid
+        type: string
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
+        type: string
+    RoleFilter:
+      description: Filter the response for results only with the specified role.
+      in: query
+      name: role_name
+      schema:
+        type: string
+    SortBy:
+      description: Which column to sort by.
+      in: query
+      name: sort_by
+      schema:
+        enum:
+        - username
+        - user_display_name
+        - email
+        - login_method
+        - role_name
+        type: string
+    Version:
+      description: The requested version of the endpoint to process the request
+      example: '2026-03-25'
+      in: query
+      name: version
+      required: true
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    UserIdSearchFilter:
+      description: Filter the response by Users that match the provided user ID
+      in: query
+      name: user_id
+      schema:
+        $ref: '#/components/schemas/UserId'
+    Limit:
+      description: Number of results to return per page
+      example: 10
+      in: query
+      name: limit
+      schema:
+        default: 10
+        format: int32
+        maximum: 100
+        minimum: 10
+        multipleOf: 10
+        type: integer
+    EmailFilter:
+      description: Filter the response by Users that match the provided email
+      in: query
+      name: email
+      schema:
+        type: string
+    TenantId__0:
+      description: Unique identifier of the tenant.
+      in: path
+      name: tenant_id
+      required: true
+      schema:
+        $ref: '#/components/schemas/TenantId__0'
+    UsernameFilter:
+      description: Filter the response by Users that match the provided username
+      in: query
+      name: username
+      schema:
+        type: string
+    MembershipId:
+      description: Unique identifier of the tenant membership.
+      in: path
+      name: membership_id
+      required: true
+      schema:
+        $ref: '#/components/schemas/TenantMembershipId'
+    NameFilter:
+      description: Filter the response by Users that match the provided name
+      in: query
+      name: name
+      schema:
+        type: string
+    ConnectionTypeFilter:
+      description: Filter the response by Users that match the provided connection type
+      in: query
+      name: connection_type
+      schema:
+        type: string
+  schemas:
+    TenantMembershipTenantRoleRelationshipBasic:
+      additionalProperties: false
+      description: The role held by the user in the tenant.
+      properties:
+        data:
+          $ref: '#/components/schemas/TenantMembershipTenantRoleRelationshipDataBasic'
+      required:
+      - data
+      type: object
+    UserUsername:
+      description: The username of the user.
+      example: username
+      type: string
+    UserName:
+      description: The real name of the user.
+      example: Firstname Lastname
+      type: string
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
+    UpdateTenantMembershipRequestRelationships:
+      additionalProperties: false
+      properties:
+        role:
+          $ref: '#/components/schemas/TenantMembershipTenantRoleRelationshipBasic'
+      required:
+      - role
+      type: object
+    ReadTenantMembershipResponseRelationships:
+      additionalProperties: false
+      properties:
+        role:
+          $ref: '#/components/schemas/TenantMembershipTenantRoleRelationshipFull'
+        tenant:
+          $ref: '#/components/schemas/TenantMembershipTenantRelationshipFull'
+        user:
+          $ref: '#/components/schemas/TenantMembershipUserRelationshipFullWithMeta'
+      required:
+      - role
+      - tenant
+      - user
+      type: object
+    TenantMembershipTenantRoleRelationshipDataFull:
+      additionalProperties: false
+      properties:
+        attributes:
+          additionalProperties: false
+          properties:
+            name:
+              $ref: '#/components/schemas/TenantRoleName'
+          required:
+          - name
+          type: object
+        id:
+          $ref: '#/components/schemas/TenantRoleId'
+        type:
+          $ref: '#/components/schemas/TenantRoleType'
+      required:
+      - id
+      - type
+      - attributes
+      type: object
+    UserType:
+      description: Resource type for users.
+      enum:
+      - user
+      type: string
+    UserLoginMethod:
+      description: The authentication method used by the user.
+      example: saml
+      type: string
+    JsonApi:
+      additionalProperties: false
+      example:
+        version: '1.0'
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
+      type: object
+    TenantUpdateAttributes:
+      additionalProperties: false
+      properties:
+        name:
+          description: The display name of the tenant.
+          example: My Tenant
+          maxLength: 60
+          minLength: 1
+          type: string
+      required:
+      - name
+      type: object
+    TenantMembershipResponseAttributes:
+      additionalProperties: false
+      properties:
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+      required:
+      - created_at
+      type: object
+    UserIsActive:
+      description: Whether the user is active.
+      example: true
+      type: boolean
+    TenantMembershipUserRelationshipDataAttributes:
+      additionalProperties: false
+      properties:
+        account_type:
+          $ref: '#/components/schemas/UserAccountType'
+        active:
+          $ref: '#/components/schemas/UserIsActive'
+        email:
+          $ref: '#/components/schemas/UserEmail'
+        login_method:
+          $ref: '#/components/schemas/UserLoginMethod'
+        name:
+          $ref: '#/components/schemas/UserName'
+        username:
+          $ref: '#/components/schemas/UserUsername'
+      required:
+      - name
+      - email
+      - login_method
+      type: object
+    QueryVersion:
+      description: Requested API version
+      example: '2026-03-25'
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+      type: string
+    TenantMembershipType:
+      description: Resource type for tenant memberships.
+      enum:
+      - tenant_membership
+      type: string
+    TenantRoleType:
+      description: Resource type for tenant roles.
+      enum:
+      - tenant_role
+      type: string
+    TenantRoleName:
+      description: The display name of the role.
+      example: Role name
+      type: string
+    TenantMembershipTenantRoleRelationshipDataBasic:
+      additionalProperties: false
+      properties:
+        id:
+          $ref: '#/components/schemas/TenantRoleId'
+        type:
+          $ref: '#/components/schemas/TenantRoleType'
+      required:
+      - id
+      - type
+      type: object
+    UpdateTenantMembershipRequestData:
+      additionalProperties: false
+      properties:
+        attributes:
+          additionalProperties: false
+          type: object
+        id:
+          $ref: '#/components/schemas/TenantMembershipId'
+        relationships:
+          $ref: '#/components/schemas/UpdateTenantMembershipRequestRelationships'
+        type:
+          $ref: '#/components/schemas/TenantMembershipType'
+      required:
+      - id
+      - type
+      - relationships
+      type: object
+    TenantRelationships:
+      properties:
+        owner:
+          properties:
+            data:
+              properties:
+                id:
+                  example: b667f176-df52-4b0a-9954-117af6b05ab7
+                  format: uuid
+                  type: string
+                type:
+                  description: The type of the resource. Always 'user'.
+                  example: user
+                  type: string
+              required:
+              - id
+              - type
+              type: object
+          required:
+          - data
+          type: object
+      type: object
+    UserId:
+      description: Unique identifier for a user.
+      example: 00000000-0000-0000-0000-000000000000
+      format: uuid
+      type: string
+    UserAccountType:
+      description: The type of the user account.
+      example: user
+      type: string
+    ErrorDocument:
+      additionalProperties: false
+      example:
+        errors:
+        - detail: Permission denied for this resource
+          status: '403'
+        jsonapi:
+          version: '1.0'
+      properties:
+        errors:
+          example:
+          - detail: Permission denied for this resource
+            status: '403'
+          items:
+            additionalProperties: false
+            example:
+              detail: Not Found
+              status: '404'
+            properties:
+              code:
+                description: An application-specific error code, expressed as a string value.
+                example: entity-not-found
+                type: string
+              detail:
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: 'The request was missing these required fields: ...'
+                type: string
+              id:
+                description: A unique identifier for this particular occurrence of the problem.
+                example: f16c31b5-6129-4571-add8-d589da9be524
+                format: uuid
+                type: string
+              links:
+                additionalProperties: false
+                description: A link that leads to further details about this particular occurrance of the problem.
+                example:
+                  about: https://example.com/about_this_error
+                properties:
+                  about:
+                    example: https://example.com/api/resource
+                    oneOf:
+                    - description: A string containing the link’s URL.
+                      example: https://example.com/api/resource
+                      type: string
+                    - additionalProperties: false
+                      example:
+                        href: https://example.com/api/resource
+                      properties:
+                        href:
+                          description: A string containing the link’s URL.
+                          example: https://example.com/api/resource
+                          type: string
+                        meta:
+                          additionalProperties: true
+                          description: Free-form object that may contain non-standard information.
+                          example:
+                            key1: value1
+                            key2:
+                              sub_key: sub_value
+                            key3:
+                            - array_value1
+                            - array_value2
+                          type: object
+                      required:
+                      - href
+                      type: object
+                type: object
+              meta:
+                additionalProperties: true
+                example:
+                  key: value
+                type: object
+              source:
+                additionalProperties: false
+                example:
+                  pointer: /data/attributes
+                properties:
+                  parameter:
+                    description: A string indicating which URI query parameter caused the error.
+                    example: param1
+                    type: string
+                  pointer:
+                    description: A JSON Pointer [RFC6901] to the associated entity in the request document.
+                    example: /data/attributes
+                    type: string
+                type: object
+              status:
+                description: The HTTP status code applicable to this problem, expressed as a string value.
+                example: '400'
+                pattern: ^[45]\d\d$
+                type: string
+              title:
+                description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+                example: Bad request
+                type: string
+            required:
+            - status
+            - detail
+            type: object
+          minItems: 1
+          type: array
+        jsonapi:
+          additionalProperties: false
+          example:
+            version: '1.0'
+          properties:
+            version:
+              description: Version of the JSON API specification this server supports.
+              example: '1.0'
+              pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+              type: string
+          required:
+          - version
+          type: object
+      required:
+      - jsonapi
+      - errors
+      type: object
+    TenantMembershipUserRelationshipDataFullWithMeta:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/TenantMembershipUserRelationshipDataAttributes'
+        id:
+          $ref: '#/components/schemas/UserId'
+        meta:
+          additionalProperties: false
+          properties:
+            tenant_owner:
+              description: Whether the user is the owner of the tenant.
+              type: boolean
+          type: object
+        type:
+          $ref: '#/components/schemas/UserType'
+      required:
+      - id
+      - type
+      - attributes
+      type: object
+    TenantName:
+      description: The display name of the tenant.
+      example: My Tenant
+      type: string
+    SelfLink:
+      additionalProperties: false
+      example:
+        self: https://example.com/api/this_resource
+      properties:
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    ListTenantMembershipResponseData:
+      additionalProperties: false
+      items:
+        $ref: '#/components/schemas/TenantMembershipResponseDataObject'
+      type: array
+    TenantMembershipTenantRelationshipDataFull:
+      additionalProperties: false
+      properties:
+        attributes:
+          additionalProperties: false
+          properties:
+            name:
+              $ref: '#/components/schemas/TenantName'
+          required:
+          - name
+          type: object
+        id:
+          $ref: '#/components/schemas/TenantId__0'
+        type:
+          $ref: '#/components/schemas/TenantType'
+      required:
+      - id
+      - type
+      - attributes
+      type: object
+    UserEmail:
+      description: The e-mail address of the user.
+      example: user@example.com
+      type: string
+    TenantAttributes:
+      properties:
+        created_at:
+          description: The time the tenant was created.
+          example: '2022-03-16T00:00:00Z'
+          format: date-time
+          type: string
+        name:
+          description: The display name of the tenant.
+          example: My Tenant
+          type: string
+        slug:
+          description: The canonical (unique and URL-friendly) name of the tenant.
+          example: my-tenant
+          type: string
+        updated_at:
+          description: The time the tenant was last modified.
+          example: '2022-03-16T00:00:00Z'
+          format: date-time
+          type: string
+      required:
+      - name
+      - slug
+      - created_at
+      - updated_at
+      type: object
+    Types:
+      example: resource
+      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
+      type: string
+    TenantRoleId:
+      description: Unique identifier for a tenant role.
+      example: 00000000-0000-0000-0000-000000000000
+      format: uuid
+      type: string
+    Links:
+      additionalProperties: false
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        related:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    TenantId__0:
+      description: Unique identifier for a tenant.
+      example: 00000000-0000-0000-0000-000000000000
+      format: uuid
+      type: string
+    TenantResponseData:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/TenantAttributes'
+        id:
+          description: The Snyk ID of the tenant.
+          example: 59d6d97e-3106-4ebb-b608-352fad9c5b34
+          format: uuid
+          type: string
+        relationships:
+          $ref: '#/components/schemas/TenantRelationships'
+        type:
+          $ref: '#/components/schemas/Types'
+      required:
+      - type
+      - id
+      - attributes
+      type: object
+    TenantMembershipId:
+      description: Unique identifier for a tenant membership.
+      example: 00000000-0000-0000-0000-000000000000
+      format: uuid
+      type: string
+    TenantMembershipUserRelationshipFullWithMeta:
+      additionalProperties: false
+      description: The user to which the membership belongs.
+      properties:
+        data:
+          $ref: '#/components/schemas/TenantMembershipUserRelationshipDataFullWithMeta'
+      required:
+      - data
+      type: object
+    TenantMembershipResponseDataObject:
+      properties:
+        attributes:
+          $ref: '#/components/schemas/TenantMembershipResponseAttributes'
+        id:
+          $ref: '#/components/schemas/TenantMembershipId'
+        relationships:
+          $ref: '#/components/schemas/ReadTenantMembershipResponseRelationships'
+        type:
+          $ref: '#/components/schemas/TenantMembershipType'
+      required:
+      - id
+      - type
+      - attributes
+      - relationships
+      type: object
+    PaginatedLinks:
+      additionalProperties: false
+      example:
+        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
+        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
+        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    TenantMembershipTenantRoleRelationshipFull:
+      additionalProperties: false
+      description: The role held by the user in the tenant.
+      properties:
+        data:
+          $ref: '#/components/schemas/TenantMembershipTenantRoleRelationshipDataFull'
+      required:
+      - data
+      type: object
+    CreatedAt:
+      description: The time at which the resource was created.
+      example: '2022-03-16T00:00:00Z'
+      format: date-time
+      type: string
+    TenantMembershipTenantRelationshipFull:
+      additionalProperties: false
+      description: The tenant to which the membership applies.
+      properties:
+        data:
+          $ref: '#/components/schemas/TenantMembershipTenantRelationshipDataFull'
+      required:
+      - data
+      type: object
+    TenantType:
+      description: Resource type for tenants.
+      enum:
+      - tenant
+      type: string
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
+  headers:
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    VersionStageResponseHeader:
+      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
+
+        '
+      schema:
+        enum:
+        - wip
+        - experimental
+        - beta
+        - ga
+        - deprecated
+        - sunset
+        example: ga
+        type: string
+    RequestIdResponseHeader:
+      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
+
+        '
+      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
+      schema:
+        format: uuid
+        type: string
+    LocationHeader:
+      description: 'A header providing a URL for the location of a resource
+
+        '
+      example: https://example.com/resource/4
+      schema:
+        format: url
+        type: string
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
+  responses:
+    '400':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Bad Request: A parameter provided as a part of the request was invalid.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '204':
+      description: The operation completed successfully with no content
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '409':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Conflict: The requested operation conflicts with the current state of the resource in some way.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '500':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '404':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Not Found: The resource being operated on could not be found.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '401':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Unauthorized: the request requires an authentication token.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+  securitySchemes:
+    APIToken:
+      description: API key value must be prefixed with \"Token \".
+      in: header
+      name: Authorization
+      type: apiKey
+    BearerAuth:
+      scheme: bearer
+      type: http
+x-snyk-api-version: '2024-10-15'

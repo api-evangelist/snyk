@@ -1,0 +1,984 @@
+openapi: 3.0.3
+info:
+  title: Snyk AccessRequests Custom Base Images API
+  version: REST
+servers:
+- description: Snyk REST API
+  url: https://api.snyk.io/rest
+security:
+- APIToken: []
+- BearerAuth: []
+tags:
+- name: Custom Base Images
+paths:
+  /custom_base_images:
+    get:
+      description: 'Get a list of custom base images with support for ordering and filtering.
+
+        Either the org_id or group_id parameters must be set to authorize successfully.
+
+        If sorting by version, the repository filter is required.
+
+        '
+      operationId: getCustomBaseImages
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - $ref: '#/components/parameters/StartingAfter'
+      - $ref: '#/components/parameters/EndingBefore'
+      - $ref: '#/components/parameters/Limit'
+      - description: The ID of the container project that the custom base image is based off of.
+        in: query
+        name: project_id
+        schema:
+          format: uuid
+          type: string
+      - description: The organization ID of the custom base image
+        in: query
+        name: org_id
+        schema:
+          format: uuid
+          type: string
+      - description: The group ID of the custom base image
+        in: query
+        name: group_id
+        schema:
+          format: uuid
+          type: string
+      - $ref: '#/components/parameters/Repository'
+      - $ref: '#/components/parameters/Tag'
+      - $ref: '#/components/parameters/IncludeInRecommendations'
+      - description: "Which column to sort by. \nIf sorting by version, the versioning schema is used.\n"
+        in: query
+        name: sort_by
+        schema:
+          enum:
+          - repository
+          - tag
+          - version
+          type: string
+      - $ref: '#/components/parameters/SortDirection'
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/CustomBaseImageCollectionResponse'
+          description: Returns custom base images
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Get a custom base image collection
+      tags:
+      - Custom Base Images
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - '2023-08-21'
+      - '2023-09-20'
+      - '2024-01-04'
+      - '2024-05-31'
+      x-snyk-api-resource: custombaseimages
+      x-snyk-api-stability: ga
+      x-snyk-api-version: '2024-05-31'
+      x-stability-level: stable
+    post:
+      description: 'In order to create a custom base image, you first need to import your base images into Snyk.
+
+        You can do this through the CLI, UI, or API.
+
+
+        This endpoint marks an image as a custom base image. This means that the image will get
+
+        added to the pool of images from which Snyk can recommend base image upgrades.
+
+
+        Note, after the first image in a repository gets added, a versioning schema cannot be passed in this endpoint.
+
+        To update the versioning schema, the PATCH endpoint must be used.
+
+        '
+      operationId: createCustomBaseImage
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/CustomBaseImagePostRequest'
+        description: The properties used in the creation of a custom base image
+      responses:
+        '201':
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/CustomBaseImageResponse'
+          description: Successfully created a custom base image
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            location:
+              $ref: '#/components/headers/LocationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Create a Custom Base Image from an existing container project
+      tags:
+      - Custom Base Images
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - '2023-08-21'
+      - '2023-09-20'
+      - '2024-01-04'
+      - '2024-05-31'
+      x-snyk-api-resource: custombaseimages
+      x-snyk-api-stability: ga
+      x-snyk-api-version: '2024-05-31'
+      x-stability-level: stable
+  /custom_base_images/{custombaseimage_id}:
+    delete:
+      description: Delete a custom base image resource. (the related container project is unaffected)
+      operationId: deleteCustomBaseImage
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - $ref: '#/components/parameters/CustomBaseImageId'
+      responses:
+        '204':
+          description: Successfully deleted the custom base image
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Delete a custom base image
+      tags:
+      - Custom Base Images
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - '2023-08-21'
+      - '2023-09-20'
+      - '2024-01-04'
+      - '2024-05-31'
+      x-snyk-api-resource: custombaseimages
+      x-snyk-api-stability: ga
+      x-snyk-api-version: '2024-05-31'
+      x-stability-level: stable
+    get:
+      description: Get a custom base image
+      operationId: getCustomBaseImage
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - $ref: '#/components/parameters/CustomBaseImageId'
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/CustomBaseImageResponse'
+          description: Returns a custom base image
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Get a custom base image
+      tags:
+      - Custom Base Images
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - '2023-08-21'
+      - '2023-09-20'
+      - '2024-01-04'
+      - '2024-05-31'
+      x-snyk-api-resource: custombaseimages
+      x-snyk-api-stability: ga
+      x-snyk-api-version: '2024-05-31'
+      x-stability-level: stable
+    patch:
+      description: Updates a custom base image's attributes
+      operationId: updateCustomBaseImage
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - $ref: '#/components/parameters/CustomBaseImageId'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/CustomBaseImagePatchRequest'
+        description: custom base image to be updated
+      responses:
+        '200':
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/CustomBaseImageResponse'
+          description: Returns the updated custom base image
+          headers:
+            deprecation:
+              $ref: '#/components/headers/DeprecationHeader'
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-lifecycle-stage:
+              $ref: '#/components/headers/VersionStageResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+            sunset:
+              $ref: '#/components/headers/SunsetHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      summary: Update a custom base image
+      tags:
+      - Custom Base Images
+      x-snyk-api-lifecycle: released
+      x-snyk-api-releases:
+      - '2023-08-21'
+      - '2023-09-20'
+      - '2024-01-04'
+      - '2024-05-31'
+      x-snyk-api-resource: custombaseimages
+      x-snyk-api-stability: ga
+      x-snyk-api-version: '2024-05-31'
+      x-stability-level: stable
+components:
+  parameters:
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
+    CustomBaseImageId:
+      description: Unique identifier for custom base image
+      in: path
+      name: custombaseimage_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    SortDirection:
+      description: Which direction to sort
+      in: query
+      name: sort_direction
+      schema:
+        default: ASC
+        enum:
+        - ASC
+        - DESC
+        type: string
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
+        type: string
+    Version:
+      description: The requested version of the endpoint to process the request
+      example: '2026-03-25'
+      in: query
+      name: version
+      required: true
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    Limit:
+      description: Number of results to return per page
+      example: 10
+      in: query
+      name: limit
+      schema:
+        default: 10
+        format: int32
+        maximum: 100
+        minimum: 10
+        multipleOf: 10
+        type: integer
+    IncludeInRecommendations:
+      description: Whether this image should be recommended as a base image upgrade
+      in: query
+      name: include_in_recommendations
+      schema:
+        type: boolean
+    Repository:
+      description: The image repository
+      in: query
+      name: repository
+      schema:
+        type: string
+    Tag:
+      description: The image tag
+      in: query
+      name: tag
+      schema:
+        type: string
+  headers:
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    VersionStageResponseHeader:
+      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
+
+        '
+      schema:
+        enum:
+        - wip
+        - experimental
+        - beta
+        - ga
+        - deprecated
+        - sunset
+        example: ga
+        type: string
+    RequestIdResponseHeader:
+      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
+
+        '
+      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
+      schema:
+        format: uuid
+        type: string
+    LocationHeader:
+      description: 'A header providing a URL for the location of a resource
+
+        '
+      example: https://example.com/resource/4
+      schema:
+        format: url
+        type: string
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
+  schemas:
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
+    JsonApi:
+      additionalProperties: false
+      example:
+        version: '1.0'
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
+      type: object
+    QueryVersion:
+      description: Requested API version
+      example: '2026-03-25'
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+      type: string
+    VersioningSchemaSemverType:
+      additionalProperties: false
+      properties:
+        type:
+          enum:
+          - semver
+          example: semver
+          type: string
+      required:
+      - type
+      type: object
+    VersioningSchemaSingleSelectionType:
+      additionalProperties: false
+      description: "The Single Selection Versioning Schema allows manual setting of which image should be given as a recommendation.\n\nOnly one image can be set as the current recommendation. If no images are set as the current selection, \nno recommendation will be given.\n\nIt is recommended to use this versioning schema if your repository's tags aren't supported by the other schemas.\n"
+      properties:
+        is_selected:
+          description: 'Whether this image should be the recommendation. Only one image can be selected at a given time. Setting this
+
+            as true will remove previous selection.
+
+            '
+          example: true
+          type: boolean
+        type:
+          enum:
+          - single-selection
+          example: single-selection
+          type: string
+      required:
+      - type
+      - is_selected
+      type: object
+    CustomBaseImageCollectionResponse:
+      additionalProperties: false
+      properties:
+        data:
+          items:
+            properties:
+              attributes:
+                $ref: '#/components/schemas/CustomBaseImageSnapshot'
+              id:
+                format: uuid
+                type: string
+              type:
+                type: string
+            type: object
+          type: array
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+      required:
+      - data
+      - jsonapi
+      type: object
+    CustomBaseImageAttributes:
+      additionalProperties: false
+      properties:
+        include_in_recommendations:
+          description: "Whether this image should be recommended as a base image upgrade. \nIf set to true, this image could be shown as a base image upgrade to other projects.\nIf set to false this image will never be recommended as an upgrade.\n"
+          example: true
+          type: boolean
+        project_id:
+          description: 'The ID of the container project that the custom base image is based off of.
+
+            The attributes of this custom base image are taken from the latest snapshot at the time of creation.
+
+            This means that no changes should be made to the original project after the creation of the custom base image,
+
+            as new snapshots created from any changes will NOT be picked up.
+
+            '
+          example: 2cab3939-d112-4ef0-836d-e09c87cbe69b
+          format: uuid
+          type: string
+        versioning_schema:
+          $ref: '#/components/schemas/VersioningSchema'
+      required:
+      - project_id
+      - include_in_recommendations
+      type: object
+    ErrorDocument:
+      additionalProperties: false
+      example:
+        errors:
+        - detail: Permission denied for this resource
+          status: '403'
+        jsonapi:
+          version: '1.0'
+      properties:
+        errors:
+          example:
+          - detail: Permission denied for this resource
+            status: '403'
+          items:
+            additionalProperties: false
+            example:
+              detail: Not Found
+              status: '404'
+            properties:
+              code:
+                description: An application-specific error code, expressed as a string value.
+                example: entity-not-found
+                type: string
+              detail:
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: 'The request was missing these required fields: ...'
+                type: string
+              id:
+                description: A unique identifier for this particular occurrence of the problem.
+                example: f16c31b5-6129-4571-add8-d589da9be524
+                format: uuid
+                type: string
+              links:
+                additionalProperties: false
+                description: A link that leads to further details about this particular occurrance of the problem.
+                example:
+                  about: https://example.com/about_this_error
+                properties:
+                  about:
+                    example: https://example.com/api/resource
+                    oneOf:
+                    - description: A string containing the link’s URL.
+                      example: https://example.com/api/resource
+                      type: string
+                    - additionalProperties: false
+                      example:
+                        href: https://example.com/api/resource
+                      properties:
+                        href:
+                          description: A string containing the link’s URL.
+                          example: https://example.com/api/resource
+                          type: string
+                        meta:
+                          additionalProperties: true
+                          description: Free-form object that may contain non-standard information.
+                          example:
+                            key1: value1
+                            key2:
+                              sub_key: sub_value
+                            key3:
+                            - array_value1
+                            - array_value2
+                          type: object
+                      required:
+                      - href
+                      type: object
+                type: object
+              meta:
+                additionalProperties: true
+                example:
+                  key: value
+                type: object
+              source:
+                additionalProperties: false
+                example:
+                  pointer: /data/attributes
+                properties:
+                  parameter:
+                    description: A string indicating which URI query parameter caused the error.
+                    example: param1
+                    type: string
+                  pointer:
+                    description: A JSON Pointer [RFC6901] to the associated entity in the request document.
+                    example: /data/attributes
+                    type: string
+                type: object
+              status:
+                description: The HTTP status code applicable to this problem, expressed as a string value.
+                example: '400'
+                pattern: ^[45]\d\d$
+                type: string
+              title:
+                description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+                example: Bad request
+                type: string
+            required:
+            - status
+            - detail
+            type: object
+          minItems: 1
+          type: array
+        jsonapi:
+          additionalProperties: false
+          example:
+            version: '1.0'
+          properties:
+            version:
+              description: Version of the JSON API specification this server supports.
+              example: '1.0'
+              pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+              type: string
+          required:
+          - version
+          type: object
+      required:
+      - jsonapi
+      - errors
+      type: object
+    SelfLink:
+      additionalProperties: false
+      example:
+        self: https://example.com/api/this_resource
+      properties:
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    CustomBaseImageSnapshot:
+      properties:
+        group_id:
+          format: uuid
+          type: string
+        include_in_recommendations:
+          type: boolean
+        org_id:
+          format: uuid
+          type: string
+        project_id:
+          format: uuid
+          type: string
+        repository:
+          type: string
+        tag:
+          type: string
+      type: object
+    CustomBaseImagePostRequest:
+      additionalProperties: false
+      properties:
+        data:
+          additionalProperties: false
+          properties:
+            attributes:
+              $ref: '#/components/schemas/CustomBaseImageAttributes'
+            type:
+              description: This should always be "custom_base_image"
+              example: custom_base_image
+              type: string
+          required:
+          - type
+          - attributes
+          type: object
+      required:
+      - data
+      type: object
+    VersioningSchema:
+      allOf:
+      - oneOf:
+        - $ref: '#/components/schemas/VersioningSchemaSemverType'
+        - $ref: '#/components/schemas/VersioningSchemaCustomType'
+        - $ref: '#/components/schemas/VersioningSchemaSingleSelectionType'
+      description: "The versioning scheme used by images in the repository.\n\nA versioning schema is a system for identifying and organizing different versions of a project. \nIt is used to track changes and updates to the project over time, and to help users identify which version they are using. \nA versioning schema typically consists of a series of numbers or labels that are incremented to reflect the progression of versions. \nFor example, a versioning schema might use a series of numbers, such as \"1.0\", \"1.1\", \"2.0\", and so on, to indicate major and minor releases of a product. \nA consistent and well-defined versioning schema helps users and tools understand and track the development of a project.\n"
+    CustomBaseImagePatchRequest:
+      additionalProperties: false
+      properties:
+        data:
+          additionalProperties: false
+          properties:
+            attributes:
+              additionalProperties: false
+              minProperties: 1
+              properties:
+                include_in_recommendations:
+                  example: true
+                  type: boolean
+                versioning_schema:
+                  $ref: '#/components/schemas/VersioningSchema'
+              type: object
+            id:
+              description: The ID of the custom base image that should be updated. (Same one used in the URI)
+              format: uuid
+              type: string
+            type:
+              description: This should always be "custom_base_image"
+              example: custom_base_image
+              type: string
+          required:
+          - type
+          - attributes
+          type: object
+      required:
+      - data
+      type: object
+    PaginatedLinks:
+      additionalProperties: false
+      example:
+        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
+        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
+        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    CustomBaseImageResponse:
+      additionalProperties: false
+      properties:
+        data:
+          $ref: '#/components/schemas/CustomBaseImageResource'
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/SelfLink'
+      required:
+      - data
+      - jsonapi
+      type: object
+    CustomBaseImageResource:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/CustomBaseImageAttributes'
+        id:
+          example: 2cab3939-d112-4ef0-836d-e09c87cbe69b
+          format: uuid
+          type: string
+        type:
+          example: custom_base_image
+          type: string
+      required:
+      - id
+      - type
+      - attributes
+      type: object
+    VersioningSchemaCustomType:
+      additionalProperties: false
+      description: "The Custom Schema type is a way for Snyk to understand your company’s container image tag versioning scheme,\nenabling Snyk to give more accurate base image upgrade recommendations.\n\nThis schema type is essentially a regular expression that groups the different parts of an image’s tag into comparable sections.\n\nIf your container image's tags follow a versioning scheme other than Semantic Versioning (SemVer), \nit is highly recommended that you select the \"Custom Versioning\" schema for your image repositories.\n"
+      properties:
+        expression:
+          description: 'The regular expression used to describe the format of tags.
+
+            Keep in mind that backslashes in the expression need to be escaped due to being encompassed in a JSON string.
+
+            '
+          example: (?<C0>.)\-(?<M2>.*)
+          type: string
+        label:
+          description: 'A customizable string that can be set for a custom versioning schema to describe its meaning.
+
+            This label has no function.
+
+            '
+          example: calendar with flavor schema
+          type: string
+        type:
+          enum:
+          - custom
+          type: string
+      required:
+      - type
+      - expression
+      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
+  responses:
+    '400':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Bad Request: A parameter provided as a part of the request was invalid.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '409':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Conflict: The requested operation conflicts with the current state of the resource in some way.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '500':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '404':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Not Found: The resource being operated on could not be found.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '401':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Unauthorized: the request requires an authentication token.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+  securitySchemes:
+    APIToken:
+      description: API key value must be prefixed with \"Token \".
+      in: header
+      name: Authorization
+      type: apiKey
+    BearerAuth:
+      scheme: bearer
+      type: http
+x-snyk-api-version: '2024-10-15'
