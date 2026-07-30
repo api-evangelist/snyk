@@ -7,7 +7,20 @@ description: Snyk is a developer-first security platform covering code, open-sou
   V1 API expose groups, organizations, projects, issues, targets, integrations, audit
   logs, SBOMs, container images, custom base images, webhooks, and exports for application-security
   teams.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/snyk.png
 tags:
 - Security
 - DevSecOps
@@ -21,203 +34,11 @@ created: '2026-05-08'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-- aid: snyk:rest-groups
-  name: Snyk REST API - Groups
-  description: Group-level resource for managing top-level Snyk tenancy. Lists groups,
-    lists organizations within a group, manages group memberships, group-level service
-    accounts, and group-level settings.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Groups
-  - Tenancy
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-  - url: graphql/snyk-graphql.md
-    type: GraphQL
-- aid: snyk:rest-organizations
-  name: Snyk REST API - Organizations
-  description: Manages organizations, organization-level memberships, organization
-    roles, and service accounts. Organizations are the unit at which projects, integrations,
-    and most policy and reporting are scoped.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Organizations
-  - Memberships
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-projects
-  name: Snyk REST API - Projects
-  description: Lists, retrieves, updates, deletes, and re-tests Snyk projects. A project
-    represents a single tracked artifact (code repo, container image, IaC manifest,
-    package manifest). Includes per-project settings, attributes, tags, and policy
-    attachment.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Projects
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-issues
-  name: Snyk REST API - Issues
-  description: Queries open and resolved issues (vulnerabilities, license violations,
-    code weaknesses) across organizations and groups. Supports rich filters by severity,
-    type, project, target, status, and ignore reason for vulnerability management.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Issues
-  - Vulnerabilities
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-targets
-  name: Snyk REST API - Targets
-  description: Lists and manages targets (the upstream import sources - e.g. GitHub
-    repositories, ECR registries, Terraform sources). Each target may carry many projects
-    under different scan types (SCA, SAST, Container, IaC).
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Targets
-  - Import Sources
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-integrations
-  name: Snyk REST API - Integrations
-  description: Manages connections to source-code managers (GitHub, GitLab, Bitbucket,
-    Azure Repos), CI/CD systems, container registries (ECR, ACR, GCR, Docker Hub),
-    and cloud providers used as ingest sources for Snyk scans.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Integrations
-  - SCM
-  - Registries
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-audit-logs
-  name: Snyk REST API - Audit Logs
-  description: Streams group- and organization-scoped audit log events for security
-    and compliance use cases. Returns event type, actor, timestamp, and content hash.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Audit Logs
-  - Compliance
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-sboms
-  name: Snyk REST API - SBOMs
-  description: Generates and exports Software Bill of Materials documents in CycloneDX
-    or SPDX format for a Snyk project, captured from the resolved dependency graph.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - SBOM
-  - CycloneDX
-  - SPDX
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-container-images
-  name: Snyk REST API - Container Images
-  description: Lists and inspects scanned container images and their relationships
-    to projects and target images, including vulnerability and base-image-recommendation
-    views.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Container Images
-  - Container Security
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-custom-base-images
-  name: Snyk REST API - Custom Base Images
-  description: Registers custom base images so Snyk can recommend internal-approved
-    base-image upgrades for container projects.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Custom Base Images
-  - Container Security
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-webhooks
-  name: Snyk REST API - Webhooks
-  description: Subscribes a partner application to Snyk events (project added, issue
-    created, issue ignored, test completed). Each delivery is signed for verification.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Webhooks
-  - Events
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
-- aid: snyk:rest-export
-  name: Snyk REST API - Export
-  description: Asynchronous bulk-export of issues, projects, dependencies, and license
-    data for large estates. Supports column filtering and produces CSV files retrievable
-    from a generated URL.
-  humanURL: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
-  baseURL: https://api.snyk.io/rest
-  tags:
-  - Export
-  - Reporting
-  - Bulk
-  - REST API
-  properties:
-  - type: Documentation
-    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
-  - type: OpenAPI
-    url: openapi/snyk-rest-openapi.json
 - aid: snyk:rest-apps
   name: Snyk REST API - Apps (OAuth)
-  description: Manages Snyk Apps, the OAuth2-based extensibility surface that lets
-    third-party applications act on behalf of Snyk users, organizations, and groups.
+  description: >-
+    Manages Snyk Apps, the OAuth2-based extensibility surface that lets third-party applications act on
+    behalf of Snyk users, organizations, and groups.
   humanURL: https://docs.snyk.io/snyk-api/snyk-apps
   baseURL: https://api.snyk.io/rest
   tags:
@@ -230,10 +51,10 @@ apis:
     url: https://docs.snyk.io/snyk-api/snyk-apps
 - aid: snyk:v1
   name: Snyk V1 API (Legacy)
-  description: The original Snyk REST API. Still in use for project import, monitor,
-    test, and certain reporting endpoints not yet ported to the dated REST API. Subject
-    to end-of-life migration; new integrations should prefer the REST API where coverage
-    exists.
+  description: >-
+    The original Snyk REST API. Still in use for project import, monitor, test, and certain reporting
+    endpoints not yet ported to the dated REST API. Subject to end-of-life migration; new integrations
+    should prefer the REST API where coverage exists.
   humanURL: https://snyk.docs.apiary.io/
   baseURL: https://api.snyk.io/v1
   tags:
@@ -244,6 +65,1663 @@ apis:
   properties:
   - type: Documentation
     url: https://snyk.docs.apiary.io/
+- aid: snyk:snyk-accessrequests-api
+  name: Snyk AccessRequests API
+  description: The AccessRequests API from Snyk — 1 operation(s) for accessrequests.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - AccessRequests
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-accessrequests-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-aibom-api
+  name: Snyk AiBom API
+  description: The AiBom API from Snyk — 4 operation(s) for aibom.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - AiBom
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-aibom-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-apps-api
+  name: Snyk Apps API
+  description: The Apps API from Snyk — 20 operation(s) for apps.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Apps
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-apps-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-asset-api
+  name: Snyk Asset API
+  description: The Asset API from Snyk — 6 operation(s) for asset.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Asset
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-asset-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-audit-logs-api
+  name: Snyk Audit Logs API
+  description: The Audit Logs API from Snyk — 2 operation(s) for audit logs.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Audit Logs
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-audit-logs-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-brokerconnections-api
+  name: Snyk BrokerConnections API
+  description: The BrokerConnections API from Snyk — 7 operation(s) for brokerconnections.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - BrokerConnections
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-brokerconnections-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-brokercontexts-api
+  name: Snyk BrokerContexts API
+  description: The BrokerContexts API from Snyk — 5 operation(s) for brokercontexts.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - BrokerContexts
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-brokercontexts-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-brokerdeployments-api
+  name: Snyk BrokerDeployments API
+  description: The BrokerDeployments API from Snyk — 3 operation(s) for brokerdeployments.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - BrokerDeployments
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-brokerdeployments-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-catalog-resource-api
+  name: Snyk Catalog Resource API
+  description: The Catalog Resource API from Snyk — 1 operation(s) for catalog resource.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Catalog Resource
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-catalog-resource-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-cloud-api
+  name: Snyk Cloud API
+  description: The Cloud API from Snyk — 6 operation(s) for cloud.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Cloud
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-cloud-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-collection-api
+  name: Snyk Collection API
+  description: The Collection API from Snyk — 3 operation(s) for collection.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Collection
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-collection-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-containerimage-api
+  name: Snyk ContainerImage API
+  description: The ContainerImage API from Snyk — 3 operation(s) for containerimage.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - ContainerImage
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-containerimage-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-containerregistryimportpolicy-api
+  name: Snyk ContainerRegistryImportPolicy API
+  description: >-
+    The ContainerRegistryImportPolicy API from Snyk — 3 operation(s) for containerregistryimportpolicy.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - ContainerRegistryImportPolicy
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-containerregistryimportpolicy-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-custom-base-images-api
+  name: Snyk Custom Base Images API
+  description: The Custom Base Images API from Snyk — 2 operation(s) for custom base images.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Custom Base Images
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-custom-base-images-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-deploymentcredentials-api
+  name: Snyk DeploymentCredentials API
+  description: The DeploymentCredentials API from Snyk — 2 operation(s) for deploymentcredentials.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - DeploymentCredentials
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-deploymentcredentials-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-export-api
+  name: Snyk Export API
+  description: The Export API from Snyk — 6 operation(s) for export.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Export
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-export-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-findings-api
+  name: Snyk Findings API
+  description: The Findings API from Snyk — 1 operation(s) for findings.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Findings
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-findings-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-group-api
+  name: Snyk Group API
+  description: The Group API from Snyk — 1 operation(s) for group.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Group
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-group-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-groups-api
+  name: Snyk Groups API
+  description: The Groups API from Snyk — 7 operation(s) for groups.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-groups-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-iacsettings-api
+  name: Snyk IacSettings API
+  description: The IacSettings API from Snyk — 2 operation(s) for iacsettings.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - IacSettings
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-iacsettings-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-integrations-api
+  name: Snyk Integrations API
+  description: The Integrations API from Snyk — 3 operation(s) for integrations.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-integrations-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-inventory-assets-api
+  name: Snyk Inventory Assets API
+  description: The Inventory Assets API from Snyk — 30 operation(s) for inventory assets.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Inventory Assets
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-inventory-assets-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-invites-api
+  name: Snyk Invites API
+  description: The Invites API from Snyk — 2 operation(s) for invites.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Invites
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-invites-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-issues-api
+  name: Snyk Issues API
+  description: The Issues API from Snyk — 6 operation(s) for issues.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Issues
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-issues-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-languagessettings-api
+  name: Snyk LanguagesSettings API
+  description: The LanguagesSettings API from Snyk — 2 operation(s) for languagessettings.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - LanguagesSettings
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-languagessettings-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-learn-assignment-api
+  name: Snyk Learn assignment API
+  description: The Learn assignment API from Snyk — 2 operation(s) for learn assignment.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Learn assignment
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-learn-assignment-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-learn-progress-api
+  name: Snyk Learn progress API
+  description: The Learn progress API from Snyk — 2 operation(s) for learn progress.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Learn progress
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-learn-progress-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-openapi-api
+  name: Snyk OpenAPI API
+  description: The OpenAPI specification for this service.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - OpenAPI
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-openapi-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-opensourcesettings-api
+  name: Snyk OpenSourceSettings API
+  description: The OpenSourceSettings API from Snyk — 4 operation(s) for opensourcesettings.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - OpenSourceSettings
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-opensourcesettings-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-orgs-api
+  name: Snyk Orgs API
+  description: The Orgs API from Snyk — 5 operation(s) for orgs.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Orgs
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-orgs-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-package-api
+  name: Snyk Package API
+  description: The Package API from Snyk — 1 operation(s) for package.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Package
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-package-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-package-version-api
+  name: Snyk Package Version API
+  description: The Package Version API from Snyk — 1 operation(s) for package version.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Package Version
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-package-version-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-personalaccesstoken-api
+  name: Snyk PersonalAccessToken API
+  description: The PersonalAccessToken API from Snyk — 2 operation(s) for personalaccesstoken.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - PersonalAccessToken
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-personalaccesstoken-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-policies-api
+  name: Snyk Policies API
+  description: The Policies API from Snyk — 5 operation(s) for policies.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Policies
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-policies-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-projects-api
+  name: Snyk Projects API
+  description: The Projects API from Snyk — 2 operation(s) for projects.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-projects-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-pull-request-templates-api
+  name: Snyk Pull Request Templates API
+  description: The Pull Request Templates API from Snyk — 1 operation(s) for pull request templates.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Pull Request Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-pull-request-templates-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-sastsettings-api
+  name: Snyk SastSettings API
+  description: The SastSettings API from Snyk — 1 operation(s) for sastsettings.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - SastSettings
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-sastsettings-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-sbom-api
+  name: Snyk SBOM API
+  description: The SBOM API from Snyk — 4 operation(s) for sbom.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - SBOM
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-sbom-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-serviceaccounts-api
+  name: Snyk ServiceAccounts API
+  description: The ServiceAccounts API from Snyk — 6 operation(s) for serviceaccounts.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - ServiceAccounts
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-serviceaccounts-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-slack-api
+  name: Snyk Slack API
+  description: The Slack API from Snyk — 2 operation(s) for slack.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Slack
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-slack-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-slacksettings-api
+  name: Snyk SlackSettings API
+  description: The SlackSettings API from Snyk — 3 operation(s) for slacksettings.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - SlackSettings
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-slacksettings-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-targets-api
+  name: Snyk Targets API
+  description: The Targets API from Snyk — 2 operation(s) for targets.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Targets
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-targets-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-tenantrole-api
+  name: Snyk TenantRole API
+  description: The TenantRole API from Snyk — 2 operation(s) for tenantrole.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - TenantRole
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-tenantrole-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-tenants-api
+  name: Snyk Tenants API
+  description: The Tenants API from Snyk — 4 operation(s) for tenants.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Tenants
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-tenants-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-tests-api
+  name: Snyk Tests API
+  description: The Tests API from Snyk — 3 operation(s) for tests.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Tests
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-tests-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-users-api
+  name: Snyk Users API
+  description: The Users API from Snyk — 3 operation(s) for users.
+  humanURL: https://apidocs.snyk.io/?version=2024-10-15
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-users-api-openapi.yml
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15
+  - type: GraphQL
+    url: graphql/snyk-graphql.md
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Projects
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Targets
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Integrations
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Audit-Logs
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/SBOM
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Container-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Custom-Base-Images
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
+  - type: Documentation
+    url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
 common:
 - type: AgenticAccess
   url: agentic-access/snyk-agentic-access.yml
