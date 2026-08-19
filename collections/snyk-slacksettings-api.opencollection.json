@@ -1,0 +1,291 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests SlackSettings API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SlackSettings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Slack integration default notification settings.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/slack_app/:bot_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "bot_id",
+                "value": "",
+                "type": "path",
+                "description": "Bot ID"
+              }
+            ]
+          },
+          "docs": "Get Slack integration default notification settings for the provided tenant ID and bot ID.\n\n#### Required permissions\n\n- `Install Apps (org.app.install)`"
+        },
+        {
+          "info": {
+            "name": "Create new Slack notification default settings.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/slack_app/:bot_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "bot_id",
+                "value": "",
+                "type": "path",
+                "description": "Bot ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new Slack notification default settings for a given tenant.\n\n#### Required permissions\n\n- `Install Apps (org.app.install)`"
+        },
+        {
+          "info": {
+            "name": "Remove the given Slack App integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/slack_app/:bot_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "bot_id",
+                "value": "",
+                "type": "path",
+                "description": "Bot ID"
+              }
+            ]
+          },
+          "docs": "Remove the given Slack App integration\n\n#### Required permissions\n\n- `Install Apps (org.app.install)`"
+        },
+        {
+          "info": {
+            "name": "Slack notification settings overrides for projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/slack_app/:bot_id/projects",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "bot_id",
+                "value": "",
+                "type": "path",
+                "description": "Bot ID"
+              }
+            ]
+          },
+          "docs": "Slack notification settings overrides for projects. These settings overrides the default settings configured for the tenant.\n\n#### Required permissions\n\n- `Install Apps (org.app.install)`"
+        },
+        {
+          "info": {
+            "name": "Create a new Slack settings override for a given project.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/slack_app/:bot_id/projects/:project_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "bot_id",
+                "value": "",
+                "type": "path",
+                "description": "Bot ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Slack settings override for a project.\n\n#### Required permissions\n\n- `Install Apps (org.app.install)`"
+        },
+        {
+          "info": {
+            "name": "Update Slack notification settings for a project.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/slack_app/:bot_id/projects/:project_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "bot_id",
+                "value": "",
+                "type": "path",
+                "description": "Bot ID"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Slack notification settings for a project.\n\n#### Required permissions\n\n- `Install Apps (org.app.install)`"
+        },
+        {
+          "info": {
+            "name": "Remove Slack settings override for a project.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/slack_app/:bot_id/projects/:project_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "bot_id",
+                "value": "",
+                "type": "path",
+                "description": "Bot ID"
+              }
+            ]
+          },
+          "docs": "Remove Slack settings override for a project.\n\n#### Required permissions\n\n- `Install Apps (org.app.install)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

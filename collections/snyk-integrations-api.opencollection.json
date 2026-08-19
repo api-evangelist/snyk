@@ -1,0 +1,279 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Integrations API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all integrations for an organization (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/integrations",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization public ID"
+              }
+            ]
+          },
+          "docs": "Get all integrations for an organization with cursor-based pagination\n\n#### Required permissions\n\n- `View integrations (org.integration.read)`"
+        },
+        {
+          "info": {
+            "name": "Create an integration for an organization (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/integrations",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization public ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new integration with specified credentials and profile name\n\n#### Required permissions\n\n- `Edit integrations (org.integration.edit)`"
+        },
+        {
+          "info": {
+            "name": "Get a specific integration (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/integrations/:integration_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization public ID"
+              },
+              {
+                "name": "integration_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the integration"
+              }
+            ]
+          },
+          "docs": "Retrieve details for a single integration by its ID\n\n#### Required permissions\n\n- `View integrations (org.integration.read)`"
+        },
+        {
+          "info": {
+            "name": "Update an existing integration (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/integrations/:integration_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization public ID"
+              },
+              {
+                "name": "integration_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the integration"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update attributes of an integration. Supports partial updates - only provided fields will be modified.\n\n**Updateable fields:**\n- `profile_name`: Change the user-defined name for the integration\n- `credentials`: Update AWS region, IAM role ARN, or both\n\n**Immutable fields:**\n- `integration_type`: Cannot be changed after creation\n\nOnly include fields you want to update in the request body. Omitted fields remain unchanged.\n\n#### Required permissions\n\n- `Edit integrations (org.integration.edit)`"
+        },
+        {
+          "info": {
+            "name": "Delete an integration (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/integrations/:integration_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization public ID"
+              },
+              {
+                "name": "integration_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the integration"
+              }
+            ]
+          },
+          "docs": "Permanently delete a container registry integration from an organization.\nBrokered integrations must have broker mode disabled via the V1 API first.\nNOTE: This endpoint performs a hard delete of the integration. The integration\nwill be permanently removed from the database and all associated targets and\nprojects will be orphaned and need to be manually removed.\n\n#### Required permissions\n\n- `Edit integrations (org.integration.edit)`"
+        },
+        {
+          "info": {
+            "name": "Get integration settings (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/integrations/:integration_id/settings",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization public ID"
+              },
+              {
+                "name": "integration_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the integration"
+              }
+            ]
+          },
+          "docs": "Get the settings for a specific integration.\n\n#### Required permissions\n\n- `View integrations (org.integration.read)`"
+        },
+        {
+          "info": {
+            "name": "Update integration settings (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/integrations/:integration_id/settings",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization public ID"
+              },
+              {
+                "name": "integration_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the integration"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the settings for a specific integration. Supports partial updates.\n\n**Updateable fields:**\n- `container_app_scan_enabled`: Enable or disable container application scanning (only applicable to container registry integrations)\n\n#### Required permissions\n\n- `Edit integrations (org.integration.edit)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

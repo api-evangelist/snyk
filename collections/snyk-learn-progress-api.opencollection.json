@@ -1,0 +1,172 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Learn progress API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Learn progress",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get collective learning progress (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/learn/progress/catalog",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization."
+              },
+              {
+                "name": "version",
+                "value": "2025-11-05",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the learn catalog resource type"
+              },
+              {
+                "name": "title",
+                "value": "",
+                "type": "query",
+                "description": "This is deprecated, use Titles instead"
+              },
+              {
+                "name": "cwes",
+                "value": "",
+                "type": "query",
+                "description": "Filter by CWE rules"
+              },
+              {
+                "name": "cves",
+                "value": "",
+                "type": "query",
+                "description": "Filter by CVE rules"
+              }
+            ]
+          },
+          "docs": "Retrieves aggregated counts of users' lesson or learning path statuses (completed, in progress, todo) across all catalog resources for an organization.\n\n#### Required permissions\n\n- `View Organization Snyk Learn Reports (org.learn_report.read)`"
+        },
+        {
+          "info": {
+            "name": "Get individual user learning progress (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/learn/progress/users",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization."
+              },
+              {
+                "name": "version",
+                "value": "2025-11-05",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the learn catalog resource type"
+              },
+              {
+                "name": "title",
+                "value": "",
+                "type": "query",
+                "description": "This is deprecated, use Titles instead"
+              },
+              {
+                "name": "titles",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the title of the learning path or lesson resource"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by progress status of the resources"
+              },
+              {
+                "name": "emails",
+                "value": "john.doe@example.com,jane.smith@example.com",
+                "type": "query",
+                "description": "Filter by user email addresses"
+              },
+              {
+                "name": "completion_interval",
+                "value": "",
+                "type": "query",
+                "description": "Filter by date interval in ISO 8601 format (e.g. 2024-01-01/2024-02-01)"
+              }
+            ]
+          },
+          "docs": "Retrieves detailed learning progress status per user, including completion dates and history for each catalog resource.\n\n#### Required permissions\n\n- `View Organization Snyk Learn Reports (org.learn_report.read)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

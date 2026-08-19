@@ -1,0 +1,190 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests SBOM API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SBOM",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a project’s SBOM document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/projects/:project_id/sbom",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for an organization"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a project"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "The desired SBOM format of the response."
+              },
+              {
+                "name": "exclude",
+                "value": "",
+                "type": "query",
+                "description": "An array of features to be excluded from the generated SBOM."
+              },
+              {
+                "name": "go_module_level",
+                "value": "",
+                "type": "query",
+                "description": "When true, consolidate Go package-level dependencies into module-level components in the SBOM. Only applies to gomodules graphs; default is false."
+              }
+            ]
+          },
+          "docs": "This endpoint lets you retrieve the SBOM document of a software project.\nIt supports the following formats:\n* CycloneDX version 1.6 in JSON (set `format` to `cyclonedx1.6+json`).\n* CycloneDX version 1.6 in XML (set `format` to `cyclonedx1.6+xml`).\n* CycloneDX version 1.5 in JSON (set `format` to `cyclonedx1.5+json`).\n* CycloneDX version 1.5 in XML (set `format` to `cyclonedx1.5+xml`).\n* CycloneDX version 1.4 in JSON (set `format` to `cyclonedx1.4+json`).\n* CycloneDX version 1.4 in XML (set `form"
+        },
+        {
+          "info": {
+            "name": "Create an SBOM test run (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/sbom_tests",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an SBOM test run by supplying an SBOM document. The components contained in the given document will get analyzed for known vulnerabilities. In order for component identification to be successful, they must have a PackageURL (purl) of a supported purl type assigned. Analysis will be skipped for any component that does not fulfill this requirement.\nSupported SBOM formats: CycloneDX 1.4 JSON, CycloneDX 1.5 JSON, CycloneDX 1.6 JSON, SPDX 2.3 JSON\nSupported purl types: apk, cargo, cocoapods, c"
+        },
+        {
+          "info": {
+            "name": "Gets an SBOM test run status (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/sbom_tests/:job_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ]
+          },
+          "docs": "Get an SBOM test run status\n\n#### Required permissions\n\n- `Test Projects (org.project.test)`"
+        },
+        {
+          "info": {
+            "name": "Gets an SBOM test run result (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/sbom_tests/:job_id/results",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ]
+          },
+          "docs": "Get an SBOM test run result\n\n#### Required permissions\n\n- `Test Projects (org.project.test)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

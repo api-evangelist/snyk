@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests OpenAPI API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OpenAPI",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listAPIVersions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/openapi"
+          },
+          "docs": "List available versions of OpenAPI specification"
+        },
+        {
+          "info": {
+            "name": "getAPIVersion",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/openapi/:version",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "The requested version of the API"
+              }
+            ]
+          },
+          "docs": "Get OpenAPI specification effective at version."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

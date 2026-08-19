@@ -1,0 +1,173 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Targets API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Targets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get targets by org ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/targets",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Calculate total amount of filtered results"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the org to return a list of targets"
+              },
+              {
+                "name": "is_private",
+                "value": "",
+                "type": "query",
+                "description": "Return targets that match the provided value of is_private"
+              },
+              {
+                "name": "exclude_empty",
+                "value": "",
+                "type": "query",
+                "description": "Return only the targets that has projects"
+              },
+              {
+                "name": "url",
+                "value": "",
+                "type": "query",
+                "description": "Return targets that match the provided remote_url."
+              },
+              {
+                "name": "source_types",
+                "value": "",
+                "type": "query",
+                "description": "Return targets that match the provided source_types"
+              },
+              {
+                "name": "display_name",
+                "value": "",
+                "type": "query",
+                "description": "Return targets with display names starting with the provided string"
+              },
+              {
+                "name": "created_gte",
+                "value": "2022-01-01T16:00:00Z",
+                "type": "query",
+                "description": "Return only targets which have been created at or after the specified date.\n"
+              }
+            ]
+          },
+          "docs": "Get a list of an organization's targets.\n\n#### Required permissions\n\n- `View Projects (org.project.read)`"
+        },
+        {
+          "info": {
+            "name": "Get target by target ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/targets/:target_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the org to return the target from"
+              },
+              {
+                "name": "target_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the target to return"
+              }
+            ]
+          },
+          "docs": "Get a specified target for an organization.\n\n#### Required permissions\n\n- `View Projects (org.project.read)`"
+        },
+        {
+          "info": {
+            "name": "Delete target by target ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/targets/:target_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the org to delete"
+              },
+              {
+                "name": "target_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the target to delete"
+              }
+            ]
+          },
+          "docs": "Delete the specified target.\n\n#### Required permissions\n\n- `Remove Projects (org.project.delete)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

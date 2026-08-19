@@ -1,0 +1,248 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests ContainerRegistryImportPolicy API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ContainerRegistryImportPolicy",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a container registry import policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/container_import/:integration_id/policy",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "integration_id",
+                "value": "",
+                "type": "path",
+                "description": "Container Registry Integration ID"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              }
+            ]
+          },
+          "docs": "Get a container registry import policy\n\n#### Required permissions\n\n- `View integrations (org.integration.read)`"
+        },
+        {
+          "info": {
+            "name": "Create a container registry import policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/container_import/:integration_id/policy",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "integration_id",
+                "value": "",
+                "type": "path",
+                "description": "Container Registry Integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a container registry import policy\n\n#### Required permissions\n\n- `Edit integrations (org.integration.edit)`"
+        },
+        {
+          "info": {
+            "name": "Update a container registry import policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/container_import/:integration_id/policy",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "integration_id",
+                "value": "",
+                "type": "path",
+                "description": "Container Registry Integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a container registry import policy\n\n#### Required permissions\n\n- `Edit integrations (org.integration.edit)`"
+        },
+        {
+          "info": {
+            "name": "Delete a container registry import policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/container_import/:integration_id/policy",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "integration_id",
+                "value": "",
+                "type": "path",
+                "description": "Container Registry Integration ID"
+              }
+            ]
+          },
+          "docs": "Delete a container registry import policy\n\n#### Required permissions\n\n- `Edit integrations (org.integration.edit)`"
+        },
+        {
+          "info": {
+            "name": "Create a dry run job for a container registry import policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/container_import/:integration_id/policy/dry_run",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "integration_id",
+                "value": "",
+                "type": "path",
+                "description": "Container Registry Integration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an asynchronous dry run job to test a container registry import policy\n\n#### Required permissions\n\n- `Edit integrations (org.integration.edit)`"
+        },
+        {
+          "info": {
+            "name": "Get a dry run job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/container_import/:integration_id/policy/dry_run/:job_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "integration_id",
+                "value": "",
+                "type": "path",
+                "description": "Container Registry Integration ID"
+              },
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "Dry run job ID"
+              }
+            ]
+          },
+          "docs": "Retrieves the status and results of a dry run job\n\n#### Required permissions\n\n- `Edit integrations (org.integration.edit)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

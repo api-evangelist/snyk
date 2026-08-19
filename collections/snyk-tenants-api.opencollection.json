@@ -1,0 +1,280 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Tenants API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tenants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of all accessible Tenants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Only return tenants whose name contains this value."
+              }
+            ]
+          },
+          "docs": "Get a list of all Tenants which the calling user is a member of"
+        },
+        {
+          "info": {
+            "name": "Get a single Tenant by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for tenant"
+              }
+            ]
+          },
+          "docs": "Get the full details of a Tenant.\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "Update tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for tenant"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the details of a tenant\n\n#### Required permissions\n\n- `Edit Tenant Details (tenant.edit)`"
+        },
+        {
+          "info": {
+            "name": "Get all memberships of the tenant (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/memberships",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the tenant."
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "Which column to sort by."
+              },
+              {
+                "name": "sort_order",
+                "value": "ASC",
+                "type": "query",
+                "description": "Order in which results are returned."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter the response by Users that match the provided email"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter the response by Users that match the provided user ID"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter the response by Users that match the provided name"
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Filter the response by Users that match the provided username"
+              },
+              {
+                "name": "connection_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter the response by Users that match the provided connection type"
+              },
+              {
+                "name": "role_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter the response for results only with the specified role."
+              }
+            ]
+          },
+          "docs": "Returns all memberships of the tenant\n\n#### Required permissions\n\n- `View Tenant Memberships (tenant.membership.read)`"
+        },
+        {
+          "info": {
+            "name": "Update tenant membership (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/memberships/:membership_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the tenant."
+              },
+              {
+                "name": "membership_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the tenant membership."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the tenant membership with the new role\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`\n\n- `View Tenant Memberships (tenant.membership.read)`\n\n- `Edit Tenant Memberships (tenant.membership.edit)`"
+        },
+        {
+          "info": {
+            "name": "Delete an individual tenant membership for a single user. (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/memberships/:membership_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "membership_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the tenant membership."
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the tenant."
+              }
+            ]
+          },
+          "docs": "Delete an individual tenant membership for a single user.\n\n#### Required permissions\n\n- `View Tenant Memberships (tenant.membership.read)`\n\n- `Delete Tenant Memberships (tenant.membership.delete)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

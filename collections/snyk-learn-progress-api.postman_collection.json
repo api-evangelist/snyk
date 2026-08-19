@@ -1,0 +1,1533 @@
+{
+  "item": [
+    {
+      "id": "74580135-0098-4e44-8ac9-a664bc8c7eeb",
+      "name": "Learn progress",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bd64984a-b5d8-4f9b-8337-322354adf3d5",
+          "name": "Get collective learning progress (Early Access)",
+          "request": {
+            "name": "Get collective learning progress (Early Access)",
+            "description": {
+              "content": "Retrieves aggregated counts of users' lesson or learning path statuses (completed, in progress, todo) across all catalog resources for an organization.\n\n#### Required permissions\n\n- `View Organization Snyk Learn Reports (org.learn_report.read)`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orgs",
+                ":org_id",
+                "learn",
+                "progress",
+                "catalog"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "2025-11-05",
+                  "description": "(Required) The requested version of the endpoint to process the request"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "Return the page of results immediately after this cursor"
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_before",
+                  "value": "<string>",
+                  "description": "Return the page of results immediately before this cursor"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of results to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "lesson",
+                  "description": "Filter by the learn catalog resource type"
+                },
+                {
+                  "disabled": false,
+                  "key": "title",
+                  "value": "<string>",
+                  "description": "This is deprecated, use Titles instead"
+                },
+                {
+                  "disabled": false,
+                  "key": "cwes",
+                  "value": "<string>",
+                  "description": "Filter by CWE rules"
+                },
+                {
+                  "disabled": false,
+                  "key": "cves",
+                  "value": "<string>",
+                  "description": "Filter by CVE rules"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "org_id",
+                  "description": "(Required) The unique identifier of the organization."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c978470a-1f28-42fa-85d1-0937969e810a",
+              "name": "Organization reporting users overview",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "learn",
+                    "progress",
+                    "catalog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2025-11-05"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "type",
+                      "value": "lesson"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cwes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cves",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The unique identifier of the organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  },\n  \"links\": {\n    \"first\": \"https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K\",\n    \"last\": \"https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K\",\n    \"next\": \"https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K\"\n  },\n  \"data\": [\n    {\n      \"id\": \"55afd877-30d2-a94b-c1f8-c89f7d4a4b55\",\n      \"type\": \"progress\",\n      \"attributes\": {\n        \"todo_count\": 29.65358330715474,\n        \"in_progress_count\": 47.51529261610512,\n        \"completed_count\": 47.55312406311458,\n        \"users_completed_count\": 4752,\n        \"users_in_progress_count\": 1255,\n        \"users_todo_count\": 5381\n      },\n      \"relationships\": {\n        \"catalog\": {\n          \"links\": {\n            \"self\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"lesson\",\n            \"id\": \"string\",\n            \"attributes\": {\n              \"title\": \"string\",\n              \"slug\": \"string\",\n              \"cwes\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ],\n              \"cves\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"740a1f45-b285-cbd4-8683-e677253218bd\",\n      \"type\": \"progress\",\n      \"attributes\": {\n        \"todo_count\": 19.23120016243439,\n        \"in_progress_count\": 93.60802072449705,\n        \"completed_count\": 48.46796396436665,\n        \"users_completed_count\": 91,\n        \"users_in_progress_count\": 6919,\n        \"users_todo_count\": 9395\n      },\n      \"relationships\": {\n        \"catalog\": {\n          \"links\": {\n            \"self\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"lesson\",\n            \"id\": \"string\",\n            \"attributes\": {\n              \"title\": \"string\",\n              \"slug\": \"string\",\n              \"cwes\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ],\n              \"cves\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          }\n        }\n      }\n    }\n  ],\n  \"meta\": {\n    \"total_org_members\": 9891\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c934ec60-e684-40d5-862e-8810deac9871",
+              "name": "Bad Request: A parameter provided as a part of the request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "learn",
+                    "progress",
+                    "catalog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2025-11-05"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "type",
+                      "value": "lesson"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cwes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cves",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The unique identifier of the organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "989c99c0-4ffb-4aa1-ac84-d6a6c46b5941",
+              "name": "Forbidden: the request requires an authentication token with more or different permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "learn",
+                    "progress",
+                    "catalog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2025-11-05"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "type",
+                      "value": "lesson"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cwes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cves",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The unique identifier of the organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "836bbffe-f81a-4a37-876a-a4ec9e54717f",
+              "name": "Not Found: The resource being operated on could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "learn",
+                    "progress",
+                    "catalog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2025-11-05"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "type",
+                      "value": "lesson"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cwes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cves",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The unique identifier of the organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91b57417-069b-434f-9648-38ce1ba40999",
+              "name": "Internal Server Error: An error was encountered while attempting to process the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "learn",
+                    "progress",
+                    "catalog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2025-11-05"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "type",
+                      "value": "lesson"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cwes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cves",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The unique identifier of the organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58d7e0b5-0693-4378-a4ec-474a6f2c249d",
+          "name": "Get individual user learning progress (Early Access)",
+          "request": {
+            "name": "Get individual user learning progress (Early Access)",
+            "description": {
+              "content": "Retrieves detailed learning progress status per user, including completion dates and history for each catalog resource.\n\n#### Required permissions\n\n- `View Organization Snyk Learn Reports (org.learn_report.read)`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orgs",
+                ":org_id",
+                "learn",
+                "progress",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "2025-11-05",
+                  "description": "(Required) The requested version of the endpoint to process the request"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "Return the page of results immediately after this cursor"
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_before",
+                  "value": "<string>",
+                  "description": "Return the page of results immediately before this cursor"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of results to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "lesson",
+                  "description": "Filter by the learn catalog resource type"
+                },
+                {
+                  "disabled": false,
+                  "key": "title",
+                  "value": "<string>",
+                  "description": "This is deprecated, use Titles instead"
+                },
+                {
+                  "disabled": false,
+                  "key": "titles",
+                  "value": "<string>",
+                  "description": "Filter by the title of the learning path or lesson resource"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by progress status of the resources"
+                },
+                {
+                  "disabled": false,
+                  "key": "emails",
+                  "value": "<email>",
+                  "description": "Filter by user email addresses"
+                },
+                {
+                  "disabled": false,
+                  "key": "completion_interval",
+                  "value": "<string>",
+                  "description": "Filter by date interval in ISO 8601 format (e.g. 2024-01-01/2024-02-01)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "org_id",
+                  "description": "(Required) The unique identifier of the organization."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1949c15c-6058-4fd7-8125-7585ec16b390",
+              "name": "Organization reporting users overview",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "learn",
+                    "progress",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2025-11-05"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "type",
+                      "value": "lesson"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "titles",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "emails",
+                      "value": "john.doe@example.com,jane.smith@example.com"
+                    },
+                    {
+                      "key": "completion_interval",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The unique identifier of the organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  },\n  \"links\": {\n    \"first\": \"https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K\",\n    \"last\": \"https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K\",\n    \"next\": \"https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K\"\n  },\n  \"data\": [\n    {\n      \"id\": \"e3a1906c-cff3-005c-59f7-e3af30d83d1b\",\n      \"type\": \"progress\",\n      \"attributes\": {\n        \"status\": \"inProgress\",\n        \"resource\": \"lesson\",\n        \"completion_history\": [\n          \"1986-08-22T06:39:50.947Z\",\n          \"2003-12-22T00:48:07.082Z\"\n        ],\n        \"completion_date\": \"1957-04-20T17:34:12.148Z\",\n        \"is_expired\": true\n      },\n      \"relationships\": {\n        \"user\": {\n          \"links\": {\n            \"first\": \"https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K\",\n            \"last\": \"https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K\",\n            \"next\": \"https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K\"\n          },\n          \"data\": {\n            \"type\": \"user\",\n            \"id\": \"string\",\n            \"attributes\": {\n              \"email\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"username\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        },\n        \"catalog\": {\n          \"links\": {\n            \"self\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"lesson\",\n            \"id\": \"string\",\n            \"attributes\": {\n              \"title\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"slug\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"cwes\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"cves\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"5c99f2bb-f107-ead5-80fe-3e7bf5ad8774\",\n      \"type\": \"progress\",\n      \"attributes\": {\n        \"status\": \"completed\",\n        \"resource\": \"learning_path\",\n        \"completion_history\": [\n          \"2015-02-01T18:09:25.906Z\",\n          \"1994-06-14T07:29:50.728Z\"\n        ],\n        \"completion_date\": \"1993-04-07T12:59:51.780Z\",\n        \"is_expired\": true\n      },\n      \"relationships\": {\n        \"user\": {\n          \"links\": {\n            \"first\": \"https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K\",\n            \"last\": \"https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K\",\n            \"next\": \"https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K\"\n          },\n          \"data\": {\n            \"type\": \"user\",\n            \"id\": \"string\",\n            \"attributes\": {\n              \"email\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"username\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        },\n        \"catalog\": {\n          \"links\": {\n            \"self\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"learning_path\",\n            \"id\": \"string\",\n            \"attributes\": {\n              \"title\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"slug\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"cwes\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"cves\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69dca0d4-e381-45d6-87f0-beaf8ed30461",
+              "name": "Bad Request: A parameter provided as a part of the request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "learn",
+                    "progress",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2025-11-05"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "type",
+                      "value": "lesson"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "titles",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "emails",
+                      "value": "john.doe@example.com,jane.smith@example.com"
+                    },
+                    {
+                      "key": "completion_interval",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The unique identifier of the organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d70f331d-91ce-4471-bd64-cd80d812a2ba",
+              "name": "Forbidden: the request requires an authentication token with more or different permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "learn",
+                    "progress",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2025-11-05"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "type",
+                      "value": "lesson"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "titles",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "emails",
+                      "value": "john.doe@example.com,jane.smith@example.com"
+                    },
+                    {
+                      "key": "completion_interval",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The unique identifier of the organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c71cd0a-9ad4-44b8-aac5-97126e6dea62",
+              "name": "Not Found: The resource being operated on could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "learn",
+                    "progress",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2025-11-05"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "type",
+                      "value": "lesson"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "titles",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "emails",
+                      "value": "john.doe@example.com,jane.smith@example.com"
+                    },
+                    {
+                      "key": "completion_interval",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The unique identifier of the organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a14a460e-cfcd-48d1-a1cf-269d3ee32a44",
+              "name": "Internal Server Error: An error was encountered while attempting to process the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "learn",
+                    "progress",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2025-11-05"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "type",
+                      "value": "lesson"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "titles",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "emails",
+                      "value": "john.doe@example.com,jane.smith@example.com"
+                    },
+                    {
+                      "key": "completion_interval",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The unique identifier of the organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.snyk.io/rest",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2bfdcd85-5983-4ecf-8543-9601983daeff",
+    "name": "Snyk AccessRequests Learn progress API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

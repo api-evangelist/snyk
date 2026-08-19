@@ -1,0 +1,310 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Projects API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all Projects for an Org with the given Org ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/projects",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the org that the projects belong to."
+              },
+              {
+                "name": "target_id",
+                "value": "",
+                "type": "query",
+                "description": "Return projects that belong to the provided targets"
+              },
+              {
+                "name": "target_reference",
+                "value": "",
+                "type": "query",
+                "description": "Return projects that match the provided target reference"
+              },
+              {
+                "name": "target_file",
+                "value": "",
+                "type": "query",
+                "description": "Return projects that match the provided target file"
+              },
+              {
+                "name": "target_runtime",
+                "value": "",
+                "type": "query",
+                "description": "Return projects that match the provided target runtime"
+              },
+              {
+                "name": "meta_count",
+                "value": "",
+                "type": "query",
+                "description": "The collection count."
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Return projects that match the provided IDs."
+              },
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "Return projects that match the provided names."
+              },
+              {
+                "name": "names_start_with",
+                "value": "",
+                "type": "query",
+                "description": "Return projects with names starting with the specified prefix."
+              },
+              {
+                "name": "origins",
+                "value": "",
+                "type": "query",
+                "description": "Return projects that match the provided origins."
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Return projects that match the provided types."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand relationships."
+              },
+              {
+                "name": "meta.latest_issue_counts",
+                "value": "",
+                "type": "query",
+                "description": "Include a summary count for the issues found in the most recent scan of this project"
+              },
+              {
+                "name": "meta.latest_dependency_total",
+                "value": "",
+                "type": "query",
+                "description": "Include the total number of dependencies found in the most recent scan of this project"
+              },
+              {
+                "name": "cli_monitored_before",
+                "value": "2021-05-29T09:50:54.014Z",
+                "type": "query",
+                "description": "Filter projects uploaded and monitored before this date (encoded value)"
+              },
+              {
+                "name": "cli_monitored_after",
+                "value": "2021-05-29T09:50:54.014Z",
+                "type": "query",
+                "description": "Filter projects uploaded and monitored after this date (encoded value)"
+              },
+              {
+                "name": "importing_user_public_id",
+                "value": "",
+                "type": "query",
+                "description": "Return projects that match the provided importing user public ids."
+              },
+              {
+                "name": "tags",
+                "value": "key1:value1,key2:value2",
+                "type": "query",
+                "description": "Return projects that match all the provided tags"
+              },
+              {
+                "name": "business_criticality",
+                "value": "",
+                "type": "query",
+                "description": "Return projects that match all the provided business_criticality value"
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "Return projects that match all the provided environment values"
+              },
+              {
+                "name": "lifecycle",
+                "value": "",
+                "type": "query",
+                "description": "Return projects that match all the provided lifecycle values"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              }
+            ]
+          },
+          "docs": "List all Projects for an Org.\n\n#### Required permissions\n\n- `View Projects (org.project.read)`"
+        },
+        {
+          "info": {
+            "name": "Get project by project ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/projects/:project_id",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the org to which the project belongs to."
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand relationships."
+              },
+              {
+                "name": "meta.latest_issue_counts",
+                "value": "",
+                "type": "query",
+                "description": "Include a summary count for the issues found in the most recent scan of this project"
+              },
+              {
+                "name": "meta.latest_dependency_total",
+                "value": "",
+                "type": "query",
+                "description": "Include the total number of dependencies found in the most recent scan of this project"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Get one project of the organization by project ID.\n\n#### Required permissions\n\n- `View Projects (org.project.read)`"
+        },
+        {
+          "info": {
+            "name": "Updates project by project ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/projects/:project_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Org the project belongs to."
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project to patch."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand relationships."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates one project of the organization by project ID.\n\n#### Required permissions\n\n- `View Organization (org.read)`\n\n- `View Projects (org.project.read)`\n\n- `Edit Projects (org.project.edit)`"
+        },
+        {
+          "info": {
+            "name": "Delete project by project ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/projects/:project_id",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the org to which the project belongs to."
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project."
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Delete one project in the organization by project ID.\n\n#### Required permissions\n\n- `View Organization (org.read)`\n\n- `View Projects (org.project.read)`\n\n- `Remove Projects (org.project.delete)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

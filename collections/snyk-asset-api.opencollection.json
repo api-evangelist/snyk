@@ -1,0 +1,439 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Asset API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Asset",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List repository aliases in group (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/assets/repository/aliases",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              },
+              {
+                "name": "url",
+                "value": "",
+                "type": "query",
+                "description": "Optional repository URL filter — restricts results to the canonical document containing this URL"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of alias items to return per page. A single canonical document with multiple aliases may span more than one page."
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.MTIzNDU2Nzg5MHxhYmNkZWY=",
+                "type": "query",
+                "description": "Return records after the record identified by this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.MTIzNDU2Nzg5MHxhYmNkZWY=",
+                "type": "query",
+                "description": "Return records before the record identified by this cursor"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of alias URL entries for repository assets within a group. Use the optional url filter to restrict results to a specific canonical document.\n\n#### Required permissions\n\n- `View Groups (group.read)`"
+        },
+        {
+          "info": {
+            "name": "Add alias for a repository asset in group (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/groups/:group_id/assets/repository/aliases",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Link one or more alternate repository URLs to a canonical repository asset within a group, enabling alias-aware asset lookup.\n\n#### Required permissions\n\n- `Edit Group Details (group.edit)`"
+        },
+        {
+          "info": {
+            "name": "Bulk remove aliases from repository assets in group (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/groups/:group_id/assets/repository/aliases",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Detach one or more aliased URLs from their canonical repository assets within a group. Each removed URL gets a new standalone asset document.\n\n#### Required permissions\n\n- `Edit Group Details (group.edit)`"
+        },
+        {
+          "info": {
+            "name": "List Assets with filters (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/groups/:group_id/assets/search",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List Assets with filters\n\n#### Required permissions\n\n- `View Groups (group.read)`"
+        },
+        {
+          "info": {
+            "name": "Get an Asset by its ID (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/assets/:asset_id",
+            "params": [
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the Asset"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Get an Asset by its ID\n\n#### Required permissions\n\n- `View Groups (group.read)`"
+        },
+        {
+          "info": {
+            "name": "Update asset attributes (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/groups/:group_id/assets/:asset_id",
+            "params": [
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the Asset"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The endpoint allows for partial updates to an asset's attributes.\n\n#### Required permissions\n\n- `Edit Group Details (group.edit)`"
+        },
+        {
+          "info": {
+            "name": "List related assets with pagination (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/assets/:asset_id/relationships/assets",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              },
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the Asset"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Return records after the record identified by cursor position starting_after"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Return records before the record identified by cursor position ending_before"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by asset type"
+              }
+            ]
+          },
+          "docs": "List related assets with pagination\n\n#### Required permissions\n\n- `View Groups (group.read)`"
+        },
+        {
+          "info": {
+            "name": "List asset projects with pagination (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/assets/:asset_id/relationships/projects",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              },
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the Asset"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Return records after the record identified by cursor position starting_after"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Return records before the record identified by cursor position ending_before"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "List asset projects with pagination\n\n#### Required permissions\n\n- `View Groups (group.read)`"
+        },
+        {
+          "info": {
+            "name": "List repository aliases in org (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/assets/repository/aliases",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "url",
+                "value": "",
+                "type": "query",
+                "description": "Optional repository URL filter — restricts results to the canonical document containing this URL"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of alias items to return per page. A single canonical document with multiple aliases may span more than one page."
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.MTIzNDU2Nzg5MHxhYmNkZWY=",
+                "type": "query",
+                "description": "Return records after the record identified by this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.MTIzNDU2Nzg5MHxhYmNkZWY=",
+                "type": "query",
+                "description": "Return records before the record identified by this cursor"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of alias URL entries for repository assets within an organisation. Use the optional url filter to restrict results to a specific canonical document.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Add alias for a repository asset in org (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/assets/repository/aliases",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Link one or more alternate repository URLs to a canonical repository asset within an organisation, enabling alias-aware asset lookup.\n\n#### Required permissions\n\n- `Edit Organization (org.edit)`"
+        },
+        {
+          "info": {
+            "name": "Bulk remove aliases from repository assets in org (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/assets/repository/aliases",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Detach one or more aliased URLs from their canonical repository assets within an organisation. Each removed URL gets a new standalone asset document.\n\n#### Required permissions\n\n- `Edit Organization (org.edit)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,424 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Policies API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get group level policies (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/policies",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              }
+            ]
+          },
+          "docs": "Get all policies for the requested group\n\n*Group level Policy APIs Access Notice:* Access to our Group level Policy APIs is currently\nrestricted via \"use-group-policy-apis\" feature flag and will result in a 403 Forbidden error\nwithout the flag enabled. Please contact your account representative for eligibility requirements.\n\n#### Required permissions\n\n- `View Policies (group.policy.read)`"
+        },
+        {
+          "info": {
+            "name": "Create a new group level policy (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/groups/:group_id/policies",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create one new group level policy.\n\n*Group level Policy APIs Access Notice:* Access to our Group level Policy APIs is currently\nrestricted via \"use-group-policy-apis\" feature flag and will result in a 403 Forbidden error\nwithout the flag enabled. Please contact your account representative for eligibility requirements.\n\n#### Required permissions\n\n- `Create Policies (group.policy.create)`"
+        },
+        {
+          "info": {
+            "name": "Update a group-level policy (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/groups/:group_id/policies/:policy_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              },
+              {
+                "name": "policy_id",
+                "value": "",
+                "type": "path",
+                "description": "Policy ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the group-level policy.\n\n*Group level Policy APIs Access Notice:* Access to our Group level Policy APIs is currently\nrestricted via \"use-group-policy-apis\" feature flag and will result in a 403 Forbidden error\nwithout the flag enabled. Please contact your account representative for eligibility requirements.\n\n#### Required permissions\n\n- `Edit Policies (group.policy.edit)`"
+        },
+        {
+          "info": {
+            "name": "Delete an group-level policy (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/groups/:group_id/policies/:policy_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              },
+              {
+                "name": "policy_id",
+                "value": "",
+                "type": "path",
+                "description": "Policy ID"
+              }
+            ]
+          },
+          "docs": "Delete an existing group-level policy.\n\n*Group level Policy APIs Access Notice:* Access to our Group level Policy APIs is currently\nrestricted via \"use-group-policy-apis\" feature flag and will result in a 403 Forbidden error\nwithout the flag enabled. Please contact your account representative for eligibility requirements.\n\n#### Required permissions\n\n- `Delete Policies (group.policy.delete)`"
+        },
+        {
+          "info": {
+            "name": "Get org-level policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/policies",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search keyword for searching fields ignored_by.name, ignored_by.email, ignore_type in policy_rules"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "The column name to sort on"
+              },
+              {
+                "name": "order_direction",
+                "value": "",
+                "type": "query",
+                "description": "Sorting direction ASC/DESC"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "review",
+                "value": "",
+                "type": "query",
+                "description": "Policy rule review state e.g. approved"
+              },
+              {
+                "name": "expires_before",
+                "value": "",
+                "type": "query",
+                "description": "Select only policies with an expiry strictly before the given time."
+              },
+              {
+                "name": "expires_after",
+                "value": "",
+                "type": "query",
+                "description": "Select only policies with an expiry strictly past the given time."
+              },
+              {
+                "name": "expires_never",
+                "value": "",
+                "type": "query",
+                "description": "Select only policies that never expire."
+              }
+            ]
+          },
+          "docs": "Get all policies for the requested organisation.\n\n*Org level Policy APIs Access Notice:* Org level Policy APIs are only available \nfor use with Code Consistent Ignores. For information about how to enable Code Consistent Ignores \nsee [this](https://docs.snyk.io/manage-risk/prioritize-issues-for-fixing/ignore-issues/consistent-ignores-for-snyk-code#enable-snyk-code-consistent-ignores) \ndocumentation.\n\n#### Required permissions\n\n- `View Ignores (org.project.ignore.read)`"
+        },
+        {
+          "info": {
+            "name": "Create a new org-level policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/policies",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new org-level policy.\n\n*Org level Policy APIs Access Notice:* Org level Policy APIs are only available \nfor use with Code Consistent Ignores. For information about how to enable Code Consistent Ignores \nsee [this](https://docs.snyk.io/manage-risk/prioritize-issues-for-fixing/ignore-issues/consistent-ignores-for-snyk-code#enable-snyk-code-consistent-ignores) \ndocumentation.\n\n#### Required permissions\n\n- `Create Ignores (org.project.ignore.create)`"
+        },
+        {
+          "info": {
+            "name": "Get an org-level policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/policies/:policy_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "policy_id",
+                "value": "",
+                "type": "path",
+                "description": "Policy ID"
+              }
+            ]
+          },
+          "docs": "Get a specific org-level policy based on its ID.\n\n*Org level Policy APIs Access Notice:* Org level Policy APIs are only available \nfor use with Code Consistent Ignores. For information about how to enable Code Consistent Ignores \nsee [this](https://docs.snyk.io/manage-risk/prioritize-issues-for-fixing/ignore-issues/consistent-ignores-for-snyk-code#enable-snyk-code-consistent-ignores) \ndocumentation.\n\n#### Required permissions\n\n- `View Ignores (org.project.ignore.read)`"
+        },
+        {
+          "info": {
+            "name": "Update an org-level policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/policies/:policy_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "policy_id",
+                "value": "",
+                "type": "path",
+                "description": "Policy ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the org-level policy. \n\n*Org level Policy APIs Access Notice:* Org level Policy APIs are only available \nfor use with Code Consistent Ignores. For information about how to enable Code Consistent Ignores \nsee [this](https://docs.snyk.io/manage-risk/prioritize-issues-for-fixing/ignore-issues/consistent-ignores-for-snyk-code#enable-snyk-code-consistent-ignores) \ndocumentation.\n\n#### Required permissions\n\n- `Edit Ignores (org.project.ignore.edit)`"
+        },
+        {
+          "info": {
+            "name": "Delete an org-level policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/policies/:policy_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "policy_id",
+                "value": "",
+                "type": "path",
+                "description": "Policy ID"
+              }
+            ]
+          },
+          "docs": "Delete an existing org-level policy.\n\n*Org level Policy APIs Access Notice:* Org level Policy APIs are only available \nfor use with Code Consistent Ignores. For information about how to enable Code Consistent Ignores \nsee [this](https://docs.snyk.io/manage-risk/prioritize-issues-for-fixing/ignore-issues/consistent-ignores-for-snyk-code#enable-snyk-code-consistent-ignores) \ndocumentation.\n\n#### Required permissions\n\n- `Remove Ignores (org.project.ignore.delete)`"
+        },
+        {
+          "info": {
+            "name": "List org policy events (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/policies/:policy_id/events",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "policy_id",
+                "value": "",
+                "type": "path",
+                "description": "Policy ID"
+              }
+            ]
+          },
+          "docs": "Retrieve the event history for the given policy.\n\n*Org level Policy APIs Access Notice:* Access to our Org level Policy APIs is currently\nrestricted via \"snykCodeConsistentIgnores\" and \"ignoreApprovalWorkflow\" feature flags\nand will result in a 403 Forbidden error without the flag enabled. Please contact your\naccount representative for eligibility requirements.\n\n#### Required permissions\n\n- `View Ignores (org.project.ignore.read)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

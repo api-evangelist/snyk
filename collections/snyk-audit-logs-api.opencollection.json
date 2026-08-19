@@ -1,0 +1,184 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Audit Logs API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Audit Logs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Group audit logs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/audit_logs/search",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "group_id",
+                "value": "0d3728ec-eebf-484d-9907-ba238019f10b",
+                "type": "path",
+                "description": "The ID of the Group."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The ID for the next page of results."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "The start date (inclusive) of the audit logs search. If not specified, the start of yesterday is used. Dates should be formatted as RFC3339, e.g. 2024-01-02T16:30:00Z.\n"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "The end date (exclusive) of the audit logs search. Dates should be formatted as RFC3339, e.g. 2024-01-02T16:30:00Z.\n"
+              },
+              {
+                "name": "size",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page."
+              },
+              {
+                "name": "sort_order",
+                "value": "ASC",
+                "type": "query",
+                "description": "Order in which results are returned."
+              },
+              {
+                "name": "user_id",
+                "value": "0d3728ec-eebf-484d-9907-ba238019f10b",
+                "type": "query",
+                "description": "Filter logs by user ID."
+              },
+              {
+                "name": "project_id",
+                "value": "0d3728ec-eebf-484d-9907-ba238019f10b",
+                "type": "query",
+                "description": "Filter logs by project ID."
+              },
+              {
+                "name": "events",
+                "value": "",
+                "type": "query",
+                "description": "Filter logs by event types, cannot be used in conjunction with exclude_events parameter."
+              },
+              {
+                "name": "exclude_events",
+                "value": "",
+                "type": "query",
+                "description": "Exclude event types from results, cannot be used in conjunctions with events parameter."
+              }
+            ]
+          },
+          "docs": "Search audit logs for a Group. \"api.access\" events are omitted from results unless explicitly requested using the events parameter. Some Organization level events are supported as well as the following\nGroup level events:\n  - api.access\n  - group.cloud_config.settings.edit\n  - group.create\n  - group.delete\n  - group.edit\n  - group.notification_settings.edit\n  - group.org.add\n  - group.org.remove\n  - group.policy.create\n  - group.policy.delete\n  - group.policy.edit\n  - group.request_access_settin"
+        },
+        {
+          "info": {
+            "name": "Search Organization audit logs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/audit_logs/search",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "0d3728ec-eebf-484d-9907-ba238019f10b",
+                "type": "path",
+                "description": "The ID of the organization."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The ID for the next page of results."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "The start date (inclusive) of the audit logs search. If not specified, the start of yesterday is used. Dates should be formatted as RFC3339, e.g. 2024-01-02T16:30:00Z.\n"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "The end date (exclusive) of the audit logs search. Dates should be formatted as RFC3339, e.g. 2024-01-02T16:30:00Z.\n"
+              },
+              {
+                "name": "size",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page."
+              },
+              {
+                "name": "sort_order",
+                "value": "ASC",
+                "type": "query",
+                "description": "Order in which results are returned."
+              },
+              {
+                "name": "user_id",
+                "value": "0d3728ec-eebf-484d-9907-ba238019f10b",
+                "type": "query",
+                "description": "Filter logs by user ID."
+              },
+              {
+                "name": "project_id",
+                "value": "0d3728ec-eebf-484d-9907-ba238019f10b",
+                "type": "query",
+                "description": "Filter logs by project ID."
+              },
+              {
+                "name": "events",
+                "value": "",
+                "type": "query",
+                "description": "Filter logs by event types, cannot be used in conjunction with exclude_events parameter."
+              },
+              {
+                "name": "exclude_events",
+                "value": "",
+                "type": "query",
+                "description": "Exclude event types from results, cannot be used in conjunctions with events parameter."
+              }
+            ]
+          },
+          "docs": "Search audit logs for an Organization. \"api.access\" events are omitted from results unless explicitly requested using the events parameter. Supported event types:\n  - api.access\n  - org.app_bot.create\n  - org.app.create\n  - org.app.delete\n  - org.app.edit\n  - org.cloud_config.settings.edit\n  - org.collection.create\n  - org.collection.delete\n  - org.collection.edit\n  - org.create\n  - org.delete\n  - org.edit\n  - org.ignore_policy.edit\n  - org.integration.create\n  - org.integration.delete\n  - org.i"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

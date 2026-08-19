@@ -1,0 +1,594 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests BrokerConnections API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "BrokerConnections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Broker connections for a given organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/brokers/connections",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "List all Broker connections integrated with a given org\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Get Integrations using the current Broker connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/brokers/connections/:connection_id/integrations",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Connection ID"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              }
+            ]
+          },
+          "docs": "Get all integrations using the Broker connection\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "Creates Broker connection Integration Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/brokers/connections/:connection_id/orgs/:org_id/integration",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Connection ID"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Configures integrations to use the Broker connection for an deployment\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "Deletes an Integration for a Broker connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/brokers/connections/:connection_id/orgs/:org_id/integrations/:integration_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Connection ID"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "integration_id",
+                "value": "",
+                "type": "path",
+                "description": "Integration ID"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Deletes an existing Broker connection for an deployment\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "List Broker connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/brokers/installs/:install_id/deployments/:deployment_id/connections",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              },
+              {
+                "name": "install_id",
+                "value": "",
+                "type": "path",
+                "description": "Install ID"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment ID"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "List all Broker connections for a given deployment\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "Creates Broker connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/brokers/installs/:install_id/deployments/:deployment_id/connections",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              },
+              {
+                "name": "install_id",
+                "value": "",
+                "type": "path",
+                "description": "Install ID"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment ID"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Broker connection for an deployment\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`\n\n- `Edit Tenant Details (tenant.edit)`"
+        },
+        {
+          "info": {
+            "name": "Deletes Broker connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/brokers/installs/:install_id/deployments/:deployment_id/connections",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              },
+              {
+                "name": "install_id",
+                "value": "",
+                "type": "path",
+                "description": "Install ID"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment ID"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Deletes all existing Broker connections for an deployment\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`\n\n- `Edit Tenant Details (tenant.edit)`"
+        },
+        {
+          "info": {
+            "name": "Get Broker connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/brokers/installs/:install_id/deployments/:deployment_id/connections/:connection_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              },
+              {
+                "name": "install_id",
+                "value": "",
+                "type": "path",
+                "description": "Install ID"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment ID"
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Connection ID"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              }
+            ]
+          },
+          "docs": "Get all Broker connection data for an deployment\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "Updates Broker connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/brokers/installs/:install_id/deployments/:deployment_id/connections/:connection_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              },
+              {
+                "name": "install_id",
+                "value": "",
+                "type": "path",
+                "description": "Install ID"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment ID"
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Connection ID"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a Broker connection for an deployment\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`\n\n- `Edit Tenant Details (tenant.edit)`"
+        },
+        {
+          "info": {
+            "name": "Deletes Broker connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/brokers/installs/:install_id/deployments/:deployment_id/connections/:connection_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              },
+              {
+                "name": "install_id",
+                "value": "",
+                "type": "path",
+                "description": "Install ID"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment ID"
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Connection ID"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Deletes an existing Broker connection for an deployment\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`\n\n- `Edit Tenant Details (tenant.edit)`"
+        },
+        {
+          "info": {
+            "name": "List organizations for bulk migration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/brokers/installs/:install_id/deployments/:deployment_id/connections/:connection_id/bulk_migration",
+            "params": [
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Connection ID"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment ID"
+              },
+              {
+                "name": "install_id",
+                "value": "",
+                "type": "path",
+                "description": "Install ID"
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              }
+            ]
+          },
+          "docs": "Lists organization IDs associated with a connection type to be bulk migrated to universal broker\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "Performs bulk migration integrations to universal broker",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/brokers/installs/:install_id/deployments/:deployment_id/connections/:connection_id/bulk_migration",
+            "params": [
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Connection ID"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment ID"
+              },
+              {
+                "name": "install_id",
+                "value": "",
+                "type": "path",
+                "description": "Install ID"
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Performs bulk migration for integrations from legacy to universal broker\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,439 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Groups API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all groups (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups",
+            "params": [
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Returns a list of groups which a user is a member of"
+        },
+        {
+          "info": {
+            "name": "Get all memberships of the group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/memberships",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the group"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "Which column to sort by."
+              },
+              {
+                "name": "sort_order",
+                "value": "ASC",
+                "type": "query",
+                "description": "Order in which results are returned."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter the response by Users that match the provided email"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter the response by Users that match the provided user ID"
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Filter the response by Users that match the provided username"
+              },
+              {
+                "name": "role_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter the response for results only with the specified role."
+              },
+              {
+                "name": "include_group_membership_count",
+                "value": "",
+                "type": "query",
+                "description": "indicates whether the count of group memberships is included"
+              }
+            ]
+          },
+          "docs": "Returns all memberships of the group\n\n#### Required permissions\n\n- `View Group Memberships (group.membership.read)`"
+        },
+        {
+          "info": {
+            "name": "Create a group membership for a user with role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/groups/:group_id/memberships",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the group"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a group membership for a user with role\n\n#### Required permissions\n\n- `Add Group Memberships (group.membership.add)`"
+        },
+        {
+          "info": {
+            "name": "Update a role from a group membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/groups/:group_id/memberships/:membership_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the group"
+              },
+              {
+                "name": "membership_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Group Membership"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a role from a group membership\n\n#### Required permissions\n\n- `Edit Group Memberships (group.membership.edit)`"
+        },
+        {
+          "info": {
+            "name": "Delete a membership from a group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/groups/:group_id/memberships/:membership_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the group"
+              },
+              {
+                "name": "membership_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Group Membership"
+              },
+              {
+                "name": "cascade",
+                "value": "",
+                "type": "query",
+                "description": "indicates whether to delete the child org memberships of the group membership."
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Deletes a membership from a group\n\n#### Required permissions\n\n- `Delete Group Memberships (group.membership.delete)`"
+        },
+        {
+          "info": {
+            "name": "Get list of org memberships of a group user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/org_memberships",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the group"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the User"
+              },
+              {
+                "name": "org_name",
+                "value": "",
+                "type": "query",
+                "description": "The Name of the org"
+              },
+              {
+                "name": "role_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter the response for results only with the specified role."
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Get list of org memberships of a group user\n\n#### Required permissions\n\n- `View Group Memberships (group.membership.read)`\n\n- `View Organizations (group.org.list)`"
+        },
+        {
+          "info": {
+            "name": "Get all SSO connections for a group (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/sso_connections",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the group"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Returns a list of SSO connections for a group\n\n#### Required permissions\n\n- `View SSO settings (group.sso.read)`"
+        },
+        {
+          "info": {
+            "name": "Get all users using a given SSO connection (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/sso_connections/:sso_id/users",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the group"
+              },
+              {
+                "name": "sso_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the SSO"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Returns a list of users for a SSO connection\n\n#### Required permissions\n\n- `View SSO settings (group.sso.read)`\n\n- `View users (group.user.read)`"
+        },
+        {
+          "info": {
+            "name": "Delete a user from a Group SSO connection (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/groups/:group_id/sso_connections/:sso_id/users/:user_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the group"
+              },
+              {
+                "name": "sso_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the SSO"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the User"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Deletes a user from a Group SSO connection\n\n#### Required permissions\n\n- `View SSO settings (group.sso.read)`\n\n- `Delete users (group.user.delete)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

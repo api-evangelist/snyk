@@ -1,0 +1,129 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Invites API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Invites",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List pending user invitations to an organization.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/invites",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the org the user is being invited to"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              }
+            ]
+          },
+          "docs": "List pending user invitations to an organization.\n\n#### Required permissions\n\n- `View Organization (org.read)`\n\n- `View users (org.user.read)`"
+        },
+        {
+          "info": {
+            "name": "Invite a user to an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/invites",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the org the user is being invited to"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invite a user to an organization with a role.\n\n#### Required permissions\n\n- `Invite users (org.user.invite)`"
+        },
+        {
+          "info": {
+            "name": "Cancel a pending user invitations to an organization.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/invites/:invite_id",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the org the user is being invited to"
+              },
+              {
+                "name": "invite_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the pending invite to cancel"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Cancel a pending user invitations to an organization.\n\n#### Required permissions\n\n- `Invite users (org.user.invite)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

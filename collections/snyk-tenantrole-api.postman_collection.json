@@ -1,0 +1,4237 @@
+{
+  "item": [
+    {
+      "id": "0c140d2b-256e-4195-acd4-1e03d67463f6",
+      "name": "TenantRole",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2ee3c23f-f7e6-4594-8b74-e5663c2f58cf",
+          "name": "List all available roles for a given tenant (Early Access)",
+          "request": {
+            "name": "List all available roles for a given tenant (Early Access)",
+            "description": {
+              "content": "List all available roles for a given tenant.\n\n#### Required permissions\n\n- `View Tenant Roles (tenant.roles.read)`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tenants",
+                ":tenant_id",
+                "roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "(Required) The requested version of the endpoint to process the request"
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Role name filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "custom",
+                  "value": "<boolean>",
+                  "description": "Whether role is custom or not."
+                },
+                {
+                  "disabled": false,
+                  "key": "assignable_by_me",
+                  "value": "<boolean>",
+                  "description": "When true, only return roles that the current user can assign to others in the tenant."
+                },
+                {
+                  "disabled": false,
+                  "key": "expand_permissions",
+                  "value": "false",
+                  "description": "option to show all permission types"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "Return the page of results immediately after this cursor"
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_before",
+                  "value": "<string>",
+                  "description": "Return the page of results immediately before this cursor"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of results to return per page"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "tenant_id",
+                  "description": "(Required) Unique identifier of the tenant."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8393e5fc-8ccf-4764-b8cb-c5605b78ea0b",
+              "name": "Returns an array of roles that are the roles on a Tenant.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "name",
+                      "value": "examplename"
+                    },
+                    {
+                      "key": "custom",
+                      "value": "false"
+                    },
+                    {
+                      "key": "assignable_by_me",
+                      "value": "false"
+                    },
+                    {
+                      "key": "expand_permissions",
+                      "value": "false"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"d5b640e5-d88c-4c17-9bf0-93597b7a1ce2\",\n      \"type\": \"tenant_role\",\n      \"attributes\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          \"string\",\n          \"string\"\n        ],\n        \"custom\": false,\n        \"normalized_name\": \"string\"\n      },\n      \"meta\": {\n        \"app_count\": 7895,\n        \"service_account_count\": 6751,\n        \"user_count\": 4234\n      },\n      \"relationships\": {\n        \"tenant\": {\n          \"data\": {\n            \"id\": \"d5b640e5-d88c-4c17-9bf0-93597b7a1ce2\",\n            \"type\": \"tenant\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"d5b640e5-d88c-4c17-9bf0-93597b7a1ce2\",\n      \"type\": \"tenant_role\",\n      \"attributes\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          \"string\",\n          \"string\"\n        ],\n        \"custom\": false,\n        \"normalized_name\": \"string\"\n      },\n      \"meta\": {\n        \"app_count\": 2569,\n        \"service_account_count\": 3754,\n        \"user_count\": 1611\n      },\n      \"relationships\": {\n        \"tenant\": {\n          \"data\": {\n            \"id\": \"d5b640e5-d88c-4c17-9bf0-93597b7a1ce2\",\n            \"type\": \"tenant\"\n          }\n        }\n      }\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  },\n  \"links\": {\n    \"first\": \"https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K\",\n    \"last\": \"https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K\",\n    \"next\": \"https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K\"\n  },\n  \"meta\": {\n    \"permissions\": [\n      {\n        \"value\": \"string\",\n        \"description\": \"Edit details of the Group\",\n        \"name\": \"Edit Group Details\",\n        \"parent\": \"group.read\"\n      },\n      {\n        \"value\": \"string\",\n        \"description\": \"Edit details of the Group\",\n        \"name\": \"Edit Group Details\",\n        \"parent\": \"group.read\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af6157bc-dbae-47bf-99f2-ff1e8289ded0",
+              "name": "Bad Request: A parameter provided as a part of the request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "name",
+                      "value": "examplename"
+                    },
+                    {
+                      "key": "custom",
+                      "value": "false"
+                    },
+                    {
+                      "key": "assignable_by_me",
+                      "value": "false"
+                    },
+                    {
+                      "key": "expand_permissions",
+                      "value": "false"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb26c5c7-4aa3-4ac3-bcca-056137754d0a",
+              "name": "Unauthorized: the request requires an authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "name",
+                      "value": "examplename"
+                    },
+                    {
+                      "key": "custom",
+                      "value": "false"
+                    },
+                    {
+                      "key": "assignable_by_me",
+                      "value": "false"
+                    },
+                    {
+                      "key": "expand_permissions",
+                      "value": "false"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73d51add-40ee-40ea-a65b-79c12d99f6ec",
+              "name": "Forbidden: the request requires an authentication token with more or different permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "name",
+                      "value": "examplename"
+                    },
+                    {
+                      "key": "custom",
+                      "value": "false"
+                    },
+                    {
+                      "key": "assignable_by_me",
+                      "value": "false"
+                    },
+                    {
+                      "key": "expand_permissions",
+                      "value": "false"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c9d1f2a-a7c5-4bae-97a1-da13ea8bc23d",
+              "name": "Not Found: The resource being operated on could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "name",
+                      "value": "examplename"
+                    },
+                    {
+                      "key": "custom",
+                      "value": "false"
+                    },
+                    {
+                      "key": "assignable_by_me",
+                      "value": "false"
+                    },
+                    {
+                      "key": "expand_permissions",
+                      "value": "false"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88109204-4760-4286-b72a-a20e0d7d92f9",
+              "name": "Conflict: The requested operation conflicts with the current state of the resource in some way.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "name",
+                      "value": "examplename"
+                    },
+                    {
+                      "key": "custom",
+                      "value": "false"
+                    },
+                    {
+                      "key": "assignable_by_me",
+                      "value": "false"
+                    },
+                    {
+                      "key": "expand_permissions",
+                      "value": "false"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0eb679b5-4c4c-485b-8440-daa9586ea424",
+              "name": "Internal Server Error: An error was encountered while attempting to process the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "name",
+                      "value": "examplename"
+                    },
+                    {
+                      "key": "custom",
+                      "value": "false"
+                    },
+                    {
+                      "key": "assignable_by_me",
+                      "value": "false"
+                    },
+                    {
+                      "key": "expand_permissions",
+                      "value": "false"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4c860dcc-0ada-4559-a007-60ba0577c532",
+          "name": "Create a custom tenant role for a given tenant (Early Access)",
+          "request": {
+            "name": "Create a custom tenant role for a given tenant (Early Access)",
+            "description": {
+              "content": "Create a custom tenant role for a given tenant.\n\n#### Required permissions\n\n- `View Tenant Roles (tenant.roles.read)`\n\n- `Create Tenant Roles (tenant.roles.create)`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tenants",
+                ":tenant_id",
+                "roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "(Required) The requested version of the endpoint to process the request"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "tenant_id",
+                  "description": "(Required) Unique identifier of the tenant."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8ea78c29-44d7-42f6-bf3b-2f094d41f527",
+              "name": "Tenant role successfully created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "key": "location",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"d5b640e5-d88c-4c17-9bf0-93597b7a1ce2\",\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"custom\": false,\n      \"normalized_name\": \"string\"\n    },\n    \"meta\": {\n      \"app_count\": 2252,\n      \"service_account_count\": 7223,\n      \"user_count\": 1292\n    },\n    \"relationships\": {\n      \"tenant\": {\n        \"data\": {\n          \"id\": \"d5b640e5-d88c-4c17-9bf0-93597b7a1ce2\",\n          \"type\": \"tenant\"\n        }\n      }\n    }\n  },\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  },\n  \"links\": {\n    \"self\": \"https://example.com/api/this_resource\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05ce6aaa-5505-4fd3-ab94-fa606ab1f78d",
+              "name": "Bad Request: A parameter provided as a part of the request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2756af9a-971a-42d1-ba03-d0a8c7510359",
+              "name": "Unauthorized: the request requires an authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54050a32-b06e-4b08-8a0f-4787029f1ac1",
+              "name": "Forbidden: the request requires an authentication token with more or different permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b75164e3-f887-488a-adbe-8f7a75195fe1",
+              "name": "Not Found: The resource being operated on could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee4f471f-e713-4cde-abc7-1561b3748e10",
+              "name": "Conflict: The requested operation conflicts with the current state of the resource in some way.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a27dffff-5700-426b-adb9-ffd885aadc90",
+              "name": "Internal Server Error: An error was encountered while attempting to process the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "303c5791-94d7-44a5-bcfb-d208d6c68392",
+          "name": "Delete a specific tenant role by its id and its tenant id. (Early Access)",
+          "request": {
+            "name": "Delete a specific tenant role by its id and its tenant id. (Early Access)",
+            "description": {
+              "content": "Delete a custom tenant role in a given tenant\n\n#### Required permissions\n\n- `View Tenant Roles (tenant.roles.read)`\n\n- `Delete Tenant Roles (tenant.roles.delete)`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tenants",
+                ":tenant_id",
+                "roles",
+                ":role_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "(Required) The requested version of the endpoint to process the request"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "tenant_id",
+                  "description": "(Required) Unique identifier of the tenant."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "role_id",
+                  "description": "(Required) Unique identifier of the role."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "603b0ac5-c0d5-483c-8e7b-ff48ac4a4cda",
+              "name": "Tenant role successfully deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b6518550-1769-4fa9-9382-4147006424a5",
+              "name": "Bad Request: A parameter provided as a part of the request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2bacb591-c45c-4edf-878a-c1d29999a45e",
+              "name": "Unauthorized: the request requires an authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4708a5b4-8735-4ff4-af3f-8822933c5c58",
+              "name": "Forbidden: the request requires an authentication token with more or different permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d994783-ce97-4104-9af6-281bb0d81498",
+              "name": "Not Found: The resource being operated on could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48258cc3-2364-4bb5-90d8-356593c8401f",
+              "name": "Conflict: The requested operation conflicts with the current state of the resource in some way.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14e9c007-a337-4136-80b5-b9188bd99a51",
+              "name": "Internal Server Error: An error was encountered while attempting to process the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "74abad23-dd70-4115-b000-6e3dd9a1bc45",
+          "name": "Return a specific role by its id and its tenant id. (Early Access)",
+          "request": {
+            "name": "Return a specific role by its id and its tenant id. (Early Access)",
+            "description": {
+              "content": "Return a role from a tenant by the tenant and role id with its details and permissions.\n\n#### Required permissions\n\n- `View Tenant Roles (tenant.roles.read)`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tenants",
+                ":tenant_id",
+                "roles",
+                ":role_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "(Required) The requested version of the endpoint to process the request"
+                },
+                {
+                  "disabled": false,
+                  "key": "has_users_assigned",
+                  "value": "false",
+                  "description": "returns current memberships of the role in the meta relationships section"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "tenant_id",
+                  "description": "(Required) Unique identifier of the tenant."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "role_id",
+                  "description": "(Required) Unique identifier of the role."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4b6f63f7-c7c8-4353-b925-c8cafd516389",
+              "name": "Returns the requested role.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "has_users_assigned",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"d5b640e5-d88c-4c17-9bf0-93597b7a1ce2\",\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"custom\": false,\n      \"normalized_name\": \"string\"\n    },\n    \"meta\": {\n      \"app_count\": 8170,\n      \"service_account_count\": 4429,\n      \"user_count\": 6854\n    },\n    \"relationships\": {\n      \"tenant\": {\n        \"data\": {\n          \"id\": \"d5b640e5-d88c-4c17-9bf0-93597b7a1ce2\",\n          \"type\": \"tenant\"\n        }\n      }\n    }\n  },\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  },\n  \"links\": {\n    \"self\": \"https://example.com/api/this_resource\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "880ccddc-264f-432a-ba9b-f1f703209c95",
+              "name": "Bad Request: A parameter provided as a part of the request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "has_users_assigned",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62ce43f1-907e-477e-bcff-0c5f16c073c1",
+              "name": "Unauthorized: the request requires an authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "has_users_assigned",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26082713-4090-4312-8b3c-1b4f77e4a9cb",
+              "name": "Forbidden: the request requires an authentication token with more or different permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "has_users_assigned",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8635344-dd02-4855-bd50-ade72276054a",
+              "name": "Not Found: The resource being operated on could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "has_users_assigned",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c64c1f2b-c567-4dba-91b0-017ea9ccf0cf",
+              "name": "Conflict: The requested operation conflicts with the current state of the resource in some way.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "has_users_assigned",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4e57f0e-050c-4006-a5b7-bdc3665074ad",
+              "name": "Internal Server Error: An error was encountered while attempting to process the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "has_users_assigned",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "35d43f64-4c43-40dc-aa36-c1a44eeab218",
+          "name": "Update a specific tenant role by its id and its tenant id. (Early Access)",
+          "request": {
+            "name": "Update a specific tenant role by its id and its tenant id. (Early Access)",
+            "description": {
+              "content": "Update attributes of a custom tenant role in a given tenant\n\n#### Required permissions\n\n- `View Tenant Roles (tenant.roles.read)`\n\n- `Edit Tenant Roles (tenant.roles.edit)`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tenants",
+                ":tenant_id",
+                "roles",
+                ":role_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "(Required) The requested version of the endpoint to process the request"
+                },
+                {
+                  "disabled": false,
+                  "key": "force",
+                  "value": "<boolean>",
+                  "description": "flag to force the update of a role, required if users are assigned to the role"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "tenant_id",
+                  "description": "(Required) Unique identifier of the tenant."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "role_id",
+                  "description": "(Required) Unique identifier of the role."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"id\": \"<uuid>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6e40ae39-ace5-4696-8cee-50df1c1a9499",
+              "name": "Returns the updated role.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"id\": \"00000000-0000-0000-0000-000000000000\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"d5b640e5-d88c-4c17-9bf0-93597b7a1ce2\",\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"custom\": false,\n      \"normalized_name\": \"string\"\n    },\n    \"meta\": {\n      \"app_count\": 8170,\n      \"service_account_count\": 4429,\n      \"user_count\": 6854\n    },\n    \"relationships\": {\n      \"tenant\": {\n        \"data\": {\n          \"id\": \"d5b640e5-d88c-4c17-9bf0-93597b7a1ce2\",\n          \"type\": \"tenant\"\n        }\n      }\n    }\n  },\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  },\n  \"links\": {\n    \"self\": \"https://example.com/api/this_resource\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5aa5ad6c-70c4-46e1-8d51-903ea973aef9",
+              "name": "Bad Request: A parameter provided as a part of the request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"id\": \"00000000-0000-0000-0000-000000000000\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8e10623-f2aa-4d2d-832e-f6e8026e20ef",
+              "name": "Unauthorized: the request requires an authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"id\": \"00000000-0000-0000-0000-000000000000\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55bc0efe-1dc2-4087-a1c6-6be0046d4304",
+              "name": "Forbidden: the request requires an authentication token with more or different permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"id\": \"00000000-0000-0000-0000-000000000000\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6fe6591-8684-47cc-8912-a0351fcfbba1",
+              "name": "Not Found: The resource being operated on could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"id\": \"00000000-0000-0000-0000-000000000000\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df2790f8-d415-4b9e-9b51-777138db224b",
+              "name": "Conflict: The requested operation conflicts with the current state of the resource in some way.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"id\": \"00000000-0000-0000-0000-000000000000\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e1b2dba-02b7-4649-a416-82c983e681ab",
+              "name": "Internal Server Error: An error was encountered while attempting to process the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "roles",
+                    ":role_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "tenant_id",
+                      "description": "(Required) Unique identifier of the tenant."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "role_id",
+                      "description": "(Required) Unique identifier of the role."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"description\": \"<string>\",\n      \"name\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"id\": \"00000000-0000-0000-0000-000000000000\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.snyk.io/rest",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "565288e5-55f9-4602-8b65-84c9fa987ab0",
+    "name": "Snyk AccessRequests TenantRole API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

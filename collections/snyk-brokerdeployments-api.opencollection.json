@@ -1,0 +1,231 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests BrokerDeployments API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "BrokerDeployments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Broker deployments for tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/brokers/deployments",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "List Broker deployments for the tenant\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "List Broker deployments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/brokers/installs/:install_id/deployments",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              },
+              {
+                "name": "install_id",
+                "value": "",
+                "type": "path",
+                "description": "Install ID"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "List Broker deployments for a given install ID\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "Creates Broker Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/brokers/installs/:install_id/deployments",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              },
+              {
+                "name": "install_id",
+                "value": "",
+                "type": "path",
+                "description": "Install ID"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Broker Deployment for an installation\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`\n\n- `Edit Tenant Details (tenant.edit)`"
+        },
+        {
+          "info": {
+            "name": "Updates Broker deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/brokers/installs/:install_id/deployments/:deployment_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              },
+              {
+                "name": "install_id",
+                "value": "",
+                "type": "path",
+                "description": "Install ID"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment ID"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a Broker deployment for a given install ID\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`\n\n- `Edit Tenant Details (tenant.edit)`"
+        },
+        {
+          "info": {
+            "name": "Deletes Broker deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/brokers/installs/:install_id/deployments/:deployment_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              },
+              {
+                "name": "install_id",
+                "value": "",
+                "type": "path",
+                "description": "Install ID"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment ID"
+              },
+              {
+                "name": "version",
+                "value": "2021-06-04",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Delete a Broker deployment for a given install ID\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`\n\n- `Edit Tenant Details (tenant.edit)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

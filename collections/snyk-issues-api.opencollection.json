@@ -1,0 +1,366 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Issues API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Issues",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get issues by group ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/issues",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              },
+              {
+                "name": "scan_item.id",
+                "value": "",
+                "type": "query",
+                "description": "A scan item id to filter issues through their scan item relationship."
+              },
+              {
+                "name": "scan_item.type",
+                "value": "",
+                "type": "query",
+                "description": "A scan item types to filter issues through their scan item relationship."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "An issue type to filter issues."
+              },
+              {
+                "name": "updated_before",
+                "value": "",
+                "type": "query",
+                "description": "A filter to select issues updated before this date."
+              },
+              {
+                "name": "updated_after",
+                "value": "",
+                "type": "query",
+                "description": "A filter to select issues updated after this date."
+              },
+              {
+                "name": "created_before",
+                "value": "",
+                "type": "query",
+                "description": "A filter to select issues created before this date."
+              },
+              {
+                "name": "created_after",
+                "value": "",
+                "type": "query",
+                "description": "A filter to select issues created after this date."
+              },
+              {
+                "name": "effective_severity_level",
+                "value": "",
+                "type": "query",
+                "description": "One or more effective severity levels to filter issues."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "An issue's status"
+              },
+              {
+                "name": "ignored",
+                "value": "",
+                "type": "query",
+                "description": "Whether an issue is ignored or not."
+              }
+            ]
+          },
+          "docs": "Get a list of a group's issues.\n\n#### Required permissions\n\n- `View Issues (group.issues.read)`"
+        },
+        {
+          "info": {
+            "name": "Get an issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/issues/:issue_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              },
+              {
+                "name": "issue_id",
+                "value": "",
+                "type": "path",
+                "description": "Issue ID"
+              }
+            ]
+          },
+          "docs": "Get an issue\n\n#### Required permissions\n\n- `View Issues (group.issues.read)`"
+        },
+        {
+          "info": {
+            "name": "Get issues by org ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/issues",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "scan_item.id",
+                "value": "",
+                "type": "query",
+                "description": "A scan item id to filter issues through their scan item relationship."
+              },
+              {
+                "name": "scan_item.type",
+                "value": "",
+                "type": "query",
+                "description": "A scan item types to filter issues through their scan item relationship."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "An issue type to filter issues."
+              },
+              {
+                "name": "updated_before",
+                "value": "",
+                "type": "query",
+                "description": "A filter to select issues updated before this date."
+              },
+              {
+                "name": "updated_after",
+                "value": "",
+                "type": "query",
+                "description": "A filter to select issues updated after this date."
+              },
+              {
+                "name": "created_before",
+                "value": "",
+                "type": "query",
+                "description": "A filter to select issues created before this date."
+              },
+              {
+                "name": "created_after",
+                "value": "",
+                "type": "query",
+                "description": "A filter to select issues created after this date."
+              },
+              {
+                "name": "effective_severity_level",
+                "value": "",
+                "type": "query",
+                "description": "One or more effective severity levels to filter issues."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "An issue's status"
+              },
+              {
+                "name": "ignored",
+                "value": "",
+                "type": "query",
+                "description": "Whether an issue is ignored or not."
+              }
+            ]
+          },
+          "docs": "Get a list of an organization's issues.\n\n#### Required permissions\n\n- `View Organization (org.read)`\n\n- `View Projects (org.project.read)`\n\n- `View Project history (org.project.snapshot.read)`"
+        },
+        {
+          "info": {
+            "name": "Get an issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/issues/:issue_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "issue_id",
+                "value": "",
+                "type": "path",
+                "description": "Issue ID"
+              }
+            ]
+          },
+          "docs": "Get an issue\n\n#### Required permissions\n\n- `View Organization (org.read)`\n\n- `View Projects (org.project.read)`\n\n- `View Project history (org.project.snapshot.read)`"
+        },
+        {
+          "info": {
+            "name": "List issues for a given set of packages  (Currently not available to all customers)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/packages/issues",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for an organization"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint is currently restricted and is not available to all customers. Query issues for a batch of packages identified by Package URL (purl). Only direct vulnerabilities are returned; transitive vulnerabilities (from dependencies) are not included as they can vary depending on the context.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "List issues for a package",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/packages/:purl/issues",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "purl",
+                "value": "pkg:maven/com.fasterxml.woodstox/woodstox-core@5.0.0?checksum=sha1:ad9503c3e994a4f611a4892f2e67ac82df727086",
+                "type": "path",
+                "description": "A URI-encoded Package URL (purl). Supported purl types are apk, cargo, cocoapods, composer, conan, deb, gem, generic, golang, hex, maven, npm, nuget, pub, pypi, rpm, and swift. A version for the package is also required. Maven packages support an optional checksum qualifier to request checksum validation. When provided, the response will include checksum validation metadata indicating whether the package and checksum match records in Snyk's database. Checksum format: `algorithm:hex_value` (lowercase), for example `sha1:ad9503c3e994a4f611a4892f2e67ac82df727086`. Only one checksum is supported per request. Supported algorithms: md5, sha1, sha256, sha512."
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for an organization"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Specify the number of results to skip before returning results. Must be greater than or equal to 0. Default is 0."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Specify the number of results to return. Must be greater than 0 and less than 1000. Default is 1000."
+              }
+            ]
+          },
+          "docs": "Query issues for a specific package version identified by Package URL (purl). Snyk returns only direct vulnerabilities. Transitive vulnerabilities (from dependencies) are not returned because they can vary depending on context. For Maven packages, you can optionally include a checksum qualifier in the PURL to request checksum validation. The response will include metadata indicating whether the provided checksum matches Snyk's records. Vulnerabilities are always returned regardless of checksum m"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

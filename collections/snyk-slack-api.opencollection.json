@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Slack API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Slack",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of Slack channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/slack_app/:tenant_id/channels",
+            "params": [
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "100",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              }
+            ]
+          },
+          "docs": "Requires the Snyk Slack App to be set up for this org, will retrieve a list of channels the Snyk Slack App can access. Note that it is currently only possible to page forwards through this collection, no prev links will be generated and the ending_before parameter will not function.\n\n#### Required permissions\n\n- `Install Apps (org.app.install)`"
+        },
+        {
+          "info": {
+            "name": "Get Slack Channel name by Slack Channel ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/slack_app/:tenant_id/channels/:channel_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "Slack Channel ID"
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant ID"
+              }
+            ]
+          },
+          "docs": "Requires the Snyk Slack App to be set up for this org. It will return the Slack channel name for the provided Slack channel ID.\n\n#### Required permissions\n\n- `Install Apps (org.app.install)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

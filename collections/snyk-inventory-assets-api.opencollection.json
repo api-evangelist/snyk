@@ -1,0 +1,1880 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Inventory Assets API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Inventory Assets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List or search all assets (synchronous) - Group scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/inventory/assets",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "RSQL filter expression for filtering results. See schema for full documentation."
+              },
+              {
+                "name": "sort",
+                "value": "-created_at",
+                "type": "query",
+                "description": "Comma-separated sort fields. Prefix with `-` for descending order."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              },
+              {
+                "name": "fields",
+                "value": "[object Object]",
+                "type": "query",
+                "description": "Sparse fieldsets allow clients to request only specific fields for a given resource type.\nUse the format `fields[<type>]=field1,field2` where `<type>` is the JSON:API resource type.\n\n**Container image fields** (use with `fields[container_images]`):\n- `class` - Classification of the asset\n- `registry` - Container registry hostname\n- `repository` - Repository path\n- `config_digest` - Image config digest\n- `distribution_digests` - Distribution digests (manifest/index pairs)\n- `image_tags` - Distinct image tags across all discovery sources\n- `built_at` - When the image was built\n- `size_bytes` - Size of the image in bytes\n- `author` - Image author\n- `architecture` - CPU architecture\n- `os` - Operating system\n- `variant` - CPU architecture variant\n- `os_version` - Operating system version\n- `os_features` - OS features\n- `config` - Image runtime configuration (OCI config)\n- `root_fs` - Root filesystem information\n- `history` - Image build history\n- `inferred_base_images` - Inferred base images\n- `teams` - Teams associated with the asset\n- `labels` - Labels associated with the asset\n- `tags` - Key-value tags for the asset\n- `risk_score` - Risk score for the asset\n- `test_surfaces` - Test surfaces for the asset\n- `issues` - Issue counts by severity\n- `created_at` - When the asset was created\n- `updated_at` - When the asset was last updated\n- `last_scan` - When the asset was last scanned\n- `scan_engines` - Scan engines applied to the asset\n\nNote: `type` and `id` are always included regardless of field selection.\n"
+              },
+              {
+                "name": "meta_count",
+                "value": "with",
+                "type": "query",
+                "description": "Provide summary count in the response meta object when requested.\nWhen `with` is provided, the count will be included in the response meta object.\nWhen `only` is provided, the count will be included in the response meta object and no data will be returned.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves a polymorphic list of all asset types for a given group.\nThe tenant is resolved from the group_id.\n\n#### Required permissions\n\n- `View Groups (group.read)`"
+        },
+        {
+          "info": {
+            "name": "Bulk update asset attributes - Group scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/groups/:group_id/inventory/assets",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partially updates multiple assets within a group context.\nMaximum of 100 assets can be updated per request.\nThe operation is transactional - all updates succeed or all fail.\n\n#### Required permissions\n\n- `Edit Group Details (group.edit)`"
+        },
+        {
+          "info": {
+            "name": "Get available filter fields - Group scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/inventory/assets/filters",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "asset_types",
+                "value": "container_images",
+                "type": "query",
+                "description": "Comma-separated list of asset types to filter the available filter fields"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              }
+            ]
+          },
+          "docs": "Returns a list of valid field names that can be used for filtering assets using RSQL.\nEach field includes its name, data type, and which asset types it applies to.\n\n#### Required permissions\n\n- `View Groups (group.read)`"
+        },
+        {
+          "info": {
+            "name": "Get filter value suggestions (autocomplete) - Group scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/inventory/assets/filters/:filter_id/values",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "filter_id",
+                "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "type": "path",
+                "description": "The UUID of the filter field to get values for (from the filter fields list endpoint)"
+              },
+              {
+                "name": "q",
+                "value": "prod",
+                "type": "query",
+                "description": "Full text search term to filter the list of values. If keys_only is true, this will filter the keys of the object filter values. If key is provided, this will filter the value for the specific key of the object filter values."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              },
+              {
+                "name": "keys_only",
+                "value": "",
+                "type": "query",
+                "description": "Return only the keys of the object filter values"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Return only the value for a specific key of the object filter values"
+              }
+            ]
+          },
+          "docs": "Returns a list of distinct values for a specific filter field.\nUseful for building autocomplete functionality in filter UIs.\n\nUse the UUID from the filter fields list endpoint to identify which field to query.\n\nFor object filter values, both the keys and values are returned.\n\n#### Required permissions\n\n- `View Groups (group.read)`"
+        },
+        {
+          "info": {
+            "name": "Get available group fields - Group scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/inventory/assets/groups",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "asset_types",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of asset types to filter group fields"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for forward pagination"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for backward pagination"
+              }
+            ]
+          },
+          "docs": "Returns a list of valid group field names that can be used for grouping assets within a group context.\n\n#### Required permissions\n\n- `View Groups (group.read)`"
+        },
+        {
+          "info": {
+            "name": "Get group value aggregation - Group scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/inventory/assets/groups/:group_field_id/values",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "group_field_id",
+                "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "type": "path",
+                "description": "The UUID of the group field to get values for (from the group fields list endpoint)"
+              },
+              {
+                "name": "asset_types",
+                "value": "container_images",
+                "type": "query",
+                "description": "Comma-separated list of asset types to filter the aggregation"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "RSQL filter expression for filtering which assets are included in aggregation.\nSupports the same syntax as the main search filter including full text search with the `q` field.\nSee the RsqlFilterString schema for complete documentation.\n"
+              },
+              {
+                "name": "sort",
+                "value": "-count",
+                "type": "query",
+                "description": "Comma-separated sort fields for group values. Prefix with `-` for descending order.\nMultiple sort fields are supported (e.g., `-issues,count`).\nDefaults to `count` (ascending) when not specified.\nResults are always tie-broken by `value` for deterministic ordering.\n\nAvailable sort fields:\n  - `value` - Sort by the group value string (alphabetical)\n  - `count` - Sort by the number of assets in each group\n  - `last_seen_at` - Sort by the aggregated last_seen_at timestamp\n  - `updated_at` - Sort by the aggregated updated_at timestamp\n  - `risk_score` - Sort by the aggregated risk score\n  - `built_at` - Sort by the aggregated container image build timestamp\n  - `issues` - Sort by issue severity (critical → high → medium → low)\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of group values to return"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for forward pagination"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for backward pagination"
+              },
+              {
+                "name": "meta_fields",
+                "value": "count,risk_score,issues,labels",
+                "type": "query",
+                "description": "Meta fields to include in the response. Multiple fields can be specified.\n\nAvailable fields:\n  - `count` - Number of assets with this value\n  - `last_seen_at` - Aggregated last_seen_at timestamp (default aggregation: last)\n  - `updated_at` - Aggregated updated_at timestamp (default aggregation: last)\n  - `risk_score` - Aggregated risk score from discovery sources (default aggregation: last)\n  - `issues` - Aggregated issue counts (critical, high, medium, low, total) (default aggregation: last)\n  - `labels` - Labels across assets (default aggregation: last)\n  - `tags` - Tags across assets (default aggregation: last)\n  - `built_at` - Aggregated container image build timestamp (default aggregation: last)\n  - `all` - Include all available meta fields\n\nAll fields default to the `last` aggregation function, which returns the value\nfrom the asset with the most recent updated_at in the group. Use the `aggregate`\nparameter to override the aggregation function per field.\n\nIf not specified, the meta object is not included in the response.\n\nNote: Requesting meta fields may impact response time as aggregations\nrequire additional computation.\n"
+              },
+              {
+                "name": "aggregate",
+                "value": "",
+                "type": "query",
+                "description": "Per-field aggregate function override for meta fields.\nAll fields default to `last` when not specified.\n`max`/`min` compute the SQL MAX/MIN across all assets in the group (scalar fields only).\n`first`/`last` returns the value from the single asset with the earliest/latest\nupdated_at in the group (all field types).\n`sum` computes the total across all assets (numeric fields, issues, labels, tags).\n"
+              }
+            ]
+          },
+          "docs": "Returns aggregated values for a specific group field id, showing the count of assets\nfor each distinct value.\n\nUse the UUID from the group fields list endpoint to identify which field to query.\n\n#### Required permissions\n\n- `View Groups (group.read)`"
+        },
+        {
+          "info": {
+            "name": "Create an asset search (asynchronous) - Group scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/groups/:group_id/inventory/assets/searches",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates an asynchronous search for assets within a group context.\n\n#### Required permissions\n\n- `View Groups (group.read)`"
+        },
+        {
+          "info": {
+            "name": "Retrieve asset search results (asynchronous) - Group scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/inventory/assets/searches/:search_id/results",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group"
+              },
+              {
+                "name": "search_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the search operation"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for results (e.g., -created_at for descending)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for forward pagination"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for backward pagination"
+              },
+              {
+                "name": "fields",
+                "value": "[object Object]",
+                "type": "query",
+                "description": "Sparse fieldsets allow clients to request only specific fields for a given resource type.\nUse the format `fields[<type>]=field1,field2` where `<type>` is the JSON:API resource type.\n\n**Container image fields** (use with `fields[container_images]`):\n- `class` - Classification of the asset\n- `registry` - Container registry hostname\n- `repository` - Repository path\n- `config_digest` - Image config digest\n- `distribution_digests` - Distribution digests (manifest/index pairs)\n- `image_tags` - Distinct image tags across all discovery sources\n- `built_at` - When the image was built\n- `size_bytes` - Size of the image in bytes\n- `author` - Image author\n- `architecture` - CPU architecture\n- `os` - Operating system\n- `variant` - CPU architecture variant\n- `os_version` - Operating system version\n- `os_features` - OS features\n- `config` - Image runtime configuration (OCI config)\n- `root_fs` - Root filesystem information\n- `history` - Image build history\n- `inferred_base_images` - Inferred base images\n- `teams` - Teams associated with the asset\n- `labels` - Labels associated with the asset\n- `tags` - Key-value tags for the asset\n- `risk_score` - Risk score for the asset\n- `test_surfaces` - Test surfaces for the asset\n- `issues` - Issue counts by severity\n- `created_at` - When the asset was created\n- `updated_at` - When the asset was last updated\n- `last_scan` - When the asset was last scanned\n- `scan_engines` - Scan engines applied to the asset\n\nNote: `type` and `id` are always included regardless of field selection.\n"
+              }
+            ]
+          },
+          "docs": "Gets paginated results for a previously initiated asset search within a group context.\n\n#### Required permissions\n\n- `View Groups (group.read)`"
+        },
+        {
+          "info": {
+            "name": "Get a single asset by ID - Group scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/inventory/assets/:asset_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group"
+              },
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the asset"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "fields",
+                "value": "[object Object]",
+                "type": "query",
+                "description": "Sparse fieldsets allow clients to request only specific fields for a given resource type.\nUse the format `fields[<type>]=field1,field2` where `<type>` is the JSON:API resource type.\n\n**Container image fields** (use with `fields[container_images]`):\n- `class` - Classification of the asset\n- `registry` - Container registry hostname\n- `repository` - Repository path\n- `config_digest` - Image config digest\n- `distribution_digests` - Distribution digests (manifest/index pairs)\n- `image_tags` - Distinct image tags across all discovery sources\n- `built_at` - When the image was built\n- `size_bytes` - Size of the image in bytes\n- `author` - Image author\n- `architecture` - CPU architecture\n- `os` - Operating system\n- `variant` - CPU architecture variant\n- `os_version` - Operating system version\n- `os_features` - OS features\n- `config` - Image runtime configuration (OCI config)\n- `root_fs` - Root filesystem information\n- `history` - Image build history\n- `inferred_base_images` - Inferred base images\n- `teams` - Teams associated with the asset\n- `labels` - Labels associated with the asset\n- `tags` - Key-value tags for the asset\n- `risk_score` - Risk score for the asset\n- `test_surfaces` - Test surfaces for the asset\n- `issues` - Issue counts by severity\n- `created_at` - When the asset was created\n- `updated_at` - When the asset was last updated\n- `last_scan` - When the asset was last scanned\n- `scan_engines` - Scan engines applied to the asset\n\nNote: `type` and `id` are always included regardless of field selection.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves a single asset by its unique identifier within a group context.\n\n#### Required permissions\n\n- `View Groups (group.read)`"
+        },
+        {
+          "info": {
+            "name": "Update asset attributes - Group scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/groups/:group_id/inventory/assets/:asset_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group"
+              },
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the asset"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partially updates an asset's attributes within a group context.\nSupports updating class, labels (add/remove), and tags (add/remove).\n\n#### Required permissions\n\n- `Edit Group Details (group.edit)`"
+        },
+        {
+          "info": {
+            "name": "List projects for an asset (group scope) (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/inventory/assets/:asset_id/relationships/projects",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group"
+              },
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the asset"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per page"
+              },
+              {
+                "name": "canonical",
+                "value": "",
+                "type": "query",
+                "description": "Filter projects by canonical status.\n- `with`: Returns all projects (canonical attribute is populated).\n- `only`: Returns only canonical projects (those used for vulnerability counts).\n- `none`: Returns only non-canonical projects.\nWhen omitted, returns all projects without canonical filtering.\n"
+              },
+              {
+                "name": "target_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter projects by target ID. When provided, returns only projects that belong to\nthe specified target. When omitted, returns projects from all targets.\n"
+              },
+              {
+                "name": "sort",
+                "value": "-snapshot_created_at",
+                "type": "query",
+                "description": "Sort field with optional direction prefix. Prefix with `-` for descending order.\n\n**Supported fields:**\n- `snapshot_created_at` - Snapshot creation timestamp\n- `issues` - Issue counts by severity (critical, high, medium, low)\n\nWhen omitted, results are ordered by `snapshot_created_at` ascending.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of Snyk projects linked to this asset with full attributes.\nReturns the `id`, `type`, and `attributes` of each related project.\nScoped to the specified group.\n\n#### Required permissions\n\n- `View Groups (group.read)`"
+        },
+        {
+          "info": {
+            "name": "List targets for an asset (group scope) (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/inventory/assets/:asset_id/relationships/targets",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group"
+              },
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the asset"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per page"
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of Snyk targets linked to this asset with full attributes.\nReturns the `id`, `type`, and `attributes` of each related target.\nScoped to the specified group.\n\n#### Required permissions\n\n- `View Groups (group.read)`"
+        },
+        {
+          "info": {
+            "name": "List or search all assets (synchronous) - Org scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/inventory/assets",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "RSQL filter expression for filtering results. See schema for full documentation."
+              },
+              {
+                "name": "sort",
+                "value": "-created_at",
+                "type": "query",
+                "description": "Comma-separated sort fields. Prefix with `-` for descending order."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              },
+              {
+                "name": "fields",
+                "value": "[object Object]",
+                "type": "query",
+                "description": "Sparse fieldsets allow clients to request only specific fields for a given resource type.\nUse the format `fields[<type>]=field1,field2` where `<type>` is the JSON:API resource type.\n\n**Container image fields** (use with `fields[container_images]`):\n- `class` - Classification of the asset\n- `registry` - Container registry hostname\n- `repository` - Repository path\n- `config_digest` - Image config digest\n- `distribution_digests` - Distribution digests (manifest/index pairs)\n- `image_tags` - Distinct image tags across all discovery sources\n- `built_at` - When the image was built\n- `size_bytes` - Size of the image in bytes\n- `author` - Image author\n- `architecture` - CPU architecture\n- `os` - Operating system\n- `variant` - CPU architecture variant\n- `os_version` - Operating system version\n- `os_features` - OS features\n- `config` - Image runtime configuration (OCI config)\n- `root_fs` - Root filesystem information\n- `history` - Image build history\n- `inferred_base_images` - Inferred base images\n- `teams` - Teams associated with the asset\n- `labels` - Labels associated with the asset\n- `tags` - Key-value tags for the asset\n- `risk_score` - Risk score for the asset\n- `test_surfaces` - Test surfaces for the asset\n- `issues` - Issue counts by severity\n- `created_at` - When the asset was created\n- `updated_at` - When the asset was last updated\n- `last_scan` - When the asset was last scanned\n- `scan_engines` - Scan engines applied to the asset\n\nNote: `type` and `id` are always included regardless of field selection.\n"
+              },
+              {
+                "name": "meta_count",
+                "value": "with",
+                "type": "query",
+                "description": "Provide summary count in the response meta object when requested.\nWhen `with` is provided, the count will be included in the response meta object.\nWhen `only` is provided, the count will be included in the response meta object and no data will be returned.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves a polymorphic list of all asset types for a given organization.\nThe group and tenant are resolved from the org_id.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Bulk update asset attributes - Org scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/inventory/assets",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partially updates multiple assets within an org context.\nMaximum of 100 assets can be updated per request.\nThe operation is transactional - all updates succeed or all fail.\n\n#### Required permissions\n\n- `Edit Organization (org.edit)`"
+        },
+        {
+          "info": {
+            "name": "Get available filter fields - Org scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/inventory/assets/filters",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "asset_types",
+                "value": "container_images",
+                "type": "query",
+                "description": "Comma-separated list of asset types to filter the available filter fields"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              }
+            ]
+          },
+          "docs": "Returns a list of valid field names that can be used for filtering assets using RSQL.\nEach field includes its name, data type, and which asset types it applies to.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Get filter value suggestions (autocomplete) - Org scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/inventory/assets/filters/:filter_id/values",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "filter_id",
+                "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "type": "path",
+                "description": "The UUID of the filter field to get values for (from the filter fields list endpoint)"
+              },
+              {
+                "name": "q",
+                "value": "prod",
+                "type": "query",
+                "description": "Full text search term to filter the list of values. If keys_only is true, this will filter the keys of the object filter values. If key is provided, this will filter the value for the specific key of the object filter values."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              },
+              {
+                "name": "keys_only",
+                "value": "",
+                "type": "query",
+                "description": "Return only the keys of the object filter values"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Return only the value for a specific key of the object filter values"
+              }
+            ]
+          },
+          "docs": "Returns a list of distinct values for a specific filter field.\nUseful for building autocomplete functionality in filter UIs.\n\nUse the UUID from the filter fields list endpoint to identify which field to query.\n\nFor object filter values, both the keys and values are returned.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Get available group fields - Org scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/inventory/assets/groups",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "asset_types",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of asset types to filter group fields"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for forward pagination"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for backward pagination"
+              }
+            ]
+          },
+          "docs": "Returns a list of valid group field names that can be used for grouping assets within an org context.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Get group value aggregation - Org scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/inventory/assets/groups/:group_field_id/values",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "group_field_id",
+                "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "type": "path",
+                "description": "The UUID of the group field to get values for (from the group fields list endpoint)"
+              },
+              {
+                "name": "asset_types",
+                "value": "container_images",
+                "type": "query",
+                "description": "Comma-separated list of asset types to filter the aggregation"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "RSQL filter expression for filtering which assets are included in aggregation.\nSupports the same syntax as the main search filter including full text search with the `q` field.\nSee the RsqlFilterString schema for complete documentation.\n"
+              },
+              {
+                "name": "sort",
+                "value": "-count",
+                "type": "query",
+                "description": "Comma-separated sort fields for group values. Prefix with `-` for descending order.\nMultiple sort fields are supported (e.g., `-issues,count`).\nDefaults to `count` (ascending) when not specified.\nResults are always tie-broken by `value` for deterministic ordering.\n\nAvailable sort fields:\n  - `value` - Sort by the group value string (alphabetical)\n  - `count` - Sort by the number of assets in each group\n  - `last_seen_at` - Sort by the aggregated last_seen_at timestamp\n  - `updated_at` - Sort by the aggregated updated_at timestamp\n  - `risk_score` - Sort by the aggregated risk score\n  - `built_at` - Sort by the aggregated container image build timestamp\n  - `issues` - Sort by issue severity (critical → high → medium → low)\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of group values to return"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for forward pagination"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for backward pagination"
+              },
+              {
+                "name": "meta_fields",
+                "value": "count,risk_score,issues,labels",
+                "type": "query",
+                "description": "Meta fields to include in the response. Multiple fields can be specified.\n\nAvailable fields:\n  - `count` - Number of assets with this value\n  - `last_seen_at` - Aggregated last_seen_at timestamp (default aggregation: last)\n  - `updated_at` - Aggregated updated_at timestamp (default aggregation: last)\n  - `risk_score` - Aggregated risk score from discovery sources (default aggregation: last)\n  - `issues` - Aggregated issue counts (critical, high, medium, low, total) (default aggregation: last)\n  - `labels` - Labels across assets (default aggregation: last)\n  - `tags` - Tags across assets (default aggregation: last)\n  - `built_at` - Aggregated container image build timestamp (default aggregation: last)\n  - `all` - Include all available meta fields\n\nAll fields default to the `last` aggregation function, which returns the value\nfrom the asset with the most recent updated_at in the group. Use the `aggregate`\nparameter to override the aggregation function per field.\n\nIf not specified, the meta object is not included in the response.\n\nNote: Requesting meta fields may impact response time as aggregations\nrequire additional computation.\n"
+              },
+              {
+                "name": "aggregate",
+                "value": "",
+                "type": "query",
+                "description": "Per-field aggregate function override for meta fields.\nAll fields default to `last` when not specified.\n`max`/`min` compute the SQL MAX/MIN across all assets in the group (scalar fields only).\n`first`/`last` returns the value from the single asset with the earliest/latest\nupdated_at in the group (all field types).\n`sum` computes the total across all assets (numeric fields, issues, labels, tags).\n"
+              }
+            ]
+          },
+          "docs": "Returns aggregated values for a specific group field id, showing the count of assets\nfor each distinct value.\n\nUse the UUID from the group fields list endpoint to identify which field to query.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Create an asset search (asynchronous) - Org scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/inventory/assets/searches",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates an asynchronous search for assets within an org context.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Retrieve asset search results (asynchronous) - Org scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/inventory/assets/searches/:search_id/results",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization"
+              },
+              {
+                "name": "search_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the search operation"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for results (e.g., -created_at for descending)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for forward pagination"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for backward pagination"
+              },
+              {
+                "name": "fields",
+                "value": "[object Object]",
+                "type": "query",
+                "description": "Sparse fieldsets allow clients to request only specific fields for a given resource type.\nUse the format `fields[<type>]=field1,field2` where `<type>` is the JSON:API resource type.\n\n**Container image fields** (use with `fields[container_images]`):\n- `class` - Classification of the asset\n- `registry` - Container registry hostname\n- `repository` - Repository path\n- `config_digest` - Image config digest\n- `distribution_digests` - Distribution digests (manifest/index pairs)\n- `image_tags` - Distinct image tags across all discovery sources\n- `built_at` - When the image was built\n- `size_bytes` - Size of the image in bytes\n- `author` - Image author\n- `architecture` - CPU architecture\n- `os` - Operating system\n- `variant` - CPU architecture variant\n- `os_version` - Operating system version\n- `os_features` - OS features\n- `config` - Image runtime configuration (OCI config)\n- `root_fs` - Root filesystem information\n- `history` - Image build history\n- `inferred_base_images` - Inferred base images\n- `teams` - Teams associated with the asset\n- `labels` - Labels associated with the asset\n- `tags` - Key-value tags for the asset\n- `risk_score` - Risk score for the asset\n- `test_surfaces` - Test surfaces for the asset\n- `issues` - Issue counts by severity\n- `created_at` - When the asset was created\n- `updated_at` - When the asset was last updated\n- `last_scan` - When the asset was last scanned\n- `scan_engines` - Scan engines applied to the asset\n\nNote: `type` and `id` are always included regardless of field selection.\n"
+              }
+            ]
+          },
+          "docs": "Gets paginated results for a previously initiated asset search within an org context.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Get a single asset by ID - Org scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/inventory/assets/:asset_id",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization"
+              },
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the asset"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "fields",
+                "value": "[object Object]",
+                "type": "query",
+                "description": "Sparse fieldsets allow clients to request only specific fields for a given resource type.\nUse the format `fields[<type>]=field1,field2` where `<type>` is the JSON:API resource type.\n\n**Container image fields** (use with `fields[container_images]`):\n- `class` - Classification of the asset\n- `registry` - Container registry hostname\n- `repository` - Repository path\n- `config_digest` - Image config digest\n- `distribution_digests` - Distribution digests (manifest/index pairs)\n- `image_tags` - Distinct image tags across all discovery sources\n- `built_at` - When the image was built\n- `size_bytes` - Size of the image in bytes\n- `author` - Image author\n- `architecture` - CPU architecture\n- `os` - Operating system\n- `variant` - CPU architecture variant\n- `os_version` - Operating system version\n- `os_features` - OS features\n- `config` - Image runtime configuration (OCI config)\n- `root_fs` - Root filesystem information\n- `history` - Image build history\n- `inferred_base_images` - Inferred base images\n- `teams` - Teams associated with the asset\n- `labels` - Labels associated with the asset\n- `tags` - Key-value tags for the asset\n- `risk_score` - Risk score for the asset\n- `test_surfaces` - Test surfaces for the asset\n- `issues` - Issue counts by severity\n- `created_at` - When the asset was created\n- `updated_at` - When the asset was last updated\n- `last_scan` - When the asset was last scanned\n- `scan_engines` - Scan engines applied to the asset\n\nNote: `type` and `id` are always included regardless of field selection.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves a single asset by its unique identifier within an org context.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Update asset attributes - Org scope (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/inventory/assets/:asset_id",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization"
+              },
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the asset"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partially updates an asset's attributes within an org context.\nSupports updating class, labels (add/remove), and tags (add/remove).\n\n#### Required permissions\n\n- `Edit Organization (org.edit)`"
+        },
+        {
+          "info": {
+            "name": "List projects for an asset (org scope) (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/inventory/assets/:asset_id/relationships/projects",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization"
+              },
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the asset"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per page"
+              },
+              {
+                "name": "canonical",
+                "value": "",
+                "type": "query",
+                "description": "Filter projects by canonical status.\n- `with`: Returns all projects (canonical attribute is populated).\n- `only`: Returns only canonical projects (those used for vulnerability counts).\n- `none`: Returns only non-canonical projects.\nWhen omitted, returns all projects without canonical filtering.\n"
+              },
+              {
+                "name": "target_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter projects by target ID. When provided, returns only projects that belong to\nthe specified target. When omitted, returns projects from all targets.\n"
+              },
+              {
+                "name": "sort",
+                "value": "-snapshot_created_at",
+                "type": "query",
+                "description": "Sort field with optional direction prefix. Prefix with `-` for descending order.\n\n**Supported fields:**\n- `snapshot_created_at` - Snapshot creation timestamp\n- `issues` - Issue counts by severity (critical, high, medium, low)\n\nWhen omitted, results are ordered by `snapshot_created_at` ascending.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of Snyk projects linked to this asset with full attributes.\nReturns the `id`, `type`, and `attributes` of each related project.\nScoped to the specified organization.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "List targets for an asset (org scope) (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/inventory/assets/:asset_id/relationships/targets",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization"
+              },
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the asset"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per page"
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of Snyk targets linked to this asset with full attributes.\nReturns the `id`, `type`, and `attributes` of each related target.\nScoped to the specified organization.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "List or search all assets (synchronous) (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/inventory/assets",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tenant"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "RSQL filter expression for filtering results. See schema for full documentation."
+              },
+              {
+                "name": "sort",
+                "value": "-created_at",
+                "type": "query",
+                "description": "Comma-separated sort fields. Prefix with `-` for descending order.\n\n**Supported fields:**\n- `created_at` - Asset creation timestamp\n- `updated_at` - Asset last update timestamp\n- `type` - Asset type (container_images)\n- `class` - Asset class\n- `risk_score` - Asset risk score (max across project sources)\n- `issues` - Issue counts by severity (critical, high, medium, low)\n- `built_at` - Image build timestamp (container images only)\n- `last_scan` - Last scan timestamp\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.MTIzNDU2Nzg5MHxhYmNkZWY=",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.MTIzNDU2Nzg5MHxhYmNkZWY=",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              },
+              {
+                "name": "fields",
+                "value": "[object Object]",
+                "type": "query",
+                "description": "Sparse fieldsets allow clients to request only specific fields for a given resource type.\nUse the format `fields[<type>]=field1,field2` where `<type>` is the JSON:API resource type.\n\n**Container image fields** (use with `fields[container_images]`):\n- `class` - Classification of the asset\n- `registry` - Container registry hostname\n- `repository` - Repository path\n- `config_digest` - Image config digest\n- `distribution_digests` - Distribution digests (manifest/index pairs)\n- `image_tags` - Distinct image tags across all discovery sources\n- `built_at` - When the image was built\n- `size_bytes` - Size of the image in bytes\n- `author` - Image author\n- `architecture` - CPU architecture\n- `os` - Operating system\n- `variant` - CPU architecture variant\n- `os_version` - Operating system version\n- `os_features` - OS features\n- `config` - Image runtime configuration (OCI config)\n- `root_fs` - Root filesystem information\n- `history` - Image build history\n- `inferred_base_images` - Inferred base images\n- `teams` - Teams associated with the asset\n- `labels` - Labels associated with the asset\n- `tags` - Key-value tags for the asset\n- `risk_score` - Risk score for the asset\n- `test_surfaces` - Test surfaces for the asset\n- `issues` - Issue counts by severity\n- `created_at` - When the asset was created\n- `updated_at` - When the asset was last updated\n- `last_scan` - When the asset was last scanned\n- `scan_engines` - Scan engines applied to the asset\n\nNote: `type` and `id` are always included regardless of field selection.\n"
+              },
+              {
+                "name": "meta_count",
+                "value": "with",
+                "type": "query",
+                "description": "Provide summary count in the response meta object when requested.\nWhen `with` is provided, the count will be included in the response meta object.\nWhen `only` is provided, the count will be included in the response meta object and no data will be returned.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves a polymorphic list of all asset types for a given tenant.\nThe response includes different asset types (containers, container images, etc.)\nin a single unified response following the JSON:API specification.\n\nThis endpoint supports both simple listing and synchronous search with filtering,\nsorting, and cursor-based pagination through query parameters.\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "Bulk update asset attributes (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/inventory/assets",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tenant"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partially updates multiple assets in a single request.  \nMaximum of 100 assets can be updated per request.\nThe operation is transactional - all updates succeed or all fail.\nSupports updating class, labels (add/remove), and tags (add/remove).\n\n#### Required permissions\n\n- `Edit Tenant Details (tenant.edit)`"
+        },
+        {
+          "info": {
+            "name": "Get available filter fields (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/inventory/assets/filters",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tenant"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "asset_types",
+                "value": "container_images",
+                "type": "query",
+                "description": "Comma-separated list of asset types to filter the available filter fields"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              }
+            ]
+          },
+          "docs": "Returns a list of valid field names that can be used for filtering assets using RSQL.\nEach field includes its name, data type, and which asset types it applies to.\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "Get filter value suggestions (autocomplete) (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/inventory/assets/filters/:filter_id/values",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tenant"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "filter_id",
+                "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "type": "path",
+                "description": "The UUID of the filter field to get values for (from the filter fields list endpoint)"
+              },
+              {
+                "name": "q",
+                "value": "prod",
+                "type": "query",
+                "description": "Full text search term to filter the list of values. If keys_only is true, this will filter the keys of the object filter values. If key is provided, this will filter the value for the specific key of the object filter values."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              },
+              {
+                "name": "keys_only",
+                "value": "",
+                "type": "query",
+                "description": "Return only the keys of the object filter values"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Return only the value for a specific key of the object filter values"
+              }
+            ]
+          },
+          "docs": "Returns a list of distinct values for a specific filter field.\nUseful for building autocomplete functionality in filter UIs.\n\nUse the UUID from the filter fields list endpoint to identify which field to query.\n\nFor object filter values, both the keys and values are returned.\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "Get available group fields (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/inventory/assets/groups",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tenant"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "asset_types",
+                "value": "container_images",
+                "type": "query",
+                "description": "Comma-separated list of asset types to filter the available group fields"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              }
+            ]
+          },
+          "docs": "Returns a list of valid group field names that can be used for grouping assets.\nEach field includes its name, data type, and which asset types it applies to.\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "Get group value aggregation (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/inventory/assets/groups/:group_field_id/values",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tenant"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "group_field_id",
+                "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "type": "path",
+                "description": "The UUID of the group field to get values for (from the group fields list endpoint)"
+              },
+              {
+                "name": "asset_types",
+                "value": "container_images",
+                "type": "query",
+                "description": "Comma-separated list of asset types to filter the aggregation"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "RSQL filter expression for filtering which assets are included in aggregation.\nSupports the same syntax as the main search filter including full text search with the `q` field.\nSee the RsqlFilterString schema for complete documentation.\n"
+              },
+              {
+                "name": "sort",
+                "value": "-count",
+                "type": "query",
+                "description": "Comma-separated sort fields for group values. Prefix with `-` for descending order.\nMultiple sort fields are supported (e.g., `-issues,count`).\nDefaults to `count` (ascending) when not specified.\nResults are always tie-broken by `value` for deterministic ordering.\n\nAvailable sort fields:\n  - `value` - Sort by the group value string (alphabetical)\n  - `count` - Sort by the number of assets in each group\n  - `last_seen_at` - Sort by the aggregated last_seen_at timestamp\n  - `updated_at` - Sort by the aggregated updated_at timestamp\n  - `risk_score` - Sort by the aggregated risk score\n  - `built_at` - Sort by the aggregated container image build timestamp\n  - `issues` - Sort by issue severity (critical → high → medium → low)\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              },
+              {
+                "name": "meta_fields",
+                "value": "count,risk_score,issues,labels",
+                "type": "query",
+                "description": "Meta fields to include in the response. Multiple fields can be specified.\n\nAvailable fields:\n  - `count` - Number of assets with this value\n  - `last_seen_at` - Aggregated last_seen_at timestamp (default aggregation: last)\n  - `updated_at` - Aggregated updated_at timestamp (default aggregation: last)\n  - `risk_score` - Aggregated risk score from discovery sources (default aggregation: last)\n  - `issues` - Aggregated issue counts (critical, high, medium, low, total) (default aggregation: last)\n  - `labels` - Labels across assets (default aggregation: last)\n  - `tags` - Tags across assets (default aggregation: last)\n  - `built_at` - Aggregated container image build timestamp (default aggregation: last)\n  - `all` - Include all available meta fields\n\nAll fields default to the `last` aggregation function, which returns the value\nfrom the asset with the most recent updated_at in the group. Use the `aggregate`\nparameter to override the aggregation function per field.\n\nIf not specified, the meta object is not included in the response.\n\nNote: Requesting meta fields may impact response time as aggregations\nrequire additional computation.\n"
+              },
+              {
+                "name": "aggregate",
+                "value": "",
+                "type": "query",
+                "description": "Per-field aggregate function override for meta fields.\nAll fields default to `last` when not specified.\n`max`/`min` compute the SQL MAX/MIN across all assets in the group (scalar fields only).\n`first`/`last` returns the value from the single asset with the earliest/latest\nupdated_at in the group (all field types).\n`sum` computes the total across all assets (numeric fields, issues, labels, tags).\n"
+              }
+            ]
+          },
+          "docs": "Returns aggregated values for a specific group field id, showing the count of assets\nfor each distinct value.\n\nUse the UUID from the group fields list endpoint to identify which field to query.\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "Create an asset search (asynchronous) (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/inventory/assets/searches",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tenant"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates an asynchronous search for assets and returns a redirect to the search results endpoint\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "Retrieve asset search results (asynchronous) (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/inventory/assets/searches/:search_id/results",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tenant"
+              },
+              {
+                "name": "search_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the search operation"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated sort fields. Prefix with `-` for descending order.\n\n**Supported fields:**\n- `created_at` - Asset creation timestamp\n- `updated_at` - Asset last update timestamp\n- `type` - Asset type (container_images)\n- `class` - Asset class\n- `risk_score` - Asset risk score (max across project sources)\n- `issues` - Issue counts by severity (critical, high, medium, low)\n- `built_at` - Image build timestamp (container images only)\n- `last_scan` - Last scan timestamp\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for next page"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for previous page"
+              },
+              {
+                "name": "fields",
+                "value": "[object Object]",
+                "type": "query",
+                "description": "Sparse fieldsets allow clients to request only specific fields for a given resource type.\nUse the format `fields[<type>]=field1,field2` where `<type>` is the JSON:API resource type.\n\n**Container image fields** (use with `fields[container_images]`):\n- `class` - Classification of the asset\n- `registry` - Container registry hostname\n- `repository` - Repository path\n- `config_digest` - Image config digest\n- `distribution_digests` - Distribution digests (manifest/index pairs)\n- `image_tags` - Distinct image tags across all discovery sources\n- `built_at` - When the image was built\n- `size_bytes` - Size of the image in bytes\n- `author` - Image author\n- `architecture` - CPU architecture\n- `os` - Operating system\n- `variant` - CPU architecture variant\n- `os_version` - Operating system version\n- `os_features` - OS features\n- `config` - Image runtime configuration (OCI config)\n- `root_fs` - Root filesystem information\n- `history` - Image build history\n- `inferred_base_images` - Inferred base images\n- `teams` - Teams associated with the asset\n- `labels` - Labels associated with the asset\n- `tags` - Key-value tags for the asset\n- `risk_score` - Risk score for the asset\n- `test_surfaces` - Test surfaces for the asset\n- `issues` - Issue counts by severity\n- `created_at` - When the asset was created\n- `updated_at` - When the asset was last updated\n- `last_scan` - When the asset was last scanned\n- `scan_engines` - Scan engines applied to the asset\n\nNote: `type` and `id` are always included regardless of field selection.\n"
+              }
+            ]
+          },
+          "docs": "Gets paginated results for a previously initiated asset search\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "Get a single asset by ID (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/inventory/assets/:asset_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tenant"
+              },
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the asset"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "fields",
+                "value": "[object Object]",
+                "type": "query",
+                "description": "Sparse fieldsets allow clients to request only specific fields for a given resource type.\nUse the format `fields[<type>]=field1,field2` where `<type>` is the JSON:API resource type.\n\n**Container image fields** (use with `fields[container_images]`):\n- `class` - Classification of the asset\n- `registry` - Container registry hostname\n- `repository` - Repository path\n- `config_digest` - Image config digest\n- `distribution_digests` - Distribution digests (manifest/index pairs)\n- `image_tags` - Distinct image tags across all discovery sources\n- `built_at` - When the image was built\n- `size_bytes` - Size of the image in bytes\n- `author` - Image author\n- `architecture` - CPU architecture\n- `os` - Operating system\n- `variant` - CPU architecture variant\n- `os_version` - Operating system version\n- `os_features` - OS features\n- `config` - Image runtime configuration (OCI config)\n- `root_fs` - Root filesystem information\n- `history` - Image build history\n- `inferred_base_images` - Inferred base images\n- `teams` - Teams associated with the asset\n- `labels` - Labels associated with the asset\n- `tags` - Key-value tags for the asset\n- `risk_score` - Risk score for the asset\n- `test_surfaces` - Test surfaces for the asset\n- `issues` - Issue counts by severity\n- `created_at` - When the asset was created\n- `updated_at` - When the asset was last updated\n- `last_scan` - When the asset was last scanned\n- `scan_engines` - Scan engines applied to the asset\n\nNote: `type` and `id` are always included regardless of field selection.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves a single asset by its unique identifier.\nThe response includes the asset's details in JSON:API format.\nThe asset type is determined from the database and the appropriate\ndetails are returned polymorphically.\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "Update asset attributes (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/inventory/assets/:asset_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tenant"
+              },
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the asset"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partially updates an asset's attributes.\nSupports updating class, labels (add/remove), and tags (add/remove).\nAt least one attribute must be provided in the request.\n\n#### Required permissions\n\n- `Edit Tenant Details (tenant.edit)`"
+        },
+        {
+          "info": {
+            "name": "List projects for an asset (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/inventory/assets/:asset_id/relationships/projects",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tenant"
+              },
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the asset"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per page"
+              },
+              {
+                "name": "canonical",
+                "value": "",
+                "type": "query",
+                "description": "Filter projects by canonical status.\n- `with`: Returns all projects (canonical attribute is populated).\n- `only`: Returns only canonical projects (those used for vulnerability counts).\n- `none`: Returns only non-canonical projects.\nWhen omitted, returns all projects without canonical filtering.\n"
+              },
+              {
+                "name": "target_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter projects by target ID. When provided, returns only projects that belong to\nthe specified target. When omitted, returns projects from all targets.\n"
+              },
+              {
+                "name": "sort",
+                "value": "-snapshot_created_at",
+                "type": "query",
+                "description": "Sort field with optional direction prefix. Prefix with `-` for descending order.\n\n**Supported fields:**\n- `snapshot_created_at` - Snapshot creation timestamp\n- `issues` - Issue counts by severity (critical, high, medium, low)\n\nWhen omitted, results are ordered by `snapshot_created_at` ascending.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of Snyk projects linked to this asset with full attributes.\nReturns the `id`, `type`, and `attributes` of each related project.\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        },
+        {
+          "info": {
+            "name": "List targets for an asset (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/inventory/assets/:asset_id/relationships/targets",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tenant"
+              },
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the asset"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The requested API version"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the next page of results"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for fetching the previous page of results"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return per page"
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of Snyk targets linked to this asset with full attributes.\nReturns the `id`, `type`, and `attributes` of each related target.\n\n#### Required permissions\n\n- `View Tenant Details (tenant.read)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

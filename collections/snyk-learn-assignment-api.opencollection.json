@@ -1,0 +1,185 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Learn assignment API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Learn assignment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a list of assignments for an organization (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/learn/assignments",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization."
+              },
+              {
+                "name": "version",
+                "value": "2025-11-05",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              }
+            ]
+          },
+          "docs": "Allows an admin to obtain a comprehensive list of all assignments within their organization.\n\n#### Required permissions\n\n- `View Organization assignments (org.learn_assignment.read)`"
+        },
+        {
+          "info": {
+            "name": "Bulk creation of assignments for users in an organization. (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/learn/assignments",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization."
+              },
+              {
+                "name": "version",
+                "value": "2025-11-05",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Allows an admin to create assignments in bulk for all or a subset of users within their organization.\n\n#### Required permissions\n\n- `Create assignments (org.learn_assignment.create)`"
+        },
+        {
+          "info": {
+            "name": "Update due date for assignments in an organization. (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/learn/assignments",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization."
+              },
+              {
+                "name": "version",
+                "value": "2025-11-05",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Allows an admin to update the due date for existing assignments within their organization.\n\n#### Required permissions\n\n- `Edit assignments (org.learn_assignment.edit)`"
+        },
+        {
+          "info": {
+            "name": "Bulk deletion of assignments in an organization (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/learn/assignments",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization."
+              },
+              {
+                "name": "version",
+                "value": "2025-11-05",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Allows an admin to delete multiple assignments within their organization.\n\n**Note**: Assignments that are part of a Learning Program cannot be deleted through this endpoint.\n\n#### Required permissions\n\n- `Delete assignments (org.learn_assignment.delete)`"
+        },
+        {
+          "info": {
+            "name": "Bulk deletion of assignments in an organization (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/learn/assignments/bulk_delete",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the organization."
+              },
+              {
+                "name": "version",
+                "value": "2025-11-05",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Allows an admin to delete multiple assignments within their organization.\n\n**Note**: Assignments that are part of a Learning Program cannot be deleted through this endpoint.\n\n#### Required permissions\n\n- `Delete assignments (org.learn_assignment.delete)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

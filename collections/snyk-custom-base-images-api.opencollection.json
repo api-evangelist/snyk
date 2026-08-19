@@ -1,0 +1,213 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Custom Base Images API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Custom Base Images",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a custom base image collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/custom_base_images",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the container project that the custom base image is based off of."
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "query",
+                "description": "The organization ID of the custom base image"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "query",
+                "description": "The group ID of the custom base image"
+              },
+              {
+                "name": "repository",
+                "value": "",
+                "type": "query",
+                "description": "The image repository"
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "The image tag"
+              },
+              {
+                "name": "include_in_recommendations",
+                "value": "",
+                "type": "query",
+                "description": "Whether this image should be recommended as a base image upgrade"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "Which column to sort by. \nIf sorting by version, the versioning schema is used.\n"
+              },
+              {
+                "name": "sort_direction",
+                "value": "",
+                "type": "query",
+                "description": "Which direction to sort"
+              }
+            ]
+          },
+          "docs": "Get a list of custom base images with support for ordering and filtering.\nEither the org_id or group_id parameters must be set to authorize successfully.\nIf sorting by version, the repository filter is required.\n"
+        },
+        {
+          "info": {
+            "name": "Create a Custom Base Image from an existing container project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/custom_base_images",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "In order to create a custom base image, you first need to import your base images into Snyk.\nYou can do this through the CLI, UI, or API.\n\nThis endpoint marks an image as a custom base image. This means that the image will get\nadded to the pool of images from which Snyk can recommend base image upgrades.\n\nNote, after the first image in a repository gets added, a versioning schema cannot be passed in this endpoint.\nTo update the versioning schema, the PATCH endpoint must be used.\n"
+        },
+        {
+          "info": {
+            "name": "Get a custom base image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/custom_base_images/:custombaseimage_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "custombaseimage_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for custom base image"
+              }
+            ]
+          },
+          "docs": "Get a custom base image"
+        },
+        {
+          "info": {
+            "name": "Update a custom base image",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/custom_base_images/:custombaseimage_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "custombaseimage_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for custom base image"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a custom base image's attributes"
+        },
+        {
+          "info": {
+            "name": "Delete a custom base image",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/custom_base_images/:custombaseimage_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "custombaseimage_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for custom base image"
+              }
+            ]
+          },
+          "docs": "Delete a custom base image resource. (the related container project is unaffected)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

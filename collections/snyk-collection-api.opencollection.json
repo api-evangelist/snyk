@@ -1,0 +1,368 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Collection API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Collection",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/collections",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Return collections sorted by the specified attributes"
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query",
+                "description": "Return collections sorted in the specified direction"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Return collections which names include the provided string"
+              },
+              {
+                "name": "is_generated",
+                "value": "",
+                "type": "query",
+                "description": "Return collections where is_generated matches the provided boolean"
+              }
+            ]
+          },
+          "docs": "Return a list of organization's collections with issues counts  and projects count.\n\n#### Required permissions\n\n- `View Collections (org.collection.read)`\n\n- `View Project history (org.project.snapshot.read)`"
+        },
+        {
+          "info": {
+            "name": "Create a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/collections",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a collection\n\n#### Required permissions\n\n- `Create Collections (org.collection.create)`"
+        },
+        {
+          "info": {
+            "name": "Get a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/collections/:collection_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a collection"
+              }
+            ]
+          },
+          "docs": "Get a collection\n\n#### Required permissions\n\n- `View Collections (org.collection.read)`"
+        },
+        {
+          "info": {
+            "name": "Edit a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/collections/:collection_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a collection"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Edit a collection\n\n#### Required permissions\n\n- `Edit Collections (org.collection.edit)`"
+        },
+        {
+          "info": {
+            "name": "Delete a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/collections/:collection_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a collection"
+              }
+            ]
+          },
+          "docs": "Delete a collection\n\n#### Required permissions\n\n- `Delete Collections (org.collection.delete)`"
+        },
+        {
+          "info": {
+            "name": "Get projects from the specified collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/collections/:collection_id/relationships/projects",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a collection"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Return projects sorted by the specified attributes"
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query",
+                "description": "Return projects sorted in the specified direction"
+              },
+              {
+                "name": "target_id",
+                "value": "",
+                "type": "query",
+                "description": "Return projects that belong to the provided targets"
+              },
+              {
+                "name": "show",
+                "value": "",
+                "type": "query",
+                "description": "Return projects that are with or without issues"
+              },
+              {
+                "name": "integration",
+                "value": "",
+                "type": "query",
+                "description": "Return projects that match the provided integration types"
+              }
+            ]
+          },
+          "docs": "Return a list of organization's projects that are from the specified collection.\n\n#### Required permissions\n\n- `View Collections (org.collection.read)`\n\n- `View Projects (org.project.read)`\n\n- `View Project history (org.project.snapshot.read)`"
+        },
+        {
+          "info": {
+            "name": "Add projects to a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/collections/:collection_id/relationships/projects",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a collection"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add projects to a collection by specifying an array of project ids\n\n#### Required permissions\n\n- `Edit Collections (org.collection.edit)`"
+        },
+        {
+          "info": {
+            "name": "Remove projects from a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/collections/:collection_id/relationships/projects",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "collection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a collection"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove projects from a collection by specifying an array of project ids\n\n#### Required permissions\n\n- `Edit Collections (org.collection.edit)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,134 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests IacSettings API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "IacSettings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the Infrastructure as Code Settings for a group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/settings/iac",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the group whose Infrastructure as Code settings are requested"
+              }
+            ]
+          },
+          "docs": "Get the Infrastructure as Code Settings for a group.\n\n#### Required permissions\n\n- `View IaC settings (group.iac.settings.read)`"
+        },
+        {
+          "info": {
+            "name": "Update the Infrastructure as Code Settings for a group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/groups/:group_id/settings/iac",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the group whose Infrastructure as Code settings are getting updated"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the Infrastructure as Code Settings for a group.\n\n#### Required permissions\n\n- `Edit IaC settings (group.iac.settings.edit)`"
+        },
+        {
+          "info": {
+            "name": "Get the Infrastructure as Code Settings for an org.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/settings/iac",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the org whose Infrastructure as Code settings are requested."
+              }
+            ]
+          },
+          "docs": "Get the Infrastructure as Code Settings for an org.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Update the Infrastructure as Code Settings for an org",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/settings/iac",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the org whose Infrastructure as Code settings are getting updated"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the Infrastructure as Code Settings for an org.\n\n#### Required permissions\n\n- `Edit Organization (org.edit)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

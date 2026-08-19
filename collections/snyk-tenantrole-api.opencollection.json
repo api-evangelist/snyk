@@ -1,0 +1,231 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests TenantRole API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "TenantRole",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all available roles for a given tenant (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/roles",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the tenant."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Role name filter."
+              },
+              {
+                "name": "custom",
+                "value": "",
+                "type": "query",
+                "description": "Whether role is custom or not."
+              },
+              {
+                "name": "assignable_by_me",
+                "value": "",
+                "type": "query",
+                "description": "When true, only return roles that the current user can assign to others in the tenant."
+              },
+              {
+                "name": "expand_permissions",
+                "value": "",
+                "type": "query",
+                "description": "option to show all permission types"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              }
+            ]
+          },
+          "docs": "List all available roles for a given tenant.\n\n#### Required permissions\n\n- `View Tenant Roles (tenant.roles.read)`"
+        },
+        {
+          "info": {
+            "name": "Create a custom tenant role for a given tenant (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/roles",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the tenant."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a custom tenant role for a given tenant.\n\n#### Required permissions\n\n- `View Tenant Roles (tenant.roles.read)`\n\n- `Create Tenant Roles (tenant.roles.create)`"
+        },
+        {
+          "info": {
+            "name": "Return a specific role by its id and its tenant id. (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/roles/:role_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the tenant."
+              },
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the role."
+              },
+              {
+                "name": "has_users_assigned",
+                "value": "",
+                "type": "query",
+                "description": "returns current memberships of the role in the meta relationships section"
+              }
+            ]
+          },
+          "docs": "Return a role from a tenant by the tenant and role id with its details and permissions.\n\n#### Required permissions\n\n- `View Tenant Roles (tenant.roles.read)`"
+        },
+        {
+          "info": {
+            "name": "Update a specific tenant role by its id and its tenant id. (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/roles/:role_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the tenant."
+              },
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the role."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "flag to force the update of a role, required if users are assigned to the role"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update attributes of a custom tenant role in a given tenant\n\n#### Required permissions\n\n- `View Tenant Roles (tenant.roles.read)`\n\n- `Edit Tenant Roles (tenant.roles.edit)`"
+        },
+        {
+          "info": {
+            "name": "Delete a specific tenant role by its id and its tenant id. (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/tenants/:tenant_id/roles/:role_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the tenant."
+              },
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the role."
+              }
+            ]
+          },
+          "docs": "Delete a custom tenant role in a given tenant\n\n#### Required permissions\n\n- `View Tenant Roles (tenant.roles.read)`\n\n- `Delete Tenant Roles (tenant.roles.delete)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

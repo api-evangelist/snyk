@@ -1,0 +1,146 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests AiBom API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AiBom",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get an AI-BOM job status (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/ai_bom_jobs/:job_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2024-10-15",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "The job id"
+              }
+            ]
+          },
+          "docs": "Returns the status of an AI-BOM job. The job status is returned in the response body. If the job is completed the response status code will be 303, redirecting to the getAiBom endpoint.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Create a new AI-BOM (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/ai_boms",
+            "params": [
+              {
+                "name": "version",
+                "value": "2024-10-15",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Triggers the creation of a new AI-BOM. The AI-BOM will be created in a background job. Users should query the background job status by using the getAiBomJob endpoint (/orgs/{org_id}/ai_bom_jobs/{job_id}). The response will contain a content-location header pointing to the getAiBomJob endpoint.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Create and upload an AI-BOM (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/ai_boms/upload",
+            "params": [
+              {
+                "name": "version",
+                "value": "2024-10-15",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an AI-BOM from a file bundle and persists it to the database. Unlike the standard createAiBom endpoint, this endpoint requires a repo_name and will store the AI-BOM for later retrieval and testing. The AI-BOM will be created in a background job. Users should query the background job status by using the getAiBomJob endpoint.\n\n#### Required permissions\n\n- `Edit Organization (org.edit)`"
+        },
+        {
+          "info": {
+            "name": "Get an AI-BOM. (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/ai_boms/:ai_bom_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2024-10-15",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "ai_bom_id",
+                "value": "",
+                "type": "path",
+                "description": "The ai_bom id"
+              }
+            ]
+          },
+          "docs": "Get a AI-BOM once it's job has finished\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,275 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests OpenSourceSettings API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OpenSourceSettings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the Open Source Settings for an Org. (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/settings/opensource",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the org."
+              }
+            ]
+          },
+          "docs": "Returns settings for your Org which may also be controlled at the Group level.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Get opensource broker setting for group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/settings/opensource/broker",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              }
+            ]
+          },
+          "docs": "Returns whether the opensource broker setting is enabled for the group\n\n#### Required permissions\n\n- `View Groups (group.read)`"
+        },
+        {
+          "info": {
+            "name": "Enable opensource broker for group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/groups/:group_id/settings/opensource/broker",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enables the opensource broker setting for a group by installing the Snyk App\n\n#### Required permissions\n\n- `Install Apps (group.app.install)`"
+        },
+        {
+          "info": {
+            "name": "Delete opensource broker setting for group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/groups/:group_id/settings/opensource/broker",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID"
+              }
+            ]
+          },
+          "docs": "Deletes the opensource broker setting for the group by uninstalling the Snyk App\n\n#### Required permissions\n\n- `Install Apps (group.app.install)`"
+        },
+        {
+          "info": {
+            "name": "Get opensource broker setting for organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/settings/opensource/broker",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              }
+            ]
+          },
+          "docs": "Returns whether the opensource broker setting is enabled for the organization\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Enable opensource broker for organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/settings/opensource/broker",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enables the opensource broker setting for an organization by installing the Snyk App\n\n#### Required permissions\n\n- `Install Apps (org.app.install)`"
+        },
+        {
+          "info": {
+            "name": "Delete opensource broker setting for organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/settings/opensource/broker",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              }
+            ]
+          },
+          "docs": "Deletes the opensource broker setting for the organization by uninstalling the Snyk App\n\n#### Required permissions\n\n- `Install Apps (org.app.install)`"
+        },
+        {
+          "info": {
+            "name": "Get opensource broker settings of ecosystem for organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/settings/opensource/:ecosystem/broker",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "ecosystem",
+                "value": "",
+                "type": "path",
+                "description": "The ecosystem identifier"
+              }
+            ]
+          },
+          "docs": "Retrieves all Broker settings of a specific Open Source Ecosystem for an Organization\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Update opensource broker settings of ecosystem for organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/settings/opensource/:ecosystem/broker",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "ecosystem",
+                "value": "",
+                "type": "path",
+                "description": "The ecosystem identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates all Broker settings of a specific Open Source Ecosystem for an Organization.\nThis endpoint has JSON-PATCH semantics: only provided Broker integrations are updated.\nProvide an empty value for `urls` to remove a Broker integration.\n\n#### Required permissions\n\n- `Edit Organization (org.edit)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

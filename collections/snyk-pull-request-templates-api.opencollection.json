@@ -1,0 +1,123 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Pull Request Templates API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pull Request Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get pull request template for group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/settings/pull_request_template",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "7626925e-4b0f-11ee-be56-0242ac120002",
+                "type": "path",
+                "description": "Snyk Group ID"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              }
+            ]
+          },
+          "docs": "Get your groups pull request template\n\n#### Required permissions\n\n- `View Group settings (group.settings.read)`"
+        },
+        {
+          "info": {
+            "name": "Create or update pull request template for group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/groups/:group_id/settings/pull_request_template",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "7626925e-4b0f-11ee-be56-0242ac120002",
+                "type": "path",
+                "description": "Snyk Group ID"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Configures a group level pull request template that will be used on any org or project within that group\n\n#### Required permissions\n\n- `Edit Group settings (group.settings.edit)`"
+        },
+        {
+          "info": {
+            "name": "Delete pull request template for group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/groups/:group_id/settings/pull_request_template",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "7626925e-4b0f-11ee-be56-0242ac120002",
+                "type": "path",
+                "description": "Snyk Group ID"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Delete your groups pull request template. This means Snyk pull requests will start to use the default template for this group.\n\n#### Required permissions\n\n- `Edit Group settings (group.settings.edit)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

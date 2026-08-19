@@ -1,0 +1,147 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Tests API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a test job. (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/test_jobs/:job_id",
+            "headers": [
+              {
+                "name": "snyk-request-id",
+                "value": ""
+              },
+              {
+                "name": "snyk-interaction-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The API version requested."
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Snyk Org ID under which to run or query information\nabout a Job or Test."
+              },
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID returned from the Test API to query."
+              }
+            ]
+          },
+          "docs": "Get a test job.\n\nThe Test API is Asynchronous, and Tests begun through the API\nare assigned a Job ID which references the in-progress Test. The\nJob ID is provided in a successful response from the CreateTest\nendpoint.\n\nThis endpoint is used to poll for the status of a Test using its\nassociated Job ID.\n\nWhen the Job is Finished and the Test is ready for consumption,\nthe Related link will be populated in the response with a link\nto the finished Test entity.\n\n#### Required permissions\n\n- `View Orga"
+        },
+        {
+          "info": {
+            "name": "Create a new test. (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/tests",
+            "headers": [
+              {
+                "name": "snyk-request-id",
+                "value": ""
+              },
+              {
+                "name": "snyk-interaction-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The API version requested."
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Snyk Org ID under which to run or query information\nabout a Job or Test."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new test.\n\nProvide the items to be tested by Snyk as well as any configuration\nparameters for the test to be run.\n\nCurrently, scans using the Open Source (SCA) and Code Analysis (SAST)\nscanners can be run using the Test API.\n\nTests begun through the Test API yield lists of Findings when\nfinished. These Findings can be retrieved using the ListFindings endpoint.\n\nSuccessfully creating a new Test will yield a Job ID that can be used\nto poll for the Test's completion via the GetJob endpoint"
+        },
+        {
+          "info": {
+            "name": "Get a test. (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/tests/:test_id",
+            "headers": [
+              {
+                "name": "snyk-request-id",
+                "value": ""
+              },
+              {
+                "name": "snyk-interaction-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The API version requested."
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Snyk Org ID under which to run or query information\nabout a Job or Test."
+              },
+              {
+                "name": "test_id",
+                "value": "",
+                "type": "path",
+                "description": "Test ID returned from the Test API to query."
+              }
+            ]
+          },
+          "docs": "Get a test.\n\nA Test returned through this endpoint is intended to\nbe a completed Test with results. The data returned through\nthis endpoint does not contain the Findings for the Test, but\na description of the Test that was run and its status.\n\nTests that completed successfully are marked with an appropriate\noutcome according to the configured Thresholds.\n\nFacts about the Test (e.g. how many dependencies were present in\na Tested SBOM) are attached to this response as well as a summary\nof the Find"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

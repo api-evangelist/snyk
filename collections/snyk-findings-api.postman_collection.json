@@ -1,0 +1,394 @@
+{
+  "item": [
+    {
+      "id": "918040f4-61a6-430e-b825-5a62c301aeaa",
+      "name": "Findings",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a1280d70-6ccb-4b8d-82c7-81595ce75a65",
+          "name": "List findings for a test. (Early Access)",
+          "request": {
+            "name": "List findings for a test. (Early Access)",
+            "description": {
+              "content": "List findings for a test.\n\nTest Findings are scanner-agnostic representations of\nvulnerabilities and organization-level policy breaches.\nWhen Snyk runs a Test, the results of that Test are\nformatted into Findings.\n\nThis endpoint returns pages of Findings associated with\na given Test ID. Findings are returned in sorted order by\nID, with page size equal to the provided Limit query parameter.\nPage size is 10 Findings by default if no parameter is provided.\n\nNote that the Findings returned from this endpoint are only the\nFindings that are _not_ suppressed by policy and are _not_\nin violation of a set Test threshold (like Severity or Risk Score).\n\nTo retrieve the next (or previous) page of Findings, utilize the\nNext and Prev links returned in the response.\n\n#### Required permissions\n\n- `View Organization (org.read)`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orgs",
+                ":org_id",
+                "tests",
+                ":test_id",
+                "findings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "(Required) The API version requested."
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "Opaque pagination cursor for forward traversal."
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_before",
+                  "value": "<string>",
+                  "description": "Opaque pagination cursor for reverse traversal."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "The number of items to return."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "org_id",
+                  "description": "(Required) Snyk Org ID under which to run or query information\nabout a Job or Test."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "test_id",
+                  "description": "(Required) Test ID returned from the Test API to query."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A unique ID assigned to each API request, for tracing and troubleshooting.\n\nSnyk clients can optionally provide this ID.",
+                "key": "snyk-request-id",
+                "value": "<uuid>"
+              },
+              {
+                "disabled": false,
+                "description": "Identifies the Snyk client interaction in which this API request occurs.\n\nThe identifier is an opaque string. though at the time of writing it may either be a\nuuid or a urn containing a uuid and some metadata.",
+                "key": "snyk-interaction-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e8ad1330-2726-4dac-876a-5e2175f06777",
+              "name": "Successful API response for a paginated collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "tests",
+                    ":test_id",
+                    "findings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) Snyk Org ID under which to run or query information\nabout a Job or Test."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "test_id",
+                      "description": "(Required) Test ID returned from the Test API to query."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A unique ID assigned to each API request, for tracing and troubleshooting.\n\nSnyk clients can optionally provide this ID.",
+                    "key": "snyk-request-id",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Identifies the Snyk client interaction in which this API request occurs.\n\nThe identifier is an opaque string. though at the time of writing it may either be a\nuuid or a urn containing a uuid and some metadata.",
+                    "key": "snyk-interaction-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "deprecation",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "snyk-request-id",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "snyk-version-requested",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "snyk-version-served",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"76db58e4-a6e5-2a9a-81d2-da017625706c\",\n      \"type\": \"findings\",\n      \"attributes\": {\n        \"finding_type\": \"secret\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"key\": \"string\",\n        \"cause_of_failure\": false,\n        \"problems\": [\n          {\n            \"source\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"source\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"evidence\": [\n          {\n            \"path\": [\n              {\n                \"name\": \"my-app:1.0.0\",\n                \"version\": \"log4j:2.4.1\"\n              }\n            ],\n            \"source\": \"dependency_path\"\n          }\n        ],\n        \"locations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"rating\": {\n          \"severity\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"risk\": {\n          \"risk_score\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"component_key\": \"string\",\n        \"policy_modifications\": [\n          {\n            \"pointer\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"policy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"prior\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"pointer\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"policy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"prior\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"suppression\": {\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expires_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"justification\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"path\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"policy\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"skipIfFixable\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"links\": {\n        \"snyk_advisory\": \"https://security.snyk.io/vuln/SNYK-JAVA-ORGAPACHELOGGINGLOG4J-2314720\",\n        \"snyk_learn\": \"https://learn.snyk.io/lesson/csrf-attack/\"\n      },\n      \"relationships\": {\n        \"asset\": {\n          \"links\": {\n            \"related\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"data\": {\n            \"type\": \"as\",\n            \"id\": \"45a18935-3439-049a-3853-c0d6f4846ade\"\n          },\n          \"meta\": {\n            \"key_0\": {},\n            \"key_1\": {}\n          }\n        },\n        \"fix\": {\n          \"data\": {\n            \"type\": \"y1y0llb_vt8_s0rvxvvr_psg31u_arbkt7u8r3_pbd61nv9pap_ei00lihc6gx\",\n            \"id\": \"9f0f91ef-233c-9c80-ed21-856ffe359c13\",\n            \"attributes\": {\n              \"outcome\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"action\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        },\n        \"org\": {\n          \"data\": {\n            \"type\": \"hwqg2x_o8wmzcqhqt0_x_phd66229f20_owladcyyb\",\n            \"id\": \"98d5898f-ddab-62b0-6e2b-283811247bc6\"\n          }\n        },\n        \"policy\": {\n          \"links\": {\n            \"related\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"data\": {\n            \"type\": \"a2x\",\n            \"id\": \"4130530c-acff-869c-a253-8b1a007b83c3\",\n            \"attributes\": {\n              \"policies\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          },\n          \"meta\": {\n            \"key_0\": {}\n          }\n        },\n        \"project\": {\n          \"data\": {\n            \"type\": \"zj56z4_fe_plpaz_dn05y_jgrxrrwyt1c_q012gof0_q\",\n            \"id\": \"a75741f7-4ea9-8f55-810b-bdac205b7584\"\n          }\n        },\n        \"test\": {\n          \"links\": {\n            \"related\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"data\": {\n            \"type\": \"wbd0o744o8t_f_um59eahss_gw26lr_v_t1x3keuua4m_w7t6utkp_o_mrrxx_u\",\n            \"id\": \"9fb8e4bf-37df-331f-075a-e575dabd21b1\"\n          },\n          \"meta\": {\n            \"key_0\": {},\n            \"key_1\": {},\n            \"key_2\": {}\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"6bd04f43-412a-dadc-7f0f-cfc7641dd71a\",\n      \"type\": \"findings\",\n      \"attributes\": {\n        \"finding_type\": \"sca\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"key\": \"string\",\n        \"cause_of_failure\": false,\n        \"problems\": [\n          {\n            \"source\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"source\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"evidence\": [\n          {\n            \"path\": [\n              {\n                \"name\": \"my-app:1.0.0\",\n                \"version\": \"log4j:2.4.1\"\n              }\n            ],\n            \"source\": \"dependency_path\"\n          }\n        ],\n        \"locations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"rating\": {\n          \"severity\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"risk\": {\n          \"risk_score\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"component_key\": \"string\",\n        \"policy_modifications\": [\n          {\n            \"pointer\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"policy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"prior\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"pointer\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"reason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"policy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"prior\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"suppression\": {\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expires_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"justification\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"path\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"policy\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"skipIfFixable\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"links\": {\n        \"snyk_advisory\": \"https://security.snyk.io/vuln/SNYK-JAVA-ORGAPACHELOGGINGLOG4J-2314720\",\n        \"snyk_learn\": \"https://learn.snyk.io/lesson/csrf-attack/\"\n      },\n      \"relationships\": {\n        \"asset\": {\n          \"links\": {\n            \"related\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"data\": {\n            \"type\": \"l85f_q5m90vo_kkr9x_ihulaz1_q9xj8_s16chx55_x_aa_sk5usx\",\n            \"id\": \"913d8466-4a74-ff1a-9897-a4e47ed2acb0\"\n          },\n          \"meta\": {\n            \"key_0\": {},\n            \"key_1\": {}\n          }\n        },\n        \"fix\": {\n          \"data\": {\n            \"type\": \"v_eej6kbd1ka2_qs5nc_vphopx28_obctgnmiae6\",\n            \"id\": \"c11f83ea-c085-222b-42c6-4d08870d6581\",\n            \"attributes\": {\n              \"outcome\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"action\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        },\n        \"org\": {\n          \"data\": {\n            \"type\": \"qxmld3_m5sccm7n_eni3q9x_g_pf_opao809_rhvfu46xs9v_vx94rqb95o_vrhmq4l_us203k0fsg2_pdv9\",\n            \"id\": \"69b79355-0316-0e0e-4b6b-5470c8d1ee30\"\n          }\n        },\n        \"policy\": {\n          \"links\": {\n            \"related\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"data\": {\n            \"type\": \"ow_d_zygp_t\",\n            \"id\": \"fab21694-c6f2-ada9-f016-9fc2662a5d1d\",\n            \"attributes\": {\n              \"policies\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ]\n            }\n          },\n          \"meta\": {\n            \"key_0\": {}\n          }\n        },\n        \"project\": {\n          \"data\": {\n            \"type\": \"oa2_y_jvj7fnz_fc_gj56s9g1qb_x3fxvf43t_wv3yl4\",\n            \"id\": \"6e3d72c4-819a-f92b-db4c-5befcce14dd1\"\n          }\n        },\n        \"test\": {\n          \"links\": {\n            \"related\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"data\": {\n            \"type\": \"y_lid7cwdtfm_zxb0_mahkl8aw_k_j54ogatg6\",\n            \"id\": \"1632c4cf-ea2e-025c-a8f7-da34d122a39d\"\n          },\n          \"meta\": {\n            \"key_0\": {},\n            \"key_1\": {},\n            \"key_2\": {}\n          }\n        }\n      }\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  },\n  \"links\": {\n    \"first\": \"https://PdwYrHY.meQURaVUJG4h-dcwgbRpaI7+Rz0ohluEBsXZtk+DYC70Hu7RiVvgEIu\",\n    \"last\": \"http://eTprnxEyRNRFrDCV.cetkXmV5Qav2elmDnf1DczLHrCcMaQuTnof\",\n    \"next\": \"https://WISwoGELHUqNYGWsjGssiiMtBeHTf.dcmIrEfie+3mLT10pQRwf9o\",\n    \"prev\": \"http://ZIukVYqLRAUJnS.axibIOVomyDUToVqfYXEMexj+Rzj27uY.68PKUfj7lCxRCb9WkixrLMGMY0MVLiIK\",\n    \"self\": \"http://lyhnx.nlisL4QajXzfDdvjmOfDzq,TcVEipOmXSsbpAAxP0R.ixtaVR\"\n  },\n  \"meta\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8ce4e72-3580-4966-9103-bebc7815aa52",
+              "name": "Invalid input",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "tests",
+                    ":test_id",
+                    "findings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) Snyk Org ID under which to run or query information\nabout a Job or Test."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "test_id",
+                      "description": "(Required) Test ID returned from the Test API to query."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A unique ID assigned to each API request, for tracing and troubleshooting.\n\nSnyk clients can optionally provide this ID.",
+                    "key": "snyk-request-id",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Identifies the Snyk client interaction in which this API request occurs.\n\nThe identifier is an opaque string. though at the time of writing it may either be a\nuuid or a urn containing a uuid and some metadata.",
+                    "key": "snyk-interaction-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "deprecation",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "snyk-request-id",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "snyk-version-requested",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "snyk-version-served",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  },\n  \"errors\": [\n    {\n      \"status\": \"431\",\n      \"detail\": \"string\",\n      \"code\": \"string\",\n      \"id\": \"3ff997a4-3314-a0b8-0f27-b650870ca34c\",\n      \"links\": {\n        \"about\": \"https://gXCojLHDPIxaqRECKqlZXOaU.gqX0pwAerWlzhnOftL5VfFr5Tec4IzeN+WpeTBLTjICUZaLKT0rmPKlpq\",\n        \"key_0\": \"http://XtjfOXFYrEBZoQSjLubYXmtnLfocusvG.sxuosl9\"\n      },\n      \"meta\": {},\n      \"source\": {\n        \"parameter\": \"string\",\n        \"pointer\": \"string\"\n      },\n      \"title\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.snyk.io/rest",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4a96fac8-6150-497f-9d88-7c53c1a5763a",
+    "name": "Snyk AccessRequests Findings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

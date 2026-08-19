@@ -1,0 +1,453 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Cloud API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cloud",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Environments (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/cloud/environments",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "9a46d918-8764-458c-1234-0987abcd6543",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "created_after",
+                "value": "2022-05-06T12:25:15-04:00",
+                "type": "query",
+                "description": "Return environments created after this date"
+              },
+              {
+                "name": "created_before",
+                "value": "2022-05-06T12:25:15-04:00",
+                "type": "query",
+                "description": "Return environments created before this date"
+              },
+              {
+                "name": "updated_after",
+                "value": "2022-05-06T12:25:15-04:00",
+                "type": "query",
+                "description": "Return environments updated after this date"
+              },
+              {
+                "name": "updated_before",
+                "value": "2022-05-06T12:25:15-04:00",
+                "type": "query",
+                "description": "Return environments updated before this date"
+              },
+              {
+                "name": "name",
+                "value": "Demo AWS Environment",
+                "type": "query",
+                "description": "Filter environments by name (multi-value, comma-separated)"
+              },
+              {
+                "name": "kind",
+                "value": "aws",
+                "type": "query",
+                "description": "Filter environments by kind (multi-value, comma-separated): aws"
+              },
+              {
+                "name": "status",
+                "value": "error",
+                "type": "query",
+                "description": "Filter environments by latest scan status (multi-value, comma-separated)"
+              },
+              {
+                "name": "id",
+                "value": "052781a7-17f6-494d-0000-25c8b509abcd",
+                "type": "query",
+                "description": "Filter environments by environment ID (multi-value, comma-separated)"
+              },
+              {
+                "name": "project_id",
+                "value": "9a46d918-8764-458c-1234-0987abcd6543",
+                "type": "query",
+                "description": "Filter environments by project ID"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              }
+            ]
+          },
+          "docs": "List environments for an organization\n\n#### Required permissions\n\n- `View environments (org.cloud_environments.read)`"
+        },
+        {
+          "info": {
+            "name": "Create New Environment (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/cloud/environments",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "9a46d918-8764-458c-1234-0987abcd6543",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new environment and run a scan\n\n#### Required permissions\n\n- `Create environments (org.cloud_environments.create)`"
+        },
+        {
+          "info": {
+            "name": "Update Environment (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/cloud/environments/:environment_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "9a46d918-8764-458c-1234-0987abcd6543",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "environment_id",
+                "value": "052781a7-17f6-494d-0000-25c8b509abcd",
+                "type": "path",
+                "description": "Unique identifier for an environment"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an environment\n\n#### Required permissions\n\n- `Update environments (org.cloud_environments.edit)`"
+        },
+        {
+          "info": {
+            "name": "Delete Environment (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/cloud/environments/:environment_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "9a46d918-8764-458c-1234-0987abcd6543",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "environment_id",
+                "value": "052781a7-17f6-494d-0000-25c8b509abcd",
+                "type": "path",
+                "description": "Unique identifier for an environment"
+              }
+            ]
+          },
+          "docs": "Delete an environment\n\n#### Required permissions\n\n- `Delete environments (org.cloud_environments.delete)`"
+        },
+        {
+          "info": {
+            "name": "Generate Cloud Provider Permissions (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/cloud/permissions",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "9a46d918-8764-458c-1234-0987abcd6543",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate IAC template for Snyk to access your cloud resources\n\n#### Required permissions\n\n- `Create environments (org.cloud_environments.create)`"
+        },
+        {
+          "info": {
+            "name": "List Resources (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/cloud/resources",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "9a46d918-8764-458c-1234-0987abcd6543",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "environment_id",
+                "value": "052781a7-17f6-494d-0000-25c8b509abcd",
+                "type": "query",
+                "description": "Filter resources by environment ID (multi-value, comma-separated)"
+              },
+              {
+                "name": "resource_type",
+                "value": "aws_s3_bucket",
+                "type": "query",
+                "description": "Filter resources by resource type (multi-value, comma-separated)"
+              },
+              {
+                "name": "resource_id",
+                "value": "example-bucket",
+                "type": "query",
+                "description": "Filter resources by resource ID (multi-value, comma-separated)"
+              },
+              {
+                "name": "native_id",
+                "value": "arn:aws:s3:::example-bucket",
+                "type": "query",
+                "description": "Filter resources by native ID (multi-value, comma-separated) (AWS ARN)"
+              },
+              {
+                "name": "id",
+                "value": "4a662442-7445-55c3-adcc-cbbbdd99999",
+                "type": "query",
+                "description": "Filter resources by resource UUID (multi-value, comma-separated)"
+              },
+              {
+                "name": "platform",
+                "value": "aws",
+                "type": "query",
+                "description": "Filter resources by platform (multi-value, comma-separated): aws"
+              },
+              {
+                "name": "name",
+                "value": "example-bucket",
+                "type": "query",
+                "description": "Filter resources by name (multi-value, comma-separated)"
+              },
+              {
+                "name": "kind",
+                "value": "cloud",
+                "type": "query",
+                "description": "Filter resources by kind (multi-value, comma-separated): cloud"
+              },
+              {
+                "name": "location",
+                "value": "us-west-2",
+                "type": "query",
+                "description": "Filter resources by location (multi-value, comma-separated) (AWS region)"
+              },
+              {
+                "name": "removed",
+                "value": "true",
+                "type": "query",
+                "description": "Filter resources by whether they have been removed or not."
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              }
+            ]
+          },
+          "docs": "List resources for an organization\n\n#### Required permissions\n\n- `View resources (org.cloud_resources.read)`"
+        },
+        {
+          "info": {
+            "name": "List Scans (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/cloud/scans",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "org_id",
+                "value": "9a46d918-8764-458c-1234-0987abcd6543",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "List scans for an organization\n\n#### Required permissions\n\n- `View scans (org.cloud_scans.read)`"
+        },
+        {
+          "info": {
+            "name": "Create Scan (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/cloud/scans",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "9a46d918-8764-458c-1234-0987abcd6543",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create and trigger a new scan for an environment\n\n#### Required permissions\n\n- `Create scans (org.cloud_scans.create)`"
+        },
+        {
+          "info": {
+            "name": "Get scan (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/cloud/scans/:scan_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "9a46d918-8764-458c-1234-0987abcd6543",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "scan_id",
+                "value": "56465b1d-8764-458c-1234-0987abcd6543",
+                "type": "path",
+                "description": "Scan ID"
+              }
+            ]
+          },
+          "docs": "Get a single scan for an organization\n\n#### Required permissions\n\n- `View scans (org.cloud_scans.read)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

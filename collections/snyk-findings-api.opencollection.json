@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Findings API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Findings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List findings for a test. (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/tests/:test_id/findings",
+            "headers": [
+              {
+                "name": "snyk-request-id",
+                "value": ""
+              },
+              {
+                "name": "snyk-interaction-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The API version requested."
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Opaque pagination cursor for forward traversal."
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Opaque pagination cursor for reverse traversal."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return."
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Snyk Org ID under which to run or query information\nabout a Job or Test."
+              },
+              {
+                "name": "test_id",
+                "value": "",
+                "type": "path",
+                "description": "Test ID returned from the Test API to query."
+              }
+            ]
+          },
+          "docs": "List findings for a test.\n\nTest Findings are scanner-agnostic representations of\nvulnerabilities and organization-level policy breaches.\nWhen Snyk runs a Test, the results of that Test are\nformatted into Findings.\n\nThis endpoint returns pages of Findings associated with\na given Test ID. Findings are returned in sorted order by\nID, with page size equal to the provided Limit query parameter.\nPage size is 10 Findings by default if no parameter is provided.\n\nNote that the Findings returned from this"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

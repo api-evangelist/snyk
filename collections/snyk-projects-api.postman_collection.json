@@ -1,0 +1,3578 @@
+{
+  "item": [
+    {
+      "id": "29db2bcb-2cf3-497b-aab6-c8bb2e7e528c",
+      "name": "Projects",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cfd796b8-4f0c-493b-9f84-055d97533a26",
+          "name": "List all Projects for an Org with the given Org ID.",
+          "request": {
+            "name": "List all Projects for an Org with the given Org ID.",
+            "description": {
+              "content": "List all Projects for an Org.\n\n#### Required permissions\n\n- `View Projects (org.project.read)`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orgs",
+                ":org_id",
+                "projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "target_id",
+                  "value": "<uuid>",
+                  "description": "Return projects that belong to the provided targets"
+                },
+                {
+                  "disabled": false,
+                  "key": "target_id",
+                  "value": "<uuid>",
+                  "description": "Return projects that belong to the provided targets"
+                },
+                {
+                  "disabled": false,
+                  "key": "target_reference",
+                  "value": "<string>",
+                  "description": "Return projects that match the provided target reference"
+                },
+                {
+                  "disabled": false,
+                  "key": "target_file",
+                  "value": "<string>",
+                  "description": "Return projects that match the provided target file"
+                },
+                {
+                  "disabled": false,
+                  "key": "target_runtime",
+                  "value": "<string>",
+                  "description": "Return projects that match the provided target runtime"
+                },
+                {
+                  "disabled": false,
+                  "key": "meta_count",
+                  "value": "<string>",
+                  "description": "The collection count."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<uuid>,<uuid>",
+                  "description": "Return projects that match the provided IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "names",
+                  "value": "<string>,<string>",
+                  "description": "Return projects that match the provided names."
+                },
+                {
+                  "disabled": false,
+                  "key": "names_start_with",
+                  "value": "<string>,<string>",
+                  "description": "Return projects with names starting with the specified prefix."
+                },
+                {
+                  "disabled": false,
+                  "key": "origins",
+                  "value": "<string>,<string>",
+                  "description": "Return projects that match the provided origins."
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>,<string>",
+                  "description": "Return projects that match the provided types."
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>,<string>",
+                  "description": "Expand relationships."
+                },
+                {
+                  "disabled": false,
+                  "key": "meta.latest_issue_counts",
+                  "value": "<boolean>",
+                  "description": "Include a summary count for the issues found in the most recent scan of this project"
+                },
+                {
+                  "disabled": false,
+                  "key": "meta.latest_dependency_total",
+                  "value": "<boolean>",
+                  "description": "Include the total number of dependencies found in the most recent scan of this project"
+                },
+                {
+                  "disabled": false,
+                  "key": "cli_monitored_before",
+                  "value": "<dateTime>",
+                  "description": "Filter projects uploaded and monitored before this date (encoded value)"
+                },
+                {
+                  "disabled": false,
+                  "key": "cli_monitored_after",
+                  "value": "<dateTime>",
+                  "description": "Filter projects uploaded and monitored after this date (encoded value)"
+                },
+                {
+                  "disabled": false,
+                  "key": "importing_user_public_id",
+                  "value": "<string>,<string>",
+                  "description": "Return projects that match the provided importing user public ids."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Return projects that match all the provided tags"
+                },
+                {
+                  "disabled": false,
+                  "key": "business_criticality",
+                  "value": "<string>,<string>",
+                  "description": "Return projects that match all the provided business_criticality value"
+                },
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>,<string>",
+                  "description": "Return projects that match all the provided environment values"
+                },
+                {
+                  "disabled": false,
+                  "key": "lifecycle",
+                  "value": "<string>,<string>",
+                  "description": "Return projects that match all the provided lifecycle values"
+                },
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "(Required) The requested version of the endpoint to process the request"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "Return the page of results immediately after this cursor"
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_before",
+                  "value": "<string>",
+                  "description": "Return the page of results immediately before this cursor"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of results to return per page"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "org_id",
+                  "description": "(Required) The ID of the org that the projects belong to."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ebe75fd7-eca5-462f-8526-d60f7bccd3d2",
+              "name": "A list of projects is returned for the targeted org",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "target_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "target_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "target_reference",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target_file",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target_runtime",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "meta_count",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<uuid>,<uuid>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "names_start_with",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "origins",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "meta.latest_issue_counts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "meta.latest_dependency_total",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "cli_monitored_before",
+                      "value": "2021-05-29T09:50:54.014Z"
+                    },
+                    {
+                      "key": "cli_monitored_after",
+                      "value": "2021-05-29T09:50:54.014Z"
+                    },
+                    {
+                      "key": "importing_user_public_id",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "key1:value1,key2:value2"
+                    },
+                    {
+                      "key": "business_criticality",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "environment",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "lifecycle",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org that the projects belong to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  },\n  \"links\": {\n    \"first\": \"https://example.com/api/resource\",\n    \"last\": \"https://example.com/api/resource\",\n    \"next\": \"https://example.com/api/resource\",\n    \"prev\": \"https://example.com/api/resource\",\n    \"related\": \"https://example.com/api/resource\",\n    \"self\": \"https://example.com/api/resource\"\n  },\n  \"data\": [\n    {\n      \"id\": \"8528b102-1e95-4195-23b9-9a58722f4d87\",\n      \"type\": \"project\",\n      \"attributes\": {\n        \"name\": \"snyk/goof\",\n        \"type\": \"maven\",\n        \"target_file\": \"package.json\",\n        \"target_reference\": \"main\",\n        \"origin\": \"github\",\n        \"created\": \"2021-05-29T09:50:54.014Z\",\n        \"status\": \"active\",\n        \"read_only\": false,\n        \"settings\": {\n          \"recurring_tests\": {\n            \"frequency\": \"daily\"\n          },\n          \"pull_requests\": {\n            \"fail_only_for_issues_with_fix\": true,\n            \"is_enabled\": true,\n            \"policy\": \"all\",\n            \"severity_threshold\": \"high\"\n          },\n          \"auto_dependency_upgrade\": {\n            \"ignored_dependencies\": [\n              \"typescript\"\n            ],\n            \"is_enabled\": true,\n            \"is_inherited\": true,\n            \"is_major_upgrade_enabled\": true,\n            \"limit\": 10,\n            \"minimum_age\": 365\n          },\n          \"auto_remediation_prs\": {\n            \"is_backlog_prs_enabled\": true,\n            \"is_fresh_prs_enabled\": true,\n            \"is_patch_remediation_enabled\": true\n          },\n          \"manual_remediation_prs\": {\n            \"is_patch_remediation_enabled\": true\n          },\n          \"pull_request_assignment\": {\n            \"assignees\": [\n              \"my-github-username\"\n            ],\n            \"is_enabled\": true,\n            \"type\": \"auto\"\n          }\n        },\n        \"build_args\": {\n          \"root_workspace\": \"string\"\n        },\n        \"business_criticality\": [\n          \"medium\"\n        ],\n        \"environment\": [\n          \"external\",\n          \"hosted\"\n        ],\n        \"lifecycle\": [\n          \"production\"\n        ],\n        \"tags\": [\n          {\n            \"key\": \"tag-key\",\n            \"value\": \"tag-value\"\n          }\n        ],\n        \"target_runtime\": \"string\"\n      },\n      \"meta\": {\n        \"cli_monitored_at\": \"2021-05-29T09:50:54.014Z\",\n        \"latest_dependency_total\": {\n          \"total\": 4187.570610876582,\n          \"updated_at\": \"1970-05-03T04:51:31.067Z\"\n        },\n        \"latest_issue_counts\": {\n          \"critical\": 6191.21692112376,\n          \"high\": 4774.414325015823,\n          \"low\": 4818.216176114176,\n          \"medium\": 3786.7339566165083,\n          \"updated_at\": \"1978-09-23T19:29:46.442Z\"\n        }\n      },\n      \"relationships\": {\n        \"target\": {\n          \"data\": {\n            \"type\": \"resource\",\n            \"id\": \"4a72d1db-b465-4764-99e1-ecedad03b06a\"\n          },\n          \"links\": {\n            \"related\": \"https://example.com/api/other_resource\"\n          },\n          \"meta\": {\n            \"key1\": \"value1\",\n            \"key2\": {\n              \"sub_key\": \"sub_value\"\n            },\n            \"key3\": [\n              \"array_value1\",\n              \"array_value2\"\n            ]\n          }\n        },\n        \"organization\": {\n          \"data\": {\n            \"type\": \"resource\",\n            \"id\": \"4a72d1db-b465-4764-99e1-ecedad03b06a\"\n          },\n          \"links\": {\n            \"related\": \"https://example.com/api/other_resource\"\n          },\n          \"meta\": {\n            \"key1\": \"value1\",\n            \"key2\": {\n              \"sub_key\": \"sub_value\"\n            },\n            \"key3\": [\n              \"array_value1\",\n              \"array_value2\"\n            ]\n          }\n        },\n        \"importer\": {\n          \"data\": {\n            \"type\": \"resource\",\n            \"id\": \"4a72d1db-b465-4764-99e1-ecedad03b06a\"\n          },\n          \"links\": {\n            \"related\": \"https://example.com/api/other_resource\"\n          },\n          \"meta\": {\n            \"key1\": \"value1\",\n            \"key2\": {\n              \"sub_key\": \"sub_value\"\n            },\n            \"key3\": [\n              \"array_value1\",\n              \"array_value2\"\n            ]\n          }\n        },\n        \"owner\": {\n          \"data\": {\n            \"type\": \"resource\",\n            \"id\": \"4a72d1db-b465-4764-99e1-ecedad03b06a\"\n          },\n          \"links\": {\n            \"related\": \"https://example.com/api/other_resource\"\n          },\n          \"meta\": {\n            \"key1\": \"value1\",\n            \"key2\": {\n              \"sub_key\": \"sub_value\"\n            },\n            \"key3\": [\n              \"array_value1\",\n              \"array_value2\"\n            ]\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"d289add4-6bb5-1b76-e9c5-9d073231a4bb\",\n      \"type\": \"project\",\n      \"attributes\": {\n        \"name\": \"snyk/goof\",\n        \"type\": \"maven\",\n        \"target_file\": \"package.json\",\n        \"target_reference\": \"main\",\n        \"origin\": \"github\",\n        \"created\": \"2021-05-29T09:50:54.014Z\",\n        \"status\": \"active\",\n        \"read_only\": false,\n        \"settings\": {\n          \"recurring_tests\": {\n            \"frequency\": \"daily\"\n          },\n          \"pull_requests\": {\n            \"fail_only_for_issues_with_fix\": true,\n            \"is_enabled\": true,\n            \"policy\": \"all\",\n            \"severity_threshold\": \"high\"\n          },\n          \"auto_dependency_upgrade\": {\n            \"ignored_dependencies\": [\n              \"typescript\"\n            ],\n            \"is_enabled\": true,\n            \"is_inherited\": true,\n            \"is_major_upgrade_enabled\": true,\n            \"limit\": 10,\n            \"minimum_age\": 365\n          },\n          \"auto_remediation_prs\": {\n            \"is_backlog_prs_enabled\": true,\n            \"is_fresh_prs_enabled\": true,\n            \"is_patch_remediation_enabled\": true\n          },\n          \"manual_remediation_prs\": {\n            \"is_patch_remediation_enabled\": true\n          },\n          \"pull_request_assignment\": {\n            \"assignees\": [\n              \"my-github-username\"\n            ],\n            \"is_enabled\": true,\n            \"type\": \"auto\"\n          }\n        },\n        \"build_args\": {\n          \"root_workspace\": \"string\"\n        },\n        \"business_criticality\": [\n          \"medium\"\n        ],\n        \"environment\": [\n          \"external\",\n          \"hosted\"\n        ],\n        \"lifecycle\": [\n          \"production\"\n        ],\n        \"tags\": [\n          {\n            \"key\": \"tag-key\",\n            \"value\": \"tag-value\"\n          }\n        ],\n        \"target_runtime\": \"string\"\n      },\n      \"meta\": {\n        \"cli_monitored_at\": \"2021-05-29T09:50:54.014Z\",\n        \"latest_dependency_total\": {\n          \"total\": 3572.618006870031,\n          \"updated_at\": \"2013-06-04T19:59:36.961Z\"\n        },\n        \"latest_issue_counts\": {\n          \"critical\": 9304.76722057745,\n          \"high\": 2157.689949004864,\n          \"low\": 3757.698715436262,\n          \"medium\": 9916.715477347954,\n          \"updated_at\": \"2004-05-20T10:53:54.717Z\"\n        }\n      },\n      \"relationships\": {\n        \"target\": {\n          \"data\": {\n            \"type\": \"resource\",\n            \"id\": \"4a72d1db-b465-4764-99e1-ecedad03b06a\"\n          },\n          \"links\": {\n            \"related\": \"https://example.com/api/other_resource\"\n          },\n          \"meta\": {\n            \"key1\": \"value1\",\n            \"key2\": {\n              \"sub_key\": \"sub_value\"\n            },\n            \"key3\": [\n              \"array_value1\",\n              \"array_value2\"\n            ]\n          }\n        },\n        \"organization\": {\n          \"data\": {\n            \"type\": \"resource\",\n            \"id\": \"4a72d1db-b465-4764-99e1-ecedad03b06a\"\n          },\n          \"links\": {\n            \"related\": \"https://example.com/api/other_resource\"\n          },\n          \"meta\": {\n            \"key1\": \"value1\",\n            \"key2\": {\n              \"sub_key\": \"sub_value\"\n            },\n            \"key3\": [\n              \"array_value1\",\n              \"array_value2\"\n            ]\n          }\n        },\n        \"importer\": {\n          \"data\": {\n            \"type\": \"resource\",\n            \"id\": \"4a72d1db-b465-4764-99e1-ecedad03b06a\"\n          },\n          \"links\": {\n            \"related\": \"https://example.com/api/other_resource\"\n          },\n          \"meta\": {\n            \"key1\": \"value1\",\n            \"key2\": {\n              \"sub_key\": \"sub_value\"\n            },\n            \"key3\": [\n              \"array_value1\",\n              \"array_value2\"\n            ]\n          }\n        },\n        \"owner\": {\n          \"data\": {\n            \"type\": \"resource\",\n            \"id\": \"4a72d1db-b465-4764-99e1-ecedad03b06a\"\n          },\n          \"links\": {\n            \"related\": \"https://example.com/api/other_resource\"\n          },\n          \"meta\": {\n            \"key1\": \"value1\",\n            \"key2\": {\n              \"sub_key\": \"sub_value\"\n            },\n            \"key3\": [\n              \"array_value1\",\n              \"array_value2\"\n            ]\n          }\n        }\n      }\n    }\n  ],\n  \"meta\": {\n    \"count\": 2653.465446030937\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7141024b-7796-4322-af46-16d3c3991669",
+              "name": "Bad Request: A parameter provided as a part of the request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "target_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "target_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "target_reference",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target_file",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target_runtime",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "meta_count",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<uuid>,<uuid>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "names_start_with",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "origins",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "meta.latest_issue_counts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "meta.latest_dependency_total",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "cli_monitored_before",
+                      "value": "2021-05-29T09:50:54.014Z"
+                    },
+                    {
+                      "key": "cli_monitored_after",
+                      "value": "2021-05-29T09:50:54.014Z"
+                    },
+                    {
+                      "key": "importing_user_public_id",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "key1:value1,key2:value2"
+                    },
+                    {
+                      "key": "business_criticality",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "environment",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "lifecycle",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org that the projects belong to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc1e92ef-ad9b-4a68-ba67-b249fe8ddf7c",
+              "name": "Unauthorized: the request requires an authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "target_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "target_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "target_reference",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target_file",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target_runtime",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "meta_count",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<uuid>,<uuid>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "names_start_with",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "origins",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "meta.latest_issue_counts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "meta.latest_dependency_total",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "cli_monitored_before",
+                      "value": "2021-05-29T09:50:54.014Z"
+                    },
+                    {
+                      "key": "cli_monitored_after",
+                      "value": "2021-05-29T09:50:54.014Z"
+                    },
+                    {
+                      "key": "importing_user_public_id",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "key1:value1,key2:value2"
+                    },
+                    {
+                      "key": "business_criticality",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "environment",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "lifecycle",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org that the projects belong to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa9b894a-501d-459b-ad29-47b0d7233685",
+              "name": "Forbidden: the request requires an authentication token with more or different permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "target_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "target_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "target_reference",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target_file",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target_runtime",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "meta_count",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<uuid>,<uuid>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "names_start_with",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "origins",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "meta.latest_issue_counts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "meta.latest_dependency_total",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "cli_monitored_before",
+                      "value": "2021-05-29T09:50:54.014Z"
+                    },
+                    {
+                      "key": "cli_monitored_after",
+                      "value": "2021-05-29T09:50:54.014Z"
+                    },
+                    {
+                      "key": "importing_user_public_id",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "key1:value1,key2:value2"
+                    },
+                    {
+                      "key": "business_criticality",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "environment",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "lifecycle",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org that the projects belong to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e6a4937-e449-4b0a-adeb-0d3c1ac5442e",
+              "name": "Not Found: The resource being operated on could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "target_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "target_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "target_reference",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target_file",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target_runtime",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "meta_count",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<uuid>,<uuid>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "names_start_with",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "origins",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "meta.latest_issue_counts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "meta.latest_dependency_total",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "cli_monitored_before",
+                      "value": "2021-05-29T09:50:54.014Z"
+                    },
+                    {
+                      "key": "cli_monitored_after",
+                      "value": "2021-05-29T09:50:54.014Z"
+                    },
+                    {
+                      "key": "importing_user_public_id",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "key1:value1,key2:value2"
+                    },
+                    {
+                      "key": "business_criticality",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "environment",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "lifecycle",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org that the projects belong to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf1407e6-e763-4021-8038-976782c795b5",
+              "name": "Internal Server Error: An error was encountered while attempting to process the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "target_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "target_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "target_reference",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target_file",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target_runtime",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "meta_count",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<uuid>,<uuid>"
+                    },
+                    {
+                      "key": "names",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "names_start_with",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "origins",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "meta.latest_issue_counts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "meta.latest_dependency_total",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "cli_monitored_before",
+                      "value": "2021-05-29T09:50:54.014Z"
+                    },
+                    {
+                      "key": "cli_monitored_after",
+                      "value": "2021-05-29T09:50:54.014Z"
+                    },
+                    {
+                      "key": "importing_user_public_id",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "key1:value1,key2:value2"
+                    },
+                    {
+                      "key": "business_criticality",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "environment",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "lifecycle",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "v1.eyJpZCI6IjEwMDAifQo="
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "v1.eyJpZCI6IjExMDAifQo="
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org that the projects belong to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d8facea0-9520-43dd-9f92-80b44568c13b",
+          "name": "Delete project by project ID.",
+          "request": {
+            "name": "Delete project by project ID.",
+            "description": {
+              "content": "Delete one project in the organization by project ID.\n\n#### Required permissions\n\n- `View Organization (org.read)`\n\n- `View Projects (org.project.read)`\n\n- `Remove Projects (org.project.delete)`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orgs",
+                ":org_id",
+                "projects",
+                ":project_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "(Required) The requested version of the endpoint to process the request"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "org_id",
+                  "description": "(Required) The ID of the org to which the project belongs to."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "project_id",
+                  "description": "(Required) The ID of the project."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dbe90b8d-3ded-4b02-b214-bc33c256d255",
+              "name": "The project has been deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org to which the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ea98e64e-c4f4-4c41-a87a-d7a1fafa01dd",
+              "name": "Bad Request: A parameter provided as a part of the request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org to which the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73c19785-21bf-4c98-8201-0e960dbd2024",
+              "name": "Unauthorized: the request requires an authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org to which the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5f7b8df-f080-4937-b466-6b07a571f741",
+              "name": "Forbidden: the request requires an authentication token with more or different permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org to which the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52ed8b51-630b-4fe1-813f-2b679aec9589",
+              "name": "Not Found: The resource being operated on could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org to which the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3aad34c9-8215-446b-a52c-e67264a42698",
+              "name": "Internal Server Error: An error was encountered while attempting to process the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org to which the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "43c512ef-e87a-4e50-9b2c-4c325b6ef68e",
+          "name": "Get project by project ID.",
+          "request": {
+            "name": "Get project by project ID.",
+            "description": {
+              "content": "Get one project of the organization by project ID.\n\n#### Required permissions\n\n- `View Projects (org.project.read)`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orgs",
+                ":org_id",
+                "projects",
+                ":project_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>,<string>",
+                  "description": "Expand relationships."
+                },
+                {
+                  "disabled": false,
+                  "key": "meta.latest_issue_counts",
+                  "value": "<boolean>",
+                  "description": "Include a summary count for the issues found in the most recent scan of this project"
+                },
+                {
+                  "disabled": false,
+                  "key": "meta.latest_dependency_total",
+                  "value": "<boolean>",
+                  "description": "Include the total number of dependencies found in the most recent scan of this project"
+                },
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "(Required) The requested version of the endpoint to process the request"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "org_id",
+                  "description": "(Required) The ID of the org to which the project belongs to."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "project_id",
+                  "description": "(Required) The ID of the project."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8a064257-fd95-460a-900a-b9816d2f5f57",
+              "name": "A project is returned for the targeted org",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "meta.latest_issue_counts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "meta.latest_dependency_total",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org to which the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  },\n  \"data\": {\n    \"id\": \"e020ad5f-2897-8458-0ece-c7a46b207b0e\",\n    \"type\": \"project\",\n    \"attributes\": {\n      \"name\": \"snyk/goof\",\n      \"type\": \"maven\",\n      \"target_file\": \"package.json\",\n      \"target_reference\": \"main\",\n      \"origin\": \"github\",\n      \"created\": \"2021-05-29T09:50:54.014Z\",\n      \"status\": \"active\",\n      \"read_only\": false,\n      \"settings\": {\n        \"recurring_tests\": {\n          \"frequency\": \"daily\"\n        },\n        \"pull_requests\": {\n          \"fail_only_for_issues_with_fix\": true,\n          \"is_enabled\": true,\n          \"policy\": \"all\",\n          \"severity_threshold\": \"high\"\n        },\n        \"auto_dependency_upgrade\": {\n          \"ignored_dependencies\": [\n            \"typescript\"\n          ],\n          \"is_enabled\": true,\n          \"is_inherited\": true,\n          \"is_major_upgrade_enabled\": true,\n          \"limit\": 10,\n          \"minimum_age\": 365\n        },\n        \"auto_remediation_prs\": {\n          \"is_backlog_prs_enabled\": true,\n          \"is_fresh_prs_enabled\": true,\n          \"is_patch_remediation_enabled\": true\n        },\n        \"manual_remediation_prs\": {\n          \"is_patch_remediation_enabled\": true\n        },\n        \"pull_request_assignment\": {\n          \"assignees\": [\n            \"my-github-username\"\n          ],\n          \"is_enabled\": true,\n          \"type\": \"auto\"\n        }\n      },\n      \"build_args\": {\n        \"root_workspace\": \"string\"\n      },\n      \"business_criticality\": [\n        \"medium\"\n      ],\n      \"environment\": [\n        \"external\",\n        \"hosted\"\n      ],\n      \"lifecycle\": [\n        \"production\"\n      ],\n      \"tags\": [\n        {\n          \"key\": \"tag-key\",\n          \"value\": \"tag-value\"\n        }\n      ],\n      \"target_runtime\": \"string\"\n    },\n    \"meta\": {\n      \"cli_monitored_at\": \"2021-05-29T09:50:54.014Z\",\n      \"latest_dependency_total\": {\n        \"total\": 1398.399227392656,\n        \"updated_at\": \"1949-12-30T18:07:39.852Z\"\n      },\n      \"latest_issue_counts\": {\n        \"critical\": 1964.9902539580532,\n        \"high\": 6477.113231602027,\n        \"low\": 2158.27311497932,\n        \"medium\": 7999.603541944183,\n        \"updated_at\": \"1958-11-10T22:34:12.465Z\"\n      }\n    },\n    \"relationships\": {\n      \"target\": {\n        \"data\": {\n          \"type\": \"resource\",\n          \"id\": \"4a72d1db-b465-4764-99e1-ecedad03b06a\"\n        },\n        \"links\": {\n          \"related\": \"https://example.com/api/other_resource\"\n        },\n        \"meta\": {\n          \"key1\": \"value1\",\n          \"key2\": {\n            \"sub_key\": \"sub_value\"\n          },\n          \"key3\": [\n            \"array_value1\",\n            \"array_value2\"\n          ]\n        }\n      },\n      \"organization\": {\n        \"data\": {\n          \"type\": \"resource\",\n          \"id\": \"4a72d1db-b465-4764-99e1-ecedad03b06a\"\n        },\n        \"links\": {\n          \"related\": \"https://example.com/api/other_resource\"\n        },\n        \"meta\": {\n          \"key1\": \"value1\",\n          \"key2\": {\n            \"sub_key\": \"sub_value\"\n          },\n          \"key3\": [\n            \"array_value1\",\n            \"array_value2\"\n          ]\n        }\n      },\n      \"importer\": {\n        \"data\": {\n          \"type\": \"resource\",\n          \"id\": \"4a72d1db-b465-4764-99e1-ecedad03b06a\"\n        },\n        \"links\": {\n          \"related\": \"https://example.com/api/other_resource\"\n        },\n        \"meta\": {\n          \"key1\": \"value1\",\n          \"key2\": {\n            \"sub_key\": \"sub_value\"\n          },\n          \"key3\": [\n            \"array_value1\",\n            \"array_value2\"\n          ]\n        }\n      },\n      \"owner\": {\n        \"data\": {\n          \"type\": \"resource\",\n          \"id\": \"4a72d1db-b465-4764-99e1-ecedad03b06a\"\n        },\n        \"links\": {\n          \"related\": \"https://example.com/api/other_resource\"\n        },\n        \"meta\": {\n          \"key1\": \"value1\",\n          \"key2\": {\n            \"sub_key\": \"sub_value\"\n          },\n          \"key3\": [\n            \"array_value1\",\n            \"array_value2\"\n          ]\n        }\n      }\n    }\n  },\n  \"links\": {\n    \"first\": \"https://example.com/api/resource\",\n    \"last\": \"https://example.com/api/resource\",\n    \"next\": \"https://example.com/api/resource\",\n    \"prev\": \"https://example.com/api/resource\",\n    \"related\": \"https://example.com/api/resource\",\n    \"self\": \"https://example.com/api/resource\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef75fd95-3b9b-4f43-8c76-551db0496bcd",
+              "name": "Bad Request: A parameter provided as a part of the request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "meta.latest_issue_counts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "meta.latest_dependency_total",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org to which the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c668f84a-1cf9-4d4b-9136-751570ad76f0",
+              "name": "Unauthorized: the request requires an authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "meta.latest_issue_counts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "meta.latest_dependency_total",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org to which the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1ca9ef1-6f38-449f-bf20-cdede0a810b0",
+              "name": "Forbidden: the request requires an authentication token with more or different permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "meta.latest_issue_counts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "meta.latest_dependency_total",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org to which the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "651b2f16-7229-44e2-92f7-7ac6cee10070",
+              "name": "Not Found: The resource being operated on could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "meta.latest_issue_counts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "meta.latest_dependency_total",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org to which the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "333df629-da2a-47c0-af8b-49f059925e66",
+              "name": "Internal Server Error: An error was encountered while attempting to process the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "meta.latest_issue_counts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "meta.latest_dependency_total",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the org to which the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "36291053-38b9-4cb4-a405-be10152ca08f",
+          "name": "Updates project by project ID.",
+          "request": {
+            "name": "Updates project by project ID.",
+            "description": {
+              "content": "Updates one project of the organization by project ID.\n\n#### Required permissions\n\n- `View Organization (org.read)`\n\n- `View Projects (org.project.read)`\n\n- `Edit Projects (org.project.edit)`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orgs",
+                ":org_id",
+                "projects",
+                ":project_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "(Required) The requested version of the endpoint to process the request"
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>,<string>",
+                  "description": "Expand relationships."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "org_id",
+                  "description": "(Required) The ID of the Org the project belongs to."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "project_id",
+                  "description": "(Required) The ID of the project to patch."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<uuid>\",\n    \"attributes\": {\n      \"business_criticality\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"environment\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"lifecycle\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"tags\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ],\n      \"test_frequency\": \"<string>\"\n    },\n    \"relationships\": {\n      \"owner\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<uuid>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "26c7c2e1-a377-4410-93c6-0883d54400bc",
+              "name": "A project is updated for the targeted org",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the Org the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project to patch."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"331ede0a-de94-456f-b788-166caeca58bf\",\n    \"attributes\": {\n      \"business_criticality\": [\n        \"medium\"\n      ],\n      \"environment\": [\n        \"external\",\n        \"hosted\"\n      ],\n      \"lifecycle\": [\n        \"production\"\n      ],\n      \"tags\": [\n        {\n          \"key\": \"tag-key\",\n          \"value\": \"tag-value\"\n        }\n      ],\n      \"test_frequency\": \"daily\"\n    },\n    \"relationships\": {\n      \"owner\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"331ede0a-de94-456f-b788-166caeca58bf\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  },\n  \"data\": {\n    \"type\": \"project\",\n    \"id\": \"331ede0a-de94-456f-b788-166caeca58bf\",\n    \"attributes\": {\n      \"name\": \"snyk/goof\",\n      \"type\": \"maven\",\n      \"target_file\": \"package.json\",\n      \"target_reference\": \"main\",\n      \"origin\": \"github\",\n      \"created\": \"2021-05-29T09:50:54.014Z\",\n      \"status\": \"active\",\n      \"read_only\": false,\n      \"settings\": {\n        \"recurring_tests\": {\n          \"frequency\": \"daily\"\n        },\n        \"pull_requests\": {\n          \"fail_only_for_issues_with_fix\": true,\n          \"is_enabled\": true,\n          \"policy\": \"all\",\n          \"severity_threshold\": \"high\"\n        },\n        \"auto_dependency_upgrade\": {\n          \"ignored_dependencies\": [\n            \"typescript\"\n          ],\n          \"is_enabled\": true,\n          \"is_inherited\": true,\n          \"is_major_upgrade_enabled\": true,\n          \"limit\": 10,\n          \"minimum_age\": 365\n        },\n        \"auto_remediation_prs\": {\n          \"is_backlog_prs_enabled\": true,\n          \"is_fresh_prs_enabled\": true,\n          \"is_patch_remediation_enabled\": true\n        },\n        \"manual_remediation_prs\": {\n          \"is_patch_remediation_enabled\": true\n        },\n        \"pull_request_assignment\": {\n          \"assignees\": [\n            \"my-github-username\"\n          ],\n          \"is_enabled\": true,\n          \"type\": \"auto\"\n        }\n      },\n      \"build_args\": {\n        \"root_workspace\": \"string\"\n      },\n      \"business_criticality\": [\n        \"medium\"\n      ],\n      \"environment\": [\n        \"external\",\n        \"hosted\"\n      ],\n      \"lifecycle\": [\n        \"production\"\n      ],\n      \"tags\": [\n        {\n          \"key\": \"tag-key\",\n          \"value\": \"tag-value\"\n        }\n      ],\n      \"target_runtime\": \"string\"\n    },\n    \"links\": {\n      \"first\": \"https://example.com/api/resource\",\n      \"last\": \"https://example.com/api/resource\",\n      \"next\": \"https://example.com/api/resource\",\n      \"prev\": \"https://example.com/api/resource\",\n      \"related\": \"https://example.com/api/resource\",\n      \"self\": \"https://example.com/api/resource\"\n    },\n    \"meta\": {\n      \"cli_monitored_at\": \"2021-05-29T09:50:54.014Z\"\n    },\n    \"relationships\": {\n      \"target\": {\n        \"data\": {\n          \"type\": \"resource\",\n          \"id\": \"4a72d1db-b465-4764-99e1-ecedad03b06a\"\n        },\n        \"links\": {\n          \"related\": \"https://example.com/api/other_resource\"\n        },\n        \"meta\": {\n          \"key1\": \"value1\",\n          \"key2\": {\n            \"sub_key\": \"sub_value\"\n          },\n          \"key3\": [\n            \"array_value1\",\n            \"array_value2\"\n          ]\n        }\n      },\n      \"organization\": {\n        \"data\": {\n          \"type\": \"resource\",\n          \"id\": \"4a72d1db-b465-4764-99e1-ecedad03b06a\"\n        },\n        \"links\": {\n          \"related\": \"https://example.com/api/other_resource\"\n        },\n        \"meta\": {\n          \"key1\": \"value1\",\n          \"key2\": {\n            \"sub_key\": \"sub_value\"\n          },\n          \"key3\": [\n            \"array_value1\",\n            \"array_value2\"\n          ]\n        }\n      },\n      \"importer\": {\n        \"data\": {\n          \"type\": \"resource\",\n          \"id\": \"4a72d1db-b465-4764-99e1-ecedad03b06a\"\n        },\n        \"links\": {\n          \"related\": \"https://example.com/api/other_resource\"\n        },\n        \"meta\": {\n          \"key1\": \"value1\",\n          \"key2\": {\n            \"sub_key\": \"sub_value\"\n          },\n          \"key3\": [\n            \"array_value1\",\n            \"array_value2\"\n          ]\n        }\n      },\n      \"owner\": {\n        \"data\": {\n          \"type\": \"resource\",\n          \"id\": \"4a72d1db-b465-4764-99e1-ecedad03b06a\"\n        },\n        \"links\": {\n          \"related\": \"https://example.com/api/other_resource\"\n        },\n        \"meta\": {\n          \"key1\": \"value1\",\n          \"key2\": {\n            \"sub_key\": \"sub_value\"\n          },\n          \"key3\": [\n            \"array_value1\",\n            \"array_value2\"\n          ]\n        }\n      }\n    }\n  },\n  \"links\": {\n    \"first\": \"https://example.com/api/resource\",\n    \"last\": \"https://example.com/api/resource\",\n    \"next\": \"https://example.com/api/resource\",\n    \"prev\": \"https://example.com/api/resource\",\n    \"related\": \"https://example.com/api/resource\",\n    \"self\": \"https://example.com/api/resource\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6770e26a-2b12-4208-a7d0-ccb3a6b9560e",
+              "name": "Bad Request: A parameter provided as a part of the request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the Org the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project to patch."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"331ede0a-de94-456f-b788-166caeca58bf\",\n    \"attributes\": {\n      \"business_criticality\": [\n        \"medium\"\n      ],\n      \"environment\": [\n        \"external\",\n        \"hosted\"\n      ],\n      \"lifecycle\": [\n        \"production\"\n      ],\n      \"tags\": [\n        {\n          \"key\": \"tag-key\",\n          \"value\": \"tag-value\"\n        }\n      ],\n      \"test_frequency\": \"daily\"\n    },\n    \"relationships\": {\n      \"owner\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"331ede0a-de94-456f-b788-166caeca58bf\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9640c0c5-491e-4330-87a5-4ee56bd42b85",
+              "name": "Unauthorized: the request requires an authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the Org the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project to patch."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"331ede0a-de94-456f-b788-166caeca58bf\",\n    \"attributes\": {\n      \"business_criticality\": [\n        \"medium\"\n      ],\n      \"environment\": [\n        \"external\",\n        \"hosted\"\n      ],\n      \"lifecycle\": [\n        \"production\"\n      ],\n      \"tags\": [\n        {\n          \"key\": \"tag-key\",\n          \"value\": \"tag-value\"\n        }\n      ],\n      \"test_frequency\": \"daily\"\n    },\n    \"relationships\": {\n      \"owner\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"331ede0a-de94-456f-b788-166caeca58bf\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70ff939f-eaef-42d2-b331-54a64c8654d3",
+              "name": "Forbidden: the request requires an authentication token with more or different permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the Org the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project to patch."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"331ede0a-de94-456f-b788-166caeca58bf\",\n    \"attributes\": {\n      \"business_criticality\": [\n        \"medium\"\n      ],\n      \"environment\": [\n        \"external\",\n        \"hosted\"\n      ],\n      \"lifecycle\": [\n        \"production\"\n      ],\n      \"tags\": [\n        {\n          \"key\": \"tag-key\",\n          \"value\": \"tag-value\"\n        }\n      ],\n      \"test_frequency\": \"daily\"\n    },\n    \"relationships\": {\n      \"owner\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"331ede0a-de94-456f-b788-166caeca58bf\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc286ee5-837b-40e2-a7b8-40f35ed31b0c",
+              "name": "Not Found: The resource being operated on could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the Org the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project to patch."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"331ede0a-de94-456f-b788-166caeca58bf\",\n    \"attributes\": {\n      \"business_criticality\": [\n        \"medium\"\n      ],\n      \"environment\": [\n        \"external\",\n        \"hosted\"\n      ],\n      \"lifecycle\": [\n        \"production\"\n      ],\n      \"tags\": [\n        {\n          \"key\": \"tag-key\",\n          \"value\": \"tag-value\"\n        }\n      ],\n      \"test_frequency\": \"daily\"\n    },\n    \"relationships\": {\n      \"owner\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"331ede0a-de94-456f-b788-166caeca58bf\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d5aaa21-858c-4073-8bd4-92b542cd1a23",
+              "name": "Internal Server Error: An error was encountered while attempting to process the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orgs",
+                    ":org_id",
+                    "projects",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2026-03-25"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "org_id",
+                      "description": "(Required) The ID of the Org the project belongs to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) The ID of the project to patch."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"331ede0a-de94-456f-b788-166caeca58bf\",\n    \"attributes\": {\n      \"business_criticality\": [\n        \"medium\"\n      ],\n      \"environment\": [\n        \"external\",\n        \"hosted\"\n      ],\n      \"lifecycle\": [\n        \"production\"\n      ],\n      \"tags\": [\n        {\n          \"key\": \"tag-key\",\n          \"value\": \"tag-value\"\n        }\n      ],\n      \"test_frequency\": \"daily\"\n    },\n    \"relationships\": {\n      \"owner\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"331ede0a-de94-456f-b788-166caeca58bf\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:\nhttps://tools.ietf.org/id/draft-dalal-deprecation-header-01.html\n",
+                  "key": "deprecation",
+                  "value": "2021-07-01T00:00:00Z"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it's very helpful to provide this ID.\n",
+                  "key": "snyk-request-id",
+                  "value": "4b58e274-ec62-4fab-917b-1d2c48d6bdef"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.\n",
+                  "key": "snyk-version-lifecycle-stage",
+                  "value": "ga"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint requested by the caller.",
+                  "key": "snyk-version-requested",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the version of the endpoint that was served by the API.",
+                  "key": "snyk-version-served",
+                  "value": "2026-03-25"
+                },
+                {
+                  "disabled": false,
+                  "description": "A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD",
+                  "key": "sunset",
+                  "value": "2021-08-02"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"detail\": \"Permission denied for this resource\",\n      \"status\": \"403\"\n    }\n  ],\n  \"jsonapi\": {\n    \"version\": \"1.0\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.snyk.io/rest",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "16ab94b1-8f7e-4ccd-8632-b8c5c354243a",
+    "name": "Snyk AccessRequests Projects API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

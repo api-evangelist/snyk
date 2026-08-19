@@ -1,0 +1,388 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Orgs API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Orgs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all organizations in group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/groups/:group_id/orgs",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for group"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Only return organizations whose name contains this value. Case insensitive."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Only return organizations whose slug exactly matches this value. Case sensitive."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand the response with additional fields. When set to `count`, the response will include a `meta` object containing a `total_count` field with the total number of organizations in the group, ignoring any filters applied to the original query."
+              }
+            ]
+          },
+          "docs": "Get a paginated list of all the organizations belonging to the group.\nBy default, this endpoint returns the organizations in alphabetical order of their name.\n\n#### Required permissions\n\n- `View Groups (group.read)`\n\n- `View Organizations (group.org.list)`"
+        },
+        {
+          "info": {
+            "name": "List accessible organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "query",
+                "description": "If set, only return organizations within the specified group"
+              },
+              {
+                "name": "is_personal",
+                "value": "",
+                "type": "query",
+                "description": "If true, only return organizations that are not part of a group."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Only return orgs whose slug exactly matches this value."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Only return orgs whose name contains this value."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand the specified related resources in the response to include their attributes."
+              }
+            ]
+          },
+          "docs": "Get a paginated list of organizations you have access to."
+        },
+        {
+          "info": {
+            "name": "Get organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for org"
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand the specified related resources in the response to include their attributes."
+              }
+            ]
+          },
+          "docs": "Get the full details of an organization.\n\n#### Required permissions\n\n- `View Organization (org.read)`"
+        },
+        {
+          "info": {
+            "name": "Update organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/orgs/:org_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for org"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the details of an organization\n\n#### Required permissions\n\n- `Edit Organization (org.edit)`"
+        },
+        {
+          "info": {
+            "name": "Get all memberships of the org",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/memberships",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the org"
+              },
+              {
+                "name": "starting_after",
+                "value": "v1.eyJpZCI6IjEwMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately after this cursor"
+              },
+              {
+                "name": "ending_before",
+                "value": "v1.eyJpZCI6IjExMDAifQo=",
+                "type": "query",
+                "description": "Return the page of results immediately before this cursor"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of results to return per page"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "Which column to sort by."
+              },
+              {
+                "name": "sort_order",
+                "value": "ASC",
+                "type": "query",
+                "description": "Order in which results are returned."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter the response by Users that match the provided email"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter the response by Users that match the provided user ID"
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Filter the response by Users that match the provided username"
+              },
+              {
+                "name": "role_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter the response for results only with the specified role."
+              }
+            ]
+          },
+          "docs": "Returns all memberships of the org\n\n#### Required permissions\n\n- `View Organization Memberships (org.membership.read)`"
+        },
+        {
+          "info": {
+            "name": "Create a org membership for a user with role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/memberships",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the org"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a org membership for a user with role\n\n#### Required permissions\n\n- `Add Organization Memberships (org.membership.add)`"
+        },
+        {
+          "info": {
+            "name": "Update a org membership for a user with role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/memberships/:membership_id",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the org"
+              },
+              {
+                "name": "membership_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the org membership"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a org membership for a user with role\n\n#### Required permissions\n\n- `Edit Organization Memberships (org.membership.edit)`"
+        },
+        {
+          "info": {
+            "name": "Remove user's org membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/memberships/:membership_id",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the org"
+              },
+              {
+                "name": "membership_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the org membership"
+              },
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              }
+            ]
+          },
+          "docs": "Remove a user's membership of the group.\n\n#### Required permissions\n\n- `Delete Organization Memberships (org.membership.delete)`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

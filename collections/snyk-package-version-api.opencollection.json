@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snyk AccessRequests Package Version API",
+    "version": "REST"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Package Version",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a package version (Early Access)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.snyk.io/rest/orgs/:org_id/ecosystems/:ecosystem/packages/:package_name/versions/:package_version",
+            "params": [
+              {
+                "name": "version",
+                "value": "2026-03-25",
+                "type": "query",
+                "description": "The requested version of the endpoint to process the request"
+              },
+              {
+                "name": "org_id",
+                "value": "",
+                "type": "path",
+                "description": "Org ID"
+              },
+              {
+                "name": "ecosystem",
+                "value": "",
+                "type": "path",
+                "description": "The package ecosystem"
+              },
+              {
+                "name": "package_name",
+                "value": "",
+                "type": "path",
+                "description": "Package name (URL encoded if needed)"
+              },
+              {
+                "name": "package_version",
+                "value": "",
+                "type": "path",
+                "description": "Package version (URL encoded if needed). Accepts semantic versioning formats (e.g., 1.2.3, v1.2.3).\nNote: Golang commit hashes are NOT supported.\n"
+              }
+            ]
+          },
+          "docs": "Get package version metadata for a specific version of a package from an ecosystem.\n\n**Important:** The security section of `package_health` refers to the **specific version in the request**, not the latest version. Since the `overall_rating` is computed from all health sections (including security), it is also influenced by this version's security data.\n\n**Supported Ecosystems:** npm, pypi, maven, nuget, golang\n\n**Version Format:** Accepts standard semantic versioning formats (e.g., `1.2.3`, `v"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
