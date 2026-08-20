@@ -42,6 +42,11 @@ apis:
   humanURL: https://docs.snyk.io/snyk-api/snyk-apps
   baseURL: https://api.snyk.io/rest
   tags:
+  - Application
+  - Authentication
+  - Extensibility
+  - REST API
+  tags_raw:
   - Apps
   - OAuth
   - Extensibility
@@ -58,6 +63,10 @@ apis:
   humanURL: https://snyk.docs.apiary.io/
   baseURL: https://api.snyk.io/v1
   tags:
+  - v1
+  - Legacy
+  - Monitors
+  tags_raw:
   - V1
   - Legacy
   - Test
@@ -107,6 +116,8 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
+  - AI-BOM
+  tags_raw:
   - AiBom
   properties:
   - type: OpenAPI
@@ -143,6 +154,8 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
+  - Application
+  tags_raw:
   - Apps
   properties:
   - type: OpenAPI
@@ -467,6 +480,8 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
+  - Container Image
+  tags_raw:
   - ContainerImage
   properties:
   - type: OpenAPI
@@ -720,6 +735,8 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
+  - Group
+  tags_raw:
   - Groups
   properties:
   - type: OpenAPI
@@ -792,6 +809,8 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
+  - Integration
+  tags_raw:
   - Integrations
   properties:
   - type: OpenAPI
@@ -1116,6 +1135,8 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
+  - Organization
+  tags_raw:
   - Orgs
   properties:
   - type: OpenAPI
@@ -1224,6 +1245,8 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
+  - Personal Access Token
+  tags_raw:
   - PersonalAccessToken
   properties:
   - type: OpenAPI
@@ -1296,6 +1319,8 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
@@ -1440,6 +1465,8 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
+  - Service Accounts
+  tags_raw:
   - ServiceAccounts
   properties:
   - type: OpenAPI
@@ -1692,6 +1719,8 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
