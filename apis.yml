@@ -31,7 +31,7 @@ tags:
 - Container Security
 - IaC
 created: '2026-05-08'
-modified: '2026-05-19'
+modified: '2026-08-27'
 specificationVersion: '0.23'
 apis:
 - aid: snyk:rest-apps
@@ -39,7 +39,7 @@ apis:
   description: >-
     Manages Snyk Apps, the OAuth2-based extensibility surface that lets third-party applications act on
     behalf of Snyk users, organizations, and groups.
-  humanURL: https://docs.snyk.io/snyk-api/snyk-apps
+  humanURL: https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/snyk-apps-apis
   baseURL: https://api.snyk.io/rest
   tags:
   - Application
@@ -53,14 +53,14 @@ apis:
   - REST API
   properties:
   - type: Documentation
-    url: https://docs.snyk.io/snyk-api/snyk-apps
+    url: https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/snyk-apps-apis
 - aid: snyk:v1
   name: Snyk V1 API (Legacy)
   description: >-
     The original Snyk REST API. Still in use for project import, monitor, test, and certain reporting
     endpoints not yet ported to the dated REST API. Subject to end-of-life migration; new integrations
     should prefer the REST API where coverage exists.
-  humanURL: https://snyk.docs.apiary.io/
+  humanURL: https://docs.snyk.io/developer-tools/snyk-api/v1-api
   baseURL: https://api.snyk.io/v1
   tags:
   - v1
@@ -73,7 +73,75 @@ apis:
   - Monitor
   properties:
   - type: Documentation
-    url: https://snyk.docs.apiary.io/
+    url: https://docs.snyk.io/developer-tools/snyk-api/v1-api
+- aid: snyk:oauth2-authorize
+  name: Snyk OAuth2 API - Authorize
+  description: >-
+    The user-facing half of Snyk's RFC 6749 OAuth2 flow for Snyk Apps. Served from the Snyk app
+    subdomain rather than the API subdomain, it initiates the authorization-code grant and redirects
+    back to the client with a code. Snyk publishes this as its own OpenAPI 3.0.3 document.
+  humanURL: https://docs.snyk.io/developer-tools/snyk-api/oauth2-api
+  baseURL: https://app.snyk.io
+  tags:
+  - OAuth
+  - Authentication
+  - Authorization
+  - REST API
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-oauth2-app-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-oauth2-app-overlay.yaml
+  - type: Documentation
+    url: https://docs.snyk.io/developer-tools/snyk-api/oauth2-api
+  - type: OAuthScopes
+    url: scopes/snyk-scopes.yml
+- aid: snyk:oauth2-token
+  name: Snyk OAuth2 API - Token
+  description: >-
+    The token half of Snyk's OAuth2 API - exchange an authorization code for an access token, refresh
+    an expiring token, and revoke a token. Supports authorization_code, refresh_token and
+    client_credentials grants, discriminated on grant_type. Published by Snyk as OpenAPI 3.0.3.
+  humanURL: https://docs.snyk.io/developer-tools/snyk-api/oauth2-api
+  baseURL: https://api.snyk.io/oauth2
+  tags:
+  - OAuth
+  - Authentication
+  - Tokens
+  - REST API
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-oauth2-token-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-oauth2-token-overlay.yaml
+  - type: Documentation
+    url: https://docs.snyk.io/developer-tools/snyk-api/oauth2-api
+  - type: OAuthScopes
+    url: scopes/snyk-scopes.yml
+- aid: snyk:mcp
+  name: Snyk MCP Server (Snyk Studio)
+  description: >-
+    Snyk's first-party Model Context Protocol server, shipped inside the Snyk CLI and run locally over
+    stdio (`npx -y snyk@latest mcp -t stdio`). Twelve security tools - code, dependency, container,
+    IaC, SBOM and AI-BOM scanning plus package health checks - exposed to coding agents. Snyk states
+    it offers no hosted remote MCP server.
+  humanURL: https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/getting-started-with-snyk-studio
+  tags:
+  - MCP
+  - Agents
+  - Security
+  - DevSecOps
+  properties:
+  - type: MCPServer
+    url: mcp/snyk-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/snyk-tool-crosswalk.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Documentation
+    url: https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio
+  - type: SourceCode
+    url: https://github.com/snyk/studio-mcp
 - aid: snyk:snyk-accessrequests-api
   name: Snyk AccessRequests API
   description: The AccessRequests API from Snyk — 1 operation(s) for accessrequests.
@@ -84,10 +152,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-accessrequests-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-accessrequests-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -122,10 +190,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-aibom-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-aibom-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -160,10 +228,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-apps-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-apps-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -196,10 +264,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-asset-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-asset-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -232,10 +300,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-audit-logs-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-audit-logs-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -268,10 +336,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-brokerconnections-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-brokerconnections-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -304,10 +372,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-brokercontexts-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-brokercontexts-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -340,10 +408,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-brokerdeployments-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-brokerdeployments-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -376,10 +444,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-catalog-resource-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-catalog-resource-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -412,10 +480,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-cloud-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-cloud-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -448,10 +516,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-collection-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-collection-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -486,10 +554,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-containerimage-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-containerimage-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -523,10 +591,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-containerregistryimportpolicy-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-containerregistryimportpolicy-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -559,10 +627,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-custom-base-images-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-custom-base-images-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -595,10 +663,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-deploymentcredentials-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-deploymentcredentials-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -631,10 +699,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-export-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-export-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -667,10 +735,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-findings-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-findings-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -703,10 +771,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-group-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-group-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -741,10 +809,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-groups-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-groups-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -777,10 +845,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-iacsettings-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-iacsettings-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -815,10 +883,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-integrations-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-integrations-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -851,10 +919,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-inventory-assets-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-inventory-assets-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -887,10 +955,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-invites-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-invites-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -923,10 +991,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-issues-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-issues-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -959,10 +1027,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-languagessettings-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-languagessettings-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -995,10 +1063,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-learn-assignment-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-learn-assignment-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1031,10 +1099,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-learn-progress-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-learn-progress-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1067,10 +1135,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-openapi-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-openapi-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1103,10 +1171,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-opensourcesettings-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-opensourcesettings-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1141,10 +1209,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-orgs-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-orgs-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1177,10 +1245,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-package-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-package-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1213,10 +1281,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-package-version-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-package-version-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1251,10 +1319,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-personalaccesstoken-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-personalaccesstoken-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1287,10 +1355,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-policies-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-policies-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1325,10 +1393,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-projects-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-projects-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1361,10 +1429,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-pull-request-templates-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-pull-request-templates-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1397,10 +1465,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-sastsettings-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-sastsettings-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1433,10 +1501,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-sbom-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-sbom-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1471,10 +1539,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-serviceaccounts-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-serviceaccounts-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1507,10 +1575,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-slack-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-slack-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1543,10 +1611,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-slacksettings-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-slacksettings-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1579,10 +1647,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-targets-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-targets-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1615,10 +1683,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-tenantrole-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-tenantrole-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1651,10 +1719,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-tenants-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-tenants-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1687,10 +1755,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-tests-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-tests-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1725,10 +1793,10 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/snyk-users-api-openapi.yml
+  - type: Overlay
+    url: overlays/snyk-users-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15
-  - type: GraphQL
-    url: graphql/snyk-graphql.md
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Orgs
   - type: Documentation
@@ -1769,7 +1837,7 @@ common:
 - type: Website
   url: https://snyk.io/
 - type: Documentation
-  url: https://docs.snyk.io/snyk-api
+  url: https://docs.snyk.io/developer-tools/snyk-api
 - type: APIReference
   url: https://apidocs.snyk.io/
 - type: Plans
@@ -1780,12 +1848,73 @@ common:
   url: finops/snyk-finops.yml
 - type: Integrations
   url: https://snyk.io/integrations/
-- type: LlmsText
+- type: LLMsTxt
   url: https://docs.snyk.io/llms.txt
 - url: https://snyk.io/blog/feed/
-  type: Blog
+  type: BlogRSS
+- type: Packages
+  url: packages/snyk-packages.yml
+- type: SDKs
+  url: packages/snyk-packages.yml
+- type: CLI
+  url: cli/snyk-cli.yml
+- type: MCPServer
+  url: mcp/snyk-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/snyk-tool-crosswalk.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: WellKnown
+  url: well-known/snyk-well-known.yml
+- type: SecurityTxt
+  url: well-known/snyk-security.txt
+- type: Security
+  url: security/snyk-vulnerability-disclosure.yml
+- type: Compliance
+  url: security/snyk-trust-center.yml
+- type: Conformance
+  url: conformance/snyk-conformance.yml
+- type: Conventions
+  url: conventions/snyk-conventions.yml
+- type: ErrorCatalog
+  url: errors/snyk-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/snyk-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/snyk-lifecycle.yml
+- type: StatusPage
+  url: https://status.snyk.io/
+- type: ChangeLog
+  url: changelog/snyk-changelog.yml
+- type: OAuthScopes
+  url: scopes/snyk-scopes.yml
+- type: DataModel
+  url: data-model/snyk-data-model.yml
+- type: Webhooks
+  url: asyncapi/snyk-webhooks.yml
+- type: DeveloperPortal
+  url: https://docs.snyk.io/developer-tools/snyk-api
+- type: GettingStarted
+  url: https://docs.snyk.io/getting-started-guides/getting-started
+- type: Support
+  url: https://support.snyk.io/
+- type: Pricing
+  url: https://snyk.io/plans/
+- type: SignUp
+  url: https://app.snyk.io/signup
+- type: TermsOfService
+  url: https://snyk.io/policies/terms-of-service/
+- type: PrivacyPolicy
+  url: https://snyk.io/policies/privacy/
+- type: Blog
+  url: https://snyk.io/blog/
 integrations:
 - name: View partner solutions
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-27'
+  status: enriched
+  artifacts_added: 74
+  pass: local-v1
