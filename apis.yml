@@ -7,6 +7,19 @@ description: Snyk is a developer-first security platform covering code, open-sou
   V1 API expose groups, organizations, projects, issues, targets, integrations, audit
   logs, SBOMs, container images, custom base images, webhooks, and exports for application-security
   teams.
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
@@ -1820,6 +1833,9 @@ apis:
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
 common:
+- type: CapabilityMap
+  url: capabilities/snyk-capability-edges.yml
+  name: Snyk Business Capability Map
 - type: AgenticAccess
   url: agentic-access/snyk-agentic-access.yml
 - type: TrustCenter
