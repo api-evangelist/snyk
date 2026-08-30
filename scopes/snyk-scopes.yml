@@ -1,0 +1,106 @@
+specification: API Commons OAuth Scopes
+specificationVersion: '0.1'
+provider: Snyk
+providerId: snyk
+generated: '2026-08-27'
+method: searched
+source: https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/snyk-apps-apis/scopes-to-request.md
+docs: https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/snyk-apps-apis/scopes-to-request
+description: >-
+  Snyk's OAuth2 scopes apply to Snyk Apps, the RFC 6749 authorization-code integration
+  path documented at https://docs.snyk.io/developer-tools/snyk-api/oauth2-api and specified
+  in openapi/snyk-oauth2-app-openapi.yml and openapi/snyk-oauth2-token-openapi.yml. The
+  vocabulary is a strict dotted resource.action hierarchy rooted at org, with 27 published
+  scopes. Note two hard constraints Snyk states in the docs: org.read is mandatory and must
+  always be requested, and scopes CANNOT be changed after an App is created - a scope change
+  means creating a new App with a new clientId/clientSecret and having every user re-authorize.
+  These scopes govern Snyk Apps only; personal access tokens and service-account tokens are
+  not scoped through this vocabulary.
+derivation_note: >-
+  derive-oauth-scopes.py found zero oauth2 securitySchemes in the refined REST specs -
+  the REST document declares only APIToken (apiKey) and BearerAuth (http bearer), and the
+  OAuth2 flow lives in the separate OAuth2 API specs. This file is therefore searched from
+  the documented scope reference rather than derived from the spec.
+flows:
+  - type: authorization_code
+    authorization_url: https://app.snyk.io/oauth2/authorize
+    token_url: https://api.snyk.io/oauth2/token
+    revocation_url: https://api.snyk.io/oauth2/revoke
+    pkce: supported
+    note: >-
+      Snyk documents a PKCE quick-setup path. /oauth2/authorize is served from the app
+      subdomain; /token and /revoke from the API subdomain.
+  - type: refresh_token
+    token_url: https://api.snyk.io/oauth2/token
+  - type: client_credentials
+    token_url: https://api.snyk.io/oauth2/token
+    note: >-
+      Present as a grant_type discriminator in the published token spec. No refresh_token
+      is issued for client_credentials grants.
+scope_count: 27
+mandatory_scopes:
+  - org.read
+scopes:
+  - name: org.read
+    description: View Organization information and settings.
+    required: true
+  - name: org.edit
+    description: Edit Organization information and settings.
+  - name: org.report.read
+    description: View reports in your Organization.
+  - name: org.project.create
+    description: Add new Projects.
+  - name: org.project.read
+    description: View Project information and settings and view Organization targets.
+  - name: org.project.edit
+    description: Edit Project information.
+  - name: org.project.delete
+    description: Permanently remove Projects and permanently remove Organization targets.
+  - name: org.project.status
+    description: Activate and deactivate Projects.
+  - name: org.project.test
+    description: Test Projects.
+  - name: org.project.ignore.create
+    description: Create new Project ignores.
+  - name: org.project.ignore.read
+    description: View Project ignore information.
+  - name: org.project.ignore.edit
+    description: Configure Project ignores.
+  - name: org.project.ignore.delete
+    description: Permanently remove Project ignores.
+  - name: org.project.attributes.edit
+    description: Apply and remove project attributes.
+  - name: org.project.tag.edit
+    description: Create, apply and remove Project tags.
+  - name: org.project.pr.create
+    description: Create fix pull requests for Projects.
+  - name: org.project.pr.skip
+    description: Skip failed security tests on pull requests by marking checks as successful.
+  - name: org.project.jira.issue.read
+    description: View Jira issue information.
+  - name: org.project.jira.issue.create
+    description: Create new Jira issues.
+  - name: org.project.snapshot.read
+    description: View project dependencies, vulnerabilities, and other information obtained by scanning Projects.
+  - name: org.package.test
+    description: Test packages in ecosystems supported by Snyk.
+  - name: org.container_image.read
+    description: View container images.
+  - name: org.collection.create
+    description: Create a collection of Projects.
+  - name: org.collection.read
+    description: View Project collections.
+  - name: org.collection.edit
+    description: Add and remove Projects from collections.
+  - name: org.collection.delete
+    description: Delete Project collections.
+constraints:
+  - >-
+    Scopes are immutable for the lifetime of a Snyk App. Changing them requires creating a
+    new App and re-authorizing every installed user.
+  - >-
+    A user can only complete authorization if they personally hold every permission the
+    requested scopes imply, so over-requesting blocks installs outright.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

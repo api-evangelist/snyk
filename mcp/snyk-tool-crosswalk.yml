@@ -1,0 +1,150 @@
+specification: API Commons Tool Crosswalk
+specificationVersion: '0.1'
+provider: Snyk
+providerId: snyk
+generated: '2026-08-27'
+method: derived
+source: >-
+  Derived by binding the 12 documented Snyk MCP tools
+  (https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/readme.md)
+  against operationIds in the live Snyk REST OpenAPI 3.0.3 document served at
+  https://api.snyk.io/rest/openapi/2026-03-25 (291 operations, servers[] https://api.snyk.io/rest).
+description: >-
+  The headline finding is that Snyk's MCP server and Snyk's REST API are almost
+  disjoint products. The MCP server is a LOCAL scanner: its tools take a filesystem path
+  and shell out to the Snyk CLI's scan engines, and nothing in the REST API accepts a
+  local directory. The REST API is a PLATFORM-MANAGEMENT surface: orgs, projects,
+  targets, issues, policies, service accounts, exports. Only three tools have a genuine
+  REST analogue, and even those differ in input shape (a local artifact versus a
+  server-side project or PURL). An agent that has the MCP server has no way to reach the
+  other 288 REST operations, and an agent that has an API token has no way to scan a
+  working directory.
+surfaces:
+  openapi:
+    path: openapi/
+    source: https://api.snyk.io/rest/openapi/2026-03-25
+    operations: 291
+    gated: false
+    note: The OpenAPI document itself is served anonymously; calling the operations requires an Enterprise-plan token.
+  mcp:
+    url: null
+    transport: stdio
+    install: "npx -y snyk@latest mcp -t stdio"
+    gated: true
+    note: >-
+      No HTTP endpoint exists, so tools/list could not be called and no live inputSchema
+      was captured. Tools are mapped by name and documented semantics only.
+  graphql:
+    endpoint: null
+    note: Snyk publishes no GraphQL API. POST probes of api.snyk.io/graphql and app.snyk.io/graphql returned 404 and 400 on 2026-08-27.
+crosswalk:
+  - tool: snyk_sbom_scan
+    category: sbom
+    rest:
+      - createSbomTestRun
+      - getSbomTestStatus
+      - getSbomTestResult
+    binding: semantic
+    confidence: high
+    note: >-
+      Both test an SBOM document for known vulnerabilities. The MCP tool reads an SBOM
+      file from the local filesystem; the REST trio is an async job - POST the document,
+      poll status, fetch results.
+  - tool: snyk_aibom
+    category: aibom
+    rest:
+      - createAiBom
+      - createAndUploadAiBom
+      - getAiBomJob
+      - getAiBom
+    binding: semantic
+    confidence: high
+    note: >-
+      snyk_aibom generates an AI-BOM for a local project; the REST AiBom operations create
+      and retrieve AI-BOM documents server-side.
+  - tool: snyk_package_health_check
+    category: package-intelligence
+    rest:
+      - getPackage
+      - getPackageVersion
+      - getIssuesPerPurl
+      - listIssuesForManyPurls
+    binding: semantic
+    confidence: medium
+    note: >-
+      The tool returns an overall health rating plus vulnerability counts by severity,
+      maintenance, community and popularity. The REST operations supply the vulnerability
+      half of that (issues for a PURL, package and version metadata); the maintenance,
+      community and popularity ratings have no published REST equivalent, so the mapping
+      is partial. Tool supports npm, pypi, nuget, maven and golang only.
+mcp_only:
+  - tool: snyk_code_scan
+    reason: SAST over a local working directory. No REST operation accepts source files; Snyk Code scanning server-side happens through SCM integration, not an API upload.
+  - tool: snyk_sca_scan
+    reason: Dependency scan of a local manifest tree, resolved by running Gradle/Maven/npm locally. No REST equivalent.
+  - tool: snyk_iac_scan
+    reason: IaC misconfiguration scan of local Terraform/Kubernetes/CloudFormation files. No REST upload endpoint.
+  - tool: snyk_container_scan
+    reason: Container image scan performed by the local CLI against a local or registry image. REST ContainerImage operations only read images already known to the platform.
+  - tool: snyk_trust
+    reason: Local CLI trust decision for a folder. Purely a client-side safety gate; no server-side concept.
+  - tool: snyk_auth
+    reason: Establishes the local CLI credential (interactive OAuth or token). The REST API has no login operation - a token is issued from the web app.
+  - tool: snyk_logout
+    reason: Clears the local CLI credential. No REST equivalent; REST token revocation is deletePersonalAccessToken, which deletes the token rather than ending a local session.
+  - tool: snyk_version
+    reason: Reports the local CLI/MCP build. No REST equivalent.
+  - tool: snyk_send_feedback
+    reason: Sends a fix summary to Snyk telemetry. Not part of the public API.
+rest_only_summary:
+  count: 279
+  note: >-
+    279 of the 291 REST operations have no MCP tool at all. They are the whole
+    platform-management surface. Representative clusters, by tag and operation count in
+    the live spec.
+  clusters:
+    - tag: Inventory Assets
+      operations: 36
+    - tag: Apps
+      operations: 28
+    - tag: ServiceAccounts
+      operations: 12
+    - tag: BrokerConnections
+      operations: 12
+    - tag: Asset
+      operations: 11
+    - tag: Policies
+      operations: 10
+    - tag: OpensourceSettings
+      operations: 10
+    - tag: Groups
+      operations: 9
+    - tag: Cloud
+      operations: 9
+    - tag: Orgs
+      operations: 8
+    - tag: Collection
+      operations: 8
+    - tag: Export
+      operations: 6
+    - tag: Issues
+      operations: 6
+    - tag: Tenants
+      operations: 6
+    - tag: Projects
+      operations: 5
+    - tag: Targets
+      operations: 3
+    - tag: Audit Logs
+      operations: 2
+coverage:
+  mcp_tools: 12
+  mcp_tools_mapped: 3
+  mcp_tools_unmapped: 9
+  rest_operations: 291
+  rest_operations_mapped: 12
+  rest_operations_unmapped: 279
+  overlap_percent_of_rest: 4.1
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

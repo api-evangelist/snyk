@@ -1,0 +1,92 @@
+specification: API Commons Agent Skills
+specificationVersion: '0.1'
+provider: Snyk
+providerId: snyk
+generated: '2026-08-27'
+method: searched
+source: https://github.com/snyk/studio-recipes/tree/main/command_directives/synchronous_remediation/skills
+docs: https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/directives
+description: >-
+  These are Snyk's OWN Agent Skills, saved verbatim from the snyk/studio-recipes repository
+  that Snyk's Snyk Studio documentation points readers at. Nothing here was authored on
+  Snyk's behalf. Every skill is Apache-2.0 licensed, carries `metadata.author: Snyk`, and is
+  built to drive the Snyk MCP server's tools (mcp_snyk_snyk_code_scan, snyk_sca_scan,
+  snyk_iac_scan, snyk_container_scan, snyk_sbom_scan, snyk_aibom,
+  snyk_package_health_check) rather than the REST API - which is consistent with everything
+  else about Snyk's agent surface: it is local, CLI-backed and scan-shaped.
+skill_count: 8
+license: Apache-2.0
+repository: https://github.com/snyk/studio-recipes
+grounded_in: mcp/snyk-mcp.yml
+grounded_in_note: >-
+  These skills invoke MCP tool names, not OpenAPI operationIds. See
+  mcp/snyk-tool-crosswalk.yml for how those tools relate (mostly do not relate) to the 291
+  REST operations.
+skills:
+  - name: snyk-fix
+    file: snyk-fix.md
+    version: 1.1.0
+    description: >-
+      All-in-one remediation workflow - parse, scan, analyze, fix, validate, summarize and
+      optionally open a PR. Supports single-issue and batch mode.
+    tools: [mcp_snyk_snyk_code_scan, mcp_snyk_snyk_sca_scan, mcp_snyk_snyk_breakability_check, mcp_snyk_snyk_auth, mcp_snyk_snyk_send_feedback]
+    source: https://github.com/snyk/studio-recipes/blob/main/command_directives/synchronous_remediation/skills/snyk-fix/SKILL.md
+  - name: secure-at-inception
+    file: snyk-secure-at-inception.md
+    version: 1.0.0
+    description: Test AI-generated code for security issues at the moment of generation, across Code, Open Source and IaC.
+    tools: [mcp_snyk_snyk_code_scan, mcp_snyk_snyk_sca_scan, mcp_snyk_snyk_iac_scan, mcp_snyk_snyk_send_feedback]
+    source: https://github.com/snyk/studio-recipes/blob/main/command_directives/synchronous_remediation/skills/secure-at-inception/SKILL.md
+  - name: secure-dependency-health-check
+    file: snyk-secure-dependency-health-check.md
+    version: 1.1.0
+    description: >-
+      Evaluate and compare open-source packages before an agent adds a dependency - health
+      rating, vulnerability counts by severity, maintenance and community signals. npm,
+      PyPI, NuGet, Maven and Go only.
+    tools: [mcp_snyk_snyk_package_health_check]
+    source: https://github.com/snyk/studio-recipes/blob/main/command_directives/synchronous_remediation/skills/secure-dependency-health-check/SKILL.md
+  - name: container-security
+    file: snyk-container-security.md
+    version: 1.0.0
+    description: Scan container images and Dockerfiles, with base-image recommendation and Dockerfile best-practice references.
+    tools: [mcp_snyk_snyk_container_scan]
+    source: https://github.com/snyk/studio-recipes/blob/main/command_directives/synchronous_remediation/skills/container-security/SKILL.md
+  - name: iac-security
+    file: snyk-iac-security.md
+    version: 1.0.0
+    description: Scan infrastructure-as-code, with Terraform and Kubernetes security-pattern references.
+    tools: [mcp_snyk_snyk_iac_scan]
+    source: https://github.com/snyk/studio-recipes/blob/main/command_directives/synchronous_remediation/skills/iac-security/SKILL.md
+  - name: sbom-analyzer
+    file: snyk-sbom-analyzer.md
+    version: 1.0.0
+    description: Analyze an SBOM document for vulnerabilities, with a reference on SBOM formats.
+    tools: [mcp_snyk_snyk_sbom_scan]
+    source: https://github.com/snyk/studio-recipes/blob/main/command_directives/synchronous_remediation/skills/sbom-analyzer/SKILL.md
+  - name: ai-inventory
+    file: snyk-ai-inventory.md
+    version: 1.0.0
+    description: Build an AI bill of materials for a project - models, services and AI assets.
+    tools: [mcp_snyk_snyk_aibom]
+    source: https://github.com/snyk/studio-recipes/blob/main/command_directives/synchronous_remediation/skills/ai-inventory/SKILL.md
+  - name: drift-detector
+    file: snyk-drift-detector.md
+    version: 1.0.0
+    description: Detect infrastructure drift between IaC and deployed state, with a drift-remediation reference.
+    tools: [Bash]
+    note: Drives `snyk iac describe` through the shell rather than an MCP tool.
+    source: https://github.com/snyk/studio-recipes/blob/main/command_directives/synchronous_remediation/skills/drift-detector/SKILL.md
+not_captured:
+  - >-
+    Each skill directory also ships reference/ markdown files (e.g. terraform-security-patterns.md,
+    dockerfile-best-practices.md, package-evaluation-criteria.md). Only the SKILL.md entry
+    points are mirrored here; the references remain in snyk/studio-recipes.
+  - >-
+    Snyk also publishes command directives (snyk-fix, snyk-code-fix, snyk-sca-fix,
+    create-security-pr, snyk-batch-fix) and guardrail hooks (secure_at_commit,
+    secrets_at_commit, package enforcement for Cursor) in the same repository. Those are
+    hooks and slash-commands, not Agent Skills, so they are referenced rather than mirrored.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

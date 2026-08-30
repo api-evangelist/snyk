@@ -1,0 +1,90 @@
+specification: API Commons Webhooks
+specificationVersion: '0.1'
+provider: Snyk
+providerId: snyk
+generated: '2026-08-27'
+method: searched
+source: >-
+  https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/webhooks-apis/about-webhooks.md,
+  https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/webhooks-apis/webhooks.md and
+  https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/webhooks-apis/validation-and-versioning-of-payloads.md
+docs: https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/webhooks-apis
+asyncapi_published: false
+asyncapi_probe:
+  - url: https://api.snyk.io/asyncapi.yaml
+    status: 404
+  - url: https://api.snyk.io/asyncapi.json
+    status: 404
+  - url: https://docs.snyk.io/asyncapi.yaml
+    status: 404
+asyncapi_note: >-
+  Snyk publishes no AsyncAPI document. The webhook surface is documented in prose only, and
+  is managed through the V1 API (the Webhooks API is a V1 resource, not a REST one), so it
+  is also absent from the OpenAPI contract. Nothing has been authored on Snyk's behalf - this
+  file records the published catalogue and its shape, not an invented schema.
+status: beta
+status_note: >-
+  Snyk states the Webhooks API is in beta and that it "may change the API and the structure
+  of webhook payloads at any time, without notice". Treat every field below as unstable.
+event_count: 2
+transport:
+  protocol: https
+  https_only: true
+  https_only_note: Webhooks can only be configured for HTTPS URLs; HTTP is rejected.
+  method: POST
+  content_type: application/json
+  regions_supported: [SNYK-US-01, SNYK-US-02, SNYK-EU-01, SNYK-AU-01]
+delivery_headers:
+  - name: X-Snyk-Event
+    description: The event name and payload version, e.g. ping/v0 or project_snapshot/v0. Snyk requires consumers to branch on this header because one endpoint may receive multiple event types.
+  - name: X-Snyk-Transport-ID
+    description: GUID identifying this delivery.
+  - name: X-Snyk-Timestamp
+    description: ISO 8601 timestamp of when the event occurred, e.g. 2020-09-25T15:27:53Z.
+  - name: X-Hub-Signature
+    description: HMAC hex digest of the request body, always prefixed sha256=, keyed on the secret supplied at webhook creation.
+  - name: User-Agent
+    description: Identifies the origin, e.g. Snyk-Webhooks/044aadd.
+signing:
+  algorithm: HMAC-SHA256
+  header: X-Hub-Signature
+  prefix: 'sha256='
+  key: 'A high-entropy secret supplied by the consumer when creating the webhook; Snyk requires it to be random, single-purpose and known only to Snyk and the consumer.'
+  verification_docs: https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/webhooks-apis/validation-and-versioning-of-payloads
+versioning:
+  scheme: 'Per-event version suffix carried in the X-Snyk-Event header (name/vN).'
+  current: v0
+events:
+  - name: ping
+    version: v0
+    header_value: ping/v0
+    description: >-
+      Fired when a new webhook is created, and manually triggerable through the ping webhook
+      API. Used to confirm the endpoint receives Snyk deliveries.
+    payload_fields: [webhookId]
+  - name: project_snapshot
+    version: v0
+    header_value: project_snapshot/v0
+    description: >-
+      Fired every time an existing project is tested and a new snapshot is created - on every
+      test, whether or not new issues were found. NOT fired when a project is created or
+      imported.
+    scan_types_supported: [open source, container]
+    payload_fields:
+      - project
+      - org
+      - group
+      - newIssues
+      - removedIssues
+    payload_note: >-
+      project, org and group are the V1 API object shapes; newIssues and removedIssues are
+      arrays of the V1 issue object.
+coverage_gap:
+  note: >-
+    Two events over a platform that scans code, containers, IaC, secrets and AI assets. Snyk's
+    own documentation limits project_snapshot to open source and container scan types, so
+    Snyk Code, IaC, Secrets and AI-BOM findings have no push channel at all - consumers of
+    those products must poll the Issues or Export endpoints.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

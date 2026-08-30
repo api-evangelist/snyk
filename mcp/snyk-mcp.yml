@@ -1,0 +1,108 @@
+specification: API Commons MCP
+specificationVersion: '0.1'
+provider: Snyk
+providerId: snyk
+generated: '2026-08-27'
+method: searched
+source: https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/readme.md
+docs:
+  - https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/readme.md
+  - https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/getting-started-with-snyk-studio.md
+  - https://github.com/snyk/studio-mcp
+name: Snyk MCP Server
+status: published
+description: >-
+  Snyk ships a first-party MCP server as part of Snyk Studio, its agentic-development
+  security layer. It is deliberately LOCAL ONLY: the server runs on the developer's own
+  machine through the Snyk CLI so that it can read local files to scan them. Snyk's own
+  documentation states plainly, "The Snyk MCP Server is designed as a local MCP server,
+  running on your system using the Snyk CLI to ensure local file access. Snyk does not
+  offer a hosted remote MCP server." There is therefore no URL an agent can POST to;
+  a human installs and runs it first. Tools are grouped into three profiles - lite,
+  full (default), and experimental - selectable with --profile or SNYK_MCP_PROFILE.
+deployment:
+  mode: local-stdio
+  endpoint: null
+  install: "npx -y snyk@latest mcp -t stdio"
+  package: https://www.npmjs.com/package/snyk
+  source_repository: https://github.com/snyk/studio-mcp
+  auth: api-key
+  verified: searched
+  note: >-
+    Verified from Snyk's own Snyk Studio documentation, which both gives the exact
+    stdio invocation and explicitly denies a hosted remote endpoint. Authentication is
+    the Snyk CLI's own token/OAuth session, established by running the snyk_auth tool
+    or `snyk auth`; there is no MCP-level OAuth challenge because there is no HTTP
+    transport. No remote MCP URL was guessed or probed into existence.
+transport: stdio
+config_example: |
+  {
+    "mcpServers": {
+      "Snyk": {
+        "command": "npx",
+        "args": ["-y", "snyk@latest", "mcp", "-t", "stdio"],
+        "env": {}
+      }
+    }
+  }
+profiles:
+  - name: lite
+    description: Minimum set of essential security scanning tools; keeps token use and context size low.
+  - name: full
+    description: All stable tools. Default profile. Comprehensive coverage across code, dependencies, containers, IaC and SBOMs.
+  - name: experimental
+    description: Everything in full, plus new tools under evaluation which may change or be promoted.
+tools:
+  - name: snyk_auth
+    description: Authenticate the Snyk CLI session used by the MCP server.
+    profiles: [lite, full, experimental]
+  - name: snyk_code_scan
+    description: Snyk Code (SAST) scan of first-party source code.
+    profiles: [lite, full, experimental]
+  - name: snyk_sca_scan
+    description: Snyk Open Source (SCA) scan of dependencies. May execute third-party ecosystem tools (Gradle, Maven) locally to resolve the dependency tree.
+    profiles: [lite, full, experimental]
+  - name: snyk_version
+    description: Report Snyk CLI version information.
+    profiles: [lite, full, experimental]
+  - name: snyk_logout
+    description: Clear the local Snyk authentication session.
+    profiles: [lite, full, experimental]
+  - name: snyk_trust
+    description: Trust a given folder before running a scan.
+    profiles: [lite, full, experimental]
+  - name: snyk_send_feedback
+    description: Summarize issues fixed and send feedback to Snyk.
+    profiles: [lite, full, experimental]
+  - name: snyk_container_scan
+    description: Snyk Container scan of container images.
+    profiles: [full, experimental]
+  - name: snyk_iac_scan
+    description: Snyk Infrastructure as Code scan of Terraform, Kubernetes and CloudFormation files.
+    profiles: [full, experimental]
+  - name: snyk_sbom_scan
+    description: Test an SBOM file for known vulnerabilities.
+    profiles: [full, experimental]
+  - name: snyk_aibom
+    description: Generate an AI-BOM for a local software project.
+    profiles: [full, experimental]
+  - name: snyk_package_health_check
+    description: >-
+      Evaluate open-source package health (vulnerability counts by severity, maintenance,
+      community, popularity) before an agent selects a dependency. Supported for npm,
+      pypi, nuget, maven and golang only.
+    profiles: [full, experimental]
+tool_count: 12
+schemas_available: false
+schemas_note: >-
+  Tool names, descriptions and profile membership are taken verbatim from Snyk's
+  documentation. Full JSON inputSchema for each tool was NOT captured: the server has no
+  HTTP transport, so tools/list cannot be called over the network - it requires running
+  the local stdio server on a machine with the Snyk CLI installed. Recording the names
+  and descriptions without inventing parameter schemas.
+related:
+  agent_skills: skills/
+  studio_recipes: https://github.com/snyk/studio-recipes
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
