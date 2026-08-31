@@ -96,6 +96,10 @@ apis:
   humanURL: https://docs.snyk.io/developer-tools/snyk-api/oauth2-api
   baseURL: https://app.snyk.io
   tags:
+  - Authentication
+  - Authorization
+  - REST API
+  tags_raw:
   - OAuth
   - Authentication
   - Authorization
@@ -118,6 +122,10 @@ apis:
   humanURL: https://docs.snyk.io/developer-tools/snyk-api/oauth2-api
   baseURL: https://api.snyk.io/oauth2
   tags:
+  - Authentication
+  - Tokens
+  - REST API
+  tags_raw:
   - OAuth
   - Authentication
   - Tokens
@@ -197,7 +205,7 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
-  - AI-BOM
+  - AiBom
   tags_raw:
   - AiBom
   properties:
@@ -561,7 +569,7 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
-  - Container Image
+  - ContainerImage
   tags_raw:
   - ContainerImage
   properties:
@@ -1326,7 +1334,7 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
-  - Personal Access Token
+  - PersonalAccessToken
   tags_raw:
   - PersonalAccessToken
   properties:
@@ -1546,7 +1554,7 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
-  - Service Accounts
+  - ServiceAccounts
   tags_raw:
   - ServiceAccounts
   properties:
