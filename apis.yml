@@ -205,7 +205,7 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
-  - AiBom
+  - AI-BOM
   tags_raw:
   - AiBom
   properties:
@@ -569,7 +569,7 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
-  - ContainerImage
+  - Container Image
   tags_raw:
   - ContainerImage
   properties:
@@ -1334,7 +1334,7 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
-  - PersonalAccessToken
+  - Personal Access Token
   tags_raw:
   - PersonalAccessToken
   properties:
@@ -1554,7 +1554,7 @@ apis:
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
-  - ServiceAccounts
+  - Service Accounts
   tags_raw:
   - ServiceAccounts
   properties:
@@ -1841,6 +1841,9 @@ apis:
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
 common:
+- type: License
+  name: Apache-2.0
+  url: https://github.com/snyk/studio-mcp/blob/main/LICENSE
 - type: CapabilityMap
   url: capabilities/snyk-capability-edges.yml
   name: Snyk Business Capability Map
