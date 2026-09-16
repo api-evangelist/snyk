@@ -87,66 +87,15 @@ apis:
   properties:
   - type: Documentation
     url: https://docs.snyk.io/developer-tools/snyk-api/v1-api
-- aid: snyk:oauth2-authorize
-  name: Snyk OAuth2 API - Authorize
-  description: >-
-    The user-facing half of Snyk's RFC 6749 OAuth2 flow for Snyk Apps. Served from the Snyk app
-    subdomain rather than the API subdomain, it initiates the authorization-code grant and redirects
-    back to the client with a code. Snyk publishes this as its own OpenAPI 3.0.3 document.
-  humanURL: https://docs.snyk.io/developer-tools/snyk-api/oauth2-api
-  baseURL: https://app.snyk.io
-  tags:
-  - Authentication
-  - Authorization
-  - REST API
-  tags_raw:
-  - OAuth
-  - Authentication
-  - Authorization
-  - REST API
-  properties:
-  - type: OpenAPI
-    url: openapi/snyk-oauth2-app-openapi.yml
-  - type: Overlay
-    url: overlays/snyk-oauth2-app-overlay.yaml
-  - type: Documentation
-    url: https://docs.snyk.io/developer-tools/snyk-api/oauth2-api
-  - type: OAuthScopes
-    url: scopes/snyk-scopes.yml
-- aid: snyk:oauth2-token
-  name: Snyk OAuth2 API - Token
-  description: >-
-    The token half of Snyk's OAuth2 API - exchange an authorization code for an access token, refresh
-    an expiring token, and revoke a token. Supports authorization_code, refresh_token and
-    client_credentials grants, discriminated on grant_type. Published by Snyk as OpenAPI 3.0.3.
-  humanURL: https://docs.snyk.io/developer-tools/snyk-api/oauth2-api
-  baseURL: https://api.snyk.io/oauth2
-  tags:
-  - Authentication
-  - Tokens
-  - REST API
-  tags_raw:
-  - OAuth
-  - Authentication
-  - Tokens
-  - REST API
-  properties:
-  - type: OpenAPI
-    url: openapi/snyk-oauth2-token-openapi.yml
-  - type: Overlay
-    url: overlays/snyk-oauth2-token-overlay.yaml
-  - type: Documentation
-    url: https://docs.snyk.io/developer-tools/snyk-api/oauth2-api
-  - type: OAuthScopes
-    url: scopes/snyk-scopes.yml
 - aid: snyk:mcp
   name: Snyk MCP Server (Snyk Studio)
   description: >-
     Snyk's first-party Model Context Protocol server, shipped inside the Snyk CLI and run locally over
-    stdio (`npx -y snyk@latest mcp -t stdio`). Twelve security tools - code, dependency, container,
-    IaC, SBOM and AI-BOM scanning plus package health checks - exposed to coding agents. Snyk states
-    it offers no hosted remote MCP server.
-  humanURL: https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/getting-started-with-snyk-studio
+    stdio (`npx -y snyk@latest mcp -t stdio`). Twelve security tools - code, dependency, container, IaC,
+    SBOM and AI-BOM scanning plus package health checks - exposed to coding agents. Snyk states it offers
+    no hosted remote MCP server.
+  humanURL: >-
+    https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/getting-started-with-snyk-studio
   tags:
   - MCP
   - Agents
@@ -1840,7 +1789,25 @@ apis:
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Webhooks
   - type: Documentation
     url: https://apidocs.snyk.io/?version=2024-10-15#tag/Issues-Export
+- aid: snyk:snyk-oauth2-api
+  name: Snyk Oauth2 API
+  description: oauth2
+  humanURL: https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/snyk-apps-apis
+  baseURL: https://api.snyk.io/rest
+  tags:
+  - oauth2
+  properties:
+  - type: OpenAPI
+    url: openapi/snyk-oauth2-api-openapi.yml
+  - type: Documentation
+    url: https://docs.snyk.io/developer-tools/snyk-api/oauth2-api
+  - type: OAuthScopes
+    url: scopes/snyk-scopes.yml
 common:
+- type: Overlay
+  url: overlays/snyk-oauth2-app-overlay.yaml
+- type: Overlay
+  url: overlays/snyk-oauth2-token-overlay.yaml
 - type: License
   name: Apache-2.0
   url: https://github.com/snyk/studio-mcp/blob/main/LICENSE
