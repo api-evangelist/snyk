@@ -80,7 +80,8 @@ edges:
     tests and automated remediation pull requests — scanning and remediation administration, not project
     management in the PMO sense.
 - tag: ServiceAccounts
-  spec_file: snyk-serviceaccounts-api-openapi.yml
+  spec_file: snyk-service-accounts-api-openapi.yml
+  reanchored_from: snyk-serviceaccounts-api-openapi.yml
   capability_id: BC-620.20
   capability_id_l1: BC-620
   capability_name: Identity & Access Management
