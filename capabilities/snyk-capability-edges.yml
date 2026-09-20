@@ -1,0 +1,113 @@
+slug: snyk
+provider: Snyk
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 9
+edges:
+- tag: Issues
+  spec_file: snyk-issues-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.85
+  evidence: GET /orgs/{org_id}/issues listOrgIssues 'Get issues by org ID'; schemas 'RiskScore', 'Severity3',
+    'IssueAttributes', 'List issues for a package'
+  reason: On a developer-security platform, 'Issues' are security findings/vulnerabilities discovered
+    on packages and projects, with severity and risk scoring — this is vulnerability identification and
+    remediation tracking, not generic issue tracking.
+- tag: Findings
+  spec_file: snyk-findings-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.8
+  evidence: GET /orgs/{org_id}/tests/{test_id}/findings  listFindings  List findings for a test
+  reason: Returns security test findings with SuppressionStatus, ReachabilityEvidence, UpgradePath and
+    Package schemas — i.e. vulnerability findings and their remediation paths. Clearly vulnerability management;
+    slight ambiguity vs. broader security governance.
+- tag: Apps
+  spec_file: snyk-apps-api-openapi.yml
+  capability_id: BC-4270.40
+  capability_id_l1: BC-4270
+  capability_name: Developer Identity & Credential Management
+  confidence: 0.75
+  evidence: POST /orgs/{org_id}/apps  createApp  Create a new app for an organization.  ... POST /groups/{group_id}/apps/installs/{install_id}/secrets  updateGroupAppInstallSecret  Manage
+    client secret for non-interactive Snyk App installations
+  reason: Schemas ClientId, ClientSecret, RedirectUrisNoMin, AccessTokenTtlSeconds, IsConfidential show
+    this is issuance and stewardship of OAuth clients and app credentials for third-party integrations,
+    plus install/authorisation revocation. That is Developer Identity & Credential Management; some overlap
+    with partner-app programme management keeps confidence below 0.8.
+- tag: Tests
+  spec_file: snyk-tests-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.72
+  evidence: POST /orgs/{org_id}/tests  createTest  Create a new test. (Early Access) ... ContainerScanConfiguration,
+    SecretsScanConfiguration
+  reason: 'Homograph guard: ''Tests'' here is not software QA but security scanning — the request schemas
+    are ContainerScanConfiguration, SecretsScanConfiguration, ScmRepoLocator and PolicyRefSet, i.e. launching
+    vulnerability/secret scans over code and images. Maps to Vulnerability Management.'
+- tag: Groups
+  spec_file: snyk-groups-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /groups/{group_id}/memberships  createGroupMembership  Create a group membership for
+    a user with role; GET /groups/{group_id}/sso_connections  listGroupSsoConnections
+  reason: Operations manage user memberships, roles and SSO connections including removing users from
+    an SSO connection — access administration and federation. Maps to Identity & Access Management, though
+    it is tenant-level admin of the vendor's own platform.
+- tag: Projects
+  spec_file: snyk-projects-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.7
+  evidence: GET /orgs/{org_id}/projects 'List all Projects for an Org'; schemas 'RecurringTestsSettings',
+    'AutoRemediationPRsSettings20240531', 'ManualRemediationPRsSettings20240531'
+  reason: Snyk 'Projects' are scanned code/dependency targets whose settings govern recurring security
+    tests and automated remediation pull requests — scanning and remediation administration, not project
+    management in the PMO sense.
+- tag: ServiceAccounts
+  spec_file: snyk-serviceaccounts-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /groups/{group_id}/service_accounts/{serviceaccount_id}/secrets  updateServiceAccountSecret  Manage
+    a group service account's client secret
+  reason: Full lifecycle of non-human principals and their client secrets at group and org scope — creation,
+    update, deletion, secret rotation. That is identity and access management for machine credentials.
+    Some ambiguity with developer credential management (BC-4270.40), hence 0.7.
+- tag: TenantRole
+  spec_file: snyk-tenantrole-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /tenants/{tenant_id}/roles  createTenantRole  Create a custom tenant role for a given
+    tenant (Early Access)
+  reason: Creation, update and deletion of custom roles scoped to a tenant, with an AssignableByMe flag
+    — role-based access control administration, i.e. identity and access management. Could alternatively
+    be read as tenant configuration (BC-4230.20), so 0.7.
+- tag: Users
+  spec_file: snyk-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: PATCH /groups/{group_id}/users/{id}  updateUser  Update a user's role in a group (Early Access)
+  reason: Platform user records and role assignment within a group, plus a self-identity endpoint (schemas
+    User, Principal20240422). This is access administration of platform identities, not HR employee records;
+    mapped to Identity & Access Management.
