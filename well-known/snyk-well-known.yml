@@ -1,0 +1,63 @@
+specification: API Commons Well-Known
+specificationVersion: '0.1'
+provider: Snyk
+providerId: snyk
+generated: '2026-08-27'
+method: probed
+source: direct HTTPS probe of each host on 2026-08-27
+description: >-
+  Probe of the RFC 8615 /.well-known/ namespace on every Snyk host named in apis.yml
+  (the API host api.snyk.io, the marketing host snyk.io, and the documentation host
+  docs.snyk.io). Snyk serves exactly one well-known document: an RFC 9116 security.txt
+  on snyk.io, which names security@snyk.io, a disclosure policy page, and an Intigriti
+  submission form. No OpenID Connect discovery, OAuth authorization-server metadata,
+  RFC 9727 api-catalog, or ai-plugin manifest is served on any host. Snyk publishes an
+  OAuth2 API (RFC 6749) but does not advertise it through discovery metadata.
+hosts:
+  - host: snyk.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        file: snyk-security.txt
+        content_type: text/plain
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: api.snyk.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+  - host: docs.snyk.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+notes:
+  - >-
+    api.snyk.io returns a bare 404 with no body for every /.well-known/ path; snyk.io
+    and docs.snyk.io return an HTML 404 page. Neither is a soft-200, so no false
+    positives were recorded.
+  - >-
+    The security.txt carries no Expires date in RFC 3339 form - it literally says
+    "Expires: Never", which is not RFC 9116 conformant.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

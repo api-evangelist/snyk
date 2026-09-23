@@ -1,0 +1,145 @@
+specification: API Commons Packages
+specificationVersion: '0.1'
+provider: Snyk
+providerId: snyk
+generated: '2026-08-27'
+method: searched
+source: >-
+  Registry metadata read on 2026-08-27 from registry.npmjs.org, pypi.org/pypi/<pkg>/json,
+  proxy.golang.org, search.maven.org and hub.docker.com, cross-referenced against the
+  snyk and snyk-labs GitHub organizations and https://docs.snyk.io/developer-tools/.
+description: >-
+  Snyk's distribution centre of gravity is the CLI, not an API client library. The npm
+  `snyk` package is the CLI and is released almost daily (1.1307.0 on 2026-08-26) and is
+  also the artifact that carries the MCP server (`snyk mcp -t stdio`). Around it sit a
+  Maven plugin, a Gradle plugin, Homebrew and Scoop taps, and a Docker image with 44M+
+  pulls. What Snyk does NOT ship is a supported first-party SDK for the REST API in any
+  language: the only Python client, snyk-labs/pysnyk, is described in Snyk's own docs as
+  "the unsupported pysnyk Python client" and its last PyPI release was 2024-01-13, more
+  than two years behind the 2026-03-25 REST API version. Consumers of the REST API are
+  expected to call it directly.
+package_count: 10
+official_count: 9
+packages:
+  - name: snyk
+    registry: npm
+    url: https://www.npmjs.com/package/snyk
+    version: 1.1307.0
+    published: '2026-08-26'
+    official: true
+    kind: cli
+    language: javascript
+    repository: https://github.com/snyk/cli
+    note: >-
+      The Snyk CLI itself. Also the delivery vehicle for the Snyk MCP server - Snyk Studio
+      documents `npx -y snyk@latest mcp -t stdio` as the install. Released continuously.
+  - name: "@snyk/protect"
+    registry: npm
+    url: https://www.npmjs.com/package/@snyk/protect
+    version: 1.1307.0
+    published: '2026-08-26'
+    official: true
+    kind: library
+    language: javascript
+    repository: https://github.com/snyk/cli
+    note: Snyk protect library, versioned in lockstep with the CLI.
+  - name: snyk-api-import
+    registry: npm
+    url: https://www.npmjs.com/package/snyk-api-import
+    version: 2.23.2
+    published: '2026-05-19'
+    official: true
+    kind: tool
+    language: typescript
+    repository: https://github.com/snyk/snyk-api-import
+    note: >-
+      Snyk-maintained bulk import/mirroring tool built on the Snyk API. Documented at
+      docs.snyk.io/developer-tools/snyk-apps/tool-snyk-api-import.
+  - name: snyk-to-html
+    registry: npm
+    url: https://www.npmjs.com/package/snyk-to-html
+    version: 3.7.9
+    published: '2026-08-03'
+    official: true
+    kind: tool
+    language: javascript
+    repository: https://github.com/snyk/snyk-to-html
+    note: Renders Snyk CLI JSON test output as an HTML report.
+  - name: snyk-delta
+    registry: npm
+    url: https://www.npmjs.com/package/snyk-delta
+    version: 1.13.2
+    published: '2026-03-25'
+    official: true
+    kind: tool
+    language: typescript
+    note: Compares Snyk test results against a monitored baseline to surface newly introduced issues.
+  - name: pysnyk
+    registry: pypi
+    url: https://pypi.org/project/pysnyk/
+    version: 0.9.19
+    published: '2024-01-13'
+    official: false
+    kind: sdk
+    language: python
+    repository: https://github.com/snyk-labs/pysnyk
+    note: >-
+      The only Python client for the Snyk API, published under the snyk-labs
+      organization. Snyk's own documentation calls it "the unsupported pysnyk Python
+      client", so official is recorded as false. Last PyPI release 2024-01-13 and last
+      repository push 2024-08-20 - it predates the 2024-10-15 REST versioning change and
+      every GA version since, which is the clearest abandonment signal in this repo.
+  - name: github.com/snyk/studio-mcp
+    registry: go
+    url: https://pkg.go.dev/github.com/snyk/studio-mcp
+    version: v1.15.4
+    published: '2026-08-19'
+    official: true
+    kind: mcp-server
+    language: go
+    repository: https://github.com/snyk/studio-mcp
+    note: Go module behind the Snyk Studio MCP server, embedded in the CLI.
+  - name: github.com/snyk/code-client-go
+    registry: go
+    url: https://pkg.go.dev/github.com/snyk/code-client-go
+    version: v1.31.8
+    published: '2026-08-19'
+    official: true
+    kind: client
+    language: go
+    repository: https://github.com/snyk/code-client-go
+    note: >-
+      Client used for Snyk Code scanning from the IDE plugins and CLI. An internal
+      scanning client, not a REST API SDK.
+  - name: io.snyk:snyk-maven-plugin
+    registry: maven
+    url: https://search.maven.org/artifact/io.snyk/snyk-maven-plugin
+    version: 2.3.0
+    published: '2024-08-13'
+    official: true
+    kind: build-plugin
+    language: java
+    note: Maven plugin that runs Snyk tests as part of a Maven build.
+  - name: snyk/snyk
+    registry: docker
+    url: https://hub.docker.com/r/snyk/snyk
+    version: null
+    published: '2026-08-26'
+    official: true
+    kind: container-image
+    note: >-
+      Official Snyk CLI container image, 44.5M+ pulls, last pushed 2026-08-26. Docker Hub
+      does not expose a single "latest version" string for the repository the way a
+      package registry does, so version is recorded null with the last-updated date in
+      published - checked, nothing semver-shaped to record.
+sdk_gap:
+  rest_api_sdks: 0
+  note: >-
+    No first-party, supported SDK exists for the Snyk REST or V1 API in any language.
+    Java (snyk/code-sdk-java) and Go (snyk/code-client-go) clients exist but target the
+    Snyk Code scanning service consumed by Snyk's own IDE plugins, not the public REST
+    API. This is worth stating explicitly because a reader will otherwise assume the very
+    active npm `snyk` package is an API client - it is a scanner CLI.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

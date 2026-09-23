@@ -1,0 +1,149 @@
+specification: API Commons Error Catalog
+specificationVersion: '0.1'
+provider: Snyk
+providerId: snyk
+generated: '2026-08-27'
+method: derived
+source: >-
+  Derived from the 4xx/5xx responses of all 291 operations in the live Snyk REST OpenAPI
+  (https://api.snyk.io/rest/openapi/2026-03-25), enriched from
+  https://docs.snyk.io/developer-tools/snyk-api/rest-api/about-the-rest-api.md and a live
+  unauthenticated probe of https://api.snyk.io/rest/self on 2026-08-27.
+format: jsonapi
+format_note: >-
+  NOT RFC 9457. Snyk uses the JSON:API 1.0 errors array. There is no application/problem+json
+  anywhere in the contract, and no `type` URI - the machine-readable discriminator is the
+  per-error `code` string, alongside HTTP status.
+envelope:
+  media_type: application/vnd.api+json
+  schema: components/schemas/ErrorDocument
+  shape:
+    jsonapi:
+      version: '1.0'
+    errors:
+      - id: 'uuid - unique identifier for this particular occurrence of the problem'
+        code: 'application-specific error code, expressed as a string (e.g. entity-not-found)'
+        status: 'HTTP status as a string (e.g. "404")'
+        detail: 'human-readable explanation specific to this occurrence'
+        source:
+          parameter: 'the query parameter at fault, when applicable'
+          pointer: 'a JSON pointer into the request document, when applicable'
+        links: 'about link for further information'
+        meta: 'additional non-standard information'
+  example_documented: |
+    {
+      "errors": [
+        {
+          "id": "0418e907-a89e-4736-9a5b-91a2022e0899",
+          "detail": "Unknown query parameter 'unknown'",
+          "status": "400",
+          "source": { "parameter": "unknown" }
+        }
+      ]
+    }
+  example_observed: |
+    HTTP/2 401
+    content-type: application/vnd.api+json
+    snyk-request-id: 3e402660-a8c7-47a3-b03a-35709445ec2b
+
+    {"jsonapi":{"version":"1.0"},"errors":[{"status":"401","details":"Unauthorized"}]}
+  observed_note: >-
+    The live 401 body uses the key `details`, while the published ErrorDocument schema and
+    the documented example both use `detail`. A client that reads only `detail` will get
+    undefined on a real 401. Recorded as observed, not corrected.
+error_codes:
+  - code: entity-not-found
+    status: '404'
+    occurrences_in_spec: 234
+    title: Entity not found
+    detail: The resource being operated on could not be found.
+    remediation: >-
+      Confirm the UUID and that the token's org/group scope actually contains the resource.
+      Snyk returns 404 rather than 403 for resources outside your tenant, so a 404 can mean
+      "exists but not yours".
+    note: The only application-specific error code carried as an example anywhere in the contract.
+problem_types:
+  - status: '400'
+    title: Bad Request
+    operations: 281
+    detail: >-
+      A parameter provided as part of the request was invalid, or the request did not
+      conform to the OpenAPI specification. Also returned when a body is sent without
+      Content-Type: application/vnd.api+json.
+    remediation: >-
+      Send the JSON:API media type on every request with a body; supply the required
+      `version` query parameter in YYYY-MM-DD form; check `source.parameter` in the error
+      object, which names the offending parameter.
+    docs: https://docs.snyk.io/developer-tools/snyk-api/rest-api/about-the-rest-api
+  - status: '401'
+    title: Unauthorized
+    operations: 262
+    detail: The request requires an authentication token.
+    remediation: >-
+      Use `Authorization: token <PAT>` for Snyk tokens and `Authorization: bearer <token>`
+      for Snyk App OAuth2 access tokens - the wrong keyword for the credential type is a
+      401. Also check the region: a token issued on api.snyk.io returns 401 against
+      api.eu.snyk.io, api.us.snyk.io or api.au.snyk.io.
+    docs: https://docs.snyk.io/developer-tools/snyk-api/authentication-for-api
+  - status: '403'
+    title: Forbidden
+    operations: 240
+    detail: The request requires an authentication token with more or different permissions.
+    remediation: >-
+      Review the token's permissions, or for a Snyk App the granted scopes. Every operation
+      description in the contract names its required permission (e.g. "Edit integrations
+      (org.integration.edit)").
+    docs: https://support.snyk.io/hc/en-us/articles/4410967220765-How-to-check-if-a-personal-access-token-has-the-correct-permissions
+  - status: '404'
+    title: Not Found
+    operations: 273
+    code: entity-not-found
+    detail: The resource you are trying to access could not be found.
+    remediation: Review the identifiers in the path; see the entity-not-found note above about cross-tenant masking.
+  - status: '409'
+    title: Conflict
+    operations: 110
+    detail: The requested operation conflicts with the current state of the resource.
+    remediation: >-
+      Re-read the resource before retrying. In the absence of idempotency keys this is the
+      main signal that a create has already succeeded - treat 409 on a retried POST as
+      "already done" rather than as a failure.
+    variants:
+      - 'Conflict - The assignment cannot be deleted because it is part of a Learning Program.'
+  - status: '429'
+    title: Too Many Requests
+    operations: 2
+    detail: >-
+      Rate limit exhausted. Documented ceiling is 1,620 requests per minute per API key over
+      a one-minute interval; only the two asynchronous export operations declare this
+      response in the contract.
+    headers: [retry-after, snyk-request-id, deprecation, sunset, snyk-version-served, snyk-version-requested, snyk-version-lifecycle-stage]
+    remediation: Honour retry-after where present; otherwise back off for the remainder of the one-minute window and retry - Snyk states such requests are safe to retry.
+    see: rate-limits/snyk-rate-limits.yml
+  - status: '500'
+    title: Internal Server Error
+    operations: 282
+    detail: An unexpected error was encountered while attempting to process the request.
+    remediation: Retry with backoff. If it persists, contact Snyk support and quote the snyk-request-id from the response.
+  - status: '501'
+    title: Not Implemented
+    operations: 2
+    detail: The requested operation is not implemented.
+  - status: '503'
+    title: Service Unavailable
+    operations: 2
+    detail: The server is currently unavailable to handle the request.
+    remediation: Retry with backoff; check https://status.snyk.io/.
+coverage:
+  operations_analysed: 291
+  operations_with_4xx: 291
+  distinct_statuses: ['400', '401', '403', '404', '409', '429', '500', '501', '503']
+  distinct_application_codes_published: 1
+  gap_note: >-
+    Snyk publishes a rich HTTP-status catalogue but almost no application-level error code
+    vocabulary - one code (entity-not-found) appears in the entire contract, and there is no
+    public error-code reference page in the documentation. An agent can branch on status but
+    cannot branch on cause.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

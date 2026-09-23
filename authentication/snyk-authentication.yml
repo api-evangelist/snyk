@@ -1,22 +1,122 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/snyk-rest-openapi.json
+specification: API Commons Authentication
+specificationVersion: '0.1'
+provider: Snyk
+providerId: snyk
+generated: '2026-08-27'
+method: searched
+source: >-
+  https://docs.snyk.io/developer-tools/snyk-api/authentication-for-api.md and
+  https://docs.snyk.io/developer-tools/snyk-api/rest-api/about-the-rest-api.md, reconciled
+  against the securitySchemes declared in the live REST OpenAPI
+  (https://api.snyk.io/rest/openapi/2026-03-25) and the 47 refined specs under openapi/.
+docs: https://docs.snyk.io/developer-tools/snyk-api/authentication-for-api
+description: >-
+  Snyk authenticates the REST and V1 APIs with a bearer-style token carried in the
+  Authorization header, and the token TYPE decides the header keyword: a Snyk personal
+  access token or service-account token uses `Authorization: token <TOKEN>`, while a Snyk
+  App OAuth2 access token uses `Authorization: bearer <TOKEN>`. Getting this wrong returns
+  401. Two things a caller must know before writing any code: API access is an ENTERPRISE
+  entitlement - Snyk states that Free and Team personal tokens authenticate the IDE, CLI
+  and CI/CD integrations but cannot call the API - and tokens are REGION-BOUND, so a token
+  minted on api.snyk.io returns 401 against api.eu.snyk.io or api.us.snyk.io.
 summary:
   types:
-  - apiKey
-  - http
+    - apiKey
+    - http
+    - oauth2
   api_key_in:
-  - header
+    - header
+  transport: https-only
+  transport_note: The API is available only over HTTPS; calling over HTTP returns 404 for all requests.
 schemes:
-- name: APIToken
-  type: apiKey
-  in: header
-  parameter: Authorization
-  description: API key value must be prefixed with \"Token \".
-  sources:
-  - openapi/snyk-rest-openapi.json
-- name: BearerAuth
-  type: http
-  scheme: bearer
-  sources:
-  - openapi/snyk-rest-openapi.json
+  - name: APIToken
+    type: apiKey
+    in: header
+    parameter: Authorization
+    value_prefix: "token "
+    description: >-
+      Snyk personal access token (PAT) or service-account token. The API key value must be
+      prefixed with "Token ". Declared as the APIToken securityScheme in every REST spec.
+    example_header: 'Authorization: token API_TOKEN'
+    source: openapi/ (all 47 REST specs) + docs authentication page
+  - name: BearerAuth
+    type: http
+    scheme: bearer
+    parameter: Authorization
+    description: >-
+      Snyk App OAuth2 access token obtained through the authorization-code flow. Declared as
+      the BearerAuth securityScheme in every REST spec.
+    example_header: 'Authorization: bearer ACCESS_TOKEN'
+    source: openapi/ (all 47 REST specs) + docs authentication page
+  - name: OAuth2
+    type: oauth2
+    flows:
+      authorization_code:
+        authorization_url: https://app.snyk.io/oauth2/authorize
+        token_url: https://api.snyk.io/oauth2/token
+        refresh_url: https://api.snyk.io/oauth2/token
+        revocation_url: https://api.snyk.io/oauth2/revoke
+        pkce: supported
+        scopes_file: scopes/snyk-scopes.yml
+      client_credentials:
+        token_url: https://api.snyk.io/oauth2/token
+    description: >-
+      RFC 6749 OAuth2 for Snyk Apps. Specified in openapi/snyk-oauth2-app-openapi.yml
+      (authorize) and openapi/snyk-oauth2-token-openapi.yml (token, revoke). 27 scopes,
+      org.read mandatory. Access tokens expire in ~3600s; refresh tokens in ~15552000s
+      (180 days) per the published token response schema.
+credential_types:
+  - name: Personal Access Token (PAT)
+    scope: user account
+    issued_at: https://app.snyk.io/account/personal-access-tokens
+    recommended_for: local CLI use, manual IDE authentication, one-off API calls
+    api_access: Enterprise plans only
+  - name: Service account token
+    scope: organization or group
+    recommended_for: all automation - CI/CD scanning, build plugins, API automation
+    note: >-
+      Snyk explicitly recommends service accounts over personal tokens for automation so
+      that integrations survive a user changing role or closing their account.
+  - name: Legacy API token
+    scope: user account
+    issued_at: https://app.snyk.io/account
+    note: Revoke & Regenerate invalidates the previous token immediately.
+  - name: Snyk App OAuth2 access token
+    scope: per-organization, per-scope
+    note: Issued to a third-party App after user authorization; carries a bot_id.
+regions:
+  note: >-
+    Tokens are region-specific. Use the base URL for the region your Snyk tenant is hosted
+    in; a token from another region returns 401 Unauthorized.
+  bases:
+    - region: SNYK-US-01
+      base_url: https://api.snyk.io/rest
+    - region: SNYK-US-02
+      base_url: https://api.us.snyk.io/rest
+    - region: SNYK-EU-01
+      base_url: https://api.eu.snyk.io/rest
+    - region: SNYK-AU-01
+      base_url: https://api.au.snyk.io/rest
+required_headers:
+  - name: Content-Type
+    value: application/vnd.api+json
+    applies_to: every request carrying a body
+    note: Omitting it returns 400 "Client request did not conform to OpenAPI specification".
+  - name: Authorization
+    value: token <PAT> | bearer <OAuth2 access token>
+failure_modes:
+  - status: 401
+    condition: missing/invalid token, wrong header keyword for the token type, or a token from a different Snyk region
+  - status: 403
+    condition: token authenticated but lacks the permission or scope for the resource
+observed:
+  probe: 'GET https://api.snyk.io/rest/self?version=2024-10-15 (unauthenticated, 2026-08-27)'
+  status: 401
+  body: '{"jsonapi":{"version":"1.0"},"errors":[{"status":"401","details":"Unauthorized"}]}'
+  response_headers_seen:
+    - content-type: application/vnd.api+json
+    - snyk-request-id
+    - strict-transport-security: max-age=31536000; preload
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

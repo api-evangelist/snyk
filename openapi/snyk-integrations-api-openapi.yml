@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Snyk AccessRequests Integrations API
+  title: Snyk Integrations API
   version: REST
 servers:
 - description: Snyk REST API
@@ -580,6 +580,32 @@ paths:
       x-stability-level: beta
 components:
   schemas:
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
+    DigitalOceanAttributes:
+      additionalProperties: false
+      properties:
+        credentials:
+          $ref: '#/components/schemas/DigitalOceanCredentials'
+        integration_type:
+          enum:
+          - digitalocean-cr
+          type: string
+        profile_name:
+          description: User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.
+          example: my-aws-prod-account
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$
+          type: string
+      required:
+      - integration_type
+      - profile_name
+      - credentials
+      type: object
     Integration:
       additionalProperties: false
       description: Integration resource returned in API responses
@@ -601,14 +627,16 @@ components:
             profile_name:
               description: User-defined name for the integration. Null for integrations created via V1 API.
               example: my-aws-prod-account
-              nullable: true
-              type: string
+              type:
+              - string
+              - 'null'
             updated_at:
               description: When the integration was last updated
               example: '2025-10-31T10:30:00Z'
               format: date-time
-              nullable: true
-              type: string
+              type:
+              - string
+              - 'null'
           required:
           - integration_type
           - profile_name
@@ -653,80 +681,6 @@ components:
       - type
       - id
       - attributes
-      type: object
-    ActualVersion:
-      description: Resolved API version
-      example: '2026-03-25'
-      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
-      type: string
-    EcrCredentials:
-      additionalProperties: false
-      description: Credentials for AWS Elastic Container Registry (ECR) integration
-      properties:
-        region:
-          description: AWS region where the ECR registry is located
-          example: us-east-1
-          pattern: ^[a-z]{2}-[a-z]+-\d{1}$
-          type: string
-        role_arn:
-          description: AWS IAM role ARN for cross-account access to ECR
-          example: arn:aws:iam::123456789012:role/SnykEcrRole
-          maxLength: 2048
-          minLength: 20
-          pattern: ^arn:aws:iam::\d{12}:role/.+$
-          type: string
-      required:
-      - region
-      - role_arn
-      type: object
-    JsonApi:
-      additionalProperties: false
-      example:
-        version: '1.0'
-      properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          example: '1.0'
-          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
-          type: string
-      required:
-      - version
-      type: object
-    DigitalOceanCredentials:
-      additionalProperties: false
-      description: Credentials for DigitalOcean Container Registry
-      properties:
-        token:
-          description: DigitalOcean API token with read/write access to container registry
-          example: dop_v1_1234567890abcdef1234567890abcdef1234567890abcdef1234567890ab
-          maxLength: 500
-          minLength: 1
-          pattern: ^[a-zA-Z0-9_-]+$
-          type: string
-      required:
-      - token
-      type: object
-    GcrAttributes:
-      additionalProperties: false
-      properties:
-        credentials:
-          $ref: '#/components/schemas/GcrCredentials'
-        integration_type:
-          enum:
-          - gcr
-          - google-artifact-cr
-          type: string
-        profile_name:
-          description: User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.
-          example: my-aws-prod-account
-          maxLength: 255
-          minLength: 1
-          pattern: ^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$
-          type: string
-      required:
-      - integration_type
-      - profile_name
-      - credentials
       type: object
     IntegrationType:
       description: 'Integration type identifier.
@@ -812,40 +766,83 @@ components:
       - kubernetes
       - terraform-cloud
       type: string
-    GenericContainerRegistryCredentials:
+    GcrCredentials:
       additionalProperties: false
-      description: Credentials for generic container registries (ACR, Artifactory, Harbor, Quay, etc.)
+      description: Credentials for Google Container Registry (GCR) and Google Artifact Registry (GAR)
       properties:
         password:
-          description: Registry password or access token
-          example: mypassword123
+          description: JSON key file content for Google Cloud service account (as a string)
+          example: '{"type":"service_account","project_id":"my-project",...}'
           format: password
           minLength: 1
           type: string
         registry_base:
-          description: Registry base URL - hostname only, no protocol (e.g., myregistry.azurecr.io, artifactory.company.com, harbor.example.com, quay.io)
-          example: myregistry.azurecr.io
+          description: Registry base URL for GCR or GAR (e.g., gcr.io, us.gcr.io, eu.gcr.io, asia.gcr.io, us-docker.pkg.dev, europe-docker.pkg.dev)
+          example: gcr.io
           format: hostname
           maxLength: 255
           minLength: 1
           pattern: ^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?)*$
           type: string
-        username:
-          description: Registry username
-          example: admin
-          maxLength: 255
-          minLength: 1
-          type: string
       required:
-      - username
       - password
       - registry_base
       type: object
-    QueryVersion:
-      description: Requested API version
-      example: '2026-03-25'
-      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
-      type: string
+    GenericAttributes:
+      additionalProperties: false
+      properties:
+        credentials:
+          $ref: '#/components/schemas/GenericContainerRegistryCredentials'
+        integration_type:
+          enum:
+          - acr
+          - artifactory-cr
+          - github-cr
+          - gitlab-cr
+          - harbor-cr
+          - nexus-cr
+          - quay-cr
+          type: string
+        profile_name:
+          description: User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.
+          example: my-aws-prod-account
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$
+          type: string
+      required:
+      - integration_type
+      - profile_name
+      - credentials
+      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
     IntegrationSettings:
       additionalProperties: false
       description: Integration settings resource
@@ -876,28 +873,99 @@ components:
       - id
       - attributes
       type: object
-    GcrCredentials:
+    DockerHubCredentials:
       additionalProperties: false
-      description: Credentials for Google Container Registry (GCR) and Google Artifact Registry (GAR)
+      description: Credentials for Docker Hub container registry
       properties:
         password:
-          description: JSON key file content for Google Cloud service account (as a string)
-          example: '{"type":"service_account","project_id":"my-project",...}'
+          description: Docker Hub password or access token
+          example: dckr_pat_1234567890abcdef
           format: password
           minLength: 1
           type: string
-        registry_base:
-          description: Registry base URL for GCR or GAR (e.g., gcr.io, us.gcr.io, eu.gcr.io, asia.gcr.io, us-docker.pkg.dev, europe-docker.pkg.dev)
-          example: gcr.io
-          format: hostname
+        username:
+          description: Docker Hub username
+          example: myusername
           maxLength: 255
           minLength: 1
-          pattern: ^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?)*$
           type: string
       required:
+      - username
       - password
-      - registry_base
       type: object
+    SelfLink:
+      additionalProperties: false
+      example:
+        self: https://example.com/api/this_resource
+      properties:
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    IntegrationPatchRequestData:
+      additionalProperties: false
+      description: Request body for updating an integration (partial update supported)
+      properties:
+        data:
+          additionalProperties: false
+          description: The integration data
+          properties:
+            attributes:
+              additionalProperties: false
+              description: 'Integration attributes to update. Only include fields you want to modify.
+
+                Note: integration_type cannot be changed after creation.
+
+                '
+              properties:
+                credentials:
+                  description: 'Integration credentials (structure varies by integration_type).
+
+                    Only include fields you want to update.
+
+
+                    Credential types:
+
+                    - ECR: role_arn + region
+
+                    - Docker Hub: username + password
+
+                    - Generic (ACR, Artifactory, Harbor, etc.): username + password + registry_base
+
+                    - DigitalOcean: token
+
+                    - GCR/GAR: password (JSON key) + registry_base
+
+                    '
+                  oneOf:
+                  - $ref: '#/components/schemas/EcrCredentials'
+                  - $ref: '#/components/schemas/DockerHubCredentials'
+                  - $ref: '#/components/schemas/GenericContainerRegistryCredentials'
+                  - $ref: '#/components/schemas/DigitalOceanCredentials'
+                  - $ref: '#/components/schemas/GcrCredentials'
+                profile_name:
+                  description: User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.
+                  example: my-aws-prod-account
+                  maxLength: 255
+                  minLength: 1
+                  pattern: ^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$
+                  type: string
+              type: object
+            id:
+              description: The integration ID
+              format: uuid
+              type: string
+            type:
+              description: Resource type (must be 'integration')
+              enum:
+              - integration
+              type: string
+          type: object
+      type: object
+    QueryVersion:
+      description: Requested API version
+      example: '2026-03-25'
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+      type: string
     EcrAttributes:
       additionalProperties: false
       properties:
@@ -1037,22 +1105,15 @@ components:
       - jsonapi
       - errors
       type: object
-    SelfLink:
-      additionalProperties: false
-      example:
-        self: https://example.com/api/this_resource
-      properties:
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
-    DigitalOceanAttributes:
+    GcrAttributes:
       additionalProperties: false
       properties:
         credentials:
-          $ref: '#/components/schemas/DigitalOceanCredentials'
+          $ref: '#/components/schemas/GcrCredentials'
         integration_type:
           enum:
-          - digitalocean-cr
+          - gcr
+          - google-artifact-cr
           type: string
         profile_name:
           description: User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.
@@ -1123,6 +1184,19 @@ components:
       required:
       - data
       type: object
+    JsonApi:
+      additionalProperties: false
+      example:
+        version: '1.0'
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
+      type: object
     IntegrationSettingsPatchRequestData:
       additionalProperties: false
       description: Request body for updating integration settings
@@ -1156,25 +1230,86 @@ components:
       required:
       - data
       type: object
-    DockerHubCredentials:
+    EcrCredentials:
       additionalProperties: false
-      description: Credentials for Docker Hub container registry
+      description: Credentials for AWS Elastic Container Registry (ECR) integration
+      properties:
+        region:
+          description: AWS region where the ECR registry is located
+          example: us-east-1
+          pattern: ^[a-z]{2}-[a-z]+-\d{1}$
+          type: string
+        role_arn:
+          description: AWS IAM role ARN for cross-account access to ECR
+          example: arn:aws:iam::123456789012:role/SnykEcrRole
+          maxLength: 2048
+          minLength: 20
+          pattern: ^arn:aws:iam::\d{12}:role/.+$
+          type: string
+      required:
+      - region
+      - role_arn
+      type: object
+    DigitalOceanCredentials:
+      additionalProperties: false
+      description: Credentials for DigitalOcean Container Registry
+      properties:
+        token:
+          description: DigitalOcean API token with read/write access to container registry
+          example: dop_v1_1234567890abcdef1234567890abcdef1234567890abcdef1234567890ab
+          maxLength: 500
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+$
+          type: string
+      required:
+      - token
+      type: object
+    GenericContainerRegistryCredentials:
+      additionalProperties: false
+      description: Credentials for generic container registries (ACR, Artifactory, Harbor, Quay, etc.)
       properties:
         password:
-          description: Docker Hub password or access token
-          example: dckr_pat_1234567890abcdef
+          description: Registry password or access token
+          example: mypassword123
           format: password
           minLength: 1
           type: string
+        registry_base:
+          description: Registry base URL - hostname only, no protocol (e.g., myregistry.azurecr.io, artifactory.company.com, harbor.example.com, quay.io)
+          example: myregistry.azurecr.io
+          format: hostname
+          maxLength: 255
+          minLength: 1
+          pattern: ^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?)*$
+          type: string
         username:
-          description: Docker Hub username
-          example: myusername
+          description: Registry username
+          example: admin
           maxLength: 255
           minLength: 1
           type: string
       required:
       - username
       - password
+      - registry_base
+      type: object
+    PaginatedLinks:
+      additionalProperties: false
+      example:
+        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
+        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
+        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
       type: object
     DockerHubAttributes:
       additionalProperties: false
@@ -1197,232 +1332,45 @@ components:
       - profile_name
       - credentials
       type: object
-    PaginatedLinks:
-      additionalProperties: false
-      example:
-        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
-        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
-        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
-      properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
-    IntegrationPatchRequestData:
-      additionalProperties: false
-      description: Request body for updating an integration (partial update supported)
-      properties:
-        data:
-          additionalProperties: false
-          description: The integration data
-          properties:
-            attributes:
-              additionalProperties: false
-              description: 'Integration attributes to update. Only include fields you want to modify.
-
-                Note: integration_type cannot be changed after creation.
-
-                '
-              properties:
-                credentials:
-                  description: 'Integration credentials (structure varies by integration_type).
-
-                    Only include fields you want to update.
-
-
-                    Credential types:
-
-                    - ECR: role_arn + region
-
-                    - Docker Hub: username + password
-
-                    - Generic (ACR, Artifactory, Harbor, etc.): username + password + registry_base
-
-                    - DigitalOcean: token
-
-                    - GCR/GAR: password (JSON key) + registry_base
-
-                    '
-                  oneOf:
-                  - $ref: '#/components/schemas/EcrCredentials'
-                  - $ref: '#/components/schemas/DockerHubCredentials'
-                  - $ref: '#/components/schemas/GenericContainerRegistryCredentials'
-                  - $ref: '#/components/schemas/DigitalOceanCredentials'
-                  - $ref: '#/components/schemas/GcrCredentials'
-                profile_name:
-                  description: User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.
-                  example: my-aws-prod-account
-                  maxLength: 255
-                  minLength: 1
-                  pattern: ^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$
-                  type: string
-              type: object
-            id:
-              description: The integration ID
-              format: uuid
-              type: string
-            type:
-              description: Resource type (must be 'integration')
-              enum:
-              - integration
-              type: string
-          type: object
-      type: object
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
-        type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
-    GenericAttributes:
-      additionalProperties: false
-      properties:
-        credentials:
-          $ref: '#/components/schemas/GenericContainerRegistryCredentials'
-        integration_type:
-          enum:
-          - acr
-          - artifactory-cr
-          - github-cr
-          - gitlab-cr
-          - harbor-cr
-          - nexus-cr
-          - quay-cr
-          type: string
-        profile_name:
-          description: User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.
-          example: my-aws-prod-account
-          maxLength: 255
-          minLength: 1
-          pattern: ^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$
-          type: string
-      required:
-      - integration_type
-      - profile_name
-      - credentials
-      type: object
-  parameters:
-    EndingBefore:
-      description: Return the page of results immediately before this cursor
-      example: v1.eyJpZCI6IjExMDAifQo=
-      in: query
-      name: ending_before
-      schema:
-        type: string
-    StartingAfter:
-      description: Return the page of results immediately after this cursor
-      example: v1.eyJpZCI6IjEwMDAifQo=
-      in: query
-      name: starting_after
-      schema:
-        type: string
-    Version:
-      description: The requested version of the endpoint to process the request
-      example: '2026-03-25'
-      in: query
-      name: version
-      required: true
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    Limit:
-      description: Number of results to return per page
-      example: 10
-      in: query
-      name: limit
-      schema:
-        default: 10
-        format: int32
-        maximum: 100
-        minimum: 10
-        multipleOf: 10
-        type: integer
-  headers:
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
-    VersionRequestedResponseHeader:
-      description: A header containing the version of the endpoint requested by the caller.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/ActualVersion'
-    VersionStageResponseHeader:
-      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
-
-        '
-      schema:
-        enum:
-        - wip
-        - experimental
-        - beta
-        - ga
-        - deprecated
-        - sunset
-        example: ga
-        type: string
-    RequestIdResponseHeader:
-      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
-
-        '
-      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
-      schema:
-        format: uuid
-        type: string
-    LocationHeader:
-      description: 'A header providing a URL for the location of a resource
-
-        '
-      example: https://example.com/resource/4
-      schema:
-        format: url
-        type: string
-    DeprecationHeader:
-      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
-
-        '
-      example: '2021-07-01T00:00:00Z'
-      schema:
-        format: date-time
-        type: string
   responses:
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '401':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Unauthorized: the request requires an authentication token.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
     '400':
       content:
         application/vnd.api+json:
@@ -1480,25 +1428,6 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '403':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
     '404':
       content:
         application/vnd.api+json:
@@ -1518,25 +1447,98 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '401':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Unauthorized: the request requires an authentication token.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
+  headers:
+    VersionStageResponseHeader:
+      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
+
+        '
+      schema:
+        enum:
+        - wip
+        - experimental
+        - beta
+        - ga
+        - deprecated
+        - sunset
+        example: ga
+        type: string
+    RequestIdResponseHeader:
+      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
+
+        '
+      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
+      schema:
+        format: uuid
+        type: string
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    LocationHeader:
+      description: 'A header providing a URL for the location of a resource
+
+        '
+      example: https://example.com/resource/4
+      schema:
+        format: url
+        type: string
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
+  parameters:
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
+        type: string
+    Version:
+      description: The requested version of the endpoint to process the request
+      example: '2026-03-25'
+      in: query
+      name: version
+      required: true
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
+    Limit:
+      description: Number of results to return per page
+      example: 10
+      in: query
+      name: limit
+      schema:
+        default: 10
+        format: int32
+        maximum: 100
+        minimum: 10
+        multipleOf: 10
+        type: integer
   securitySchemes:
     APIToken:
       description: API key value must be prefixed with \"Token \".

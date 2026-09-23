@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Snyk AccessRequests Catalog Resource API
+  title: Snyk Catalog Resource API
   version: REST
 servers:
 - description: Snyk REST API
@@ -73,90 +73,45 @@ paths:
         category: learn
       x-stability-level: beta
 components:
-  parameters:
-    EndingBefore:
-      description: Return the page of results immediately before this cursor
-      example: v1.eyJpZCI6IjExMDAifQo=
-      in: query
-      name: ending_before
-      schema:
-        type: string
-    StartingAfter:
-      description: Return the page of results immediately after this cursor
-      example: v1.eyJpZCI6IjEwMDAifQo=
-      in: query
-      name: starting_after
-      schema:
-        type: string
-    Limit:
-      description: Number of results to return per page
-      example: 10
-      in: query
-      name: limit
-      schema:
-        default: 10
-        format: int32
-        maximum: 100
-        minimum: 10
-        multipleOf: 10
-        type: integer
-    ContentSource:
-      description: The source of educational resources
-      in: query
-      name: content_source
-      schema:
-        enum:
-        - source-preview
-        - cache
-        type: string
-    ApiVersion:
-      description: The requested version of the endpoint to process the request
-      example: '2025-11-05'
-      in: query
-      name: version
-      required: true
-      schema:
-        default: '2025-11-05'
-        description: Requested API version
-        pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
-        type: string
   schemas:
-    Tag:
-      properties:
-        tag_type:
-          description: 'The classification type for this tag. Possible values: ecosystem - programming language or platform (e.g. java, python, javascript, golang, cpp, csharp, kubernetes, docker, aiml, rust, ruby, swift, general). topic - security or product training topic (freeform string). cwe - Common Weakness Enumeration identifier (format: CWE-{id}, e.g. CWE-79). cve - Common Vulnerabilities and Exposures identifier (format: CVE-{year}-{id}, e.g. CVE-2021-44228). snyk_vuln_id - Snyk vulnerability rule identifier (format: SNYK-{LANG}-{PKG}-{ID}, e.g. SNYK-JAVA-ORGAPACHELOGGINGLOG4J-2314720).'
-          example: cwe
-          type: string
-        tag_values:
-          description: Array of values associated with this tag type. Values follow the format described by the corresponding tag_type.
-          example:
-          - CWE-79
-          - CWE-89
-          items:
-            type: string
-          type: array
-      required:
-      - tag_type
-      - tag_values
-      type: object
     ActualVersion:
       description: Resolved API version
       example: '2026-03-25'
       pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
       type: string
-    JsonApi:
-      additionalProperties: false
-      example:
-        version: '1.0'
-      properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          example: '1.0'
-          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
-          type: string
-      required:
-      - version
-      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
+    QueryVersion:
+      description: Requested API version
+      example: '2026-03-25'
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+      type: string
     EducationResourceExtended:
       properties:
         attributes:
@@ -174,8 +129,9 @@ components:
               - product training
               type: string
             estimated_duration:
-              nullable: true
-              type: number
+              type:
+              - number
+              - 'null'
             image:
               type: string
             lesson_ids:
@@ -216,11 +172,24 @@ components:
       - type
       - attributes
       type: object
-    QueryVersion:
-      description: Requested API version
-      example: '2026-03-25'
-      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
-      type: string
+    Tag:
+      properties:
+        tag_type:
+          description: 'The classification type for this tag. Possible values: ecosystem - programming language or platform (e.g. java, python, javascript, golang, cpp, csharp, kubernetes, docker, aiml, rust, ruby, swift, general). topic - security or product training topic (freeform string). cwe - Common Weakness Enumeration identifier (format: CWE-{id}, e.g. CWE-79). cve - Common Vulnerabilities and Exposures identifier (format: CVE-{year}-{id}, e.g. CVE-2021-44228). snyk_vuln_id - Snyk vulnerability rule identifier (format: SNYK-{LANG}-{PKG}-{ID}, e.g. SNYK-JAVA-ORGAPACHELOGGINGLOG4J-2314720).'
+          example: cwe
+          type: string
+        tag_values:
+          description: Array of values associated with this tag type. Values follow the format described by the corresponding tag_type.
+          example:
+          - CWE-79
+          - CWE-89
+          items:
+            type: string
+          type: array
+      required:
+      - tag_type
+      - tag_values
+      type: object
     ErrorDocument:
       additionalProperties: false
       example:
@@ -339,6 +308,19 @@ components:
       - jsonapi
       - errors
       type: object
+    JsonApi:
+      additionalProperties: false
+      example:
+        version: '1.0'
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
+      type: object
     PaginatedLinks:
       additionalProperties: false
       example:
@@ -357,51 +339,7 @@ components:
         self:
           $ref: '#/components/schemas/LinkProperty'
       type: object
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
-        type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
   headers:
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
-    VersionRequestedResponseHeader:
-      description: A header containing the version of the endpoint requested by the caller.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/ActualVersion'
     VersionStageResponseHeader:
       description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
 
@@ -424,6 +362,22 @@ components:
       schema:
         format: uuid
         type: string
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
     DeprecationHeader:
       description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
 
@@ -434,6 +388,53 @@ components:
       schema:
         format: date-time
         type: string
+  parameters:
+    ContentSource:
+      description: The source of educational resources
+      in: query
+      name: content_source
+      schema:
+        enum:
+        - source-preview
+        - cache
+        type: string
+    ApiVersion:
+      description: The requested version of the endpoint to process the request
+      example: '2025-11-05'
+      in: query
+      name: version
+      required: true
+      schema:
+        default: '2025-11-05'
+        description: Requested API version
+        pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+        type: string
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
+        type: string
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
+    Limit:
+      description: Number of results to return per page
+      example: 10
+      in: query
+      name: limit
+      schema:
+        default: 10
+        format: int32
+        maximum: 100
+        minimum: 10
+        multipleOf: 10
+        type: integer
   responses:
     '500':
       content:

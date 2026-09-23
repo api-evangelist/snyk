@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Snyk AccessRequests AiBom API
+  title: Snyk AI Bom API
   version: REST
 servers:
 - description: Snyk REST API
@@ -2153,77 +2153,22 @@ paths:
       x-snyk-api-version: 2024-10-15~beta
       x-stability-level: beta
 components:
-  headers:
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
-    RequestIdResponseHeader:
-      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
-
-        '
-      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
-      schema:
-        format: uuid
-        type: string
-    LocationHeader:
-      description: 'A header providing a URL for the location of a resource
-
-        '
-      example: https://example.com/resource/4
-      schema:
-        format: url
-        type: string
-    DeprecationHeader:
-      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
-
-        '
-      example: '2021-07-01T00:00:00Z'
-      schema:
-        format: date-time
-        type: string
   schemas:
-    JobAttributes:
-      description: JobAttributes represents the attributes of a Job resource
+    GetAiBomResponseData:
       properties:
-        status:
-          $ref: '#/components/schemas/JobState'
-      required:
-      - status
-      type: object
-    GetAiBomResponseBody:
-      additionalProperties: false
-      properties:
-        data:
-          $ref: '#/components/schemas/GetAiBomResponseData'
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-      required:
-      - data
-      - jsonapi
-      - links
-      type: object
-    CreateAiBomRequestBody:
-      properties:
-        data:
-          $ref: '#/components/schemas/CreateAiBomRequestData'
-      required:
-      - data
-      type: object
-    FileUploadApiAttributes:
-      properties:
-        upload_revision_id:
-          description: The id of the upload revision the has been created by the user
+        attributes:
+          $ref: '#/components/schemas/AiBomAttributes'
+        id:
           format: uuid
           type: string
+        type:
+          enum:
+          - ai_bom
+          type: string
       required:
-      - upload_revision_id
+      - id
+      - attributes
+      - type
       type: object
     CreateAndUploadAiBomFileUploadData:
       properties:
@@ -2236,26 +2181,6 @@ components:
       required:
       - type
       - attributes
-      type: object
-    RelationshipObjectToOne:
-      properties:
-        data:
-          $ref: '#/components/schemas/RelationshipObjectToOneData'
-      required:
-      - data
-      type: object
-    JsonApi:
-      additionalProperties: false
-      example:
-        version: '1.0'
-      properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          example: '1.0'
-          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
-          type: string
-      required:
-      - version
       type: object
     ScmBundleStoreAttributes:
       properties:
@@ -2270,64 +2195,67 @@ components:
       required:
       - target_id
       type: object
-    CreateAndUploadAiBomFileBundleAttributes:
+    GetAiBomResponseJobBody:
+      additionalProperties: false
       properties:
-        bundle_id:
-          description: The id of the bundle that has been uploaded by the user, sha256 hash
-          pattern: ^[0-9a-fA-F]{64}$
-          type: string
-        repo_name:
-          description: The name of the repository
-          maxLength: 200
-          minLength: 1
-          type: string
+        data:
+          $ref: '#/components/schemas/JobData'
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
       required:
-      - bundle_id
-      - repo_name
+      - data
+      - jsonapi
+      - links
       type: object
-    ScmBundleStoreData:
+    FileUploadApiAttributes:
       properties:
-        attributes:
-          $ref: '#/components/schemas/ScmBundleStoreAttributes'
-        type:
-          enum:
-          - ai_bom_scm_bundle
-          type: string
-      required:
-      - type
-      - attributes
-      type: object
-    RelationshipObjectToOneData:
-      properties:
-        id:
+        upload_revision_id:
+          description: The id of the upload revision the has been created by the user
           format: uuid
           type: string
-        type:
-          type: string
       required:
-      - id
-      - type
+      - upload_revision_id
       type: object
-    FileUploadApiData:
+    CreateAiBomRequestData:
+      discriminator:
+        mapping:
+          ai_bom_file_bundle: '#/components/schemas/FileBundleStoreData'
+          ai_bom_file_upload: '#/components/schemas/FileUploadApiData'
+          ai_bom_scm_bundle: '#/components/schemas/ScmBundleStoreData'
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/FileBundleStoreData'
+      - $ref: '#/components/schemas/ScmBundleStoreData'
+      - $ref: '#/components/schemas/FileUploadApiData'
+    GetAiBomResponseBody:
+      additionalProperties: false
       properties:
-        attributes:
-          $ref: '#/components/schemas/FileUploadApiAttributes'
-        type:
-          enum:
-          - ai_bom_file_upload
-          type: string
+        data:
+          $ref: '#/components/schemas/GetAiBomResponseData'
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
       required:
-      - type
-      - attributes
+      - data
+      - jsonapi
+      - links
       type: object
-    FileBundleStoreAttributes:
+    CreateAiBomResponseBody:
+      additionalProperties: false
       properties:
-        bundle_id:
-          description: The id of the bundle that has been uploaded by the user, sha256 hash
-          pattern: ^[0-9a-fA-F]{64}$
-          type: string
+        data:
+          $ref: '#/components/schemas/JobData'
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
       required:
-      - bundle_id
+      - data
+      - jsonapi
+      - links
       type: object
     JobData:
       properties:
@@ -2347,47 +2275,6 @@ components:
       - attributes
       - type
       type: object
-    GetAiBomResponseData:
-      properties:
-        attributes:
-          $ref: '#/components/schemas/AiBomAttributes'
-        id:
-          format: uuid
-          type: string
-        type:
-          enum:
-          - ai_bom
-          type: string
-      required:
-      - id
-      - attributes
-      - type
-      type: object
-    JobState:
-      description: State of the job.
-      enum:
-      - processing
-      - finished
-      - errored
-      type: string
-    CreateAiBomRequestData:
-      discriminator:
-        mapping:
-          ai_bom_file_bundle: '#/components/schemas/FileBundleStoreData'
-          ai_bom_file_upload: '#/components/schemas/FileUploadApiData'
-          ai_bom_scm_bundle: '#/components/schemas/ScmBundleStoreData'
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/FileBundleStoreData'
-      - $ref: '#/components/schemas/ScmBundleStoreData'
-      - $ref: '#/components/schemas/FileUploadApiData'
-    CreateAndUploadAiBomRequestBody:
-      properties:
-        data:
-          $ref: '#/components/schemas/CreateAndUploadAiBomRequestData'
-      required:
-      - data
-      type: object
     CreateAndUploadAiBomFileBundleData:
       properties:
         attributes:
@@ -2400,62 +2287,14 @@ components:
       - type
       - attributes
       type: object
-    CreateAndUploadAiBomRequestData:
-      discriminator:
-        mapping:
-          ai_bom_file_bundle: '#/components/schemas/CreateAndUploadAiBomFileBundleData'
-          ai_bom_file_upload: '#/components/schemas/CreateAndUploadAiBomFileUploadData'
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/CreateAndUploadAiBomFileBundleData'
-      - $ref: '#/components/schemas/CreateAndUploadAiBomFileUploadData'
-    GetAiBomResponseJobBody:
-      additionalProperties: false
+    FileBundleStoreAttributes:
       properties:
-        data:
-          $ref: '#/components/schemas/JobData'
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-      required:
-      - data
-      - jsonapi
-      - links
-      type: object
-    FileBundleStoreData:
-      properties:
-        attributes:
-          $ref: '#/components/schemas/FileBundleStoreAttributes'
-        type:
-          enum:
-          - ai_bom_file_bundle
+        bundle_id:
+          description: The id of the bundle that has been uploaded by the user, sha256 hash
+          pattern: ^[0-9a-fA-F]{64}$
           type: string
       required:
-      - type
-      - attributes
-      type: object
-    AiBomAttributes:
-      additionalProperties: true
-      description: The AI-Bom document
-      type: object
-    PaginatedLinks:
-      additionalProperties: false
-      example:
-        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
-        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
-        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
-      properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
+      - bundle_id
       type: object
     CreateAndUploadAiBomFileUploadAttributes:
       properties:
@@ -2471,27 +2310,6 @@ components:
       required:
       - upload_revision_id
       - repo_name
-      type: object
-    CreateAiBomResponseBody:
-      additionalProperties: false
-      properties:
-        data:
-          $ref: '#/components/schemas/JobData'
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-      required:
-      - data
-      - jsonapi
-      - links
-      type: object
-    JobDataRelationships:
-      properties:
-        ai_bom:
-          $ref: '#/components/schemas/RelationshipObjectToOne'
-      required:
-      - ai_bom
       type: object
     LinkProperty:
       example: https://example.com/api/resource
@@ -2521,30 +2339,187 @@ components:
         required:
         - href
         type: object
-  parameters:
-    JobIdParam:
-      description: The job id
-      in: path
-      name: job_id
-      required: true
+    JobState:
+      description: State of the job.
+      enum:
+      - processing
+      - finished
+      - errored
+      type: string
+    JobDataRelationships:
+      properties:
+        ai_bom:
+          $ref: '#/components/schemas/RelationshipObjectToOne'
+      required:
+      - ai_bom
+      type: object
+    CreateAndUploadAiBomRequestBody:
+      properties:
+        data:
+          $ref: '#/components/schemas/CreateAndUploadAiBomRequestData'
+      required:
+      - data
+      type: object
+    CreateAiBomRequestBody:
+      properties:
+        data:
+          $ref: '#/components/schemas/CreateAiBomRequestData'
+      required:
+      - data
+      type: object
+    AiBomAttributes:
+      additionalProperties: true
+      description: The AI-Bom document
+      type: object
+    CreateAndUploadAiBomFileBundleAttributes:
+      properties:
+        bundle_id:
+          description: The id of the bundle that has been uploaded by the user, sha256 hash
+          pattern: ^[0-9a-fA-F]{64}$
+          type: string
+        repo_name:
+          description: The name of the repository
+          maxLength: 200
+          minLength: 1
+          type: string
+      required:
+      - bundle_id
+      - repo_name
+      type: object
+    FileUploadApiData:
+      properties:
+        attributes:
+          $ref: '#/components/schemas/FileUploadApiAttributes'
+        type:
+          enum:
+          - ai_bom_file_upload
+          type: string
+      required:
+      - type
+      - attributes
+      type: object
+    JsonApi:
+      additionalProperties: false
+      example:
+        version: '1.0'
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
+      type: object
+    RelationshipObjectToOneData:
+      properties:
+        id:
+          format: uuid
+          type: string
+        type:
+          type: string
+      required:
+      - id
+      - type
+      type: object
+    RelationshipObjectToOne:
+      properties:
+        data:
+          $ref: '#/components/schemas/RelationshipObjectToOneData'
+      required:
+      - data
+      type: object
+    CreateAndUploadAiBomRequestData:
+      discriminator:
+        mapping:
+          ai_bom_file_bundle: '#/components/schemas/CreateAndUploadAiBomFileBundleData'
+          ai_bom_file_upload: '#/components/schemas/CreateAndUploadAiBomFileUploadData'
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/CreateAndUploadAiBomFileBundleData'
+      - $ref: '#/components/schemas/CreateAndUploadAiBomFileUploadData'
+    FileBundleStoreData:
+      properties:
+        attributes:
+          $ref: '#/components/schemas/FileBundleStoreAttributes'
+        type:
+          enum:
+          - ai_bom_file_bundle
+          type: string
+      required:
+      - type
+      - attributes
+      type: object
+    ScmBundleStoreData:
+      properties:
+        attributes:
+          $ref: '#/components/schemas/ScmBundleStoreAttributes'
+        type:
+          enum:
+          - ai_bom_scm_bundle
+          type: string
+      required:
+      - type
+      - attributes
+      type: object
+    PaginatedLinks:
+      additionalProperties: false
+      example:
+        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
+        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
+        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    JobAttributes:
+      description: JobAttributes represents the attributes of a Job resource
+      properties:
+        status:
+          $ref: '#/components/schemas/JobState'
+      required:
+      - status
+      type: object
+  headers:
+    RequestIdResponseHeader:
+      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
+
+        '
+      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
       schema:
         format: uuid
         type: string
-    AiBomIdParam:
-      description: The ai_bom id
-      in: path
-      name: ai_bom_id
-      required: true
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
       schema:
-        format: uuid
+        format: date
         type: string
-    OrgIdParam:
-      description: Org ID
-      in: path
-      name: org_id
-      required: true
+    LocationHeader:
+      description: 'A header providing a URL for the location of a resource
+
+        '
+      example: https://example.com/resource/4
       schema:
-        format: uuid
+        format: url
+        type: string
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
         type: string
   responses:
     '503':
@@ -2704,6 +2679,31 @@ components:
             type: string
         sunset:
           $ref: '#/components/headers/SunsetHeader'
+  parameters:
+    JobIdParam:
+      description: The job id
+      in: path
+      name: job_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    AiBomIdParam:
+      description: The ai_bom id
+      in: path
+      name: ai_bom_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    OrgIdParam:
+      description: Org ID
+      in: path
+      name: org_id
+      required: true
+      schema:
+        format: uuid
+        type: string
   securitySchemes:
     APIToken:
       description: API key value must be prefixed with \"Token \".

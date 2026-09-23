@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Snyk AccessRequests OpenSourceSettings API
+  title: Snyk Open Source Settings API
   version: REST
 servers:
 - description: Snyk REST API
@@ -685,93 +685,22 @@ paths:
       x-snyk-api-version: '2024-10-15'
       x-stability-level: stable
 components:
-  examples:
-    PostBrokerSettingsRequestAddIntegration:
-      summary: Add an integration
-      value:
-        data:
-          integrations:
-          - integration_type: artifactory
-            urls:
-            - https://artifactory.internal-domain.com/artifactory/api/nuget/v3/team-nuget/index.json
-    GetBrokerSettingsResponseWithIntegrations:
-      summary: Broker settings with some integrations configured
-      value:
-        data:
-          integrations:
-          - created_at: '2026-04-15T10:00:00.000Z'
-            id: 019d7722-72c3-7ae4-bb4e-40deea1820c0
-            integration_type: artifactory
-            urls:
-            - https://artifactory.internal-domain.com/artifactory/api/nuget/v3/nuget-group/index.json
-          - created_at: '2026-04-16T10:00:00.000Z'
-            id: 019d7722-90bd-7bc0-9666-775eee165cf0
-            integration_type: nexus-private-repo
-            urls:
-            - https://nexus.internal-domain.com/repository/nuget-hosted/index.json
-            - https://nexus.internal-domain.com/repository/nuget-proxy/index.json
-        jsonapi:
-          version: '1.0'
-        links:
-          self: /orgs/db2557c3-ecb8-4d45-8e1e-894ae89a92a6/settings/opensource/Dotnet/broker?version=2024-10-15
-    PostBrokerSettingsRequestEditIntegrations:
-      summary: Edit multiple integrations at once
-      value:
-        data:
-          integrations:
-          - integration_type: artifactory
-            urls:
-            - https://artifactory.internal-domain.com/artifactory/api/nuget/v3/sandbox-nuget/index.json
-            - https://artifactory.internal-domain.com/artifactory/api/nuget/v3/production-nuget/index.json
-          - integration_type: nexus-private-repo
-            urls: []
-    GetBrokerSettingsResponseEmpty:
-      summary: No integrations configured
-      value:
-        data:
-          integrations: []
-        jsonapi:
-          version: '1.0'
-        links:
-          self: /orgs/82b3efbb-4b32-4f96-8005-9444eceacec8/settings/opensource/Dotnet/broker?version=2024-10-15
-    PostBrokerSettingsRequestRemoveIntegration:
-      summary: Remove an integration by setting empty urls
-      value:
-        data:
-          integrations:
-          - integration_type: nexus-private-repo
-            urls: []
-    PostBrokerSettingsResponse:
-      summary: Response after updating broker settings
-      value:
-        data:
-          integrations:
-          - created_at: '2024-01-15T10:00:00.000Z'
-            id: 019d7722-d843-7b9f-a1dd-bd5c0bac373d
-            integration_type: artifactory
-            urls:
-            - https://artifactory.internal-domain.com/artifactory/api/nuget/v3/team-nuget/index.json
-        jsonapi:
-          version: '1.0'
-        links:
-          self: /orgs/4f4fbf18-b2cd-4bf3-9b7e-323b8be249ea/settings/opensource/Dotnet/broker?version=2024-10-15
   headers:
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
     VersionRequestedResponseHeader:
       description: A header containing the version of the endpoint requested by the caller.
       example: '2026-03-25'
       schema:
         $ref: '#/components/schemas/QueryVersion'
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
       schema:
-        $ref: '#/components/schemas/ActualVersion'
+        format: date-time
+        type: string
     VersionStageResponseHeader:
       description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
 
@@ -794,6 +723,17 @@ components:
       schema:
         format: uuid
         type: string
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
     LocationHeader:
       description: 'A header providing a URL for the location of a resource
 
@@ -802,56 +742,23 @@ components:
       schema:
         format: url
         type: string
-    DeprecationHeader:
-      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
-
-        '
-      example: '2021-07-01T00:00:00Z'
-      schema:
-        format: date-time
-        type: string
   schemas:
-    BrokerIntegration:
+    Links:
       additionalProperties: false
       properties:
-        created_at:
-          description: When this integration was created
-          format: date-time
-          readOnly: true
-          type: string
-        id:
-          description: The unique identifier for the ecosystem integration
-          format: uuid
-          readOnly: true
-          type: string
-        integration_type:
-          description: The type of integration (e.g., 'artifactory', 'nexus-private-repo')
-          enum:
-          - artifactory
-          - nexus-private-repo
-          example: artifactory
-          type: string
-        urls:
-          description: Array of URLs associated with this integration. Set this field to undefined, an empty array, or omit it to delete the integration.
-          example:
-          - https://my-custom-artifactory.internal/artifactory/api/nuget/v3/my-nuget/index.json
-          - https://my-custom-artifactory.internal/artifactory/api/nuget/v3/my-other-nuget/index.json
-          - https://my-custom-artifactory.internal/artifactory/api/go/my-go-modules
-          items:
-            format: uri
-            maxLength: 2048
-            type: string
-          type: array
-      required:
-      - integration_type
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        related:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
       type: object
-    ActualVersion:
-      description: Resolved API version
-      example: '2026-03-25'
-      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
-      type: string
     JsonApi:
       additionalProperties: false
       example:
@@ -865,11 +772,44 @@ components:
       required:
       - version
       type: object
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
     QueryVersion:
       description: Requested API version
       example: '2026-03-25'
       pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
       type: string
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
     ErrorDocument:
       additionalProperties: false
       example:
@@ -988,14 +928,6 @@ components:
       - jsonapi
       - errors
       type: object
-    SelfLink:
-      additionalProperties: false
-      example:
-        self: https://example.com/api/this_resource
-      properties:
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
     BrokerSettings:
       additionalProperties: false
       properties:
@@ -1006,21 +938,47 @@ components:
       required:
       - integrations
       type: object
-    Links:
+    SelfLink:
       additionalProperties: false
+      example:
+        self: https://example.com/api/this_resource
       properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        related:
-          $ref: '#/components/schemas/LinkProperty'
         self:
           $ref: '#/components/schemas/LinkProperty'
+      type: object
+    BrokerIntegration:
+      additionalProperties: false
+      properties:
+        created_at:
+          description: When this integration was created
+          format: date-time
+          readOnly: true
+          type: string
+        id:
+          description: The unique identifier for the ecosystem integration
+          format: uuid
+          readOnly: true
+          type: string
+        integration_type:
+          description: The type of integration (e.g., 'artifactory', 'nexus-private-repo')
+          enum:
+          - artifactory
+          - nexus-private-repo
+          example: artifactory
+          type: string
+        urls:
+          description: Array of URLs associated with this integration. Set this field to undefined, an empty array, or omit it to delete the integration.
+          example:
+          - https://my-custom-artifactory.internal/artifactory/api/nuget/v3/my-nuget/index.json
+          - https://my-custom-artifactory.internal/artifactory/api/nuget/v3/my-other-nuget/index.json
+          - https://my-custom-artifactory.internal/artifactory/api/go/my-go-modules
+          items:
+            format: uri
+            maxLength: 2048
+            type: string
+          type: array
+      required:
+      - integration_type
       type: object
     PaginatedLinks:
       additionalProperties: false
@@ -1040,41 +998,13 @@ components:
         self:
           $ref: '#/components/schemas/LinkProperty'
       type: object
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
-        type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
   responses:
-    '400':
+    '403':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
-      description: 'Bad Request: A parameter provided as a part of the request was invalid.'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -1107,12 +1037,12 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '403':
+    '401':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
-      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      description: 'Unauthorized: the request requires an authentication token.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -1145,12 +1075,12 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '401':
+    '400':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
-      description: 'Unauthorized: the request requires an authentication token.'
+      description: 'Bad Request: A parameter provided as a part of the request was invalid.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -1173,6 +1103,76 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/QueryVersion'
+  examples:
+    PostBrokerSettingsRequestEditIntegrations:
+      summary: Edit multiple integrations at once
+      value:
+        data:
+          integrations:
+          - integration_type: artifactory
+            urls:
+            - https://artifactory.internal-domain.com/artifactory/api/nuget/v3/sandbox-nuget/index.json
+            - https://artifactory.internal-domain.com/artifactory/api/nuget/v3/production-nuget/index.json
+          - integration_type: nexus-private-repo
+            urls: []
+    PostBrokerSettingsRequestRemoveIntegration:
+      summary: Remove an integration by setting empty urls
+      value:
+        data:
+          integrations:
+          - integration_type: nexus-private-repo
+            urls: []
+    PostBrokerSettingsRequestAddIntegration:
+      summary: Add an integration
+      value:
+        data:
+          integrations:
+          - integration_type: artifactory
+            urls:
+            - https://artifactory.internal-domain.com/artifactory/api/nuget/v3/team-nuget/index.json
+    PostBrokerSettingsResponse:
+      summary: Response after updating broker settings
+      value:
+        data:
+          integrations:
+          - created_at: '2024-01-15T10:00:00.000Z'
+            id: 019d7722-d843-7b9f-a1dd-bd5c0bac373d
+            integration_type: artifactory
+            urls:
+            - https://artifactory.internal-domain.com/artifactory/api/nuget/v3/team-nuget/index.json
+        jsonapi:
+          version: '1.0'
+        links:
+          self: /orgs/4f4fbf18-b2cd-4bf3-9b7e-323b8be249ea/settings/opensource/Dotnet/broker?version=2024-10-15
+    GetBrokerSettingsResponseEmpty:
+      summary: No integrations configured
+      value:
+        data:
+          integrations: []
+        jsonapi:
+          version: '1.0'
+        links:
+          self: /orgs/82b3efbb-4b32-4f96-8005-9444eceacec8/settings/opensource/Dotnet/broker?version=2024-10-15
+    GetBrokerSettingsResponseWithIntegrations:
+      summary: Broker settings with some integrations configured
+      value:
+        data:
+          integrations:
+          - created_at: '2026-04-15T10:00:00.000Z'
+            id: 019d7722-72c3-7ae4-bb4e-40deea1820c0
+            integration_type: artifactory
+            urls:
+            - https://artifactory.internal-domain.com/artifactory/api/nuget/v3/nuget-group/index.json
+          - created_at: '2026-04-16T10:00:00.000Z'
+            id: 019d7722-90bd-7bc0-9666-775eee165cf0
+            integration_type: nexus-private-repo
+            urls:
+            - https://nexus.internal-domain.com/repository/nuget-hosted/index.json
+            - https://nexus.internal-domain.com/repository/nuget-proxy/index.json
+        jsonapi:
+          version: '1.0'
+        links:
+          self: /orgs/db2557c3-ecb8-4d45-8e1e-894ae89a92a6/settings/opensource/Dotnet/broker?version=2024-10-15
   requestBodies:
     EmptyRequestBody:
       content:

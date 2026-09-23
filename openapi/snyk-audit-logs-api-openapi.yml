@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Snyk AccessRequests Audit Logs API
+  title: Snyk Audit Logs API
   version: REST
 servers:
 - description: Snyk REST API
@@ -13,7 +13,81 @@ tags:
 paths:
   /groups/{group_id}/audit_logs/search:
     get:
-      description: "Search audit logs for a Group. \"api.access\" events are omitted from results unless explicitly requested using the events parameter. Some Organization level events are supported as well as the following\nGroup level events:\n  - api.access\n  - group.cloud_config.settings.edit\n  - group.create\n  - group.delete\n  - group.edit\n  - group.notification_settings.edit\n  - group.org.add\n  - group.org.remove\n  - group.policy.create\n  - group.policy.delete\n  - group.policy.edit\n  - group.request_access_settings.edit\n  - group.role.create\n  - group.role.delete\n  - group.role.edit\n  - group.service_account.create\n  - group.service_account.delete\n  - group.service_account.edit\n  - group.settings.edit\n  - group.settings.feature_flag.edit\n  - group.sso.add\n  - group.sso.auth0_connection.create\n  - group.sso.auth0_connection.edit\n  - group.sso.create\n  - group.sso.delete\n  - group.sso.edit\n  - group.sso.membership.sync\n  - group.sso.remove\n  - group.tag.create\n  - group.tag.delete\n  - group.user.add\n  - group.user.remove\n  - group.user.role.edit\n\n#### Required permissions\n\n- `View Audit Logs (group.audit.read)`"
+      description: 'Search audit logs for a Group. "api.access" events are omitted from results unless explicitly requested using the events parameter. Some Organization level events are supported as well as the following
+
+        Group level events:
+
+        - api.access
+
+        - group.cloud_config.settings.edit
+
+        - group.create
+
+        - group.delete
+
+        - group.edit
+
+        - group.notification_settings.edit
+
+        - group.org.add
+
+        - group.org.remove
+
+        - group.policy.create
+
+        - group.policy.delete
+
+        - group.policy.edit
+
+        - group.request_access_settings.edit
+
+        - group.role.create
+
+        - group.role.delete
+
+        - group.role.edit
+
+        - group.service_account.create
+
+        - group.service_account.delete
+
+        - group.service_account.edit
+
+        - group.settings.edit
+
+        - group.settings.feature_flag.edit
+
+        - group.sso.add
+
+        - group.sso.auth0_connection.create
+
+        - group.sso.auth0_connection.edit
+
+        - group.sso.create
+
+        - group.sso.delete
+
+        - group.sso.edit
+
+        - group.sso.membership.sync
+
+        - group.sso.remove
+
+        - group.tag.create
+
+        - group.tag.delete
+
+        - group.user.add
+
+        - group.user.remove
+
+        - group.user.role.edit
+
+
+        #### Required permissions
+
+
+        - `View Audit Logs (group.audit.read)`'
       operationId: listGroupAuditLogs
       parameters:
       - $ref: '#/components/parameters/Version'
@@ -71,7 +145,7 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-      summary: Search Group audit logs.
+      summary: Search Group audit logs
       tags:
       - Audit Logs
       x-snyk-api-lifecycle: released
@@ -84,7 +158,159 @@ paths:
       x-stability-level: stable
   /orgs/{org_id}/audit_logs/search:
     get:
-      description: "Search audit logs for an Organization. \"api.access\" events are omitted from results unless explicitly requested using the events parameter. Supported event types:\n  - api.access\n  - org.app_bot.create\n  - org.app.create\n  - org.app.delete\n  - org.app.edit\n  - org.cloud_config.settings.edit\n  - org.collection.create\n  - org.collection.delete\n  - org.collection.edit\n  - org.create\n  - org.delete\n  - org.edit\n  - org.ignore_policy.edit\n  - org.integration.create\n  - org.integration.delete\n  - org.integration.edit\n  - org.integration.settings.edit\n  - org.language_settings.edit\n  - org.notification_settings.edit\n  - org.org_source.create\n  - org.org_source.delete\n  - org.org_source.edit\n  - org.policy.create\n  - org.policy.edit\n  - org.policy.delete\n  - org.project_filter.create\n  - org.project_filter.delete\n  - org.project.add\n  - org.project.attributes.edit\n  - org.project.delete\n  - org.project.edit\n  - org.project.fix_pr.auto_open\n  - org.project.fix_pr.manual_open\n  - org.project.ignore.create\n  - org.project.ignore.delete\n  - org.project.ignore.edit\n  - org.project.monitor\n  - org.project.pr_check.edit\n  - org.project.remove\n  - org.project.settings.delete\n  - org.project.settings.edit\n  - org.project.stop_monitor\n  - org.project.tag.add\n  - org.project.tag.remove\n  - org.project.test\n  - org.request_access_settings.edit\n  - org.sast_settings.edit\n  - org.service_account.create\n  - org.service_account.delete\n  - org.service_account.edit\n  - org.settings.feature_flag.edit\n  - org.target.create\n  - org.target.delete\n  - org.user.add\n  - org.user.invite\n  - org.user.invite.accept\n  - org.user.invite.revoke\n  - org.user.invite_link.accept\n  - org.user.invite_link.create\n  - org.user.invite_link.revoke\n  - org.user.leave\n  - org.user.provision.accept\n  - org.user.provision.create\n  - org.user.provision.delete\n  - org.user.remove\n  - org.user.role.create\n  - org.user.role.delete\n  - org.user.role.details.edit\n  - org.user.role.edit\n  - org.user.role.permissions.edit\n  - org.webhook.add\n  - org.webhook.delete\n  - user.org.notification_settings.edit\n\n#### Required permissions\n\n- `View audit logs (org.audit_log.read)`"
+      description: 'Search audit logs for an Organization. "api.access" events are omitted from results unless explicitly requested using the events parameter. Supported event types:
+
+        - api.access
+
+        - org.app_bot.create
+
+        - org.app.create
+
+        - org.app.delete
+
+        - org.app.edit
+
+        - org.cloud_config.settings.edit
+
+        - org.collection.create
+
+        - org.collection.delete
+
+        - org.collection.edit
+
+        - org.create
+
+        - org.delete
+
+        - org.edit
+
+        - org.ignore_policy.edit
+
+        - org.integration.create
+
+        - org.integration.delete
+
+        - org.integration.edit
+
+        - org.integration.settings.edit
+
+        - org.language_settings.edit
+
+        - org.notification_settings.edit
+
+        - org.org_source.create
+
+        - org.org_source.delete
+
+        - org.org_source.edit
+
+        - org.policy.create
+
+        - org.policy.edit
+
+        - org.policy.delete
+
+        - org.project_filter.create
+
+        - org.project_filter.delete
+
+        - org.project.add
+
+        - org.project.attributes.edit
+
+        - org.project.delete
+
+        - org.project.edit
+
+        - org.project.fix_pr.auto_open
+
+        - org.project.fix_pr.manual_open
+
+        - org.project.ignore.create
+
+        - org.project.ignore.delete
+
+        - org.project.ignore.edit
+
+        - org.project.monitor
+
+        - org.project.pr_check.edit
+
+        - org.project.remove
+
+        - org.project.settings.delete
+
+        - org.project.settings.edit
+
+        - org.project.stop_monitor
+
+        - org.project.tag.add
+
+        - org.project.tag.remove
+
+        - org.project.test
+
+        - org.request_access_settings.edit
+
+        - org.sast_settings.edit
+
+        - org.service_account.create
+
+        - org.service_account.delete
+
+        - org.service_account.edit
+
+        - org.settings.feature_flag.edit
+
+        - org.target.create
+
+        - org.target.delete
+
+        - org.user.add
+
+        - org.user.invite
+
+        - org.user.invite.accept
+
+        - org.user.invite.revoke
+
+        - org.user.invite_link.accept
+
+        - org.user.invite_link.create
+
+        - org.user.invite_link.revoke
+
+        - org.user.leave
+
+        - org.user.provision.accept
+
+        - org.user.provision.create
+
+        - org.user.provision.delete
+
+        - org.user.remove
+
+        - org.user.role.create
+
+        - org.user.role.delete
+
+        - org.user.role.details.edit
+
+        - org.user.role.edit
+
+        - org.user.role.permissions.edit
+
+        - org.webhook.add
+
+        - org.webhook.delete
+
+        - user.org.notification_settings.edit
+
+
+        #### Required permissions
+
+
+        - `View audit logs (org.audit_log.read)`'
       operationId: listOrgAuditLogs
       parameters:
       - $ref: '#/components/parameters/Version'
@@ -142,7 +368,7 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-      summary: Search Organization audit logs.
+      summary: Search Organization audit logs
       tags:
       - Audit Logs
       x-snyk-api-lifecycle: released
@@ -154,61 +380,56 @@ paths:
       x-snyk-api-version: '2024-04-29'
       x-stability-level: stable
 components:
-  headers:
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
-    VersionRequestedResponseHeader:
-      description: A header containing the version of the endpoint requested by the caller.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/ActualVersion'
-    VersionStageResponseHeader:
-      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
-
-        '
-      schema:
-        enum:
-        - wip
-        - experimental
-        - beta
-        - ga
-        - deprecated
-        - sunset
-        example: ga
-        type: string
-    RequestIdResponseHeader:
-      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
-
-        '
-      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
-      schema:
-        format: uuid
-        type: string
-    DeprecationHeader:
-      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
-
-        '
-      example: '2021-07-01T00:00:00Z'
-      schema:
-        format: date-time
-        type: string
   schemas:
     ActualVersion:
       description: Resolved API version
       example: '2026-03-25'
       pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
       type: string
+    Links:
+      additionalProperties: false
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        related:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
     AuditLogSearch:
       properties:
         items:
@@ -239,19 +460,6 @@ components:
           type: array
         type:
           type: string
-      type: object
-    JsonApi:
-      additionalProperties: false
-      example:
-        version: '1.0'
-      properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          example: '1.0'
-          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
-          type: string
-      required:
-      - version
       type: object
     QueryVersion:
       description: Requested API version
@@ -376,157 +584,58 @@ components:
       - jsonapi
       - errors
       type: object
-    Links:
+    JsonApi:
       additionalProperties: false
+      example:
+        version: '1.0'
       properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        related:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
       type: object
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
-        type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
-  parameters:
-    SortOrder:
-      description: Order in which results are returned.
-      example: ASC
-      in: query
-      name: sort_order
-      schema:
-        default: DESC
-        enum:
-        - ASC
-        - DESC
-        type: string
-    Size:
-      description: Number of results to return per page.
-      example: 10
-      in: query
-      name: size
-      schema:
-        default: 100
-        format: int32
-        maximum: 100
-        minimum: 1
-        multipleOf: 1
-        type: integer
-    Cursor:
-      description: The ID for the next page of results.
-      in: query
-      name: cursor
-      schema:
-        type: string
-    UserId:
-      description: Filter logs by user ID.
-      example: 0d3728ec-eebf-484d-9907-ba238019f10b
-      in: query
-      name: user_id
-      schema:
-        format: uuid
-        type: string
-    Version:
-      description: The requested version of the endpoint to process the request
-      example: '2026-03-25'
-      in: query
-      name: version
-      required: true
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    GroupId:
-      description: The ID of the Group.
-      example: 0d3728ec-eebf-484d-9907-ba238019f10b
-      in: path
-      name: group_id
-      required: true
-      schema:
-        format: uuid
-        type: string
-    To:
-      description: 'The end date (exclusive) of the audit logs search. Dates should be formatted as RFC3339, e.g. 2024-01-02T16:30:00Z.
-
-        '
-      in: query
-      name: to
-      schema:
-        format: date-time
-        type: string
-    OrgId:
-      description: The ID of the organization.
-      example: 0d3728ec-eebf-484d-9907-ba238019f10b
-      in: path
-      name: org_id
-      required: true
-      schema:
-        format: uuid
-        type: string
-    Events:
-      description: Filter logs by event types, cannot be used in conjunction with exclude_events parameter.
-      in: query
-      name: events
-      schema:
-        items:
-          type: string
-        type: array
-    ProjectId:
-      description: Filter logs by project ID.
-      example: 0d3728ec-eebf-484d-9907-ba238019f10b
-      in: query
-      name: project_id
-      schema:
-        format: uuid
-        type: string
-    From:
-      description: 'The start date (inclusive) of the audit logs search. If not specified, the start of yesterday is used. Dates should be formatted as RFC3339, e.g. 2024-01-02T16:30:00Z.
-
-        '
-      in: query
-      name: from
-      schema:
-        format: date-time
-        type: string
-    ExcludeEvents:
-      description: Exclude event types from results, cannot be used in conjunctions with events parameter.
-      in: query
-      name: exclude_events
-      schema:
-        items:
-          type: string
-        type: array
   responses:
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '401':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Unauthorized: the request requires an authentication token.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
     '400':
       content:
         application/vnd.api+json:
@@ -565,25 +674,6 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '403':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
     '404':
       content:
         application/vnd.api+json:
@@ -603,25 +693,161 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '401':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Unauthorized: the request requires an authentication token.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
+  parameters:
+    UserId:
+      description: Filter logs by user ID.
+      example: 0d3728ec-eebf-484d-9907-ba238019f10b
+      in: query
+      name: user_id
+      schema:
+        format: uuid
+        type: string
+    Cursor:
+      description: The ID for the next page of results.
+      in: query
+      name: cursor
+      schema:
+        type: string
+    Size:
+      description: Number of results to return per page.
+      example: 10
+      in: query
+      name: size
+      schema:
+        default: 100
+        format: int32
+        maximum: 100
+        minimum: 1
+        multipleOf: 1
+        type: integer
+    Events:
+      description: Filter logs by event types, cannot be used in conjunction with exclude_events parameter.
+      in: query
+      name: events
+      schema:
+        items:
+          type: string
+        type: array
+    From:
+      description: 'The start date (inclusive) of the audit logs search. If not specified, the start of yesterday is used. Dates should be formatted as RFC3339, e.g. 2024-01-02T16:30:00Z.
+
+        '
+      in: query
+      name: from
+      schema:
+        format: date-time
+        type: string
+    ProjectId:
+      description: Filter logs by project ID.
+      example: 0d3728ec-eebf-484d-9907-ba238019f10b
+      in: query
+      name: project_id
+      schema:
+        format: uuid
+        type: string
+    To:
+      description: 'The end date (exclusive) of the audit logs search. Dates should be formatted as RFC3339, e.g. 2024-01-02T16:30:00Z.
+
+        '
+      in: query
+      name: to
+      schema:
+        format: date-time
+        type: string
+    OrgId:
+      description: The ID of the organization.
+      example: 0d3728ec-eebf-484d-9907-ba238019f10b
+      in: path
+      name: org_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    GroupId:
+      description: The ID of the Group.
+      example: 0d3728ec-eebf-484d-9907-ba238019f10b
+      in: path
+      name: group_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    Version:
+      description: The requested version of the endpoint to process the request
+      example: '2026-03-25'
+      in: query
+      name: version
+      required: true
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    ExcludeEvents:
+      description: Exclude event types from results, cannot be used in conjunctions with events parameter.
+      in: query
+      name: exclude_events
+      schema:
+        items:
+          type: string
+        type: array
+    SortOrder:
+      description: Order in which results are returned.
+      example: ASC
+      in: query
+      name: sort_order
+      schema:
+        default: DESC
+        enum:
+        - ASC
+        - DESC
+        type: string
+  headers:
+    VersionStageResponseHeader:
+      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
+
+        '
+      schema:
+        enum:
+        - wip
+        - experimental
+        - beta
+        - ga
+        - deprecated
+        - sunset
+        example: ga
+        type: string
+    RequestIdResponseHeader:
+      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
+
+        '
+      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
+      schema:
+        format: uuid
+        type: string
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
   securitySchemes:
     APIToken:
       description: API key value must be prefixed with \"Token \".

@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Snyk AccessRequests Tests API
+  title: Snyk Tests API
   version: REST
 servers:
 - description: Snyk REST API
@@ -638,69 +638,6 @@ paths:
       x-stability-level: beta
 components:
   schemas:
-    TestExecutionStates:
-      enum:
-      - pending
-      - started
-      - finished
-      - errored
-      type: string
-    DepGraphSubjectCreate:
-      description: '**Deprecated**
-
-
-        Provide an InlineResource with the DepGraph contents
-
-        and the SCA Scan Configuration instead.
-
-
-        Test subject representing a Snyk dependency graph (a legacy SBOM format).'
-      properties:
-        dep_graph:
-          allOf:
-          - $ref: '#/components/schemas/DepGraphRef'
-          description: 'When creating a test, provide the dep-graph contents inline to the request.
-
-
-            This attribute is only available when creating a new Test.'
-        locator:
-          allOf:
-          - $ref: '#/components/schemas/LocalPathLocator'
-          description: 'Source file(s) from which the dependency graph was derived.
-
-
-            For some managed package ecosystems (examples: Maven, Yarn workspaces),
-
-            Snyk might derive a dependency graph from several files.'
-        type:
-          enum:
-          - dep_graph
-          type: string
-      required:
-      - type
-      - dep_graph
-      - locator
-      type: object
-    ScmContext:
-      description: 'Additional SCM information about a resource.
-
-        Provides context about where the content came from; the resource itself is the testable item.
-
-        ScmResource does not use this; it identifies SCM via its own fields.'
-      properties:
-        branch:
-          maxLength: 256
-          type: string
-        commit_ref:
-          maxLength: 1024
-          type: string
-        repo_url:
-          maxLength: 1024
-          type: string
-      type: object
-    String256:
-      maxLength: 256
-      type: string
     TestOutcome:
       description: Outcome of a test; pass or fail.
       properties:
@@ -722,683 +659,6 @@ components:
       required:
       - result
       type: object
-    io.snyk.api.v1testdepgraph.request.Package:
-      additionalProperties: {}
-      properties:
-        id:
-          type: string
-        info:
-          $ref: '#/components/schemas/io.snyk.api.v1testdepgraph.request.PackageInfo'
-      required:
-      - id
-      - info
-      type: object
-    LocalPathLocator:
-      description: 'LocalPathLocator locates a test subject by local file paths, relative to the
-
-        working copy top-level directory of the source code.'
-      properties:
-        paths:
-          description: Local file paths. Limited to 256 characters.
-          items:
-            $ref: '#/components/schemas/String256'
-          minItems: 1
-          type: array
-        type:
-          enum:
-          - local_path
-          type: string
-      required:
-      - type
-      - paths
-      type: object
-    SastScanConfiguration:
-      description: Scan configuration parameters for the SAST scanner.
-      type: object
-    io.snyk.api.v1testdepgraph.request.NodeRef:
-      additionalProperties: {}
-      properties:
-        nodeId:
-          type: string
-      required:
-      - nodeId
-      type: object
-    io.snyk.api.v1testdepgraph.request.Node:
-      additionalProperties: {}
-      properties:
-        deps:
-          items:
-            $ref: '#/components/schemas/io.snyk.api.v1testdepgraph.request.NodeRef'
-          type: array
-        nodeId:
-          type: string
-        pkgId:
-          type: string
-      required:
-      - nodeId
-      - pkgId
-      - deps
-      type: object
-    TestSubjectLocator:
-      discriminator:
-        mapping:
-          local_path: '#/components/schemas/LocalPathLocator'
-          other: '#/components/schemas/OtherLocator'
-          project_entity: '#/components/schemas/ProjectEntityLocator'
-          project_name: '#/components/schemas/ProjectNameLocator'
-          scm_repo: '#/components/schemas/ScmRepoLocator'
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/ProjectEntityLocator'
-      - $ref: '#/components/schemas/ProjectNameLocator'
-      - $ref: '#/components/schemas/ScmRepoLocator'
-      - $ref: '#/components/schemas/LocalPathLocator'
-      - $ref: '#/components/schemas/OtherLocator'
-    DiffResource:
-      description: 'DiffResources contain two versions of the same content
-
-        to compare against each other.
-
-
-        The Base and Compare fields contain Resources representing
-
-        an "existing" (base) version as well as a "new" (compare)
-
-        version. Most commonly these Resources will be of the same type,
-
-        e.g. an ScmResource containing a reference the `main` branch being
-
-        compared to an ScmResource containing a reference to a new
-
-        feature branch.
-
-
-        Currently no scans are supported through the Test API
-
-        for DiffResources.'
-      example:
-        base:
-          file_patterns: []
-          integration_id: 00000000-0000-0000-0000-000000000000
-          ref: main
-          repo_url: https://github.com/example/repo
-          type: scm
-        compare:
-          file_patterns: []
-          integration_id: 00000000-0000-0000-0000-000000000000
-          ref: feat/homepage
-          repo_url: https://github.com/example/repo
-          type: scm
-        type: diff
-      properties:
-        base:
-          $ref: '#/components/schemas/BaseResourceVariant'
-        compare:
-          $ref: '#/components/schemas/BaseResourceVariant'
-        type:
-          enum:
-          - diff
-          type: string
-      required:
-      - type
-      - base
-      - compare
-      type: object
-    ScanConfiguration:
-      description: 'A map of scanner types to their specific set of
-
-        configuration parameters.
-
-
-        The presence of a scanner''s configuration in the
-
-        provided ScanConfiguration is used to determine what scans
-
-        to run on the list of Resources provided.
-
-
-        Note that an empty config object is different than
-
-        omitting the field. An omitted scanner config results in
-
-        that scanner not being run. A provided empty scan config
-
-        will run the scanner if it is possible.'
-      example:
-        secrets: {}
-      properties:
-        container:
-          $ref: '#/components/schemas/ContainerScanConfiguration'
-        iac:
-          $ref: '#/components/schemas/IacScanConfiguration'
-        sast:
-          $ref: '#/components/schemas/SastScanConfiguration'
-        sca:
-          $ref: '#/components/schemas/ScaScanConfiguration'
-        secrets:
-          $ref: '#/components/schemas/SecretsScanConfiguration'
-      type: object
-    BaseResourceCreateItem:
-      description: BaseResources contain a single instance of testable content.
-      example:
-        resource:
-          content_type: source
-          file_patterns: []
-          repository_url: https://github.com/example/repo
-          revision_id: 00000000-0000-0000-0000-000000000000
-          root_folder_id: .
-          type: upload
-        type: base
-      properties:
-        resource:
-          allOf:
-          - $ref: '#/components/schemas/BaseResourceVariantCreateItem'
-          description: The specific representation of what content to test.
-        type:
-          enum:
-          - base
-          type: string
-      required:
-      - type
-      - resource
-      type: object
-    DeepcodeBundleSubject:
-      description: '**Deprecated**
-
-
-        Provide a BundleResource and include the
-
-        SAST Scan Configuration instead.
-
-
-        Test subject representing source code uploaded to Snyk using DeepCode
-
-        bundle APIs.
-
-
-        Deepcode bundles are accepted through the API, but are not
-
-        guaranteed to return Findings.'
-      properties:
-        bundle_id:
-          description: Deepcode Bundle ID. These IDs are sha256 digests (32 bytes or 64 hex digits).
-          pattern: ^[a-fA-F0-9]{64}$
-          type: string
-        locator:
-          allOf:
-          - $ref: '#/components/schemas/LocalPathLocator'
-          description: Locate local paths from which the source code bundle was derived.
-        type:
-          enum:
-          - deepcode_bundle
-          type: string
-      required:
-      - type
-      - bundle_id
-      - locator
-      type: object
-    TestSubject:
-      description: 'The subject of a test, which identifies the asset/project and content references
-
-        necessary to conduct a security test.'
-      discriminator:
-        mapping:
-          deepcode_bundle: '#/components/schemas/DeepcodeBundleSubject'
-          dep_graph: '#/components/schemas/DepGraphSubject'
-          git_url_coordinates: '#/components/schemas/GitUrlCoordinatesSubject'
-          other: '#/components/schemas/OtherSubject'
-          sbom: '#/components/schemas/SbomSubject'
-          sbom_reachability: '#/components/schemas/SbomReachabilitySubject'
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/DeepcodeBundleSubject'
-      - $ref: '#/components/schemas/DepGraphSubject'
-      - $ref: '#/components/schemas/GitUrlCoordinatesSubject'
-      - $ref: '#/components/schemas/SbomReachabilitySubject'
-      - $ref: '#/components/schemas/OtherSubject'
-      - $ref: '#/components/schemas/SbomSubject'
-    BaseResourceVariantCreateItem:
-      discriminator:
-        mapping:
-          bundle: '#/components/schemas/BundleResource'
-          container: '#/components/schemas/ContainerRepoResource'
-          inline: '#/components/schemas/InlineResourceCreateItem'
-          scm: '#/components/schemas/ScmResource'
-          snyk_ref: '#/components/schemas/SnykReferenceResource'
-          upload: '#/components/schemas/UploadResource'
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/InlineResourceCreateItem'
-      - $ref: '#/components/schemas/BundleResource'
-      - $ref: '#/components/schemas/UploadResource'
-      - $ref: '#/components/schemas/ScmResource'
-      - $ref: '#/components/schemas/ContainerRepoResource'
-      - $ref: '#/components/schemas/SnykReferenceResource'
-    SdlcStage:
-      description: SDLC stage where the test was initiated.
-      enum:
-      - ide
-      - cli
-      - pr_check
-      - ci_cd
-      - mcp
-      - other
-      type: string
-    ContainerRepoResource:
-      description: 'Resource representing a container repository.
-
-
-        Container Repos identify a specific container
-
-        image in a container registry. These images can be scanned
-
-        using the Snyk Container scanner.
-
-
-        Currently no scans are supported through the Test API for
-
-        ContainerRepoResources.'
-      example:
-        image_url: https://docker.io/example/image
-        tag: version_0.0.0
-        type: container
-      properties:
-        image_url:
-          description: 'URL at which the specific container image can be found
-
-            in a container registry.'
-          format: url
-          maxLength: 1024
-          type: string
-        scm_context:
-          $ref: '#/components/schemas/ScmContext'
-        tag:
-          description: Tagged version of the container to scan.
-          type: string
-        type:
-          enum:
-          - container
-          type: string
-      required:
-      - type
-      - image_url
-      - tag
-      type: object
-    TestDataCreate:
-      description: TestData represents a Test resource object.
-      properties:
-        attributes:
-          $ref: '#/components/schemas/TestAttributesCreate'
-        type:
-          enum:
-          - tests
-          type: string
-      required:
-      - type
-      - attributes
-      type: object
-    io.snyk.api.v1testdepgraph.request.PackageManager:
-      additionalProperties: {}
-      properties:
-        name:
-          type: string
-      required:
-      - name
-      type: object
-    ScaScanConfiguration:
-      description: Scan configuration parameters for the SCA scanner.
-      type: object
-    io.snyk.api.common.ErrorDocument:
-      properties:
-        errors:
-          items:
-            $ref: '#/components/schemas/io.snyk.api.common.Error'
-          minItems: 1
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/io.snyk.api.common.JsonApi'
-      required:
-      - jsonapi
-      - errors
-      type: object
-    io.snyk.api.common.LinkObject:
-      properties:
-        href:
-          $ref: '#/components/schemas/io.snyk.api.common.LinkString'
-        meta:
-          $ref: '#/components/schemas/io.snyk.api.common.Meta'
-      required:
-      - href
-      type: object
-    io.snyk.api.v1testdepgraph.request.PackageInfo:
-      additionalProperties: {}
-      properties:
-        name:
-          type: string
-        version:
-          type: string
-      required:
-      - name
-      - version
-      type: object
-    FindingSummary:
-      description: Summary of findings found by the Test.
-      properties:
-        count:
-          description: Total count of findings.
-          example: 30
-          format: uint32
-          type: integer
-        count_by:
-          additionalProperties:
-            additionalProperties:
-              format: uint32
-              type: integer
-            type: object
-          description: 'Counts of findings grouped by various finding attributes.
-
-
-            The outer record is keyed by finding attribute name. The value is a record
-
-            keyed by distinct values of this attribute, whose value is the number of
-
-            findings with a distinct value.'
-          example:
-            result_type:
-              sast: 12
-              sca: 18
-            severity:
-              critical: 2
-              high: 3
-              low: 15
-              medium: 10
-          type: object
-      required:
-      - count
-      type: object
-    BaseResource:
-      description: BaseResources contain a single instance of testable content.
-      example:
-        resource:
-          content_type: source
-          file_patterns: []
-          repository_url: https://github.com/example/repo
-          revision_id: 00000000-0000-0000-0000-000000000000
-          root_folder_id: .
-          type: upload
-        type: base
-      properties:
-        resource:
-          allOf:
-          - $ref: '#/components/schemas/BaseResourceVariant'
-          description: The specific representation of what content to test.
-        type:
-          enum:
-          - base
-          type: string
-      required:
-      - type
-      - resource
-      type: object
-    TestData:
-      description: TestData represents a Test resource object.
-      properties:
-        attributes:
-          $ref: '#/components/schemas/TestAttributes'
-        id:
-          format: uuid
-          readOnly: true
-          type: string
-        links:
-          properties:
-            findings:
-              allOf:
-              - $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
-              description: Link to the findings discovered by the test, when it completes.
-          readOnly: true
-          type: object
-        type:
-          enum:
-          - tests
-          type: string
-      required:
-      - id
-      - type
-      - attributes
-      type: object
-    io.snyk.api.common.Meta:
-      additionalProperties: {}
-      description: Free-form object that may contain non-standard information.
-      type: object
-    ReachabilityFilter:
-      description: Represent various reachability filters available for findings.
-      enum:
-      - reachable
-      - no_path_found
-      - no_info
-      type: string
-    BundleResource:
-      description: 'Resource representing Bundles of files created through the
-
-        Deepcode Bundle API.
-
-
-        Bundles contain collections of files uploaded by clients to
-
-        Snyk for testing.
-
-
-        BundleResources can be marked either as SBOM or Source to
-
-        indicate the contents of the Bundle.
-
-
-        SBOM BundleResources should provide the following fields:
-
-        - type
-
-        - bundle_id
-
-        - name
-
-        - file_patterns (may be empty)
-
-
-        Source BundleResources should provide the following fields:
-
-        - type
-
-        - bundle_id
-
-        - repository_url
-
-        - root_folder_id
-
-        - file_patterns (may be empty)
-
-
-        Currently supported scans utilizing BundleResources are:
-
-        - SAST: (1) BundleResource containing Source files.
-
-        - SBOM (SCA): (1) BundleResource containing an SBOM
-
-        - SBOM + Reachability Analysis (SCA): (1) BundleResource containing an SBOM, (1) BundleResource containing Source files.'
-      example:
-        bundle_id: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
-        content_type: source
-        file_patterns: []
-        repository_url: https://github.com/example/repo
-        root_folder_id: .
-        type: bundle
-      properties:
-        bundle_id:
-          description: 'The ID returned from the Files Bundle Store API for a given Bundle.
-
-            The Deepcode Bundle API is not intended for direct public use,
-
-            and will be replaced with the File Upload API in the future.
-
-
-            These IDs are sha256 digests (32 bytes or 64 hex digits).'
-          example: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
-          pattern: ^[a-fA-F0-9]{64}$
-          type: string
-        content_type:
-          description: 'Content present in the Bundle.
-
-
-            Currently only SBOMs and Source files are accepted
-
-            content types.'
-          enum:
-          - sbom
-          - source
-          type: string
-        file_patterns:
-          description: 'File Patterns to include in the scan. Elements must be less than 256 characters.
-
-
-            Currently unsupported. Provide an empty list.'
-          items:
-            $ref: '#/components/schemas/String256'
-          maxItems: 20
-          type: array
-        name:
-          description: 'A name to assign to the SBOM contained in the BundleRevision.
-
-
-            Overrides the filename in the BundleRevision.'
-          maxLength: 256
-          type: string
-        repository_url:
-          description: Repository URL at which the Source files are stored.
-          maxLength: 1024
-          type: string
-        root_folder_id:
-          description: Folder inside the BundleRevision at which the Source files are located.
-          maxLength: 1024
-          type: string
-        scm_context:
-          $ref: '#/components/schemas/ScmContext'
-        type:
-          enum:
-          - bundle
-          type: string
-      required:
-      - type
-      - bundle_id
-      - content_type
-      - file_patterns
-      type: object
-    TestOutcomeReason:
-      description: Reasons for the outcome.
-      enum:
-      - policy_breach
-      - timeout
-      - other
-      type: string
-    TestSubjectCreate:
-      description: 'The subject of a test, which identifies the asset/project and content references
-
-        necessary to conduct a security test.'
-      discriminator:
-        mapping:
-          deepcode_bundle: '#/components/schemas/DeepcodeBundleSubject'
-          dep_graph: '#/components/schemas/DepGraphSubjectCreate'
-          git_url_coordinates: '#/components/schemas/GitUrlCoordinatesSubject'
-          other: '#/components/schemas/OtherSubject'
-          sbom: '#/components/schemas/SbomSubject'
-          sbom_reachability: '#/components/schemas/SbomReachabilitySubject'
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/DeepcodeBundleSubject'
-      - $ref: '#/components/schemas/DepGraphSubjectCreate'
-      - $ref: '#/components/schemas/GitUrlCoordinatesSubject'
-      - $ref: '#/components/schemas/SbomReachabilitySubject'
-      - $ref: '#/components/schemas/OtherSubject'
-      - $ref: '#/components/schemas/SbomSubject'
-    ProjectNameLocator:
-      description: ProjectNameLocator locates a Snyk Project by its name.
-      properties:
-        project_name:
-          description: Name of the Snyk Project.
-          type: string
-        target_reference:
-          description: 'Target reference which differentiates this project, for example, with a
-
-            branch name or version. Projects having the same reference can be grouped
-
-            based on that reference.'
-          type: string
-        type:
-          enum:
-          - project_name
-          type: string
-      required:
-      - type
-      - project_name
-      type: object
-    InlineResource:
-      description: 'Resource comprised of file contents included directly in
-
-        a request body.
-
-
-        Currently supported scans utilizing InlineResources are:
-
-        - SCA (Open Source): (1) InlineResource containing a Dep Graph'
-      example:
-        content:
-          dep_graph:
-            graph:
-              nodes:
-              - deps: []
-                nodeId: root-node
-                pkgId: snyk@1.0.0-monorepo
-              rootNodeId: root-node
-            pkgManager:
-              name: npm
-            pkgs:
-            - id: snyk@1.0.0-monorepo
-              info:
-                name: snyk
-                version: 1.0.0-monorepo
-            schemaVersion: 1.3.0
-          type: dep_graph
-        name: dep_graph.json
-        type: inline
-      properties:
-        name:
-          maxLength: 256
-          type: string
-        scm_context:
-          $ref: '#/components/schemas/ScmContext'
-        type:
-          enum:
-          - inline
-          type: string
-      required:
-      - type
-      - name
-      type: object
-    BaseResourceVariant:
-      discriminator:
-        mapping:
-          bundle: '#/components/schemas/BundleResource'
-          container: '#/components/schemas/ContainerRepoResource'
-          inline: '#/components/schemas/InlineResource'
-          scm: '#/components/schemas/ScmResource'
-          snyk_ref: '#/components/schemas/SnykReferenceResource'
-          upload: '#/components/schemas/UploadResource'
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/InlineResource'
-      - $ref: '#/components/schemas/BundleResource'
-      - $ref: '#/components/schemas/UploadResource'
-      - $ref: '#/components/schemas/ScmResource'
-      - $ref: '#/components/schemas/ContainerRepoResource'
-      - $ref: '#/components/schemas/SnykReferenceResource'
     TestConfiguration:
       description: Test configuration.
       properties:
@@ -1450,32 +710,432 @@ components:
 
             the test will fail with reason "timeout".'
       type: object
-    TestResource:
-      anyOf:
-      - $ref: '#/components/schemas/BaseResource'
-      - $ref: '#/components/schemas/DiffResource'
-      description: 'TestResources contain single instances of testable content
-
-        to be provided to Snyk scanners.'
-      discriminator:
-        mapping:
-          base: '#/components/schemas/BaseResource'
-          diff: '#/components/schemas/DiffResource'
-        propertyName: type
-    DepGraphContent:
-      description: 'Dep Graph file contents, of the same format as Dep Graphs
-
-        provided to /v1/test-dep-graph endpoint.'
+    SdlcStage:
+      description: SDLC stage where the test was initiated.
+      enum:
+      - ide
+      - cli
+      - pr_check
+      - ci_cd
+      - mcp
+      - other
+      type: string
+    DependencyCountFact:
+      description: DependencyCountFact represents a dependency count fact.
       properties:
-        dep_graph:
-          $ref: '#/components/schemas/DepGraphRef'
+        total_dependency_count:
+          format: int64
+          type: integer
         type:
           enum:
-          - dep_graph
+          - dependency_count_fact
           type: string
       required:
       - type
-      - dep_graph
+      - total_dependency_count
+      type: object
+    Uuid:
+      format: uuid
+      type: string
+    OtherLocator:
+      description: 'OtherLocator represents any locator that this version of the API is not
+
+        capable of expressing.'
+      properties:
+        type:
+          enum:
+          - other
+          type: string
+      required:
+      - type
+      type: object
+    io.snyk.api.v1testdepgraph.request.NodeRef:
+      additionalProperties: {}
+      properties:
+        nodeId:
+          type: string
+      required:
+      - nodeId
+      type: object
+    UploadResource:
+      description: 'Resource referring to an Upload Revision created through the
+
+        File Upload API (currently in Closed Beta).
+
+
+        Revisions contain collections of files uploaded by clients to
+
+        Snyk for testing.
+
+
+        UploadResources can be marked either as SBOM or Source to
+
+        indicate the contents of the Revision.
+
+
+        SBOM UploadResources should provide the following fields:
+
+        - type
+
+        - revision_id
+
+        - name
+
+        - file_patterns (may be empty)
+
+
+        Source UploadResources should provide the following fields:
+
+        - type
+
+        - revision_id
+
+        - repository_url
+
+        - root_folder_id
+
+        - file_patterns (may be empty)
+
+
+        Currently supported scans utilizing UploadResources are:
+
+        - SBOM (SCA): (1) UploadResource containing an SBOM
+
+        - SBOM + Reachability Analysis (SCA): (1) UploadResource containing an SBOM, (1) UploadResource containing Source files.
+
+        - Secrets: (1) UploadResource containing Source files'
+      example:
+        content_type: source
+        file_patterns: []
+        repository_url: https://github.com/example/repo
+        revision_id: 00000000-0000-0000-0000-000000000000
+        root_folder_id: .
+        type: upload
+      properties:
+        content_type:
+          description: 'Content present in the Upload Revision.
+
+
+            Currently only SBOMs and Source files are accepted
+
+            content types.'
+          enum:
+          - sbom
+          - source
+          type: string
+        file_patterns:
+          description: 'File Patterns to include in the scan. Elements must be less than 256 characters.
+
+
+            Currently unsupported. Provide an empty list.'
+          items:
+            $ref: '#/components/schemas/String256'
+          maxItems: 20
+          type: array
+        name:
+          description: 'A name to assign to the SBOM contained in the UploadRevision.
+
+
+            Overrides the filename in the UploadRevision.'
+          maxLength: 256
+          type: string
+        repository_url:
+          description: Repository URL at which the Source files are stored.
+          maxLength: 1024
+          type: string
+        revision_id:
+          description: 'The ID returned from the File Upload API for a given Revision.
+
+            The File Upload API is released in Closed Beta.
+
+            Customers with access may view the preview documentation for
+
+            information on its usage.'
+          example: 5025c59b-c4dd-48e3-b98a-e98d838f4c9b
+          maxLength: 1024
+          type: string
+        root_folder_id:
+          description: Folder inside the UploadRevision at which the Source files are located.
+          maxLength: 1024
+          type: string
+        scm_context:
+          $ref: '#/components/schemas/ScmContext'
+        type:
+          enum:
+          - upload
+          type: string
+      required:
+      - type
+      - revision_id
+      - content_type
+      - file_patterns
+      type: object
+    OtherSubject:
+      description: 'OtherSubject represents any subject that this version of the API is not
+
+        capable of expressing.'
+      properties:
+        type:
+          enum:
+          - other
+          type: string
+      required:
+      - type
+      type: object
+    io.snyk.api.common.LinkProperty:
+      oneOf:
+      - $ref: '#/components/schemas/io.snyk.api.common.LinkString'
+      - $ref: '#/components/schemas/io.snyk.api.common.LinkObject'
+    ReachabilityFilter:
+      description: Represent various reachability filters available for findings.
+      enum:
+      - reachable
+      - no_path_found
+      - no_info
+      type: string
+    TestDataCreate:
+      description: TestData represents a Test resource object.
+      properties:
+        attributes:
+          $ref: '#/components/schemas/TestAttributesCreate'
+        type:
+          enum:
+          - tests
+          type: string
+      required:
+      - type
+      - attributes
+      type: object
+    io.snyk.api.common.ErrorLink:
+      additionalProperties:
+        $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+      description: A link that leads to further details about this particular occurrance of the problem.
+      properties:
+        about:
+          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+      type: object
+    TestFact:
+      allOf:
+      - $ref: '#/components/schemas/DependencyCountFact'
+      description: TestFact represents a test fact union.
+      type: object
+    DiffResource:
+      description: 'DiffResources contain two versions of the same content
+
+        to compare against each other.
+
+
+        The Base and Compare fields contain Resources representing
+
+        an "existing" (base) version as well as a "new" (compare)
+
+        version. Most commonly these Resources will be of the same type,
+
+        e.g. an ScmResource containing a reference the `main` branch being
+
+        compared to an ScmResource containing a reference to a new
+
+        feature branch.
+
+
+        Currently no scans are supported through the Test API
+
+        for DiffResources.'
+      example:
+        base:
+          file_patterns: []
+          integration_id: 00000000-0000-0000-0000-000000000000
+          ref: main
+          repo_url: https://github.com/example/repo
+          type: scm
+        compare:
+          file_patterns: []
+          integration_id: 00000000-0000-0000-0000-000000000000
+          ref: feat/homepage
+          repo_url: https://github.com/example/repo
+          type: scm
+        type: diff
+      properties:
+        base:
+          $ref: '#/components/schemas/BaseResourceVariant'
+        compare:
+          $ref: '#/components/schemas/BaseResourceVariant'
+        type:
+          enum:
+          - diff
+          type: string
+      required:
+      - type
+      - base
+      - compare
+      type: object
+    FindingSummary:
+      description: Summary of findings found by the Test.
+      properties:
+        count:
+          description: Total count of findings.
+          example: 30
+          format: uint32
+          type: integer
+        count_by:
+          additionalProperties:
+            additionalProperties:
+              format: uint32
+              type: integer
+            type: object
+          description: 'Counts of findings grouped by various finding attributes.
+
+
+            The outer record is keyed by finding attribute name. The value is a record
+
+            keyed by distinct values of this attribute, whose value is the number of
+
+            findings with a distinct value.'
+          example:
+            result_type:
+              sast: 12
+              sca: 18
+            severity:
+              critical: 2
+              high: 3
+              low: 15
+              medium: 10
+          type: object
+      required:
+      - count
+      type: object
+    TestData:
+      description: TestData represents a Test resource object.
+      properties:
+        attributes:
+          $ref: '#/components/schemas/TestAttributes'
+        id:
+          format: uuid
+          readOnly: true
+          type: string
+        links:
+          properties:
+            findings:
+              allOf:
+              - $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+              description: Link to the findings discovered by the test, when it completes.
+          readOnly: true
+          type: object
+        type:
+          enum:
+          - tests
+          type: string
+      required:
+      - id
+      - type
+      - attributes
+      type: object
+    io.snyk.api.common.LinkObject:
+      properties:
+        href:
+          $ref: '#/components/schemas/io.snyk.api.common.LinkString'
+        meta:
+          $ref: '#/components/schemas/io.snyk.api.common.Meta'
+      required:
+      - href
+      type: object
+    IacScanConfiguration:
+      description: Scan configuration parameters for the IAC scanner.
+      type: object
+    TestSubjectLocator:
+      discriminator:
+        mapping:
+          local_path: '#/components/schemas/LocalPathLocator'
+          other: '#/components/schemas/OtherLocator'
+          project_entity: '#/components/schemas/ProjectEntityLocator'
+          project_name: '#/components/schemas/ProjectNameLocator'
+          scm_repo: '#/components/schemas/ScmRepoLocator'
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/ProjectEntityLocator'
+      - $ref: '#/components/schemas/ProjectNameLocator'
+      - $ref: '#/components/schemas/ScmRepoLocator'
+      - $ref: '#/components/schemas/LocalPathLocator'
+      - $ref: '#/components/schemas/OtherLocator'
+    DeepcodeBundleSubject:
+      description: '**Deprecated**
+
+
+        Provide a BundleResource and include the
+
+        SAST Scan Configuration instead.
+
+
+        Test subject representing source code uploaded to Snyk using DeepCode
+
+        bundle APIs.
+
+
+        Deepcode bundles are accepted through the API, but are not
+
+        guaranteed to return Findings.'
+      properties:
+        bundle_id:
+          description: Deepcode Bundle ID. These IDs are sha256 digests (32 bytes or 64 hex digits).
+          pattern: ^[a-fA-F0-9]{64}$
+          type: string
+        locator:
+          allOf:
+          - $ref: '#/components/schemas/LocalPathLocator'
+          description: Locate local paths from which the source code bundle was derived.
+        type:
+          enum:
+          - deepcode_bundle
+          type: string
+      required:
+      - type
+      - bundle_id
+      - locator
+      type: object
+    PolicyRefSet:
+      description: A set of local and/or managed policies.
+      properties:
+        ids:
+          items:
+            $ref: '#/components/schemas/Uuid'
+          type: array
+        local_policy:
+          type: boolean
+      required:
+      - ids
+      type: object
+    SbomSubject:
+      description: '**Deprecated**
+
+
+        Provide a BundleResource with SBOM Bundle ID and include
+
+        SCA Scan Configuration instead.
+
+
+        SBOM tests can also be initiated using an
+
+        UploadResource if using the File Upload API.
+
+
+        Test subject for SBOM test without reachability analysis.'
+      properties:
+        locator:
+          allOf:
+          - $ref: '#/components/schemas/LocalPathLocator'
+          description: Locate the local paths from which the SBOM and source code were derived.
+        sbom_bundle_id:
+          description: The SBOM to test for vulnerable dependencies.
+          pattern: ^[a-fA-F0-9]{64}$
+          type: string
+        type:
+          enum:
+          - sbom
+          type: string
+      required:
+      - type
+      - sbom_bundle_id
+      - locator
       type: object
     SbomReachabilitySubject:
       description: '**Deprecated**
@@ -1517,113 +1177,18 @@ components:
       - code_bundle_id
       - locator
       type: object
-    Uuid:
-      format: uuid
-      type: string
-    SbomSubject:
-      description: '**Deprecated**
-
-
-        Provide a BundleResource with SBOM Bundle ID and include
-
-        SCA Scan Configuration instead.
-
-
-        SBOM tests can also be initiated using an
-
-        UploadResource if using the File Upload API.
-
-
-        Test subject for SBOM test without reachability analysis.'
+    io.snyk.api.common.ErrorDocument:
       properties:
-        locator:
-          allOf:
-          - $ref: '#/components/schemas/LocalPathLocator'
-          description: Locate the local paths from which the SBOM and source code were derived.
-        sbom_bundle_id:
-          description: The SBOM to test for vulnerable dependencies.
-          pattern: ^[a-fA-F0-9]{64}$
-          type: string
-        type:
-          enum:
-          - sbom
-          type: string
-      required:
-      - type
-      - sbom_bundle_id
-      - locator
-      type: object
-    DepGraphRef:
-      additionalProperties: {}
-      properties:
-        graph:
-          $ref: '#/components/schemas/io.snyk.api.v1testdepgraph.request.Graph'
-        pkgManager:
-          $ref: '#/components/schemas/io.snyk.api.v1testdepgraph.request.PackageManager'
-        pkgs:
+        errors:
           items:
-            $ref: '#/components/schemas/io.snyk.api.v1testdepgraph.request.Package'
+            $ref: '#/components/schemas/io.snyk.api.common.Error'
+          minItems: 1
           type: array
-        schemaVersion:
-          type: string
+        jsonapi:
+          $ref: '#/components/schemas/io.snyk.api.common.JsonApi'
       required:
-      - schemaVersion
-      - pkgManager
-      - pkgs
-      - graph
-      type: object
-      x-go-type: json.RawMessage
-    SecretsScanConfiguration:
-      description: Scan configuration parameters for the Secrets scanner.
-      type: object
-    IacScanConfiguration:
-      description: Scan configuration parameters for the IAC scanner.
-      type: object
-    DependencyCountFact:
-      description: DependencyCountFact represents a dependency count fact.
-      properties:
-        total_dependency_count:
-          format: int64
-          type: integer
-        type:
-          enum:
-          - dependency_count_fact
-          type: string
-      required:
-      - type
-      - total_dependency_count
-      type: object
-    io.snyk.api.common.LinkProperty:
-      oneOf:
-      - $ref: '#/components/schemas/io.snyk.api.common.LinkString'
-      - $ref: '#/components/schemas/io.snyk.api.common.LinkObject'
-    DepGraphSubject:
-      description: '**Deprecated**
-
-
-        Provide an InlineResource with the DepGraph contents
-
-        and the SCA Scan Configuration instead.
-
-
-        Test subject representing a Snyk dependency graph (a legacy SBOM format).'
-      properties:
-        locator:
-          allOf:
-          - $ref: '#/components/schemas/LocalPathLocator'
-          description: 'Source file(s) from which the dependency graph was derived.
-
-
-            For some managed package ecosystems (examples: Maven, Yarn workspaces),
-
-            Snyk might derive a dependency graph from several files.'
-        type:
-          enum:
-          - dep_graph
-          type: string
-      required:
-      - type
-      - locator
+      - jsonapi
+      - errors
       type: object
     TestAttributes:
       description: TestAttributes represents the attributes of a Test resource.
@@ -1782,71 +1347,509 @@ components:
       - created_at
       - state
       type: object
-    ContainerScanConfiguration:
-      description: Scan configuration parameters for the Container scanner.
-      type: object
-    TimeoutSpec:
-      description: 'Specification for a test timeout policy. If the test does not complete within
-
-        the seconds specified, the test will instantly complete with the given outcome.'
+    DepGraphRef:
+      additionalProperties: {}
       properties:
-        outcome:
-          $ref: '#/components/schemas/PassFail'
-        seconds:
-          format: uint32
-          type: integer
-      required:
-      - seconds
-      - outcome
-      type: object
-    TestState:
-      description: Test execution state information.
-      properties:
-        errors:
-          description: 'Errors which occurred during the execution of a test.
-
-
-            If execution state is errored, at least one error will be
-
-            indicated here.'
+        graph:
+          $ref: '#/components/schemas/io.snyk.api.v1testdepgraph.request.Graph'
+        pkgManager:
+          $ref: '#/components/schemas/io.snyk.api.v1testdepgraph.request.PackageManager'
+        pkgs:
           items:
-            $ref: '#/components/schemas/io.snyk.api.common.Error'
+            $ref: '#/components/schemas/io.snyk.api.v1testdepgraph.request.Package'
           type: array
-        execution:
+        schemaVersion:
+          type: string
+      required:
+      - schemaVersion
+      - pkgManager
+      - pkgs
+      - graph
+      type: object
+      x-go-type: json.RawMessage
+    SnykReferenceResource:
+      description: 'SnykReferenceResources contain references to source code,
+
+        containers, SBOMs, and other testable content that has already
+
+        been provided to Snyk to create a Project or Target.
+
+
+        If the intended content to test is already known to Snyk as a
+
+        Project, Target, or otherwise, this SnykReferenceResource can
+
+        be used to initiate a Test with the appropriate ID.
+
+
+        Currently no scans are supported through the Test API for
+
+        SnykReferenceResources.'
+      example:
+        ref_id: 00000000-0000-0000-0000-000000000000
+        reference_type: project
+        type: snyk_ref
+      properties:
+        ref_id:
+          description: ID referring the contents already known by Snyk.
+          format: uuid
+          type: string
+        reference_type:
+          description: 'Kind of Snyk reference contained in Ref ID.
+
+
+            Targets and Projects exist in Snyk currently.
+
+
+            Assets are a feature in-development, and are listed
+
+            here for future-forward compatibility.'
+          enum:
+          - target
+          - project
+          - asset
+          type: string
+        scm_context:
+          $ref: '#/components/schemas/ScmContext'
+        type:
+          enum:
+          - snyk_ref
+          type: string
+      required:
+      - type
+      - reference_type
+      - ref_id
+      type: object
+    ProjectEntityLocator:
+      description: ProjectEntityLocator locates a Snyk Project by its public ID.
+      properties:
+        project_id:
+          description: Public ID of the Snyk Project.
+          format: uuid
+          type: string
+        type:
+          enum:
+          - project_entity
+          type: string
+      required:
+      - type
+      - project_id
+      type: object
+    BundleResource:
+      description: 'Resource representing Bundles of files created through the
+
+        Deepcode Bundle API.
+
+
+        Bundles contain collections of files uploaded by clients to
+
+        Snyk for testing.
+
+
+        BundleResources can be marked either as SBOM or Source to
+
+        indicate the contents of the Bundle.
+
+
+        SBOM BundleResources should provide the following fields:
+
+        - type
+
+        - bundle_id
+
+        - name
+
+        - file_patterns (may be empty)
+
+
+        Source BundleResources should provide the following fields:
+
+        - type
+
+        - bundle_id
+
+        - repository_url
+
+        - root_folder_id
+
+        - file_patterns (may be empty)
+
+
+        Currently supported scans utilizing BundleResources are:
+
+        - SAST: (1) BundleResource containing Source files.
+
+        - SBOM (SCA): (1) BundleResource containing an SBOM
+
+        - SBOM + Reachability Analysis (SCA): (1) BundleResource containing an SBOM, (1) BundleResource containing Source files.'
+      example:
+        bundle_id: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+        content_type: source
+        file_patterns: []
+        repository_url: https://github.com/example/repo
+        root_folder_id: .
+        type: bundle
+      properties:
+        bundle_id:
+          description: 'The ID returned from the Files Bundle Store API for a given Bundle.
+
+            The Deepcode Bundle API is not intended for direct public use,
+
+            and will be replaced with the File Upload API in the future.
+
+
+            These IDs are sha256 digests (32 bytes or 64 hex digits).'
+          example: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+          pattern: ^[a-fA-F0-9]{64}$
+          type: string
+        content_type:
+          description: 'Content present in the Bundle.
+
+
+            Currently only SBOMs and Source files are accepted
+
+            content types.'
+          enum:
+          - sbom
+          - source
+          type: string
+        file_patterns:
+          description: 'File Patterns to include in the scan. Elements must be less than 256 characters.
+
+
+            Currently unsupported. Provide an empty list.'
+          items:
+            $ref: '#/components/schemas/String256'
+          maxItems: 20
+          type: array
+        name:
+          description: 'A name to assign to the SBOM contained in the BundleRevision.
+
+
+            Overrides the filename in the BundleRevision.'
+          maxLength: 256
+          type: string
+        repository_url:
+          description: Repository URL at which the Source files are stored.
+          maxLength: 1024
+          type: string
+        root_folder_id:
+          description: Folder inside the BundleRevision at which the Source files are located.
+          maxLength: 1024
+          type: string
+        scm_context:
+          $ref: '#/components/schemas/ScmContext'
+        type:
+          enum:
+          - bundle
+          type: string
+      required:
+      - type
+      - bundle_id
+      - content_type
+      - file_patterns
+      type: object
+    GitUrlCoordinatesSubject:
+      description: '**Deprecated**
+
+
+        Provide an ScmResource and include the
+
+        SAST Scan Configuration instead.
+
+
+        Test subject representing a source tree located in a Git repository that
+
+        has a Snyk SCM integration.
+
+
+        Git URL coordinates are accepted through the API, but are not
+
+        guaranteed to return Findings.'
+      properties:
+        commit_id:
+          description: 'Commit ID of the Git commit from which content will be retrieved for the
+
+            test.'
+          pattern: ^[a-f0-9]{40,}$
+          type: string
+        integration_id:
+          description: Integration used to access the Git SCM repository in order to retrieve its source contents.
+          format: uuid
+          type: string
+        locator:
           allOf:
-          - $ref: '#/components/schemas/TestExecutionStates'
-          description: 'Current execution state of the test. This should be polled to completion
+          - $ref: '#/components/schemas/ScmRepoLocator'
+          description: 'Locate the SCM repository from which content will be retrieved for the
 
-            ("completed" or "errored") when waiting for a test result.
-
-
-            Completion is no guarantee of an outcome in the event of fatal errors.'
-        warnings:
-          description: 'Non-fatal errors which occurred during the execution of a test.
-
-
-            Execution state and warnings are not linked; any of passed/failed/
-
-            errored tests can have warnings.'
-          items:
-            $ref: '#/components/schemas/io.snyk.api.common.Error'
-          type: array
+            test.'
+        type:
+          enum:
+          - git_url_coordinates
+          type: string
       required:
-      - execution
+      - type
+      - integration_id
+      - commit_id
+      - locator
       type: object
-    TestFact:
-      allOf:
-      - $ref: '#/components/schemas/DependencyCountFact'
-      description: TestFact represents a test fact union.
-      type: object
-    TestRequestBody:
-      description: TestRequestBody represents the request body used when creating an Test.
+    io.snyk.api.common.LinkString:
+      format: uri
+      type: string
+    io.snyk.api.common.JsonApi:
       properties:
-        data:
-          $ref: '#/components/schemas/TestDataCreate'
+        version:
+          description: Version of the JSON API specification this server supports.
+          enum:
+          - '1.0'
+          type: string
       required:
-      - data
+      - version
       type: object
+    io.snyk.api.v1testdepgraph.request.PackageManager:
+      additionalProperties: {}
+      properties:
+        name:
+          type: string
+      required:
+      - name
+      type: object
+    BaseResource:
+      description: BaseResources contain a single instance of testable content.
+      example:
+        resource:
+          content_type: source
+          file_patterns: []
+          repository_url: https://github.com/example/repo
+          revision_id: 00000000-0000-0000-0000-000000000000
+          root_folder_id: .
+          type: upload
+        type: base
+      properties:
+        resource:
+          allOf:
+          - $ref: '#/components/schemas/BaseResourceVariant'
+          description: The specific representation of what content to test.
+        type:
+          enum:
+          - base
+          type: string
+      required:
+      - type
+      - resource
+      type: object
+    InlineResource:
+      description: 'Resource comprised of file contents included directly in
+
+        a request body.
+
+
+        Currently supported scans utilizing InlineResources are:
+
+        - SCA (Open Source): (1) InlineResource containing a Dep Graph'
+      example:
+        content:
+          dep_graph:
+            graph:
+              nodes:
+              - deps: []
+                nodeId: root-node
+                pkgId: snyk@1.0.0-monorepo
+              rootNodeId: root-node
+            pkgManager:
+              name: npm
+            pkgs:
+            - id: snyk@1.0.0-monorepo
+              info:
+                name: snyk
+                version: 1.0.0-monorepo
+            schemaVersion: 1.3.0
+          type: dep_graph
+        name: dep_graph.json
+        type: inline
+      properties:
+        name:
+          maxLength: 256
+          type: string
+        scm_context:
+          $ref: '#/components/schemas/ScmContext'
+        type:
+          enum:
+          - inline
+          type: string
+      required:
+      - type
+      - name
+      type: object
+    ContainerRepoResource:
+      description: 'Resource representing a container repository.
+
+
+        Container Repos identify a specific container
+
+        image in a container registry. These images can be scanned
+
+        using the Snyk Container scanner.
+
+
+        Currently no scans are supported through the Test API for
+
+        ContainerRepoResources.'
+      example:
+        image_url: https://docker.io/example/image
+        tag: version_0.0.0
+        type: container
+      properties:
+        image_url:
+          description: 'URL at which the specific container image can be found
+
+            in a container registry.'
+          format: url
+          maxLength: 1024
+          type: string
+        scm_context:
+          $ref: '#/components/schemas/ScmContext'
+        tag:
+          description: Tagged version of the container to scan.
+          type: string
+        type:
+          enum:
+          - container
+          type: string
+      required:
+      - type
+      - image_url
+      - tag
+      type: object
+    ScaScanConfiguration:
+      description: Scan configuration parameters for the SCA scanner.
+      type: object
+    LocalPathLocator:
+      description: 'LocalPathLocator locates a test subject by local file paths, relative to the
+
+        working copy top-level directory of the source code.'
+      properties:
+        paths:
+          description: Local file paths. Limited to 256 characters.
+          items:
+            $ref: '#/components/schemas/String256'
+          minItems: 1
+          type: array
+        type:
+          enum:
+          - local_path
+          type: string
+      required:
+      - type
+      - paths
+      type: object
+    BaseResourceCreateItem:
+      description: BaseResources contain a single instance of testable content.
+      example:
+        resource:
+          content_type: source
+          file_patterns: []
+          repository_url: https://github.com/example/repo
+          revision_id: 00000000-0000-0000-0000-000000000000
+          root_folder_id: .
+          type: upload
+        type: base
+      properties:
+        resource:
+          allOf:
+          - $ref: '#/components/schemas/BaseResourceVariantCreateItem'
+          description: The specific representation of what content to test.
+        type:
+          enum:
+          - base
+          type: string
+      required:
+      - type
+      - resource
+      type: object
+    DiffResourceCreateItem:
+      description: 'DiffResources contain two versions of the same content
+
+        to compare against each other.
+
+
+        The Base and Compare fields contain Resources representing
+
+        an "existing" (base) version as well as a "new" (compare)
+
+        version. Most commonly these Resources will be of the same type,
+
+        e.g. an ScmResource containing a reference the `main` branch being
+
+        compared to an ScmResource containing a reference to a new
+
+        feature branch.
+
+
+        Currently no scans are supported through the Test API
+
+        for DiffResources.'
+      example:
+        base:
+          file_patterns: []
+          integration_id: 00000000-0000-0000-0000-000000000000
+          ref: main
+          repo_url: https://github.com/example/repo
+          type: scm
+        compare:
+          file_patterns: []
+          integration_id: 00000000-0000-0000-0000-000000000000
+          ref: feat/homepage
+          repo_url: https://github.com/example/repo
+          type: scm
+        type: diff
+      properties:
+        base:
+          $ref: '#/components/schemas/BaseResourceVariantCreateItem'
+        compare:
+          $ref: '#/components/schemas/BaseResourceVariantCreateItem'
+        type:
+          enum:
+          - diff
+          type: string
+      required:
+      - type
+      - base
+      - compare
+      type: object
+    String256:
+      maxLength: 256
+      type: string
+    TestOutcomeReason:
+      description: Reasons for the outcome.
+      enum:
+      - policy_breach
+      - timeout
+      - other
+      type: string
+    io.snyk.api.v1testdepgraph.request.PackageInfo:
+      additionalProperties: {}
+      properties:
+        name:
+          type: string
+        version:
+          type: string
+      required:
+      - name
+      - version
+      type: object
+    TestResource:
+      anyOf:
+      - $ref: '#/components/schemas/BaseResource'
+      - $ref: '#/components/schemas/DiffResource'
+      description: 'TestResources contain single instances of testable content
+
+        to be provided to Snyk scanners.'
+      discriminator:
+        mapping:
+          base: '#/components/schemas/BaseResource'
+          diff: '#/components/schemas/DiffResource'
+        propertyName: type
     ScmResource:
       description: 'Resource representing a repository of source files located in
 
@@ -1919,26 +1922,127 @@ components:
       - repo_url
       - integration_id
       type: object
-    io.snyk.api.v1testdepgraph.request.Graph:
-      additionalProperties: {}
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/io.snyk.api.v1testdepgraph.request.Node'
-          type: array
-        rootNodeId:
-          type: string
-      required:
-      - rootNodeId
-      - nodes
+    SecretsScanConfiguration:
+      description: Scan configuration parameters for the Secrets scanner.
       type: object
-    io.snyk.api.common.ErrorLink:
-      additionalProperties:
-        $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
-      description: A link that leads to further details about this particular occurrance of the problem.
+    LocalPolicy:
+      description: Locally configured policy options for determining outcome of this specific test.
       properties:
-        about:
-          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+        fail_on_upgradable:
+          default: false
+          description: "Use to fail a test when there is at least one vulnerable finding that can be fixed by upgrading the version of the related\n   dependency. E.g. bumping lodash from 1.1.1 to 1.1.2."
+          type: boolean
+        ignores:
+          description: Defines ignore rules for known issues.
+          items:
+            $ref: '#/components/schemas/LocalIgnore'
+          type: array
+        reachability_filter:
+          $ref: '#/components/schemas/ReachabilityFilter'
+        risk_score_threshold:
+          description: Findings of equal or greater risk score will fail the test.
+          format: uint16
+          maximum: 1000
+          minimum: 0
+          type: integer
+        severity_threshold:
+          allOf:
+          - $ref: '#/components/schemas/Severity'
+          description: Findings of equal or greater severity will fail the test.
+        suppress_pending_ignores:
+          default: false
+          description: 'Suppress ignores pending approval, so that they do not fail the test. If
+
+            allowed by administrators, this might be set in developer workflows in
+
+            order to unblock local development while an ignore is pending approval.'
+          type: boolean
+      required:
+      - suppress_pending_ignores
+      type: object
+    ContainerScanConfiguration:
+      description: Scan configuration parameters for the Container scanner.
+      type: object
+    ScmContext:
+      description: 'Additional SCM information about a resource.
+
+        Provides context about where the content came from; the resource itself is the testable item.
+
+        ScmResource does not use this; it identifies SCM via its own fields.'
+      properties:
+        branch:
+          maxLength: 256
+          type: string
+        commit_ref:
+          maxLength: 1024
+          type: string
+        repo_url:
+          maxLength: 1024
+          type: string
+      type: object
+    io.snyk.api.common.Meta:
+      additionalProperties: {}
+      description: Free-form object that may contain non-standard information.
+      type: object
+    TestComponent:
+      description: TestComponent represents a Test Component.
+      properties:
+        asset_id:
+          allOf:
+          - $ref: '#/components/schemas/Uuid'
+          description: ID of Asset associated with Component.
+        key:
+          allOf:
+          - $ref: '#/components/schemas/String256'
+          description: Key identifying the component within the Test.
+        project_id:
+          allOf:
+          - $ref: '#/components/schemas/Uuid'
+          description: ID of Project associated with Component.
+        scan_type:
+          allOf:
+          - $ref: '#/components/schemas/FindingType'
+          description: 'Type of Scanner producing Findings associated with this
+
+            Component.'
+      required:
+      - key
+      - scan_type
+      type: object
+    TestState:
+      description: Test execution state information.
+      properties:
+        errors:
+          description: 'Errors which occurred during the execution of a test.
+
+
+            If execution state is errored, at least one error will be
+
+            indicated here.'
+          items:
+            $ref: '#/components/schemas/io.snyk.api.common.Error'
+          type: array
+        execution:
+          allOf:
+          - $ref: '#/components/schemas/TestExecutionStates'
+          description: 'Current execution state of the test. This should be polled to completion
+
+            ("completed" or "errored") when waiting for a test result.
+
+
+            Completion is no guarantee of an outcome in the event of fatal errors.'
+        warnings:
+          description: 'Non-fatal errors which occurred during the execution of a test.
+
+
+            Execution state and warnings are not linked; any of passed/failed/
+
+            errored tests can have warnings.'
+          items:
+            $ref: '#/components/schemas/io.snyk.api.common.Error'
+          type: array
+      required:
+      - execution
       type: object
     InlineResourceCreateItem:
       description: 'Resource comprised of file contents included directly in
@@ -1988,10 +2092,26 @@ components:
       - name
       - content
       type: object
-    InlineContent:
-      allOf:
-      - $ref: '#/components/schemas/DepGraphContent'
-      description: Content formats accepted inline for testing.
+    ProjectNameLocator:
+      description: ProjectNameLocator locates a Snyk Project by its name.
+      properties:
+        project_name:
+          description: Name of the Snyk Project.
+          type: string
+        target_reference:
+          description: 'Target reference which differentiates this project, for example, with a
+
+            branch name or version. Projects having the same reference can be grouped
+
+            based on that reference.'
+          type: string
+        type:
+          enum:
+          - project_name
+          type: string
+      required:
+      - type
+      - project_name
       type: object
     io.snyk.api.common.Error:
       properties:
@@ -2026,18 +2146,6 @@ components:
       required:
       - status
       - detail
-      type: object
-    OtherSubject:
-      description: 'OtherSubject represents any subject that this version of the API is not
-
-        capable of expressing.'
-      properties:
-        type:
-          enum:
-          - other
-          type: string
-      required:
-      - type
       type: object
     TestAttributesCreate:
       description: TestAttributes represents the attributes of a Test resource.
@@ -2126,87 +2234,69 @@ components:
           maxLength: 64
           type: string
       type: object
-    OtherLocator:
-      description: 'OtherLocator represents any locator that this version of the API is not
-
-        capable of expressing.'
+    TestRequestBody:
+      description: TestRequestBody represents the request body used when creating an Test.
       properties:
-        type:
-          enum:
-          - other
-          type: string
+        data:
+          $ref: '#/components/schemas/TestDataCreate'
       required:
-      - type
+      - data
       type: object
-    SnykReferenceResource:
-      description: 'SnykReferenceResources contain references to source code,
+    ScanConfiguration:
+      description: 'A map of scanner types to their specific set of
 
-        containers, SBOMs, and other testable content that has already
-
-        been provided to Snyk to create a Project or Target.
+        configuration parameters.
 
 
-        If the intended content to test is already known to Snyk as a
+        The presence of a scanner''s configuration in the
 
-        Project, Target, or otherwise, this SnykReferenceResource can
+        provided ScanConfiguration is used to determine what scans
 
-        be used to initiate a Test with the appropriate ID.
+        to run on the list of Resources provided.
 
 
-        Currently no scans are supported through the Test API for
+        Note that an empty config object is different than
 
-        SnykReferenceResources.'
+        omitting the field. An omitted scanner config results in
+
+        that scanner not being run. A provided empty scan config
+
+        will run the scanner if it is possible.'
       example:
-        ref_id: 00000000-0000-0000-0000-000000000000
-        reference_type: project
-        type: snyk_ref
+        secrets: {}
       properties:
-        ref_id:
-          description: ID referring the contents already known by Snyk.
-          format: uuid
-          type: string
-        reference_type:
-          description: 'Kind of Snyk reference contained in Ref ID.
-
-
-            Targets and Projects exist in Snyk currently.
-
-
-            Assets are a feature in-development, and are listed
-
-            here for future-forward compatibility.'
-          enum:
-          - target
-          - project
-          - asset
-          type: string
-        scm_context:
-          $ref: '#/components/schemas/ScmContext'
-        type:
-          enum:
-          - snyk_ref
-          type: string
-      required:
-      - type
-      - reference_type
-      - ref_id
+        container:
+          $ref: '#/components/schemas/ContainerScanConfiguration'
+        iac:
+          $ref: '#/components/schemas/IacScanConfiguration'
+        sast:
+          $ref: '#/components/schemas/SastScanConfiguration'
+        sca:
+          $ref: '#/components/schemas/ScaScanConfiguration'
+        secrets:
+          $ref: '#/components/schemas/SecretsScanConfiguration'
       type: object
-    Severity:
-      description: Indicate the severity of a finding discovered by a Test.
-      enum:
-      - critical
-      - high
-      - medium
-      - low
-      - none
-      - other
-      type: string
     PassFail:
       description: Indicate whether a Test passes or fails.
       enum:
       - pass
       - fail
       type: string
+    DepGraphContent:
+      description: 'Dep Graph file contents, of the same format as Dep Graphs
+
+        provided to /v1/test-dep-graph endpoint.'
+      properties:
+        dep_graph:
+          $ref: '#/components/schemas/DepGraphRef'
+        type:
+          enum:
+          - dep_graph
+          type: string
+      required:
+      - type
+      - dep_graph
+      type: object
     FindingType:
       description: Type of Finding which was discovered.
       enum:
@@ -2218,115 +2308,107 @@ components:
       - secret
       - secrets
       type: string
-    io.snyk.api.common.LinkString:
-      format: uri
-      type: string
-    ProjectEntityLocator:
-      description: ProjectEntityLocator locates a Snyk Project by its public ID.
+    io.snyk.api.v1testdepgraph.request.Node:
+      additionalProperties: {}
       properties:
-        project_id:
-          description: Public ID of the Snyk Project.
-          format: uuid
-          type: string
-        type:
-          enum:
-          - project_entity
-          type: string
-      required:
-      - type
-      - project_id
-      type: object
-    PolicyRefSet:
-      description: A set of local and/or managed policies.
-      properties:
-        ids:
+        deps:
           items:
-            $ref: '#/components/schemas/Uuid'
+            $ref: '#/components/schemas/io.snyk.api.v1testdepgraph.request.NodeRef'
           type: array
-        local_policy:
-          type: boolean
-      required:
-      - ids
-      type: object
-    io.snyk.api.common.JsonApi:
-      properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          enum:
-          - '1.0'
+        nodeId:
+          type: string
+        pkgId:
           type: string
       required:
-      - version
+      - nodeId
+      - pkgId
+      - deps
       type: object
-    GitUrlCoordinatesSubject:
+    DepGraphSubjectCreate:
       description: '**Deprecated**
 
 
-        Provide an ScmResource and include the
+        Provide an InlineResource with the DepGraph contents
 
-        SAST Scan Configuration instead.
-
-
-        Test subject representing a source tree located in a Git repository that
-
-        has a Snyk SCM integration.
+        and the SCA Scan Configuration instead.
 
 
-        Git URL coordinates are accepted through the API, but are not
-
-        guaranteed to return Findings.'
+        Test subject representing a Snyk dependency graph (a legacy SBOM format).'
       properties:
-        commit_id:
-          description: 'Commit ID of the Git commit from which content will be retrieved for the
+        dep_graph:
+          allOf:
+          - $ref: '#/components/schemas/DepGraphRef'
+          description: 'When creating a test, provide the dep-graph contents inline to the request.
 
-            test.'
-          pattern: ^[a-f0-9]{40,}$
-          type: string
-        integration_id:
-          description: Integration used to access the Git SCM repository in order to retrieve its source contents.
-          format: uuid
-          type: string
+
+            This attribute is only available when creating a new Test.'
         locator:
           allOf:
-          - $ref: '#/components/schemas/ScmRepoLocator'
-          description: 'Locate the SCM repository from which content will be retrieved for the
+          - $ref: '#/components/schemas/LocalPathLocator'
+          description: 'Source file(s) from which the dependency graph was derived.
 
-            test.'
+
+            For some managed package ecosystems (examples: Maven, Yarn workspaces),
+
+            Snyk might derive a dependency graph from several files.'
         type:
           enum:
-          - git_url_coordinates
+          - dep_graph
           type: string
       required:
       - type
-      - integration_id
-      - commit_id
+      - dep_graph
       - locator
       type: object
-    TestComponent:
-      description: TestComponent represents a Test Component.
-      properties:
-        asset_id:
-          allOf:
-          - $ref: '#/components/schemas/Uuid'
-          description: ID of Asset associated with Component.
-        key:
-          allOf:
-          - $ref: '#/components/schemas/String256'
-          description: Key identifying the component within the Test.
-        project_id:
-          allOf:
-          - $ref: '#/components/schemas/Uuid'
-          description: ID of Project associated with Component.
-        scan_type:
-          allOf:
-          - $ref: '#/components/schemas/FindingType'
-          description: 'Type of Scanner producing Findings associated with this
+    TimeoutSpec:
+      description: 'Specification for a test timeout policy. If the test does not complete within
 
-            Component.'
+        the seconds specified, the test will instantly complete with the given outcome.'
+      properties:
+        outcome:
+          $ref: '#/components/schemas/PassFail'
+        seconds:
+          format: uint32
+          type: integer
       required:
-      - key
-      - scan_type
+      - seconds
+      - outcome
       type: object
+    ScmRepoLocator:
+      description: ScmRepoLocator locates a test subject by SCM repository coordinates.
+      properties:
+        branch_name:
+          description: 'Branch name, if known and applicable to locating the test subject.
+
+
+            If not specified, the branch name can be assumed to be the "default
+
+            integration branch" of the repository.'
+          type: string
+        type:
+          enum:
+          - scm_repo
+          type: string
+        url:
+          description: URL of the SCM repository.
+          format: uri
+          type: string
+      required:
+      - type
+      - url
+      type: object
+    TestResourceCreateItem:
+      anyOf:
+      - $ref: '#/components/schemas/BaseResourceCreateItem'
+      - $ref: '#/components/schemas/DiffResourceCreateItem'
+      description: 'TestResources contain single instances of testable content
+
+        to be provided to Snyk scanners.'
+      discriminator:
+        mapping:
+          base: '#/components/schemas/BaseResourceCreateItem'
+          diff: '#/components/schemas/DiffResourceCreateItem'
+        propertyName: type
     LocalIgnore:
       properties:
         created_at:
@@ -2367,240 +2449,176 @@ components:
       required:
       - vuln_id
       type: object
-    DiffResourceCreateItem:
-      description: 'DiffResources contain two versions of the same content
+    TestSubjectCreate:
+      description: 'The subject of a test, which identifies the asset/project and content references
 
-        to compare against each other.
-
-
-        The Base and Compare fields contain Resources representing
-
-        an "existing" (base) version as well as a "new" (compare)
-
-        version. Most commonly these Resources will be of the same type,
-
-        e.g. an ScmResource containing a reference the `main` branch being
-
-        compared to an ScmResource containing a reference to a new
-
-        feature branch.
-
-
-        Currently no scans are supported through the Test API
-
-        for DiffResources.'
-      example:
-        base:
-          file_patterns: []
-          integration_id: 00000000-0000-0000-0000-000000000000
-          ref: main
-          repo_url: https://github.com/example/repo
-          type: scm
-        compare:
-          file_patterns: []
-          integration_id: 00000000-0000-0000-0000-000000000000
-          ref: feat/homepage
-          repo_url: https://github.com/example/repo
-          type: scm
-        type: diff
-      properties:
-        base:
-          $ref: '#/components/schemas/BaseResourceVariantCreateItem'
-        compare:
-          $ref: '#/components/schemas/BaseResourceVariantCreateItem'
-        type:
-          enum:
-          - diff
-          type: string
-      required:
-      - type
-      - base
-      - compare
-      type: object
-    ScmRepoLocator:
-      description: ScmRepoLocator locates a test subject by SCM repository coordinates.
-      properties:
-        branch_name:
-          description: 'Branch name, if known and applicable to locating the test subject.
-
-
-            If not specified, the branch name can be assumed to be the "default
-
-            integration branch" of the repository.'
-          type: string
-        type:
-          enum:
-          - scm_repo
-          type: string
-        url:
-          description: URL of the SCM repository.
-          format: uri
-          type: string
-      required:
-      - type
-      - url
-      type: object
-    TestResourceCreateItem:
-      anyOf:
-      - $ref: '#/components/schemas/BaseResourceCreateItem'
-      - $ref: '#/components/schemas/DiffResourceCreateItem'
-      description: 'TestResources contain single instances of testable content
-
-        to be provided to Snyk scanners.'
+        necessary to conduct a security test.'
       discriminator:
         mapping:
-          base: '#/components/schemas/BaseResourceCreateItem'
-          diff: '#/components/schemas/DiffResourceCreateItem'
+          deepcode_bundle: '#/components/schemas/DeepcodeBundleSubject'
+          dep_graph: '#/components/schemas/DepGraphSubjectCreate'
+          git_url_coordinates: '#/components/schemas/GitUrlCoordinatesSubject'
+          other: '#/components/schemas/OtherSubject'
+          sbom: '#/components/schemas/SbomSubject'
+          sbom_reachability: '#/components/schemas/SbomReachabilitySubject'
         propertyName: type
-    LocalPolicy:
-      description: Locally configured policy options for determining outcome of this specific test.
+      oneOf:
+      - $ref: '#/components/schemas/DeepcodeBundleSubject'
+      - $ref: '#/components/schemas/DepGraphSubjectCreate'
+      - $ref: '#/components/schemas/GitUrlCoordinatesSubject'
+      - $ref: '#/components/schemas/SbomReachabilitySubject'
+      - $ref: '#/components/schemas/OtherSubject'
+      - $ref: '#/components/schemas/SbomSubject'
+    BaseResourceVariant:
+      discriminator:
+        mapping:
+          bundle: '#/components/schemas/BundleResource'
+          container: '#/components/schemas/ContainerRepoResource'
+          inline: '#/components/schemas/InlineResource'
+          scm: '#/components/schemas/ScmResource'
+          snyk_ref: '#/components/schemas/SnykReferenceResource'
+          upload: '#/components/schemas/UploadResource'
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/InlineResource'
+      - $ref: '#/components/schemas/BundleResource'
+      - $ref: '#/components/schemas/UploadResource'
+      - $ref: '#/components/schemas/ScmResource'
+      - $ref: '#/components/schemas/ContainerRepoResource'
+      - $ref: '#/components/schemas/SnykReferenceResource'
+    io.snyk.api.v1testdepgraph.request.Package:
+      additionalProperties: {}
       properties:
-        fail_on_upgradable:
-          default: false
-          description: "Use to fail a test when there is at least one vulnerable finding that can be fixed by upgrading the version of the related\n   dependency. E.g. bumping lodash from 1.1.1 to 1.1.2."
-          type: boolean
-        ignores:
-          description: Defines ignore rules for known issues.
-          items:
-            $ref: '#/components/schemas/LocalIgnore'
-          type: array
-        reachability_filter:
-          $ref: '#/components/schemas/ReachabilityFilter'
-        risk_score_threshold:
-          description: Findings of equal or greater risk score will fail the test.
-          format: uint16
-          maximum: 1000
-          minimum: 0
-          type: integer
-        severity_threshold:
-          allOf:
-          - $ref: '#/components/schemas/Severity'
-          description: Findings of equal or greater severity will fail the test.
-        suppress_pending_ignores:
-          default: false
-          description: 'Suppress ignores pending approval, so that they do not fail the test. If
-
-            allowed by administrators, this might be set in developer workflows in
-
-            order to unblock local development while an ignore is pending approval.'
-          type: boolean
+        id:
+          type: string
+        info:
+          $ref: '#/components/schemas/io.snyk.api.v1testdepgraph.request.PackageInfo'
       required:
-      - suppress_pending_ignores
+      - id
+      - info
       type: object
-    UploadResource:
-      description: 'Resource referring to an Upload Revision created through the
-
-        File Upload API (currently in Closed Beta).
-
-
-        Revisions contain collections of files uploaded by clients to
-
-        Snyk for testing.
-
-
-        UploadResources can be marked either as SBOM or Source to
-
-        indicate the contents of the Revision.
-
-
-        SBOM UploadResources should provide the following fields:
-
-        - type
-
-        - revision_id
-
-        - name
-
-        - file_patterns (may be empty)
-
-
-        Source UploadResources should provide the following fields:
-
-        - type
-
-        - revision_id
-
-        - repository_url
-
-        - root_folder_id
-
-        - file_patterns (may be empty)
+    TestExecutionStates:
+      enum:
+      - pending
+      - started
+      - finished
+      - errored
+      type: string
+    BaseResourceVariantCreateItem:
+      discriminator:
+        mapping:
+          bundle: '#/components/schemas/BundleResource'
+          container: '#/components/schemas/ContainerRepoResource'
+          inline: '#/components/schemas/InlineResourceCreateItem'
+          scm: '#/components/schemas/ScmResource'
+          snyk_ref: '#/components/schemas/SnykReferenceResource'
+          upload: '#/components/schemas/UploadResource'
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/InlineResourceCreateItem'
+      - $ref: '#/components/schemas/BundleResource'
+      - $ref: '#/components/schemas/UploadResource'
+      - $ref: '#/components/schemas/ScmResource'
+      - $ref: '#/components/schemas/ContainerRepoResource'
+      - $ref: '#/components/schemas/SnykReferenceResource'
+    InlineContent:
+      allOf:
+      - $ref: '#/components/schemas/DepGraphContent'
+      description: Content formats accepted inline for testing.
+      type: object
+    DepGraphSubject:
+      description: '**Deprecated**
 
 
-        Currently supported scans utilizing UploadResources are:
+        Provide an InlineResource with the DepGraph contents
 
-        - SBOM (SCA): (1) UploadResource containing an SBOM
+        and the SCA Scan Configuration instead.
 
-        - SBOM + Reachability Analysis (SCA): (1) UploadResource containing an SBOM, (1) UploadResource containing Source files.
 
-        - Secrets: (1) UploadResource containing Source files'
-      example:
-        content_type: source
-        file_patterns: []
-        repository_url: https://github.com/example/repo
-        revision_id: 00000000-0000-0000-0000-000000000000
-        root_folder_id: .
-        type: upload
+        Test subject representing a Snyk dependency graph (a legacy SBOM format).'
       properties:
-        content_type:
-          description: 'Content present in the Upload Revision.
+        locator:
+          allOf:
+          - $ref: '#/components/schemas/LocalPathLocator'
+          description: 'Source file(s) from which the dependency graph was derived.
 
 
-            Currently only SBOMs and Source files are accepted
+            For some managed package ecosystems (examples: Maven, Yarn workspaces),
 
-            content types.'
-          enum:
-          - sbom
-          - source
-          type: string
-        file_patterns:
-          description: 'File Patterns to include in the scan. Elements must be less than 256 characters.
-
-
-            Currently unsupported. Provide an empty list.'
-          items:
-            $ref: '#/components/schemas/String256'
-          maxItems: 20
-          type: array
-        name:
-          description: 'A name to assign to the SBOM contained in the UploadRevision.
-
-
-            Overrides the filename in the UploadRevision.'
-          maxLength: 256
-          type: string
-        repository_url:
-          description: Repository URL at which the Source files are stored.
-          maxLength: 1024
-          type: string
-        revision_id:
-          description: 'The ID returned from the File Upload API for a given Revision.
-
-            The File Upload API is released in Closed Beta.
-
-            Customers with access may view the preview documentation for
-
-            information on its usage.'
-          example: 5025c59b-c4dd-48e3-b98a-e98d838f4c9b
-          maxLength: 1024
-          type: string
-        root_folder_id:
-          description: Folder inside the UploadRevision at which the Source files are located.
-          maxLength: 1024
-          type: string
-        scm_context:
-          $ref: '#/components/schemas/ScmContext'
+            Snyk might derive a dependency graph from several files.'
         type:
           enum:
-          - upload
+          - dep_graph
           type: string
       required:
       - type
-      - revision_id
-      - content_type
-      - file_patterns
+      - locator
+      type: object
+    TestSubject:
+      description: 'The subject of a test, which identifies the asset/project and content references
+
+        necessary to conduct a security test.'
+      discriminator:
+        mapping:
+          deepcode_bundle: '#/components/schemas/DeepcodeBundleSubject'
+          dep_graph: '#/components/schemas/DepGraphSubject'
+          git_url_coordinates: '#/components/schemas/GitUrlCoordinatesSubject'
+          other: '#/components/schemas/OtherSubject'
+          sbom: '#/components/schemas/SbomSubject'
+          sbom_reachability: '#/components/schemas/SbomReachabilitySubject'
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/DeepcodeBundleSubject'
+      - $ref: '#/components/schemas/DepGraphSubject'
+      - $ref: '#/components/schemas/GitUrlCoordinatesSubject'
+      - $ref: '#/components/schemas/SbomReachabilitySubject'
+      - $ref: '#/components/schemas/OtherSubject'
+      - $ref: '#/components/schemas/SbomSubject'
+    SastScanConfiguration:
+      description: Scan configuration parameters for the SAST scanner.
+      type: object
+    Severity:
+      description: Indicate the severity of a finding discovered by a Test.
+      enum:
+      - critical
+      - high
+      - medium
+      - low
+      - none
+      - other
+      type: string
+    io.snyk.api.v1testdepgraph.request.Graph:
+      additionalProperties: {}
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/io.snyk.api.v1testdepgraph.request.Node'
+          type: array
+        rootNodeId:
+          type: string
+      required:
+      - rootNodeId
+      - nodes
       type: object
   parameters:
+    io.snyk.api.request.SnykApiRequest.version:
+      description: The API version requested.
+      explode: false
+      in: query
+      name: version
+      required: true
+      schema:
+        type: string
+    io.snyk.api.request.SnykApiRequest.request_id:
+      description: 'A unique ID assigned to each API request, for tracing and troubleshooting.
+
+
+        Snyk clients can optionally provide this ID.'
+      in: header
+      name: snyk-request-id
+      schema:
+        format: uuid
+        type: string
     TestIdParam:
       description: Test ID returned from the Test API to query.
       in: path
@@ -2621,24 +2639,6 @@ components:
       schema:
         maxLength: 128
         minLength: 36
-        type: string
-    io.snyk.api.request.SnykApiRequest.version:
-      description: The API version requested.
-      explode: false
-      in: query
-      name: version
-      required: true
-      schema:
-        type: string
-    io.snyk.api.request.SnykApiRequest.request_id:
-      description: 'A unique ID assigned to each API request, for tracing and troubleshooting.
-
-
-        Snyk clients can optionally provide this ID.'
-      in: header
-      name: snyk-request-id
-      schema:
-        format: uuid
         type: string
   securitySchemes:
     APIToken:

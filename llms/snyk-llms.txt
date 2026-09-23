@@ -14,7 +14,7 @@
 - [Apex](https://docs.snyk.io/supported-languages/supported-languages-list/apex.md): Snyk support for Apex with Snyk Code, including supported file formats, interfile analysis, and SCM, CLI, and IDE features
 - [Bazel](https://docs.snyk.io/supported-languages/supported-languages-list/bazel.md): Snyk support for Bazel with Snyk Open Source, including testing Bazel v7 Projects through the Dep Graph API
 - [C/C++](https://docs.snyk.io/supported-languages/supported-languages-list/c-c++.md): Snyk support for C and C++ with Snyk Code and Snyk Open Source, including CLI and IDE testing and supported frameworks and libraries
-- [COBOL](https://docs.snyk.io/supported-languages/supported-languages-list/cobol.md): Snyk support for COBOL with Snyk Code, available in Early Access on Enterprise plans, including CICS frameworks and supported dialects
+- [COBOL](https://docs.snyk.io/supported-languages/supported-languages-list/cobol.md): Snyk Code support for COBOL, including CICS frameworks and supported dialects
 - [Dart and Flutter](https://docs.snyk.io/supported-languages/supported-languages-list/dart-and-flutter.md): Snyk support for Dart and Flutter with Snyk Code and Snyk Open Source, including Early Access code analysis on Enterprise plans
 - [Elixir](https://docs.snyk.io/supported-languages/supported-languages-list/elixir.md): Snyk support for Elixir with Snyk Open Source, including CLI and IDE testing, the Mix and Hex package managers, and SBOM testing
 - [Go](https://docs.snyk.io/supported-languages/supported-languages-list/go.md): Snyk support for Go with Snyk Open Source and Snyk Code, including SCM import, CLI and IDE testing, and supported frameworks
@@ -307,7 +307,7 @@
 - [Differences in Open Source vulnerability counts across environments](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-open-source/manage-vulnerabilities/differences-in-open-source-vulnerability-counts-across-environments.md): Why Snyk Open Source vulnerability counts differ across environments
 - [Troubleshoot fixing vulnerabilities with Snyk Open Source](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-open-source/manage-vulnerabilities/troubleshoot-fixing-vulnerabilities-with-snyk-open-source.md): How to troubleshoot fixing vulnerabilities with Snyk Open Source
 - [Snyk Code](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-code.md): How Snyk Code finds and fixes security vulnerabilities in your source code
-- [Snyk Code Local Engine](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-code/snyk-code-local-engine.md): How Snyk Code Local Engine runs Snyk Code analysis within your network
+- [Snyk Code Local Engine](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-code/snyk-code-local-engine.md): Snyk Code Local Engine is deprecated; reference information for existing deployments
 - [Configure Snyk Code](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-code/configure-snyk-code.md): How to configure Snyk Code for your Organization
 - [Import Project with Snyk Code](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-code/import-project-with-snyk-code.md): How to import a Project to scan with Snyk Code
 - [Manage code vulnerabilities](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-code/manage-code-vulnerabilities.md): How to manage code vulnerabilities found by Snyk Code
@@ -640,23 +640,12 @@
 - [Custom RegEx for Secrets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-secrets/custom-regex-for-secrets.md)
 - [Secrets scanning in the IDE](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-secrets/secrets-scanning-in-the-ide.md): Scan for exposed secrets in Visual Studio Code and JetBrains IDEs.
 - [Secrets scanning in the Snyk CLI](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-secrets/secrets-scanning-in-the-snyk-cli.md): Scan codebases for exposed secrets with the Snyk CLI.
-- [Overview](https://docs.snyk.io/scan-fix-and-prevent/fix/manage-assets.md): How Snyk manages application assets and their security risk
-- [Assets inventory tabs](https://docs.snyk.io/scan-fix-and-prevent/fix/assets-inventory-layouts.md): The tabs in the Snyk assets inventory
-- [Assets inventory components](https://docs.snyk.io/scan-fix-and-prevent/fix/assets-inventory-components.md): The components of each Snyk assets inventory layout
-- [Assets inventory filters](https://docs.snyk.io/scan-fix-and-prevent/fix/assets-inventory-filters.md): How to filter the Snyk assets inventory
+- [AppRisk asset inventory](https://docs.snyk.io/scan-fix-and-prevent/fix/manage-assets.md): How Snyk manages application assets and their security risk
+- [Assets inventory tabs](https://docs.snyk.io/scan-fix-and-prevent/fix/manage-assets/assets-inventory-layouts.md): The tabs in the Snyk assets inventory
+- [Assets inventory components](https://docs.snyk.io/scan-fix-and-prevent/fix/manage-assets/assets-inventory-components.md): The components of each Snyk assets inventory layout
+- [Assets inventory filters](https://docs.snyk.io/scan-fix-and-prevent/fix/manage-assets/assets-inventory-filters.md): How to filter the Snyk assets inventory
+- [Container image inventory](https://docs.snyk.io/scan-fix-and-prevent/fix/container-image-inventory.md)
 - [Configure repository monitoring](https://docs.snyk.io/scan-fix-and-prevent/fix/configure-repository-monitoring.md): How to configure repository monitoring in Snyk
-- [Pull Requests](https://docs.snyk.io/scan-fix-and-prevent/fix/pull-requests.md): How Snyk uses pull requests to fix and prevent vulnerabilities
-- [Snyk Pull or Merge Requests](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests.md): How Snyk pull and merge requests fix and upgrade dependencies
-- [Enable automatic Fix PRs](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/enable-automatic-fix-prs.md): How to enable automatic Snyk Fix PRs
-- [Enable automatic backlog PRs for previously known vulnerabilities](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/enable-automatic-backlog-prs-for-previously-known-vulnerabilities.md): How to enable automatic backlog PRs for previously known vulnerabilities
-- [Enable automatic upgrade PRs for new dependency upgrades](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/enable-automatic-upgrade-prs-for-new-dependency-upgrades.md): How to enable automatic upgrade PRs for new dependency upgrades
-- [Customize PR templates](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/customize-pr-templates.md): How to customize Snyk pull request templates
-- [Apply a custom PR template](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/customize-pr-templates/apply-a-custom-pr-template.md): How to create and apply a custom Snyk PR template
-- [Variables list and description](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/customize-pr-templates/variables-list-and-description.md): The variables available for Snyk custom PR templates
-- [Troubleshooting and limitations for custom PR templates](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/customize-pr-templates/troubleshooting-and-limitations-for-custom-pr-templates.md): Troubleshooting and limitations for Snyk custom PR templates
-- [Examples and template validation](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/customize-pr-templates/examples-and-template-validation.md): Examples and validation for Snyk custom PR templates
-- [Opening fix and upgrade pull requests from a fixed GitHub account](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/opening-fix-and-upgrade-pull-requests-from-a-fixed-github-account.md): How to open Snyk fix and upgrade pull requests from a fixed GitHub account
-- [Breakability risk levels](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/breakability-risk-levels.md): How Snyk breakability risk levels indicate upgrade risk in fix PRs
 - [Prioritize issues for fixing](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing.md): How to prioritize issues for fixing in Snyk
 - [Priority Score vs Risk Score](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/priority-score-vs-risk-score.md): How the Snyk Priority Score and Risk Score differ
 - [Priority Score](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/priority-score.md): How the Snyk Priority Score ranks issues for fixing
@@ -692,6 +681,19 @@
 - [Vulnerable conditions](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/vulnerable-conditions.md): How Snyk uses vulnerable conditions to refine prioritization
 - [Reachability analysis](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/reachability-analysis.md): How Snyk reachability analysis prioritizes vulnerabilities in called code, in Early Access
 - [Vulnerabilities with Social Trends](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/vulnerabilities-with-social-trends.md): How Snyk Social Trends surface vulnerabilities gaining attention
+- [Pull Requests](https://docs.snyk.io/scan-fix-and-prevent/fix/pull-requests.md): How Snyk uses pull requests to fix and prevent vulnerabilities
+- [Remediation Agent](https://docs.snyk.io/scan-fix-and-prevent/fix/remediation-agent.md)
+- [Snyk Pull or Merge Requests](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests.md): How Snyk pull and merge requests fix and upgrade dependencies
+- [Enable automatic Fix PRs](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/enable-automatic-fix-prs.md): How to enable automatic Snyk Fix PRs
+- [Enable automatic backlog PRs for previously known vulnerabilities](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/enable-automatic-backlog-prs-for-previously-known-vulnerabilities.md): How to enable automatic backlog PRs for previously known vulnerabilities
+- [Enable automatic upgrade PRs for new dependency upgrades](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/enable-automatic-upgrade-prs-for-new-dependency-upgrades.md): How to enable automatic upgrade PRs for new dependency upgrades
+- [Customize PR templates](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/customize-pr-templates.md): How to customize Snyk pull request templates
+- [Apply a custom PR template](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/customize-pr-templates/apply-a-custom-pr-template.md): How to create and apply a custom Snyk PR template
+- [Variables list and description](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/customize-pr-templates/variables-list-and-description.md): The variables available for Snyk custom PR templates
+- [Troubleshooting and limitations for custom PR templates](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/customize-pr-templates/troubleshooting-and-limitations-for-custom-pr-templates.md): Troubleshooting and limitations for Snyk custom PR templates
+- [Examples and template validation](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/customize-pr-templates/examples-and-template-validation.md): Examples and validation for Snyk custom PR templates
+- [Opening fix and upgrade pull requests from a fixed GitHub account](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/opening-fix-and-upgrade-pull-requests-from-a-fixed-github-account.md): How to open Snyk fix and upgrade pull requests from a fixed GitHub account
+- [Breakability risk levels](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/breakability-risk-levels.md): How Snyk breakability risk levels indicate upgrade risk in fix PRs
 - [Overview](https://docs.snyk.io/scan-fix-and-prevent/prevent/manage-risk.md): How Snyk helps you prioritize, manage, and reduce security risk
 - [Pull Request checks](https://docs.snyk.io/scan-fix-and-prevent/prevent/pull-request-checks.md): How Snyk Pull Request checks block new vulnerabilities in pull requests
 - [Configure Pull Request checks](https://docs.snyk.io/scan-fix-and-prevent/prevent/pull-request-checks/configure-pull-request-checks.md): How to configure Snyk Pull Request checks, including prerequisites, supported integrations, and the scans they run
@@ -1070,6 +1072,7 @@
 - [Container monitor](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/container-monitor.md): The snyk container monitor command that monitors a container image
 - [Container SBOM](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/container-sbom.md): The snyk container sbom command that generates an SBOM for a container image
 - [Container test](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/container-test.md): The snyk container test command that tests a container image for vulnerabilities
+- [Fix](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/fix.md)
 - [IaC](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/iac.md): The snyk iac commands that test infrastructure as code files
 - [IaC test](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/iac-test.md): The snyk iac test command that tests infrastructure as code files for misconfigurations
 - [IaC describe](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/iac-describe.md): The snyk iac describe command that detects drift in infrastructure as code
@@ -1223,11 +1226,26 @@
 - [AI-SPM](https://docs.snyk.io/agent-security/evo-by-snyk/ai-spm.md)
 - [AI asset visibility](https://docs.snyk.io/agent-security/evo-by-snyk/ai-spm/ai-asset-visibility.md)
 - [Risk intelligence](https://docs.snyk.io/agent-security/evo-by-snyk/ai-spm/risk-intelligence.md)
+- [Framework mappings](https://docs.snyk.io/agent-security/evo-by-snyk/ai-spm/risk-intelligence/framework-mappings.md)
 - [Agentic Development Security (ADS)](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads.md)
 - [Activation and deployment](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/activation-and-deployment.md)
 - [Agent Supply Chain Security](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/agent-supply-chain-security.md)
 - [Agent Behavior Governance](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/agent-behavior-governance.md)
 - [Trusted Output Assurance](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/trusted-output-assurance.md)
+- [Continuous Offensive Security (COS)](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos.md)
+- [Targets](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/targets.md)
+- [Before you begin](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/targets/before-you-begin.md)
+- [Define the Target Scope](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/targets/define-the-target-scope.md)
+- [Configure authentication](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/targets/configure-authentication.md)
+- [Manage Targets](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/targets/manage-targets.md)
+- [Scans](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/scans.md)
+- [Scanner IP addresses](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/scans/scanner-ip-addresses.md)
+- [Monitor and Manage Scans](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/scans/monitor-and-manage-scans.md)
+- [Findings and Reports](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/findings-and-reports.md)
+- [Interpret Scan Results](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/findings-and-reports/interpret-scan-results.md)
+- [Understand finding details](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/findings-and-reports/understand-finding-details.md)
+- [Severity and Scoring](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/findings-and-reports/severity-and-scoring.md)
+- [Reports](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/findings-and-reports/reports.md)
 
 ## Snyk data and governance
 

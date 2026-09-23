@@ -1,0 +1,131 @@
+specification: API Commons CLI
+specificationVersion: '0.1'
+provider: Snyk
+providerId: snyk
+generated: '2026-08-27'
+method: searched
+source: >-
+  https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/install-the-snyk-cli.md,
+  https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands.md and the command index in
+  https://docs.snyk.io/llms.txt, cross-checked against https://github.com/snyk/cli.
+name: Snyk CLI
+binary: snyk
+url: https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli
+repository: https://github.com/snyk/cli
+version: 1.1307.0
+released: '2026-08-26'
+description: >-
+  The Snyk CLI is the centre of Snyk's developer surface and, in practice, the real API most
+  Snyk users touch - it is more heavily distributed and far more current than any Snyk SDK
+  (44.5M+ Docker pulls, a near-daily npm release cadence). It scans locally rather than
+  proxying the REST API: `snyk test` and `snyk code test` analyse the working directory,
+  `snyk monitor` pushes a snapshot up to the platform. It is also the shipping vehicle for
+  the Snyk MCP server - `snyk mcp -t stdio` - so an agent integration and a developer
+  install are the same artifact.
+install_methods:
+  - method: npm
+    command: npm install snyk -g
+    requires: Node.js 12+ and npm 7+ for CLI 1.853.0 or later
+  - method: yarn
+    command: yarn global add snyk
+  - method: homebrew
+    command: |
+      brew tap snyk/tap
+      brew install snyk
+    note: 'The tap (https://github.com/snyk/homebrew-tap) is updated daily with the latest release.'
+    platforms: [macos, linux]
+  - method: scoop
+    command: |
+      scoop bucket add snyk https://github.com/snyk/scoop-snyk
+      scoop install snyk
+    platforms: [windows]
+  - method: docker
+    command: docker run snyk/snyk
+    registry: https://hub.docker.com/r/snyk/snyk
+    note: 'A universal image plus specialised images per ecosystem; source at https://github.com/snyk/snyk-images.'
+  - method: standalone-binary
+    note: 'Direct binary download for Windows, macOS and Linux, with published shasums and signatures to verify.'
+    docs: https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/install-the-snyk-cli/verifying-cli-standalone-binaries
+  - method: github-action
+    repository: https://github.com/snyk/actions
+    note: Pre-built GitHub Actions for CI/CD pipelines.
+platform_notes:
+  - 'Windows Subsystem for Linux is not natively supported; Snyk does not guarantee compatibility there, and that extends to IDE extensions and CI/CD plugins that shell out to the CLI.'
+commands:
+  - group: authentication and configuration
+    commands:
+      - name: auth
+        description: Authenticate the CLI with a Snyk account (interactive OAuth or token).
+      - name: config
+        description: Manage Snyk CLI configuration.
+      - name: config environment
+        description: Set the Snyk API environment, including the regional platform URL.
+  - group: open source (SCA)
+    commands:
+      - name: test
+        description: Test a project's dependencies for known vulnerabilities and license issues.
+      - name: monitor
+        description: Snapshot the project and monitor it continuously on the Snyk platform.
+      - name: fix
+        description: Apply available fixes to vulnerable dependencies.
+      - name: ignore
+        description: Ignore a specified issue.
+      - name: policy
+        description: Display the .snyk policy for a project.
+      - name: log4shell
+        description: Scan for the Log4Shell vulnerability.
+  - group: code (SAST)
+    commands:
+      - name: code
+        description: Snyk Code static analysis command group.
+      - name: code test
+        description: Run a Snyk Code static analysis test.
+  - group: container
+    commands:
+      - name: container test
+        description: Test a container image for vulnerabilities.
+      - name: container monitor
+        description: Monitor a container image on the platform.
+      - name: container sbom
+        description: Generate an SBOM for a container image.
+  - group: infrastructure as code
+    commands:
+      - name: iac test
+        description: Test IaC files for misconfigurations.
+      - name: iac describe
+        description: Detect infrastructure drift (the driftctl lineage).
+      - name: iac update-exclude-policy
+        description: Manage IaC exclusions.
+  - group: sbom and ai-bom
+    commands:
+      - name: sbom
+        description: Generate an SBOM for a project (CycloneDX or SPDX).
+      - name: sbom test
+        description: Test an SBOM document for vulnerabilities.
+      - name: aibom
+        description: Generate an AI bill of materials.
+      - name: aibom test
+        description: Test an AI bill of materials.
+  - group: secrets
+    commands:
+      - name: secrets test
+        description: Scan for hardcoded secrets.
+  - group: agent integration
+    commands:
+      - name: mcp
+        description: >-
+          Run the Snyk MCP server. `snyk mcp -t stdio` starts the local stdio MCP server used
+          by Snyk Studio; --profile / SNYK_MCP_PROFILE selects lite, full or experimental.
+        see: mcp/snyk-mcp.yml
+configuration:
+  environment_variables_docs: https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/configure-the-snyk-cli/environment-variables-for-snyk-cli
+  api_endpoint_docs: https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/configure-the-snyk-cli/configure-snyk-cli-to-connect-to-snyk-api
+  proxy_docs: https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/configure-the-snyk-cli/proxy-configuration-for-snyk-cli
+  analytics_docs: https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/snyk-cli-analytics
+release_channels:
+  docs: https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/releases-and-channels-for-the-snyk-cli
+  releases: https://github.com/snyk/cli/releases
+packaging: packages/snyk-packages.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

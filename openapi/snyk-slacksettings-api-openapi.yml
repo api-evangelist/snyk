@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Snyk AccessRequests SlackSettings API
+  title: Snyk Slack Settings API
   version: REST
 servers:
 - description: Snyk REST API
@@ -129,7 +129,7 @@ paths:
           $ref: '#/components/responses/409'
         '500':
           $ref: '#/components/responses/500'
-      summary: Get Slack integration default notification settings.
+      summary: Get Slack integration default notification settings
       tags:
       - SlackSettings
       x-snyk-api-lifecycle: released
@@ -207,7 +207,7 @@ paths:
           $ref: '#/components/responses/409'
         '500':
           $ref: '#/components/responses/500'
-      summary: Create new Slack notification default settings.
+      summary: Create new Slack notification default settings
       tags:
       - SlackSettings
       x-snyk-api-lifecycle: released
@@ -339,7 +339,7 @@ paths:
           $ref: '#/components/responses/409'
         '500':
           $ref: '#/components/responses/500'
-      summary: Remove Slack settings override for a project.
+      summary: Remove Slack settings override for a project
       tags:
       - SlackSettings
       x-snyk-api-lifecycle: released
@@ -422,7 +422,7 @@ paths:
           $ref: '#/components/responses/409'
         '500':
           $ref: '#/components/responses/500'
-      summary: Update Slack notification settings for a project.
+      summary: Update Slack notification settings for a project
       tags:
       - SlackSettings
       x-snyk-api-lifecycle: released
@@ -507,7 +507,7 @@ paths:
           $ref: '#/components/responses/409'
         '500':
           $ref: '#/components/responses/500'
-      summary: Create a new Slack settings override for a given project.
+      summary: Create a new Slack settings override for a given project
       tags:
       - SlackSettings
       x-snyk-api-lifecycle: released
@@ -520,13 +520,13 @@ paths:
       x-stability-level: stable
 components:
   parameters:
-    EndingBefore:
-      description: Return the page of results immediately before this cursor
-      example: v1.eyJpZCI6IjExMDAifQo=
-      in: query
-      name: ending_before
+    BotId:
+      description: Bot ID
+      in: path
+      name: bot_id
+      required: true
       schema:
-        type: string
+        $ref: '#/components/schemas/Uuid'
     StartingAfter:
       description: Return the page of results immediately after this cursor
       example: v1.eyJpZCI6IjEwMDAifQo=
@@ -542,13 +542,13 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/QueryVersion'
-    BotId:
-      description: Bot ID
-      in: path
-      name: bot_id
-      required: true
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
       schema:
-        $ref: '#/components/schemas/Uuid'
+        type: string
     Limit:
       description: Number of results to return per page
       example: 10
@@ -561,161 +561,16 @@ components:
         minimum: 10
         multipleOf: 10
         type: integer
-  headers:
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
-    VersionRequestedResponseHeader:
-      description: A header containing the version of the endpoint requested by the caller.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/ActualVersion'
-    VersionStageResponseHeader:
-      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
-
-        '
-      schema:
-        enum:
-        - wip
-        - experimental
-        - beta
-        - ga
-        - deprecated
-        - sunset
-        example: ga
-        type: string
-    RequestIdResponseHeader:
-      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
-
-        '
-      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
-      schema:
-        format: uuid
-        type: string
-    LocationHeader:
-      description: 'A header providing a URL for the location of a resource
-
-        '
-      example: https://example.com/resource/4
-      schema:
-        format: url
-        type: string
-    DeprecationHeader:
-      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
-
-        '
-      example: '2021-07-01T00:00:00Z'
-      schema:
-        format: date-time
-        type: string
   schemas:
-    ProjectSettingsPatchRequest:
-      additionalProperties: false
-      properties:
-        data:
-          additionalProperties: false
-          properties:
-            attributes:
-              additionalProperties: false
-              minProperties: 1
-              properties:
-                is_active:
-                  $ref: '#/components/schemas/IsActive'
-                severity_threshold:
-                  $ref: '#/components/schemas/SeverityThreshold'
-                target_channel_id:
-                  $ref: '#/components/schemas/TargetChannelId'
-              type: object
-            id:
-              $ref: '#/components/schemas/Uuid'
-            type:
-              enum:
-              - slack
-              type: string
-          required:
-          - type
-          - attributes
-          - id
-          type: object
-      type: object
     ActualVersion:
       description: Resolved API version
       example: '2026-03-25'
       pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
       type: string
-    TargetChannelId:
-      example: slack://channel?team=team-id&id=channel-id
-      format: uri
-      type: string
-    JsonApi:
-      additionalProperties: false
-      example:
-        version: '1.0'
-      properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          example: '1.0'
-          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
-          type: string
-      required:
-      - version
-      type: object
-    SettingsRequest:
-      additionalProperties: false
-      properties:
-        data:
-          additionalProperties: false
-          properties:
-            attributes:
-              $ref: '#/components/schemas/SettingsAttributes'
-            type:
-              enum:
-              - slack
-              type: string
-          required:
-          - type
-          - attributes
-          type: object
-      required:
-      - data
-      type: object
-    QueryVersion:
-      description: Requested API version
-      example: '2026-03-25'
-      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
-      type: string
-    SlackDefaultSettingsData:
-      properties:
-        attributes:
-          additionalProperties: false
-          properties:
-            severity_threshold:
-              $ref: '#/components/schemas/SeverityThreshold'
-            target_channel_id:
-              $ref: '#/components/schemas/TargetChannelId'
-            target_channel_name:
-              $ref: '#/components/schemas/TargetChannelName'
-          required:
-          - target_channel_id
-          - target_channel_name
-          - severity_threshold
-          type: object
-        id:
-          $ref: '#/components/schemas/Uuid'
-        type:
-          example: slack
-          type: string
-      type: object
+    IsActive:
+      description: Current status of the project settings.
+      example: true
+      type: boolean
     ProjectSettingsData:
       properties:
         attributes:
@@ -746,8 +601,119 @@ components:
           example: slack
           type: string
       type: object
+    GetProjectSettingsCollection:
+      additionalProperties: false
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ProjectSettingsData'
+          type: array
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+      required:
+      - data
+      - jsonapi
+      - links
+      type: object
+    SlackDefaultSettingsData:
+      properties:
+        attributes:
+          additionalProperties: false
+          properties:
+            severity_threshold:
+              $ref: '#/components/schemas/SeverityThreshold'
+            target_channel_id:
+              $ref: '#/components/schemas/TargetChannelId'
+            target_channel_name:
+              $ref: '#/components/schemas/TargetChannelName'
+          required:
+          - target_channel_id
+          - target_channel_name
+          - severity_threshold
+          type: object
+        id:
+          $ref: '#/components/schemas/Uuid'
+        type:
+          example: slack
+          type: string
+      type: object
     Uuid:
       format: uuid
+      type: string
+    TargetChannelName:
+      example: channel-name
+      minLength: 1
+      type: string
+    SeverityThreshold:
+      description: Minimum Snyk issue severity to send a notification for, messages will not be sent for any issue below this value
+      enum:
+      - low
+      - medium
+      - high
+      - critical
+      example: high
+      type: string
+    SettingsRequest:
+      additionalProperties: false
+      properties:
+        data:
+          additionalProperties: false
+          properties:
+            attributes:
+              $ref: '#/components/schemas/SettingsAttributes'
+            type:
+              enum:
+              - slack
+              type: string
+          required:
+          - type
+          - attributes
+          type: object
+      required:
+      - data
+      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
+    SelfLink:
+      additionalProperties: false
+      example:
+        self: https://example.com/api/this_resource
+      properties:
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    QueryVersion:
+      description: Requested API version
+      example: '2026-03-25'
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
       type: string
     ErrorDocument:
       additionalProperties: false
@@ -867,17 +833,18 @@ components:
       - jsonapi
       - errors
       type: object
-    TargetChannelName:
-      example: channel-name
-      minLength: 1
-      type: string
-    SelfLink:
+    JsonApi:
       additionalProperties: false
       example:
-        self: https://example.com/api/this_resource
+        version: '1.0'
       properties:
-        self:
-          $ref: '#/components/schemas/LinkProperty'
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
       type: object
     SettingsAttributes:
       additionalProperties: false
@@ -890,31 +857,39 @@ components:
       - target_channel_id
       - severity_threshold
       type: object
-    SeverityThreshold:
-      description: Minimum Snyk issue severity to send a notification for, messages will not be sent for any issue below this value
-      enum:
-      - low
-      - medium
-      - high
-      - critical
-      example: high
-      type: string
-    GetProjectSettingsCollection:
+    ProjectSettingsPatchRequest:
       additionalProperties: false
       properties:
         data:
-          items:
-            $ref: '#/components/schemas/ProjectSettingsData'
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-      required:
-      - data
-      - jsonapi
-      - links
+          additionalProperties: false
+          properties:
+            attributes:
+              additionalProperties: false
+              minProperties: 1
+              properties:
+                is_active:
+                  $ref: '#/components/schemas/IsActive'
+                severity_threshold:
+                  $ref: '#/components/schemas/SeverityThreshold'
+                target_channel_id:
+                  $ref: '#/components/schemas/TargetChannelId'
+              type: object
+            id:
+              $ref: '#/components/schemas/Uuid'
+            type:
+              enum:
+              - slack
+              type: string
+          required:
+          - type
+          - attributes
+          - id
+          type: object
       type: object
+    TargetChannelId:
+      example: slack://channel?team=team-id&id=channel-id
+      format: uri
+      type: string
     PaginatedLinks:
       additionalProperties: false
       example:
@@ -933,39 +908,45 @@ components:
         self:
           $ref: '#/components/schemas/LinkProperty'
       type: object
-    IsActive:
-      description: Current status of the project settings.
-      example: true
-      type: boolean
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
-        type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
   responses:
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '401':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Unauthorized: the request requires an authentication token.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
     '400':
       content:
         application/vnd.api+json:
@@ -1023,25 +1004,6 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '403':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
     '404':
       content:
         application/vnd.api+json:
@@ -1061,25 +1023,63 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '401':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Unauthorized: the request requires an authentication token.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
+  headers:
+    VersionStageResponseHeader:
+      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
+
+        '
+      schema:
+        enum:
+        - wip
+        - experimental
+        - beta
+        - ga
+        - deprecated
+        - sunset
+        example: ga
+        type: string
+    RequestIdResponseHeader:
+      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
+
+        '
+      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
+      schema:
+        format: uuid
+        type: string
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    LocationHeader:
+      description: 'A header providing a URL for the location of a resource
+
+        '
+      example: https://example.com/resource/4
+      schema:
+        format: url
+        type: string
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
   securitySchemes:
     APIToken:
       description: API key value must be prefixed with \"Token \".

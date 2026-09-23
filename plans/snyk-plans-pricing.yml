@@ -4,11 +4,14 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Snyk
 providerId: snyk
 created: '2026-05-08'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-08, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-08'
+# 2026-08-27: re-verified against the live pricing page. Every tier name, price,
+# billing period and quota below was read from https://snyk.io/plans/ on that date;
+# method upgraded from generated to searched.
+generated: '2026-08-27'
+method: searched
+modified: '2026-08-27'
 reconciled: true
+plan_count: 4
 tags:
   - Security
   - DevSecOps
@@ -31,7 +34,39 @@ description: >-
   Snyk API & Web). API access is gated to Team and above.
 sources:
   - https://snyk.io/plans/
-  - https://docs.snyk.io/snyk-api/authentication-for-api
+  - https://snyk.io/pricing/
+  - https://docs.snyk.io/developer-tools/snyk-api/authentication-for-api
+verification:
+  checked: '2026-08-27'
+  url: https://snyk.io/plans/
+  status: 200
+  read_as: server-rendered HTML (the page requires JavaScript for interactivity but the plan copy, prices and comparison table are present in the served markup)
+  confirmed:
+    - 'Free - $0 / month per contributing developer'
+    - 'Team - starting at $25 / month per contributing developer'
+    - 'Ignite - starting at $1,260 / year per contributing developer'
+    - 'Enterprise - contact sales for pricing'
+  quotas_read_from_comparison_table:
+    projects: { free: 5, team: 100, ignite: unlimited, enterprise: unlimited }
+    snyk_code_tests_per_month: { free: 200, team: 1000, ignite: unlimited, enterprise: custom }
+    free_plan_test_limits: { open_source: 200, code: 100, iac: 300, container: 100 }
+    self_serve_sso: { free: false, team: false, ignite: true, enterprise: true }
+    license_compliance: { free: false, team: false, ignite: true, enterprise: true }
+    risk_based_prioritization: { free: false, team: false, ignite: true, enterprise: true }
+    reporting_dashboard: { free: false, team: false, ignite: true, enterprise: true }
+    policy_management: { free: false, team: false, ignite: true, enterprise: true }
+    rbac: { free: false, team: false, ignite: false, enterprise: true }
+  contributing_developer_definition: >-
+    Snyk counts a contributing developer as a developer who has made a commit to a private
+    repository monitored by Snyk in the last 90 days. Contributions to public repositories
+    are not counted. Counts are shown on the Snyk Usage page.
+  api_entitlement_note: >-
+    Not stated on the pricing page but decisive for an API buyer: Snyk's API documentation
+    states the API requires an Enterprise plan, and that Free and Team personal tokens
+    authenticate only the IDE, CLI and CI/CD integrations. The plan you can buy on the
+    website is not the plan that gets you the API.
+  not_verified:
+    - 'The five-developer minimum and ten-developer maximum recorded on the Team tier below were not restated on the 2026-08-27 page render; they are retained from the 2026-05-08 capture and should be re-checked at purchase.'
 plans:
   - id: snyk-free
     name: Free

@@ -1,0 +1,189 @@
+specification: API Commons Conventions
+specificationVersion: '0.1'
+provider: Snyk
+providerId: snyk
+generated: '2026-08-27'
+method: searched
+source: >-
+  https://docs.snyk.io/developer-tools/snyk-api/rest-api/about-the-rest-api.md and
+  https://docs.snyk.io/developer-tools/snyk-api/authentication-for-api.md, reconciled
+  against the live REST OpenAPI at https://api.snyk.io/rest/openapi/2026-03-25 and a live
+  unauthenticated probe of https://api.snyk.io/rest/self on 2026-08-27.
+description: >-
+  Snyk's cross-cutting semantics are unusually explicit for a security vendor, and they
+  are consistent across all 291 REST operations because the whole surface is generated
+  from one JSON:API contract. Every request needs a dated `version` query parameter;
+  every write needs the JSON:API media type; every list is cursor-paginated; every
+  response carries a snyk-request-id you quote in support tickets; and every deprecated
+  endpoint tells you when it dies through sunset and deprecation headers. The two soft
+  spots are idempotency - there is no idempotency key anywhere in the contract, on any of
+  the 57 POST operations - and rate-limit signalling, which exists only as prose plus a
+  retry-after on two export endpoints.
+authentication:
+  style: bearer-token-in-authorization-header
+  keyword_varies_by_credential: true
+  detail: '`Authorization: token <PAT>` for Snyk tokens; `Authorization: bearer <token>` for Snyk App OAuth2 access tokens.'
+  see: authentication/snyk-authentication.yml
+versioning:
+  style: dated-query-parameter
+  parameter: version
+  required: true
+  format: YYYY-MM-DD
+  example: '2026-03-25'
+  current_ga: '2026-03-25'
+  stability_trees: [ga, beta, experimental]
+  stability_syntax: '<date>~<stability>, e.g. 2023-11-27~beta; a bare date means the GA tree'
+  support_windows:
+    ga: at least six months after the next GA release
+    beta: at least three months after the next beta or GA release
+    experimental: no guarantee; may break or be withdrawn at any time
+  resolution_rule: >-
+    Snyk serves the version released on or before the requested date at the requested
+    stability level or higher; requesting a beta date resolves up to a later GA version if
+    one exists.
+  guidance: >-
+    Snyk recommends pinning 2024-10-15 or later unless there is a specific reason to use an
+    older version; passing the current day's date resolves to the most recent version, which
+    is convenient and unsafe for production.
+  version_response_headers: [snyk-version-requested, snyk-version-served, snyk-version-lifecycle-stage]
+  index: https://api.snyk.io/rest/openapi
+  see: lifecycle/snyk-lifecycle.yml
+content_types:
+  request: application/vnd.api+json
+  response: application/vnd.api+json
+  enforcement: 'A body sent without the JSON:API media type returns 400 "Client request did not conform to OpenAPI specification".'
+  exceptions:
+    - 'application/vnd.cyclonedx+json and application/vnd.cyclonedx+xml on the SBOM download operation.'
+    - 'application/json on four operations.'
+  transport: 'HTTPS only. HTTP requests return 404 for every path.'
+pagination:
+  style: cursor
+  parameters:
+    - name: starting_after
+      description: Opaque Snyk-internal cursor; return records after the last one you have seen.
+    - name: ending_before
+      description: Opaque Snyk-internal cursor; return records before the first one you have seen.
+    - name: limit
+      description: Records per page.
+  response_fields: [links.prev, links.next, links.self]
+  default_sort: insertion order
+  consistency_note: >-
+    Snyk guarantees consistent pagination only on the default insertion sort. Supplying the
+    `sort` parameter forfeits that guarantee, and Snyk's stated remedy is to re-request.
+error_envelope:
+  standard: JSON:API 1.0 errors array
+  shape: '{"jsonapi":{"version":"1.0"},"errors":[{"id","code","status","detail","source","links","meta"}]}'
+  problem_json: false
+  see: errors/snyk-problem-types.yml
+request_id_tracing:
+  header: snyk-request-id
+  format: uuid
+  scope: every response
+  purpose: 'Snyk asks callers to quote it when reporting an issue; it is the primary support correlator.'
+  observed: 'snyk-request-id: 3e402660-a8c7-47a3-b03a-35709445ec2b on a live 401 (2026-08-27)'
+rate_limit_signalling:
+  documented_limit: 1620 requests per minute per API key
+  status_on_exhaustion: 429
+  runtime_headers: [retry-after]
+  runtime_headers_scope: 'Declared only on the 429 responses of the two asynchronous export operations.'
+  missing: [RateLimit-Limit, RateLimit-Remaining, RateLimit-Reset]
+  see: rate-limits/snyk-rate-limits.yml
+idempotency:
+  supported: false
+  key_header: null
+  scope: null
+  retention: null
+  evidence: >-
+    Zero occurrences of "idempot" in the 2.37MB live REST OpenAPI document and zero in the
+    docs index. No Idempotency-Key header, no idempotency_key parameter, no documented
+    replay window. 57 POST operations are exposed with no published replay-safety
+    mechanism, so a client that times out mid-POST cannot distinguish "not created" from
+    "created, response lost" except by re-reading the collection.
+  mitigation: >-
+    Most creating operations are on named or uniquely-keyed resources (an org invite, a
+    service account, a collection) and return 409 Conflict on a duplicate - 110 operations
+    declare a 409 - which gives partial, resource-specific protection rather than a
+    general-purpose idempotency guarantee.
+field_expansion:
+  supported: partial
+  mechanism: 'Per-endpoint boolean/enum query parameters rather than a general expand syntax - e.g. include_code_flows on the issues endpoints.'
+  sparse_fieldsets: false
+  note: 'Snyk does not implement the JSON:API `fields[TYPE]` sparse-fieldset or `include` compound-document conventions generally.'
+metadata:
+  supported: true
+  mechanism: 'Project tags (key/value) and project attributes (criticality, environment, lifecycle) via org.project.tag.edit and org.project.attributes.edit.'
+dry_run_mode:
+  supported: partial
+  grade: documented
+  operations:
+    - operationId: createContainerRegistryImportPolicyDryRun
+      path: POST /orgs/{org_id}/container_import/{integration_id}/policy/dry_run
+      description: Creates an asynchronous dry-run job to test a container registry import policy before applying it.
+    - operationId: getDryRunJob
+      path: GET /orgs/{org_id}/container_import/{integration_id}/policy/dry_run/{job_id}
+      description: Retrieves the status and results of a dry-run job.
+  note: >-
+    Rehearsal exists for exactly one write surface - container registry import policy. The
+    other 55 POST operations and all 41 PATCH operations have no preview mode.
+reversibility:
+  grade: documented
+  na: false
+  summary: >-
+    Snyk's API is largely a control-plane over configuration, and its reversal story is
+    "delete and re-create", not "undo". There are 44 DELETE operations, several of which
+    are genuine reversals of a specific grant (revoking an app install, revoking a session,
+    withdrawing an invitation). What does NOT exist anywhere in the contract or the docs is
+    a stated WINDOW: no restore-within-N-days, no soft delete, no trash, no undelete
+    operation. Snyk's own scope descriptions use the word "Permanently" - org.project.delete
+    is "Permanently remove Projects", org.project.ignore.delete is "Permanently remove
+    Project ignores" - which is the closest thing to an explicit irreversibility statement,
+    and it is a warning rather than a window. Graded `documented` rather than `verified`
+    for exactly that reason: reversal paths are documented, a recovery window is not, and
+    no window has been invented here to fill the slot.
+  reversals:
+    - action: Grant a Snyk App access to an organization
+      reversal_operation: deleteAppOrgInstallById
+      path: DELETE /orgs/{org_id}/apps/installs/{install_id}
+      window: not stated
+    - action: Install a Snyk App at group level
+      reversal_operation: deleteGroupAppInstallById
+      path: DELETE /groups/{group_id}/apps/installs/{install_id}
+      window: not stated
+    - action: Authorize a Snyk App as a user
+      reversal_operation: revokeUserInstalledApp
+      path: DELETE /self/apps/{app_id}
+      window: not stated
+    - action: Establish an app session
+      reversal_operation: revokeUserAppSession
+      path: DELETE /self/apps/{app_id}/sessions/{session_id}
+      window: not stated
+    - action: Invite a user to an organization
+      reversal_operation: deleteOrgInvitation
+      path: DELETE /orgs/{org_id}/invites/{invite_id}
+      window: not stated
+      note: Reverses only an unaccepted invitation; once accepted, membership removal is a different operation.
+    - action: Create an app bot
+      reversal_operation: deleteAppBot
+      path: DELETE /orgs/{org_id}/app_bots/{bot_id}
+      window: not stated
+    - action: Issue a personal access token
+      reversal_operation: deletePersonalAccessToken
+      path: DELETE /self/personal_access_tokens/{personal_access_token_id}
+      window: not stated
+      note: 'Revocation is immediate and irreversible; Snyk''s legacy "Revoke & Regenerate" flow makes the previous token invalid at once.'
+  irreversible:
+    - 'Project deletion (org.project.delete - "Permanently remove Projects and permanently remove Organization targets").'
+    - 'Project ignore deletion (org.project.ignore.delete - "Permanently remove Project ignores").'
+    - 'Project collection deletion (org.collection.delete).'
+    - 'Snyk App scope changes - not reversible or editable at all; the documented remedy is to create a new App and re-authorize every user.'
+  no_window_stated: true
+cross_links:
+  errors: errors/snyk-problem-types.yml
+  lifecycle: lifecycle/snyk-lifecycle.yml
+  authentication: authentication/snyk-authentication.yml
+  rate_limits: rate-limits/snyk-rate-limits.yml
+  scopes: scopes/snyk-scopes.yml
+  conformance: conformance/snyk-conformance.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

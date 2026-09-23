@@ -1,0 +1,109 @@
+specification: API Commons ChangeLog
+specificationVersion: '0.1'
+provider: Snyk
+providerId: snyk
+generated: '2026-08-27'
+method: searched
+source: https://docs.snyk.io/developer-tools/snyk-api/changelog.md
+url: https://docs.snyk.io/developer-tools/snyk-api/changelog
+description: >-
+  Snyk maintains a dated, per-operation API changelog that reads like a machine diff of the
+  OpenAPI document rather than a marketing release note: each entry names the HTTP method and
+  path, says Added or Updated, and lists the exact properties and parameters that changed,
+  with a yellow "Breaking" badge on the individual bullets that break clients. The published
+  page is 126KB of markdown covering 17 dated update blocks, all against the single current
+  GA version 2026-03-25. That is the notable structural fact - Snyk keeps shipping additive
+  and even breaking-badged changes INSIDE the 2026-03-25 version rather than cutting a new
+  dated version each time, so pinning a version does not fully insulate a client from change.
+scheme: dated-endpoint-versions
+scheme_note: 'Changelog entries are keyed on the API version (YYYY-MM-DD) and the date the version was updated.'
+current_version: '2026-03-25'
+machine_readable: true
+machine_readable_url: https://docs.snyk.io/developer-tools/snyk-api/changelog.md
+window:
+  from: '2026-04-23'
+  to: '2026-08-25'
+  blocks_published: 17
+  breaking_bullets_in_window: 218
+entries:
+  - version: '2026-03-25'
+    updated: '2026-08-25'
+    operations_changed: 1
+    breaking: 0
+    highlights:
+      - 'GET /orgs/{org_id}/policies - added the non-success 500 response.'
+  - version: '2026-03-25'
+    updated: '2026-08-17'
+    operations_changed: 4
+    breaking: 0
+    highlights:
+      - 'Issues endpoints (org and group, list and single) - new optional include_code_flows query parameter.'
+      - 'Added optional coordinates[].code_flows and code_flows_omitted response properties.'
+  - version: '2026-03-25'
+    updated: '2026-07-29'
+    operations_changed: 4
+    breaking: 4
+    highlights:
+      - 'Issues endpoints - new `secrets` enum value on data.attributes.type, badged Breaking (a new enum member breaks strict clients).'
+  - version: '2026-03-25'
+    updated: '2026-07-27'
+    operations_changed: 4
+    breaking: 0
+    highlights:
+      - 'Universal Broker deployment endpoints - created_at and updated_at became required response properties.'
+  - version: '2026-03-25'
+    updated: '2026-07-14'
+    operations_changed: 16
+    breaking: 0
+    highlights:
+      - 'Secrets rule extensions added at group level - 16 new operations (create, list, get, patch and related).'
+  - version: '2026-03-25'
+    updated: '2026-07-06'
+    operations_changed: 1
+    breaking: 0
+    highlights:
+      - 'POST /groups/{group_id}/export - 8 additions to the export request/response surface.'
+  - version: '2026-03-25'
+    updated: '2026-06-26'
+    operations_changed: 4
+    breaking: 0
+    highlights:
+      - 'Policies endpoints - 12 additive property changes across create, list, get and patch.'
+  - version: '2026-03-25'
+    updated: '2026-06-16'
+    operations_changed: 2
+    breaking: 2
+    highlights:
+      - 'Open-source broker settings - 2 breaking changes on the ecosystem broker settings endpoints.'
+  - version: '2026-03-25'
+    updated: '2026-06-12'
+    operations_changed: 4
+    breaking: 32
+    highlights:
+      - >-
+        Largest breaking event in the window: 32 breaking bullets across the open-source
+        private-registries and broker settings endpoints, alongside 48 additions.
+  - version: '2026-03-25'
+    updated: '2026-05-19'
+    operations_changed: null
+    breaking: null
+    highlights: ['Two separate blocks published on the same date.']
+observations:
+  - >-
+    Snyk badges breaking changes at the BULLET level, not the entry level, so a single dated
+    block can be mostly additive with two lines that break you. Reading only the headings is
+    not enough.
+  - >-
+    Adding a new enum value to a response property is explicitly badged Breaking by Snyk
+    (2026-07-29, `secrets` on issue type). Clients that switch exhaustively on enums are the
+    intended audience for that badge.
+  - >-
+    Every block in the current window targets version 2026-03-25. New dated GA versions are
+    rare - 2024-10-15, 2025-09-17, 2025-09-28, 2025-11-05, 2026-03-25 - so most change lands
+    inside an existing version.
+release_notes:
+  product: https://updates.snyk.io/
+  cli: https://github.com/snyk/cli/releases
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

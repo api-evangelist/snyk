@@ -1,4 +1,4 @@
-generated: '2026-07-11'
+generated: '2026-08-27'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
@@ -8,11 +8,12 @@ hosts:
   cert_expires: Dec  8 23:59:59 2026 GMT
   hsts: true
   hsts_max_age: 31536000
-- host: apidocs.snyk.io
+- host: docs.snyk.io
   https: true
   tls_version: TLSv1.3
-  cert_expires: Sep 14 05:49:58 2026 GMT
-  hsts: false
+  cert_expires: Oct 31 00:40:37 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
 - host: api.snyk.io
   https: true
   tls_version: TLSv1.3
@@ -23,12 +24,12 @@ domains:
 - domain: snyk.io
   dnssec: false
   caa:
-  - 0 issue "pki.goog"
-  - 0 issue "digicert.com"
-  - 0 issue "awstrust.com"
   - 0 issue "comodoca.com"
-  - 0 issue "amazontrust.com"
+  - 0 issue "amazon.com"
+  - 0 issue "pki.goog"
+  - 0 issue "sectigo.com"
   - 0 issue "amazonaws.com"
+  - 0 issue "letsencrypt.org"
   spf: true
   dmarc: true
   dmarc_policy: quarantine

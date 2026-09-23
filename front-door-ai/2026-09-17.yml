@@ -1,0 +1,31 @@
+# Front Door AI Index — snyk — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: snyk
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: snyk.io
+  final_host: snyk.io
+  ownership: own
+  owner: snyk
+  shares_host_with:
+  - snyk-container
+  inherited_from: null
+  verdict: scored
+  score: 57
+  host_score: 57
+  density: 48.84
+  words: 1167
+  tiers:
+    agentic: 6
+    core: 50
+    model: 1
+  ambiguous: 8
+  top_terms:
+    AI: 50
+    agent: 7
+    agentic: 5
+    AI agent: 1
+    Claude: 1
+    intelligence: 1

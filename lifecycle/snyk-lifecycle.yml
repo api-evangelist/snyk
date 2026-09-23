@@ -1,0 +1,153 @@
+specification: API Commons Lifecycle
+specificationVersion: '0.1'
+provider: Snyk
+providerId: snyk
+generated: '2026-08-27'
+method: searched
+source: >-
+  https://docs.snyk.io/snyk-release-process.md,
+  https://docs.snyk.io/developer-tools/snyk-api/rest-api/about-the-rest-api.md,
+  https://docs.snyk.io/developer-tools/snyk-api/changelog.md, plus the deprecated
+  operations and sunset/deprecation headers declared in
+  https://api.snyk.io/rest/openapi/2026-03-25.
+description: >-
+  Snyk runs one of the more disciplined API lifecycles in the catalog. Each endpoint is
+  independently versioned by date and stability tree, with a published support window per
+  tree; deprecation is signalled at runtime through sunset and deprecation response
+  headers referenced 245 times each in the contract; the company documents a six-stage
+  feature lifecycle from Alpha through End of Life, promises six months' notice before a
+  feature is marked Deprecated, and even names the practice of temporarily suspending an
+  endpoint to force migration ("brownouts"). Nine operations are currently flagged
+  deprecated in the live spec, all but one of them in the Apps cluster.
+versioning:
+  scheme: dated per-endpoint versions with stability trees
+  parameter: version (query, required)
+  format: YYYY-MM-DD or YYYY-MM-DD~<stability>
+  current_ga: '2026-03-25'
+  recent_ga_versions: ['2026-03-25', '2025-11-05', '2025-09-28', '2025-09-17', '2024-10-15']
+  total_published_versions: 323
+  version_index: https://api.snyk.io/rest/openapi
+  spec_per_version: https://api.snyk.io/rest/openapi/{version}
+  stability_trees:
+    - name: ga
+      support_window: at least six months after the next GA release
+    - name: beta
+      support_window: at least three months after the next beta or GA release
+    - name: experimental
+      support_window: none; unstable, may break or be withdrawn at any time
+  breaking_change_policy: >-
+    Backward-incompatible changes are delivered as a new dated version rather than in place,
+    which is the whole point of the dated scheme. The documented exception is rate limiting -
+    Snyk states that introducing new rate limits is not considered a breaking change.
+  guidance: 'Pin 2024-10-15 or later; do not send the current date in production, which floats to the newest version.'
+deprecation_policy:
+  published: true
+  url: https://docs.snyk.io/snyk-release-process
+  notice_period: six months
+  notice_detail: >-
+    "The documentation page will announce the transition of a feature to Deprecated six
+    months before its start date."
+  runtime_signalling:
+    - header: deprecation
+      format: RFC 3339 date-time
+      example: '2021-07-01T00:00:00Z'
+      spec_ref: components/headers/DeprecationHeader
+      standard: https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+      occurrences: 245
+    - header: sunset
+      format: 'date, YYYY-MM-DD'
+      example: '2021-08-02'
+      spec_ref: components/headers/SunsetHeader
+      standard: RFC 8594
+      occurrences: 245
+      note: 'Only present once the endpoint has been deprecated; Snyk marks it "for information purposes only".'
+    - header: snyk-version-lifecycle-stage
+      note: Tells the caller which stability tree served the response.
+  lifecycle_stages:
+    release:
+      - stage: Alpha
+        availability: Snyk internal users and some design partners
+        docs: none
+      - stage: Closed Beta
+        availability: preselected users, invitation only
+        docs: provided but not public
+      - stage: Early Access
+        availability: all users, opt-in, may carry additional cost
+        docs: public
+      - stage: General Availability
+        availability: all users by default
+        docs: public
+    end_of_life:
+      - stage: Deprecated
+        description: Available but discouraged; release status shown at the top of the docs page.
+      - stage: End of support
+        description: No new support tickets answered; feature still available to active users.
+      - stage: End of Life
+        description: No longer available; documentation withdrawn.
+  brownouts:
+    practised: true
+    definition: >-
+      Snyk documents "brownouts" - temporarily suspending an API endpoint or feature so that
+      it becomes unavailable, to flush out remaining callers before removal. Clients should
+      expect a deprecated endpoint to fail intermittently before it fails permanently.
+deprecated_operations:
+  count: 9
+  source: 'deprecated: true in https://api.snyk.io/rest/openapi/2026-03-25'
+  operations:
+    - operationId: getAppBots
+      path: GET /orgs/{org_id}/app_bots
+      replacement: Revoke app authorization for a Snyk Group with install ID
+    - operationId: deleteAppBot
+      path: DELETE /orgs/{org_id}/app_bots/{bot_id}
+      replacement: Revoke app authorization for a Snyk Group with install ID
+    - operationId: getApps
+      path: GET /orgs/{org_id}/apps
+      replacement: Get a list of apps created by an organization (new)
+    - operationId: createApp
+      path: POST /orgs/{org_id}/apps
+      replacement: Create a new Snyk App for an organization
+    - operationId: getApp
+      path: GET /orgs/{org_id}/apps/{client_id}
+      replacement: Get a Snyk App by its App ID
+    - operationId: updateApp
+      path: PATCH /orgs/{org_id}/apps/{client_id}
+      replacement: Update app creation attributes using the App ID
+    - operationId: deleteApp
+      path: DELETE /orgs/{org_id}/apps/{client_id}
+      replacement: Delete a Snyk App by its App ID
+    - operationId: manageSecrets
+      path: POST /orgs/{org_id}/apps/{client_id}/secrets
+      replacement: Manage client secret for non-interactive Snyk App installations
+    - operationId: deleteOrgAssignments
+      path: DELETE /orgs/{org_id}/learn/assignments
+      replacement: not stated in the contract
+  pattern_note: >-
+    Eight of the nine are the Apps cluster migrating from client_id-keyed to App-ID-keyed
+    addressing. Snyk lists each old/new pair explicitly on the release-process page, which
+    is the kind of migration mapping most providers omit.
+deprecated_features:
+  - name: Snyk Code Local Engine
+    status: deprecated
+    docs: https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-code/snyk-code-local-engine
+status_page:
+  url: https://status.snyk.io/
+  status: 200
+  checked: '2026-08-27'
+change_log:
+  url: https://docs.snyk.io/developer-tools/snyk-api/changelog
+  machine_readable_markdown: https://docs.snyk.io/developer-tools/snyk-api/changelog.md
+  see: changelog/snyk-changelog.yml
+release_notes:
+  url: https://updates.snyk.io/
+  status: 200
+  checked: '2026-08-27'
+sla:
+  published: false
+  note: >-
+    No public uptime SLA or availability target is published on the documentation site or the
+    status page. Support tiers and services terms are described qualitatively at
+    https://docs.snyk.io/snyk-data-and-governance/snyk-terms-of-support-and-services-glossary;
+    numeric commitments sit in the Order Form, which is not public.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

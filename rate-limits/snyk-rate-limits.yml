@@ -1,77 +1,119 @@
 specification: API Commons Rate Limits
 specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
 provider: Snyk
 providerId: snyk
 created: '2026-05-08'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-08, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-08'
-reconciled: false
+modified: '2026-08-27'
+generated: '2026-08-27'
+method: searched
+reconciled: true
 tags:
   - Security
   - DevSecOps
-  - Vulnerability Management
-  - Application Security
   - Rate Limiting
   - Throttling
 description: >-
-  Snyk applies a per-token request-rate limit to both the REST and V1 APIs. Numeric
-  ceilings are not exhaustively published; documented behaviour is that 429 Too Many
-  Requests is returned when the bucket is exhausted, with Retry-After indicating when
-  the caller may resume. Free and Team tier API access varies - per Snyk auth docs Free
-  and Team users cannot use personal access tokens for API calls; Enterprise/Ignite use
-  service accounts for automation. Regional endpoints serve US, EU, and AU traffic.
+  Snyk publishes an exact numeric ceiling: 1,620 requests per minute per API key, with a
+  one-minute rate-limiting interval. Exceeding it returns 429 Too Many Requests, and Snyk
+  states that all requests above the limit are rejected until requests stop for the
+  duration of the interval. Snyk also reserves the right to introduce new limits without
+  treating it as a breaking change, and tells clients to handle 429 and retry safely.
+  Runtime signalling is thin: the REST OpenAPI declares a `retry-after` response header on
+  the 429 responses of the two asynchronous export operations, but there are NO
+  RateLimit-* or X-RateLimit-* headers anywhere in the contract, so a client cannot see how
+  much budget it has left before it hits the wall - only that it has hit it.
 sources:
-  - https://docs.snyk.io/snyk-api/authentication-for-api
-  - https://docs.snyk.io/snyk-api/api-urls-snyk-api
+  - https://docs.snyk.io/developer-tools/snyk-api/rest-api/about-the-rest-api
+  - https://api.snyk.io/rest/openapi/2026-03-25
+  - https://docs.snyk.io/developer-tools/snyk-api/authentication-for-api
+limit_count: 3
 responseCodes:
   throttled: 429
   unauthorized: 401
   serverError: 5xx
+headers:
+  request:
+    - name: Authorization
+      note: The rate-limit bucket is keyed on the API key presented here.
+  response:
+    - name: retry-after
+      type: integer
+      unit: seconds
+      example: 45
+      declared_on: 429 responses of POST /orgs/{org_id}/export and POST /groups/{group_id}/export
+      source: components/headers/RetryAfter in the live REST OpenAPI
+    - name: snyk-request-id
+      type: uuid
+      note: >-
+        Returned on every response including 429. Not a rate-limit header, but it is the
+        identifier Snyk asks you to quote when reporting throttling problems.
+  absent:
+    - RateLimit-Limit
+    - RateLimit-Remaining
+    - RateLimit-Reset
+    - X-RateLimit-Limit
+    - X-RateLimit-Remaining
+    - X-RateLimit-Reset
+  absent_note: >-
+    Confirmed by scanning the full 2026-03-25 REST OpenAPI document - zero occurrences of
+    any RateLimit-* or X-RateLimit-* header name - and by an unauthenticated live request
+    to https://api.snyk.io/rest/self on 2026-08-27, whose 401 carried no rate-limit
+    headers either.
 limits:
-  - name: Per-Token Throttle
-    scope: token
+  - name: Per-API-key request rate
+    scope: api-key
     metric: requests
-    limit: dynamic
+    limit: 1620
+    burst: null
     timeFrame: minute
+    window: 60
+    status_on_exhaustion: 429
+    source: https://docs.snyk.io/developer-tools/snyk-api/rest-api/about-the-rest-api
     notes: >-
-      Snyk applies per-token rate limits. The numeric ceiling is not published; 429 is
-      returned when exceeded.
-  - name: Free / Team Personal Token API Access
-    scope: token
+      "There is a limit of 1620 requests per minute, per API key. All requests above the
+      limit will get a response with the status code 429 - Too many requests until requests
+      stop for the duration of the rate-limiting interval (one minute)." Applies to the
+      REST API; Snyk documents no separate published figure for the V1 API.
+  - name: API entitlement by plan
+    scope: account
     metric: tier_eligibility
-    limit: restricted
+    limit: enterprise-only
     notes: >-
-      Free and Team plans do not permit personal access tokens to call the API for
-      automation. Use of the API is gated to Enterprise (and Ignite) plans, with
-      service accounts recommended for non-interactive use.
-  - name: Bulk Export Job Concurrency
+      Not a throughput limit but the gate in front of it. Snyk states that for Free and Team
+      plan users the personal token does not have access to the API and may be used only for
+      IDE, CLI and CI/CD authentication. API use is an Enterprise entitlement, with service
+      accounts recommended for automation.
+  - name: Asynchronous export jobs
     scope: organization
     metric: export_jobs
-    limit: dynamic
+    limit: unpublished
+    status_on_exhaustion: 429
     notes: >-
-      Issue and dependency exports are processed asynchronously; only a small number of
-      concurrent exports per organization are accepted before subsequent jobs queue.
+      POST /orgs/{org_id}/export and POST /groups/{group_id}/export are the only two
+      operations in the contract that declare a 429 response, and they are the only two
+      carrying a retry-after header. Snyk does not publish the concurrency number; the
+      contract only tells you that these operations can be throttled and will tell you how
+      long to wait.
 policies:
-  - name: 429 Throttling
+  - name: Retry on 429
     description: >-
-      When the per-token bucket is exhausted Snyk returns 429 Too Many Requests with a
-      Retry-After header indicating the wait time.
-  - name: Backoff Strategy
+      Snyk states that clients are expected to handle 429 correctly and that such requests
+      can be retried later safely. Where retry-after is present, honour it; elsewhere back
+      off for the remainder of the one-minute interval.
+  - name: New limits are not breaking changes
     description: >-
-      Implement exponential backoff with jitter on 429 and 5xx responses. Cache
-      idempotent reads (org list, project list) and prefer the bulk Export API for
-      large exports rather than paginating individual issue lists.
-  - name: Service Accounts For Automation
+      Snyk reserves the right to introduce new rate limits from time to time to maintain
+      system health, and explicitly says this is not considered a breaking change. Clients
+      must not treat the 1,620/min figure as a contract guarantee.
+  - name: Prefer the Export API over pagination
     description: >-
-      Use a service account scoped to an organization or group for CI/CD and automation
-      flows; reserve personal tokens for interactive CLI/IDE use.
-  - name: Regional Endpoint Selection
+      For large data pulls use the asynchronous Export API rather than paginating issue
+      lists, which is the pattern that most often exhausts the per-key budget.
+  - name: Regional endpoint selection
     description: >-
-      Use the regional endpoint matching your tenant's region - api.snyk.io (US),
-      api.eu.snyk.io (EU), or api.au.snyk.io (AU) - to comply with data residency.
+      Call the base URL for your tenant's region - api.snyk.io, api.us.snyk.io,
+      api.eu.snyk.io or api.au.snyk.io. Tokens do not cross regions.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

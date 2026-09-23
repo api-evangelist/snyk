@@ -1,0 +1,165 @@
+specification: API Commons Conformance
+specificationVersion: '0.1'
+provider: Snyk
+providerId: snyk
+generated: '2026-08-27'
+method: derived
+source: >-
+  Derived from the live Snyk REST OpenAPI 3.0.3 (https://api.snyk.io/rest/openapi/2026-03-25),
+  the two published OAuth2 specs under openapi/, and searched against
+  https://docs.snyk.io/developer-tools/snyk-api/rest-api/about-the-rest-api and
+  https://trust.snyk.io/.
+description: >-
+  Snyk's REST API is one of the more standards-declarative contracts in the catalog. It
+  says out loud that it is JSON:API, it enforces the JSON:API media type on write, its
+  OAuth2 API cites RFC 6749, and - the part that matters commercially - its SBOM endpoint
+  declares CycloneDX and SPDX as first-class response formats with explicit version
+  numbers. In the software-supply-chain market that is the domain standard: a buyer who
+  already speaks CycloneDX 1.6 or SPDX 2.3 wires Snyk into an existing SBOM pipeline with
+  no bespoke connector. What Snyk does NOT do is RFC 9457 - its error envelope is the
+  JSON:API errors array, which predates and competes with problem+json.
+conformance:
+  - id: jsonapi
+    label: JSON:API 1.0
+    conforms: true
+    evidence:
+      - >-
+        Docs: "The Snyk REST API is based on the JSON:API standard, defined in OpenAPI
+        3.0.3". Snyk also links its own documented caveats at
+        https://github.com/snyk/sweater-comb/blob/main/docs/principles/jsonapi.md
+      - 'Media type application/vnd.api+json on 458 of 464 request/response content entries in the live spec.'
+      - 'Live 401 body from GET https://api.snyk.io/rest/self carries {"jsonapi":{"version":"1.0"},"errors":[...]}.'
+      - 'Write requests without Content-Type: application/vnd.api+json are rejected 400.'
+  - id: openapi
+    label: OpenAPI 3.0.3
+    conforms: true
+    evidence:
+      - 'openapi: 3.0.3 in the served document at https://api.snyk.io/rest/openapi/2026-03-25 (193 paths, 291 operations).'
+      - 'A version index is served at https://api.snyk.io/rest/openapi listing 323 dated versions.'
+      - 'Two further OpenAPI 3.0.3 documents are published for the OAuth2 API (openapi/snyk-oauth2-app-openapi.yml, openapi/snyk-oauth2-token-openapi.yml).'
+      - 'Note on the local copies: the 46 refined per-tag specs under openapi/ carry openapi: 3.2.0 because the API Evangelist refine step re-emits them at that version. Snyk itself publishes 3.0.3.'
+  - id: oauth2
+    label: OAuth 2.0 (RFC 6749)
+    conforms: true
+    evidence:
+      - 'Docs: "Snyk provides an OAuth2 API, primarily for use with Snyk Apps. It complies with RFC 6749."'
+      - 'Published spec declares authorization_code, refresh_token and client_credentials grants with a discriminator on grant_type.'
+      - 'PKCE quick-setup documented at .../snyk-apps-apis/set-up-a-snyk-app-using-the-oauth2-api/quick-setup.'
+      - '27 published scopes; see scopes/snyk-scopes.yml.'
+  - id: oidc
+    label: OpenID Connect
+    conforms: false
+    evidence:
+      - '/.well-known/openid-configuration returns 404 on snyk.io and api.snyk.io (probed 2026-08-27).'
+      - 'No openIdConnect securityScheme in any Snyk spec. OAuth2 here is authorization, not federated identity.'
+  - id: rfc9457
+    label: RFC 9457 Problem Details
+    conforms: false
+    evidence:
+      - >-
+        Zero application/problem+json responses in the live spec. Errors use the JSON:API
+        ErrorDocument shape: {jsonapi, errors:[{id, code, status, detail, source, links, meta}]}.
+      - 'This is a deliberate alternative, not an omission - JSON:API defines its own error object.'
+  - id: rfc8594
+    label: Sunset / Deprecation headers (RFC 8594 + draft-dalal deprecation header)
+    conforms: true
+    evidence:
+      - 'components/headers/SunsetHeader and components/headers/DeprecationHeader are defined and referenced 245 times each across responses in the live spec.'
+      - 'SunsetHeader description: "the date of when the underlying endpoint will be removed... Returned as a date in the format: YYYY-MM-DD".'
+      - 'DeprecationHeader cites https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html.'
+      - 'Docs: "After an endpoint is marked as deprecated, it will contain a Sunset header indicating the date at which that endpoint contract will no longer be supported."'
+  - id: pagination
+    label: Cursor pagination
+    conforms: true
+    style: cursor
+    evidence:
+      - 'Docs: "All endpoints in the Snyk REST API use cursor-based pagination."'
+      - 'Parameters starting_after, ending_before, limit; JSON:API links.prev / links.next returned in the body.'
+      - 'Default sort is insertion order, which Snyk states is the only ordering with a consistency guarantee.'
+  - id: idempotency
+    label: Idempotency keys
+    conforms: false
+    evidence:
+      - >-
+        No Idempotency-Key request header, no idempotency_key parameter and no idempotency
+        section appears anywhere in the live REST OpenAPI or in the API documentation.
+        57 POST operations exist with no documented replay-safety mechanism.
+  - id: rate_limit_headers
+    label: RFC 9239 / IETF RateLimit header fields
+    conforms: false
+    evidence:
+      - 'Zero RateLimit-* or X-RateLimit-* header names in the live spec. Only retry-after, and only on the two export 429s.'
+      - 'The numeric limit (1,620/min per key) is published in prose, not signalled at runtime.'
+  - id: request_id_tracing
+    label: Correlation / request-id tracing
+    conforms: true
+    evidence:
+      - 'components/headers/RequestIdResponseHeader (uuid), referenced 531 times; description asks callers to quote it when reporting an issue to Snyk.'
+      - 'Observed live: snyk-request-id: 3e402660-a8c7-47a3-b03a-35709445ec2b on an unauthenticated 401 (2026-08-27).'
+  - id: scim
+    label: SCIM
+    conforms: false
+    evidence:
+      - 'No urn:ietf:params:scim schema URN and no /Users or /Groups SCIM shape in the contract. User and service-account provisioning is Snyk-proprietary (Users, Invites, ServiceAccounts, TenantRole tags).'
+  - id: odata
+    label: OData
+    conforms: false
+    evidence: ['No $metadata surface and no OData query options; the contract is JSON:API.']
+  - id: fhir
+    label: FHIR
+    conforms: false
+    evidence: ['Not a healthcare provider; no FHIR resources in the contract.']
+  - id: fapi
+    label: FAPI
+    conforms: false
+    evidence: ['Not a financial-grade API; no FAPI security profile declared.']
+domain_standards:
+  market: software supply chain security / SBOM
+  note: >-
+    Reward-only check. The signature below is read from the CONTRACT, not from a marketing
+    claim: the SBOM format enum is a declared query parameter with pinned specification
+    versions, so a client can request a specific standard revision by name.
+  standards:
+    - id: cyclonedx
+      label: CycloneDX (OWASP)
+      conforms: true
+      versions: ['1.6', '1.5', '1.4']
+      encodings: [json, xml]
+      evidence:
+        location: 'components/parameters/Format (enum) in https://api.snyk.io/rest/openapi/2026-03-25'
+        detail: >-
+          enum: [cyclonedx1.6+json, cyclonedx1.6+xml, cyclonedx1.5+json, cyclonedx1.5+xml,
+          cyclonedx1.4+json, cyclonedx1.4+xml, spdx2.3+json]; example cyclonedx1.6+json.
+        operations: [getSbom, createSbomTestRun, getSbomTestResult]
+        media_types: [application/vnd.cyclonedx+json, application/vnd.cyclonedx+xml]
+    - id: spdx
+      label: SPDX (Linux Foundation)
+      conforms: true
+      versions: ['2.3']
+      encodings: [json]
+      evidence:
+        location: 'components/parameters/Format (enum) in https://api.snyk.io/rest/openapi/2026-03-25'
+        detail: 'spdx2.3+json is an accepted value of the SBOM format parameter on GET /orgs/{org_id}/projects/{project_id}/sbom.'
+        operations: [getSbom]
+    - id: purl
+      label: Package URL (purl)
+      conforms: true
+      evidence:
+        location: 'Path parameter and request bodies in the live REST OpenAPI (19 occurrences of "purl")'
+        detail: >-
+          GET /orgs/{org_id}/packages/{purl}/issues and POST /orgs/{org_id}/packages/issues
+          address packages by Package URL, the de facto cross-ecosystem package identifier.
+        operations: [getIssuesPerPurl, listIssuesForManyPurls]
+compliance_programs:
+  source: https://trust.snyk.io/
+  certifications:
+    - SOC 2
+    - ISO 27001
+    - GDPR
+  note: >-
+    Read from the Snyk Trust Center on 2026-08-27; see security/snyk-trust-center.yml. These
+    are organisational certifications, not API-contract conformance, and are recorded here
+    only so a buyer sees both in one place.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,7 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Snyk AccessRequests API
+  title: Snyk Open API
   version: REST
+  description: The OpenAPI specification for this service.
 servers:
 - description: Snyk REST API
   url: https://api.snyk.io/rest
@@ -9,137 +10,91 @@ security:
 - APIToken: []
 - BearerAuth: []
 tags:
-- name: AccessRequests
+- description: The OpenAPI specification for this service.
+  name: Open API
 paths:
-  /self/access_requests:
+  /openapi:
     get:
-      description: Get a list of user's access requests
-      operationId: getAccessRequests
-      parameters:
-      - $ref: '#/components/parameters/Version'
-      - $ref: '#/components/parameters/StartingAfter'
-      - $ref: '#/components/parameters/EndingBefore'
-      - $ref: '#/components/parameters/Limit'
-      - $ref: '#/components/parameters/OrgIdFilter'
+      description: List available versions of OpenAPI specification
+      operationId: listAPIVersions
       responses:
         '200':
           content:
-            application/vnd.api+json:
+            application/json:
               schema:
-                additionalProperties: false
-                properties:
-                  data:
-                    items:
-                      $ref: '#/components/schemas/AccessRequest'
-                    type: array
-                  jsonapi:
-                    $ref: '#/components/schemas/JsonApi'
-                  links:
-                    $ref: '#/components/schemas/Links'
-                required:
-                - jsonapi
-                - data
-                - links
-                type: object
-          description: A list of access requests are returned
+                items:
+                  type: string
+                type: array
+          description: List of available versions is returned
           headers:
-            deprecation:
-              $ref: '#/components/headers/DeprecationHeader'
             snyk-request-id:
               $ref: '#/components/headers/RequestIdResponseHeader'
-            snyk-version-lifecycle-stage:
-              $ref: '#/components/headers/VersionStageResponseHeader'
-            snyk-version-requested:
-              $ref: '#/components/headers/VersionRequestedResponseHeader'
-            snyk-version-served:
-              $ref: '#/components/headers/VersionServedResponseHeader'
-            sunset:
-              $ref: '#/components/headers/SunsetHeader'
         '400':
           $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-      summary: Get access requests (Early Access)
       tags:
-      - AccessRequests
-      x-snyk-api-lifecycle: released
-      x-snyk-api-releases:
-      - 2023-12-01~experimental
-      - 2023-12-21~beta
-      x-snyk-api-resource: self
-      x-snyk-api-stability: beta
-      x-snyk-api-version: 2023-12-21~beta
-      x-stability-level: beta
-components:
-  parameters:
-    EndingBefore:
-      description: Return the page of results immediately before this cursor
-      example: v1.eyJpZCI6IjExMDAifQo=
-      in: query
-      name: ending_before
-      schema:
-        type: string
-    StartingAfter:
-      description: Return the page of results immediately after this cursor
-      example: v1.eyJpZCI6IjEwMDAifQo=
-      in: query
-      name: starting_after
-      schema:
-        type: string
-    Version:
-      description: The requested version of the endpoint to process the request
-      example: '2026-03-25'
-      in: query
-      name: version
-      required: true
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    Limit:
-      description: Number of results to return per page
-      example: 10
-      in: query
-      name: limit
-      schema:
-        default: 10
-        format: int32
-        maximum: 100
-        minimum: 10
-        multipleOf: 10
-        type: integer
-    OrgIdFilter:
-      description: The IDs of the org to filter by
-      explode: false
-      in: query
-      name: org_id
-      schema:
-        items:
-          format: uuid
+      - Open API
+      summary: List API versions
+      x-summary-source: derived
+  /openapi/{version}:
+    get:
+      description: Get OpenAPI specification effective at version.
+      operationId: getAPIVersion
+      parameters:
+      - description: The requested version of the API
+        in: path
+        name: version
+        required: true
+        schema:
           type: string
-        type: array
-      style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: OpenAPI specification matching requested version is returned
+          headers:
+            snyk-request-id:
+              $ref: '#/components/headers/RequestIdResponseHeader'
+            snyk-version-requested:
+              $ref: '#/components/headers/VersionRequestedResponseHeader'
+            snyk-version-served:
+              $ref: '#/components/headers/VersionServedResponseHeader'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      tags:
+      - Open API
+      summary: Get API version
+      x-summary-source: derived
+components:
   headers:
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
     VersionRequestedResponseHeader:
       description: A header containing the version of the endpoint requested by the caller.
       example: '2026-03-25'
       schema:
         $ref: '#/components/schemas/QueryVersion'
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
       schema:
-        $ref: '#/components/schemas/ActualVersion'
+        format: date-time
+        type: string
     VersionStageResponseHeader:
       description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
 
@@ -162,15 +117,16 @@ components:
       schema:
         format: uuid
         type: string
-    DeprecationHeader:
-      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
-
-        '
-      example: '2021-07-01T00:00:00Z'
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
       schema:
-        format: date-time
+        $ref: '#/components/schemas/ActualVersion'
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
         type: string
   schemas:
     ActualVersion:
@@ -178,19 +134,6 @@ components:
       example: '2026-03-25'
       pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
       type: string
-    JsonApi:
-      additionalProperties: false
-      example:
-        version: '1.0'
-      properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          example: '1.0'
-          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
-          type: string
-      required:
-      - version
-      type: object
     QueryVersion:
       description: Requested API version
       example: '2026-03-25'
@@ -314,102 +257,7 @@ components:
       - jsonapi
       - errors
       type: object
-    AccessRequestAttributes:
-      additionalProperties: false
-      properties:
-        status:
-          enum:
-          - pending
-          - expired
-          type: string
-      required:
-      - status
-      type: object
-    Types:
-      example: resource
-      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
-      type: string
-    Links:
-      additionalProperties: false
-      properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        related:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
-    AccessRequest:
-      additionalProperties: false
-      properties:
-        attributes:
-          $ref: '#/components/schemas/AccessRequestAttributes'
-        id:
-          description: The Snyk ID of the access request.
-          example: 59d6d97e-3106-4ebb-b608-352fad9c5b34
-          format: uuid
-          type: string
-        type:
-          $ref: '#/components/schemas/Types'
-      required:
-      - type
-      - id
-      - attributes
-      type: object
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
-        type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
   responses:
-    '400':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Bad Request: A parameter provided as a part of the request was invalid.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
     '500':
       content:
         application/vnd.api+json:
@@ -429,12 +277,12 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '403':
+    '401':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
-      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      description: 'Unauthorized: the request requires an authentication token.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -467,12 +315,12 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '401':
+    '400':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
-      description: 'Unauthorized: the request requires an authentication token.'
+      description: 'Bad Request: A parameter provided as a part of the request was invalid.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'

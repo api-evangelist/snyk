@@ -1,0 +1,208 @@
+specification: API Commons Data Model
+specificationVersion: '0.1'
+provider: Snyk
+providerId: snyk
+generated: '2026-08-27'
+method: derived
+source: >-
+  Derived from the path hierarchy, JSON:API resource `type` enums, x-snyk-api-resource
+  extensions and $ref graph of the live Snyk REST OpenAPI 3.0.3 at
+  https://api.snyk.io/rest/openapi/2026-03-25 (193 paths, 291 operations), with entity
+  descriptions checked against https://docs.snyk.io/developer-tools/snyk-api/reference.
+description: >-
+  Snyk's data model is a strict four-level containment tree - Tenant contains Groups,
+  Groups contain Organizations, Organizations contain Projects - and every URL in the API
+  states which level it operates at. 96 of 193 paths are rooted at /orgs/{org_id}, 50 at
+  /groups/{group_id}, 32 at /tenants/{tenant_id} and 10 at /self. That hierarchy is not
+  cosmetic: it is the authorization boundary, it decides which token can call what (a
+  service account is scoped to an org or a group), and it is why the same logical read
+  (issues, policies, exports) appears twice, once per level. Beneath it, Target is the
+  imported thing (a repo, an image, a cloud account), Project is a scannable unit inside a
+  Target, and Issue is a finding on a Project. Everything else - policies, collections,
+  integrations, broker connections, settings, service accounts - hangs off one of those
+  five.
+identifier_convention:
+  format: uuid
+  note: >-
+    Every entity in the REST API is addressed by a bare UUID; Snyk uses no typed
+    id-prefixes (there is no `proj_`/`org_` convention as in some payments APIs). The only
+    non-UUID identifier in the contract is `purl`, the Package URL used to address packages
+    in the vulnerability lookup endpoints.
+jsonapi_types_declared: 70
+entities:
+  - name: Tenant
+    type: tenant
+    description: Top-level commercial container introduced with the newer platform model. Owns groups, tenant roles, and Universal Broker installs/deployments.
+    paths_rooted_here: 32
+    relationships:
+      - has_many: Group
+      - has_many: TenantRole
+        via: /tenants/{tenant_id}/roles
+      - has_many: BrokerDeployment
+        via: /tenants/{tenant_id}/brokers/installs/{install_id}/deployments
+  - name: Group
+    type: group
+    description: Enterprise grouping of organizations; the level at which cross-org governance, group policies, exports, issues and audit logs are read.
+    paths_rooted_here: 50
+    relationships:
+      - belongs_to: Tenant
+      - has_many: Org
+      - has_many: Policy
+        via: /groups/{group_id}/policies
+      - has_many: Issue
+        via: /groups/{group_id}/issues
+      - has_many: ServiceAccount
+        via: /groups/{group_id}/service_accounts
+      - has_many: RuleExtension
+        via: /groups/{group_id}/{sast|secrets}/rule_extensions
+      - has_many: Export
+        via: /groups/{group_id}/export
+  - name: Org
+    type: org
+    description: The primary working container. Owns projects, targets, integrations, collections, settings, invitations, memberships and most day-to-day API surface.
+    paths_rooted_here: 96
+    relationships:
+      - belongs_to: Group
+      - has_many: Project
+      - has_many: Target
+      - has_many: Issue
+      - has_many: Collection
+      - has_many: Policy
+      - has_many: OrgInvitation
+      - has_many: ServiceAccount
+      - has_many: ContainerImage
+      - has_many: CustomBaseImage
+      - has_many: AiBom
+      - has_many: Export
+      - has_one: OpenSourceSettings
+      - has_one: SastSettings
+      - has_one: IacSettings
+      - has_one: SecretsSettings
+      - has_one: LanguagesSettings
+      - has_one: SlackSettings
+  - name: Target
+    type: target
+    description: The imported source of scannable material - a Git repository, container registry image, cloud account or CLI-imported path. Deleting a target permanently removes it.
+    relationships:
+      - belongs_to: Org
+      - has_many: Project
+    id_fields: [remoteUrl, displayName]
+  - name: Project
+    type: project
+    description: A scannable unit inside a Target - a manifest file, a Dockerfile, an IaC file. Carries tags, attributes (criticality, environment, lifecycle), test frequency and issue counts by severity.
+    relationships:
+      - belongs_to: Org
+      - belongs_to: Target
+        via: relationships.target
+      - has_many: Issue
+      - has_many: Collection
+        via: membership in collections
+      - has_one: DepGraph
+  - name: Issue
+    type: issues
+    description: A finding on a project. Typed by product - sca, code, iac, container and (added 2026-07-29) secrets. Carries severity, coordinates, and optionally reachability and code flows.
+    relationships:
+      - belongs_to: Project
+      - belongs_to: Org
+      - belongs_to: Group
+        via: group-level issue listing
+    enums:
+      type: [sca, code, iac, container, secrets]
+  - name: Collection
+    type: collections
+    description: A user-defined or automatically created grouping of projects within an org.
+    relationships:
+      - belongs_to: Org
+      - has_many: Project
+  - name: Policy
+    type: policy
+    description: Ignore and security policy applied at org or group level; policy events record application.
+    relationships:
+      - belongs_to: Org
+      - belongs_to: Group
+      - has_many: PolicyEvent
+  - name: App
+    type: app
+    description: A Snyk App - the OAuth2 client. Addressed historically by client_id (now deprecated) and currently by App ID. Produces app installs, app bots and sessions.
+    relationships:
+      - belongs_to: Org
+      - has_many: AppInstall
+      - has_many: AppBot
+      - has_many: AppSession
+    see: scopes/snyk-scopes.yml
+  - name: ServiceAccount
+    type: service_accounts
+    description: Non-human credential scoped to an org or a group; Snyk's recommended identity for all automation.
+    relationships:
+      - belongs_to: Org
+      - belongs_to: Group
+  - name: User
+    type: user
+    description: A human identity. Reached through /self, org memberships and invitations; owns personal access tokens.
+    relationships:
+      - has_many: OrgMembership
+      - has_many: PersonalAccessToken
+      - has_many: AppInstall
+  - name: BrokerConnection
+    type: broker_connection
+    description: Universal Broker connection binding a private integration (github, gitlab, artifactory, nexus, ecr, acr, gcr, jira) into Snyk.
+    relationships:
+      - belongs_to: Tenant
+      - has_many: BrokerContext
+      - has_many: BrokerDeployment
+      - has_many: DeploymentCredential
+    enums:
+      integration_type: [github, gitlab, artifactory, nexus, ecr, acr, gcr, jira]
+  - name: ContainerImage
+    type: container_image
+    description: A container image known to the platform, with layers and base-image relationships.
+    relationships:
+      - belongs_to: Org
+      - has_many: CustomBaseImage
+  - name: Sbom
+    type: sbom
+    description: Software bill of materials for a project, emitted as CycloneDX 1.4/1.5/1.6 (JSON or XML) or SPDX 2.3 JSON.
+    relationships:
+      - belongs_to: Project
+    see: conformance/snyk-conformance.yml
+  - name: AiBom
+    type: ai_bom
+    description: AI bill of materials - models, services and AI assets discovered in a project. Created as an async job.
+    relationships:
+      - belongs_to: Org
+      - has_one: AiBomJob
+  - name: Package
+    type: package
+    description: An open-source package addressed by Package URL, with versions and known issues. The only non-UUID-addressed entity in the API.
+    id_fields: [purl, ecosystem, package_name, package_version]
+    relationships:
+      - has_many: Issue
+        via: /orgs/{org_id}/packages/{purl}/issues
+  - name: Asset
+    type: asset
+    description: Inventory/AppRisk asset record - the largest single cluster in the contract at 36 operations and 30 x-snyk-api-resource references.
+    relationships:
+      - belongs_to: Org
+      - belongs_to: Group
+  - name: Export
+    type: export
+    description: Asynchronous bulk export job for issues or usage data. The recommended alternative to paginating issue lists, and one of only two operations that can return 429.
+    relationships:
+      - belongs_to: Org
+      - belongs_to: Group
+relationships_summary:
+  containment_chain: Tenant -> Group -> Org -> Target -> Project -> Issue
+  authorization_note: >-
+    The containment chain doubles as the permission boundary. A token scoped to an Org cannot
+    read /groups/{group_id}/issues even for its own group, which is the single most common
+    cause of a 403 against this API.
+  duplication_note: >-
+    Several reads exist at both org and group level with different operationIds
+    (getOrgIssues / getGroupIssues, org policies / group policies, org export / group export).
+    They are not aliases - they return different scopes and require different permissions.
+render:
+  subway: null
+  note: No subway/ diagram exists in this repo yet; this file is the machine-readable form.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

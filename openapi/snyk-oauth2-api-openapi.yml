@@ -1,0 +1,377 @@
+openapi: 3.2.0
+info:
+  title: Snyk Oauth2 API
+  version: 1.0.0
+  description: 'Operations tagged oauth2 across 2 of this provider''s published API definitions: snyk-oauth2-app-openapi.yml, snyk-oauth2-token-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://app.snyk.io
+  description: Snyk UI
+- url: https://api.snyk.io/oauth2
+  description: Snyk OAuth2 API
+tags:
+- name: OAuth2
+  description: oauth2
+paths:
+  /oauth2/authorize:
+    get:
+      summary: Initiate the authorization code flow
+      description: To be called by the end user to authorize the client application to their Snyk organizations. Success returns a redirect to the provided `redirect_uri`, containing an authorization code which can be exchanged for an access token.
+      tags:
+      - OAuth2
+      parameters:
+      - name: response_type
+        in: query
+        description: The type of authorization flow being used. Only "code" is supported for authorization code flow.
+        required: true
+        schema:
+          type: string
+          enum:
+          - code
+          example: code
+      - name: client_id
+        in: query
+        description: The client ID of the client application.
+        required: true
+        schema:
+          type: string
+          example: 64ae3415-5ccd-49e5-91f0-9101a6793ec2
+      - name: redirect_uri
+        in: query
+        description: The redirection URI to which the authorization server will redirect the user after granting or denying authorization. Must match one of the URIs set on the client application exactly.
+        required: true
+        schema:
+          type: string
+          example: https://example.com/callback
+      - name: state
+        in: query
+        description: An opaque value used by the client to maintain state between the authorization request and the authorization callback. Use this value to match client callbacks to the request that spawned them.
+        required: false
+        schema:
+          type: string
+          example: random_state_value
+      - name: code_challenge
+        in: query
+        description: A cryptographically secure code challenge derived from a secret code verifier you generate on the client-side as defined in [RFC7636]. It is generated from a hashing a randomly generated string, the `code_verifier` used when exchanging tokens, then URL safe base 64 encoding the result.
+        required: true
+        schema:
+          type: string
+          example: YWVjMDcwNjQ1ZmU1M2VlM2IzNzYzMDU5Mzc2MTM0ZjA1OGNjMzM3MjQ3Yzk3OGFkZDE3OGI2Y2NkZmIwMDE5Zg
+      - name: code_challenge_method
+        in: query
+        description: The method used to derive the code challenge from the code verifier, only S256 is supported.
+        required: true
+        schema:
+          type: string
+          enum:
+          - S256
+          example: S256
+      responses:
+        '303':
+          description: Redirection to authorization server. The Location header is set to the provided `redirect_uri` so the user's browser should follow this redirect automatically.
+          headers:
+            Location:
+              description: 'Specified redirect_uri with querystring parameters `code` and `state`, or if there is an error: `error`, `error_description` and `state`. See examples for more details.'
+              schema:
+                type: string
+              required: true
+              examples:
+                success:
+                  value: https://example.com/callback?code=returned_auth_code&state=random_state_value
+                  description: Authorization succeeded, the returned code can be used to call /oauth2/token to obtain an access token.
+                error:
+                  value: https://example.com/callback?error=invalid_token&error_description=Token%20expired.&state=random_state_value
+                  description: 'There was an error. Inform the user that the flow did not complete successfully. A full list of possible errors can be found in the OAuth Extensions Error Registry registry maintained by IANA: https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml'
+      operationId: getOauth2Authorize
+      x-operation-id-source: derived
+    servers:
+    - url: https://app.snyk.io
+      description: Snyk UI
+  /token:
+    post:
+      summary: Request an access token
+      description: Allows the client application to exchange the authorization code received from the authorization server for an access token.
+      tags:
+      - OAuth2
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/AuthCode'
+              - $ref: '#/components/schemas/RefreshToken'
+              - $ref: '#/components/schemas/ClientCredentials'
+              discriminator:
+                propertyName: grant_type
+      responses:
+        '200':
+          description: Successful token request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    description: The access token granted to the client application.
+                    type: string
+                    example: some_opaque_access_token_string
+                  expires_in:
+                    description: The number of seconds until the access token expires.
+                    type: integer
+                    example: 3599
+                  refresh_token:
+                    description: Refresh token that can be used to obtain a new access token. Will not be granted in `client_credentials` grants.
+                    type: string
+                    example: some_opaque_refresh_token_string
+                  refresh_expires_in:
+                    description: The number of seconds until the refresh token expires.
+                    type: integer
+                    example: 15552000
+                  token_type:
+                    description: The type of token issued.
+                    type: string
+                    enum:
+                    - bearer
+                    example: bearer
+                  scope:
+                    description: The space-separated list of scopes granted to the client application.
+                    type: string
+                    example: org.read org.project.read org.project.snapshot.read
+                  bot_id:
+                    description: ID of the newly created bot user.
+                    type: string
+                    format: uuid
+                    example: 95233fa3-33cf-4dd3-a6ac-e040985e1a4f
+                required:
+                - access_token
+                - expires_in
+                - token_type
+                - scope
+                - bot_id
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Forbidden'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      operationId: postToken
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.snyk.io/oauth2
+      description: Snyk OAuth2 API
+  /revoke:
+    post:
+      summary: Revoke refresh token
+      description: Revokes an otherwise valid refresh token so it can't be reused. This is used when a refresh token is accidentally, or maliciously, leaked.
+      tags:
+      - OAuth2
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  description: The client ID of the client application.
+                  type: string
+                  example: 64ae3415-5ccd-49e5-91f0-9101a6793ec2
+                client_secret:
+                  description: The client secret of the client application.
+                  type: string
+                  example: super_secret_client_secret
+                token:
+                  description: The refresh token to be revoked.
+                  type: string
+                  example: some_opaque_refresh_token_string
+              required:
+              - client_id
+              - client_secret
+              - token
+      responses:
+        '200':
+          description: The token has been revoked, or was invalid.
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/Forbidden'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      operationId: postRevoke
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.snyk.io/oauth2
+      description: Snyk OAuth2 API
+components:
+  schemas:
+    OAuthError:
+      type: object
+      properties:
+        error:
+          description: 'An error ID. The full list of possible values can be found in the OAuth Extensions Error Registry maintained by IANA: https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml'
+          type: string
+          example: invalid_request
+        error_description:
+          description: Human readable description about what happened.
+          type: string
+          example: The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Request parameter 'grant_type' is missing
+      required:
+      - error
+      - error_description
+    AuthCode:
+      type: object
+      properties:
+        grant_type:
+          description: The type of grant used in the request. Use `authorization_code` to exchange an authorization code for an access token.
+          type: string
+          enum:
+          - authorization_code
+          example: authorization_code
+        code:
+          description: The authorization code received from the authorization server.
+          type: string
+          example: returned_auth_code
+        client_id:
+          description: The client ID of the client application.
+          type: string
+          example: 64ae3415-5ccd-49e5-91f0-9101a6793ec2
+        client_secret:
+          description: The client secret of the client application.
+          type: string
+          example: super_secret_client_secret
+        code_verifier:
+          description: The code verifier used to generate the code challenge.
+          type: string
+          example: your_secure_code_verifier
+      required:
+      - grant_type
+      - code
+      - client_id
+      - client_secret
+      - code_verifier
+    RefreshToken:
+      type: object
+      properties:
+        grant_type:
+          description: The type of grant used in the request. Use `refresh_token` to exchange a refresh token for a new access token and refresh token pair.
+          type: string
+          enum:
+          - refresh_token
+          example: refresh_token
+        client_secret:
+          description: The client secret of the client application.
+          type: string
+          example: super_secret_client_secret
+        refresh_token:
+          description: A previously issued refresh token. This token will be consumed when it is used here so cannot be reused.
+          type: string
+          example: some_opaque_refresh_token_string
+      required:
+      - grant_type
+      - client_secret
+      - refresh_token
+    ClientCredentialsJWT:
+      allOf:
+      - $ref: '#/components/schemas/ClientCredentialsBase'
+      - type: object
+        properties:
+          client_id:
+            description: The client ID of the client application.
+            type: string
+            example: 64ae3415-5ccd-49e5-91f0-9101a6793ec2
+          client_assertion:
+            description: 'A compact signed JWT containing claims detailed in OIDC Connect Core 1.0, section 9.
+
+
+              Required header claims:
+
+              - kid: KeyID which matches a public key in the registered JWKS endpoint.
+
+
+              Required payload claims:
+
+              - sub: client_id of your Service Account.
+
+              - iss: client_id of your Service Account.
+
+              - jti: A cryptographically unique value (nonce) to prevent replay attacks.
+
+              - aud: Full URL for this token endpoint - "https://api.snyk.io/oauth2/token".
+
+              - exp: Unix timestamp of when the token shouldn''t be accepted for processing. We suggest now() + 5 minutes.
+
+
+              The JWT must be signed using a private key with RSA256 (RSASSA-PKCS-v1.5 using SHA-256), and its public key must be exposed on the previously registered JWKS endpoint'
+            type: string
+          client_assertion_type:
+            description: The method of client_assertion being sent. Only "urn:ietf:params:oauth:client-assertion-type:jwt-bearer" is supported.
+            type: string
+            enum:
+            - urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+            example: urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+        required:
+        - client_assertion
+        - client_assertion_type
+    ClientCredentialsSecret:
+      allOf:
+      - $ref: '#/components/schemas/ClientCredentialsBase'
+      - type: object
+        properties:
+          client_id:
+            description: The client ID of the client application.
+            type: string
+            example: 64ae3415-5ccd-49e5-91f0-9101a6793ec2
+          client_secret:
+            description: The client secret of the client application.
+            type: string
+            example: super_secret_client_secret
+        required:
+        - client_id
+        - client_secret
+    ClientCredentialsBase:
+      type: object
+      properties:
+        grant_type:
+          description: The type of grant used in the request. Use `client_credentials` to exchange credentials for an access token, typically used with Service Accounts. Supports either client_secret or private_key_jwt auth.
+          type: string
+          enum:
+          - client_credentials
+          example: client_credentials
+      required:
+      - grant_type
+    ClientCredentials:
+      oneOf:
+      - $ref: '#/components/schemas/ClientCredentialsSecret'
+      - $ref: '#/components/schemas/ClientCredentialsJWT'
+      discriminator:
+        propertyName: client_assertion_type
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthError'
+    ServerError:
+      description: An unexpected server error.
+    InvalidRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthError'
+x-refined-from:
+- snyk-oauth2-app-openapi.yml
+- snyk-oauth2-token-openapi.yml
+x-hideTryItPanel: true
+x-codeSamples: true
