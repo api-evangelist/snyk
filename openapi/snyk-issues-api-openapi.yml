@@ -3181,628 +3181,11 @@ paths:
       x-stability-level: stable
 components:
   schemas:
-    BulkPackageUrlsRequestBody:
-      properties:
-        data:
-          properties:
-            attributes:
-              properties:
-                purls:
-                  description: An array of Package URLs (purl). Supported purl types are apk, cargo, cocoapods, composer, conan, deb, gem, generic, golang, hex, maven, npm, nuget, pub, pypi, rpm, and swift. A version for the package is also required.
-                  items:
-                    type: string
-                  type: array
-              required:
-              - purls
-              type: object
-            type:
-              $ref: '#/components/schemas/Types'
-          required:
-          - attributes
-          type: object
-      required:
-      - data
-      type: object
-    MaturityLevel:
-      description: Details about the maturity level
-      properties:
-        format:
-          description: The standard by which the “maturity” value is shown.
-          example: CVSSv4
-          type: string
-        level:
-          description: 'Exploit maturity of the vulnerability. For CVSSv3: Proof of Concept, Functional, High. For CVSSv4: Unreported, Proof of Concept, Attacked.'
-          example: Attacked
-          type: string
-        type:
-          description: Indicates if the CVSS item is primary or secondary. Clients should prefer the primary CVSS vector.
-          example: primary
-          type: string
-      type: object
-    ClassTypeDef:
+    ProblemTypeDef:
       enum:
-      - rule-category
-      - compliance
-      - weakness
-      example: compliance
+      - rule
+      - vulnerability
       type: string
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
-        type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
-    QueryVersion:
-      description: Requested API version
-      example: '2026-03-25'
-      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
-      type: string
-    RiskScore:
-      description: Risk prioritization score based on an analysis model
-      example:
-        model: v1
-        value: 700
-      properties:
-        model:
-          description: Risk scoring model used to calculate the score value
-          type: string
-        updated_at:
-          format: date-time
-          type: string
-        value:
-          description: Risk score value, which may be used for overall prioritization
-          maximum: 1000
-          minimum: 0
-          type: integer
-      required:
-      - value
-      - model
-      type: object
-    ActualVersion:
-      description: Resolved API version
-      example: '2026-03-25'
-      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
-      type: string
-    ChecksumValidationMeta:
-      description: Metadata about checksum validation when a checksum qualifier is provided in the PURL
-      properties:
-        description:
-          description: Human-readable explanation of the validation result
-          example: Package and checksum both match
-          type: string
-        details:
-          properties:
-            checksum:
-              description: Whether the checksum matched (null if no checksum validation was requested)
-              example: true
-              type:
-              - boolean
-              - 'null'
-            name_version:
-              description: Whether the package name and version were found
-              example: true
-              type: boolean
-          required:
-          - name_version
-          - checksum
-          type: object
-        input:
-          properties:
-            checksum:
-              description: The checksum value provided (null if none)
-              example: sha1:abc123
-              type:
-              - string
-              - 'null'
-            purl:
-              description: The original PURL provided
-              example: pkg:maven/com.example/my-package@1.0.0?checksum=sha1:abc123
-              type: string
-          required:
-          - purl
-          - checksum
-          type: object
-        type:
-          description: 'The type of match found: - `full`: Both package ID and checksum match - `partial`: Only one of package ID or checksum matches - `none`: Neither package ID nor checksum found'
-          enum:
-          - none
-          - partial
-          - full
-          example: full
-          type: string
-      required:
-      - type
-      - details
-      - description
-      - input
-      type: object
-    Error:
-      additionalProperties: false
-      example:
-        detail: Not Found
-        status: '404'
-      properties:
-        code:
-          description: An application-specific error code, expressed as a string value.
-          example: entity-not-found
-          type: string
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          example: 'The request was missing these required fields: ...'
-          type: string
-        id:
-          description: A unique identifier for this particular occurrence of the problem.
-          example: f16c31b5-6129-4571-add8-d589da9be524
-          format: uuid
-          type: string
-        links:
-          additionalProperties: false
-          description: A link that leads to further details about this particular occurrance of the problem.
-          example:
-            about: https://example.com/about_this_error
-          properties:
-            about:
-              example: https://example.com/api/resource
-              oneOf:
-              - description: A string containing the link’s URL.
-                example: https://example.com/api/resource
-                type: string
-              - additionalProperties: false
-                example:
-                  href: https://example.com/api/resource
-                properties:
-                  href:
-                    description: A string containing the link’s URL.
-                    example: https://example.com/api/resource
-                    type: string
-                  meta:
-                    additionalProperties: true
-                    description: Free-form object that may contain non-standard information.
-                    example:
-                      key1: value1
-                      key2:
-                        sub_key: sub_value
-                      key3:
-                      - array_value1
-                      - array_value2
-                    type: object
-                required:
-                - href
-                type: object
-          type: object
-        meta:
-          additionalProperties: true
-          example:
-            key: value
-          type: object
-        source:
-          additionalProperties: false
-          example:
-            pointer: /data/attributes
-          properties:
-            parameter:
-              description: A string indicating which URI query parameter caused the error.
-              example: param1
-              type: string
-            pointer:
-              description: A JSON Pointer [RFC6901] to the associated entity in the request document.
-              example: /data/attributes
-              type: string
-          type: object
-        status:
-          description: The HTTP status code applicable to this problem, expressed as a string value.
-          example: '400'
-          pattern: ^[45]\d\d$
-          type: string
-        title:
-          description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-          example: Bad request
-          type: string
-      required:
-      - status
-      - detail
-      type: object
-    IgnoreType:
-      enum:
-      - ignore
-      example: ignore
-      type: string
-    TestExecutionType:
-      enum:
-      - test-workflow-execution
-      - custom-execution
-      type: string
-    DeployedRiskFactor:
-      properties:
-        included_in_score:
-          default: false
-          type: boolean
-        links:
-          $ref: '#/components/schemas/RiskFactorLinks'
-        name:
-          type: string
-        updated_at:
-          format: date-time
-          type: string
-        value:
-          type: boolean
-      required:
-      - name
-      - updated_at
-      - value
-      type: object
-    Types:
-      example: resource
-      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
-      type: string
-    RiskFactor:
-      discriminator:
-        mapping:
-          deployed: '#/components/schemas/DeployedRiskFactor'
-          loaded_package: '#/components/schemas/LoadedPackageRiskFactor'
-          os_condition: '#/components/schemas/OSConditionRiskFactor'
-          public_facing: '#/components/schemas/PublicFacingRiskFactor'
-        propertyName: name
-      oneOf:
-      - $ref: '#/components/schemas/DeployedRiskFactor'
-      - $ref: '#/components/schemas/OSConditionRiskFactor'
-      - $ref: '#/components/schemas/PublicFacingRiskFactor'
-      - $ref: '#/components/schemas/LoadedPackageRiskFactor'
-    Problem3:
-      properties:
-        disclosed_at:
-          description: When this problem was disclosed to the public.
-          format: date-time
-          type: string
-        discovered_at:
-          description: When this problem was first discovered.
-          format: date-time
-          type: string
-        id:
-          example: CWE-61
-          maxLength: 1024
-          minLength: 1
-          type: string
-        source:
-          example: CVE
-          maxLength: 64
-          minLength: 1
-          type: string
-        updated_at:
-          description: When this problem was last updated.
-          format: date-time
-          type: string
-        url:
-          description: An optional URL for this problem.
-          format: uri
-          maxLength: 4096
-          minLength: 1
-          type: string
-      required:
-      - id
-      - source
-      type: object
-    Severity3:
-      properties:
-        level:
-          description: Level of severity calculated via vector
-          example: medium
-          type: string
-        score:
-          description: The CVSS score calculated from the vector, representing the severity of the vulnerability on a scale from 0 to 10.
-          example: 5.3
-          type:
-          - number
-          - 'null'
-        source:
-          description: The source of this severity. The value must be the id of a referenced problem or class, in which case that problem or class is the source of this issue. If source is omitted, this severity is sourced internally in the Snyk application.
-          example: Snyk
-          type: string
-        type:
-          description: Indicates if the CVSS item is primary or secondary. Clients should prefer the primary CVSS vector.
-          example: primary
-          type: string
-        vector:
-          description: CVSS vector string detailing the metrics of a vulnerability.
-          example: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L
-          type:
-          - string
-          - 'null'
-        version:
-          description: CVSS version being described.
-          example: '4.0'
-          type: string
-      type: object
-    ResourcePath:
-      example: ',5.4.0),[6.0.0.pr1,6.4.0)'
-      maxLength: 2024
-      minLength: 1
-      type: string
-    Resolution:
-      additionalProperties: false
-      description: 'An optional field recording when and via what means an issue was resolved, if it was resolved.
-
-        Resolved issues are retained for XX days.
-
-        '
-      properties:
-        details:
-          description: Optional details about the resolution. Used by Snyk Cloud so far.
-          type: string
-        resolved_at:
-          description: The time when this issue was resolved.
-          format: date-time
-          type: string
-        type:
-          $ref: '#/components/schemas/ResolutionTypeDef'
-      required:
-      - type
-      - resolved_at
-      type: object
-    Remedy3:
-      properties:
-        description:
-          description: A markdown-formatted optional description of this remedy.
-          example: Upgrade the package version to 5.4.0,6.4.0 to fix this vulnerability
-          type: string
-        details:
-          properties:
-            upgrade_package:
-              description: A minimum version to upgrade to in order to remedy the issue.
-              example: 5.4.0,6.4.0
-              type: string
-          type: object
-        type:
-          description: The type of the remedy. Always ‘indeterminate’.
-          example: indeterminate
-          type: string
-      type: object
-    PurlIssuesMeta:
-      properties:
-        errors:
-          items:
-            $ref: '#/components/schemas/Error'
-          type: array
-        packages:
-          additionalProperties:
-            properties:
-              match:
-                $ref: '#/components/schemas/ChecksumValidationMeta'
-              package:
-                $ref: '#/components/schemas/PackageMeta__0'
-            required:
-            - package
-            type: object
-          description: 'Package metadata and checksum validation results, keyed by PURL.
-
-            Keys must be valid Package URLs (e.g., "pkg:maven/com.example/foo@1.0.0").
-
-            '
-          type: object
-      type: object
-    PackageMeta__0:
-      properties:
-        name:
-          description: The package’s name
-          example: spring-core
-          type: string
-        namespace:
-          description: A name prefix, such as a maven group id or docker image owner
-          example: org.springframework
-          type: string
-        type:
-          description: The package type or protocol
-          example: maven
-          type: string
-        url:
-          description: The purl of the package
-          example: pkg:maven/com.fasterxml.woodstox/woodstox-core@5.0.0
-          type: string
-        version:
-          description: The version of the package
-          example: 1.0.0
-          type: string
-      type: object
-    ErrorDocument:
-      additionalProperties: false
-      example:
-        errors:
-        - detail: Permission denied for this resource
-          status: '403'
-        jsonapi:
-          version: '1.0'
-      properties:
-        errors:
-          example:
-          - detail: Permission denied for this resource
-            status: '403'
-          items:
-            additionalProperties: false
-            example:
-              detail: Not Found
-              status: '404'
-            properties:
-              code:
-                description: An application-specific error code, expressed as a string value.
-                example: entity-not-found
-                type: string
-              detail:
-                description: A human-readable explanation specific to this occurrence of the problem.
-                example: 'The request was missing these required fields: ...'
-                type: string
-              id:
-                description: A unique identifier for this particular occurrence of the problem.
-                example: f16c31b5-6129-4571-add8-d589da9be524
-                format: uuid
-                type: string
-              links:
-                additionalProperties: false
-                description: A link that leads to further details about this particular occurrance of the problem.
-                example:
-                  about: https://example.com/about_this_error
-                properties:
-                  about:
-                    example: https://example.com/api/resource
-                    oneOf:
-                    - description: A string containing the link’s URL.
-                      example: https://example.com/api/resource
-                      type: string
-                    - additionalProperties: false
-                      example:
-                        href: https://example.com/api/resource
-                      properties:
-                        href:
-                          description: A string containing the link’s URL.
-                          example: https://example.com/api/resource
-                          type: string
-                        meta:
-                          additionalProperties: true
-                          description: Free-form object that may contain non-standard information.
-                          example:
-                            key1: value1
-                            key2:
-                              sub_key: sub_value
-                            key3:
-                            - array_value1
-                            - array_value2
-                          type: object
-                      required:
-                      - href
-                      type: object
-                type: object
-              meta:
-                additionalProperties: true
-                example:
-                  key: value
-                type: object
-              source:
-                additionalProperties: false
-                example:
-                  pointer: /data/attributes
-                properties:
-                  parameter:
-                    description: A string indicating which URI query parameter caused the error.
-                    example: param1
-                    type: string
-                  pointer:
-                    description: A JSON Pointer [RFC6901] to the associated entity in the request document.
-                    example: /data/attributes
-                    type: string
-                type: object
-              status:
-                description: The HTTP status code applicable to this problem, expressed as a string value.
-                example: '400'
-                pattern: ^[45]\d\d$
-                type: string
-              title:
-                description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-                example: Bad request
-                type: string
-            required:
-            - status
-            - detail
-            type: object
-          minItems: 1
-          type: array
-        jsonapi:
-          additionalProperties: false
-          example:
-            version: '1.0'
-          properties:
-            version:
-              description: Version of the JSON API specification this server supports.
-              example: '1.0'
-              pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
-              type: string
-          required:
-          - version
-          type: object
-      required:
-      - jsonapi
-      - errors
-      type: object
-    Issue:
-      additionalProperties: false
-      description: A Snyk Issue.
-      properties:
-        attributes:
-          $ref: '#/components/schemas/IssueAttributes'
-        id:
-          example: 73832c6c-19ff-4a92-850c-2e1ff2800c16
-          format: uuid
-          type: string
-        relationships:
-          $ref: '#/components/schemas/IssueRelationships'
-        type:
-          $ref: '#/components/schemas/IssueType'
-      required:
-      - id
-      - type
-      - attributes
-      - relationships
-      type: object
-    PackageRepresentation:
-      properties:
-        package:
-          $ref: '#/components/schemas/PackageMeta'
-      type: object
-    PublicFacingRiskFactor:
-      properties:
-        included_in_score:
-          default: false
-          type: boolean
-        links:
-          $ref: '#/components/schemas/RiskFactorLinks'
-        name:
-          type: string
-        updated_at:
-          format: date-time
-          type: string
-        value:
-          type: boolean
-      required:
-      - name
-      - updated_at
-      - value
-      type: object
-    Coordinate:
-      properties:
-        remedies:
-          items:
-            $ref: '#/components/schemas/Remedy3'
-          type: array
-        representations:
-          description: The affected versions of this vulnerability.
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/ResourcePathRepresentation'
-            - $ref: '#/components/schemas/PackageRepresentation'
-          type: array
-      required:
-      - representations
-      type: object
     IssueAttributes:
       additionalProperties: false
       description: issue attributes
@@ -4249,118 +3632,211 @@ components:
       - status
       - ignored
       type: object
-    IssuesResponse:
-      additionalProperties: false
+    ResourcePathRepresentation:
+      description: An object that contains an opaque identifying string.
       properties:
-        data:
-          items:
-            $ref: '#/components/schemas/CommonIssueModelVThree'
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-        meta:
-          $ref: '#/components/schemas/IssuesMeta'
+        resource_path:
+          $ref: '#/components/schemas/ResourcePath'
+      required:
+      - resource_path
       type: object
-    IssueType:
-      enum:
-      - issue
-      example: issue
-      type: string
-    CVSSSource:
-      additionalProperties: false
+    ChecksumValidationMeta:
+      description: Metadata about checksum validation when a checksum qualifier is provided in the PURL
       properties:
-        level:
-          example: medium
-          minLength: 1
+        description:
+          description: Human-readable explanation of the validation result
+          example: Package and checksum both match
           type: string
-        modification_time:
-          description: The time this CVSS data was last updated
+        details:
+          properties:
+            checksum:
+              description: Whether the checksum matched (null if no checksum validation was requested)
+              example: true
+              type:
+              - boolean
+              - 'null'
+            name_version:
+              description: Whether the package name and version were found
+              example: true
+              type: boolean
+          required:
+          - name_version
+          - checksum
+          type: object
+        input:
+          properties:
+            checksum:
+              description: The checksum value provided (null if none)
+              example: sha1:abc123
+              type:
+              - string
+              - 'null'
+            purl:
+              description: The original PURL provided
+              example: pkg:maven/com.example/my-package@1.0.0?checksum=sha1:abc123
+              type: string
+          required:
+          - purl
+          - checksum
+          type: object
+        type:
+          description: 'The type of match found: - `full`: Both package ID and checksum match - `partial`: Only one of package ID or checksum matches - `none`: Neither package ID nor checksum found'
+          enum:
+          - none
+          - partial
+          - full
+          example: full
+          type: string
+      required:
+      - type
+      - details
+      - description
+      - input
+      type: object
+    OrganizationType:
+      enum:
+      - organization
+      example: organization
+      type: string
+    RiskFactor:
+      discriminator:
+        mapping:
+          deployed: '#/components/schemas/DeployedRiskFactor'
+          loaded_package: '#/components/schemas/LoadedPackageRiskFactor'
+          os_condition: '#/components/schemas/OSConditionRiskFactor'
+          public_facing: '#/components/schemas/PublicFacingRiskFactor'
+        propertyName: name
+      oneOf:
+      - $ref: '#/components/schemas/DeployedRiskFactor'
+      - $ref: '#/components/schemas/OSConditionRiskFactor'
+      - $ref: '#/components/schemas/PublicFacingRiskFactor'
+      - $ref: '#/components/schemas/LoadedPackageRiskFactor'
+    OSConditionRiskFactor:
+      properties:
+        included_in_score:
+          default: false
+          type: boolean
+        links:
+          $ref: '#/components/schemas/RiskFactorLinks'
+        name:
+          type: string
+        updated_at:
           format: date-time
           type: string
+        value:
+          type: boolean
+      required:
+      - name
+      - updated_at
+      - value
+      type: object
+    DeployedRiskFactor:
+      properties:
+        included_in_score:
+          default: false
+          type: boolean
+        links:
+          $ref: '#/components/schemas/RiskFactorLinks'
+        name:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        value:
+          type: boolean
+      required:
+      - name
+      - updated_at
+      - value
+      type: object
+    Risk:
+      additionalProperties: false
+      description: Risk prioritization information for an issue
+      example:
+        factors:
+        - name: deployed
+          updated_at: '2023-09-07T13:36:37Z'
+          value: true
         score:
-          example: 4.2
-          format: float
-          type: number
+          model: v4
+          value: 700
+      properties:
+        factors:
+          description: Risk factors identified for an issue
+          items:
+            $ref: '#/components/schemas/RiskFactor'
+          type: array
+        score:
+          $ref: '#/components/schemas/RiskScore'
+      required:
+      - factors
+      type: object
+    ExploitDetails:
+      description: Details about the exploits
+      properties:
+        maturity_levels:
+          description: List of maturity levels
+          items:
+            $ref: '#/components/schemas/MaturityLevel'
+          type: array
+        sources:
+          description: Sources for determining exploit maturity level, e.g., CISA, ExploitDB, Snyk.
+          items:
+            type: string
+          type: array
+      type: object
+    Problem3:
+      properties:
+        disclosed_at:
+          description: When this problem was disclosed to the public.
+          format: date-time
+          type: string
+        discovered_at:
+          description: When this problem was first discovered.
+          format: date-time
+          type: string
+        id:
+          example: CWE-61
+          maxLength: 1024
+          minLength: 1
+          type: string
         source:
-          example: snyk
+          example: CVE
+          maxLength: 64
           minLength: 1
           type: string
-        vector:
-          example: CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:A/VC:N/VI:N/VA:N/SC:H/SI:L/SA:L/E:A
-          minLength: 1
+        updated_at:
+          description: When this problem was last updated.
+          format: date-time
           type: string
-        version:
-          example: '4.0'
+        url:
+          description: An optional URL for this problem.
+          format: uri
+          maxLength: 4096
           minLength: 1
           type: string
       required:
-      - level
+      - id
       - source
-      - score
-      - vector
-      - version
-      - modification_time
       type: object
-    CommonIssueModelVThree:
+    LoadedPackageRiskFactor:
       properties:
-        attributes:
-          properties:
-            coordinates:
-              items:
-                $ref: '#/components/schemas/Coordinate'
-              type: array
-            created_at:
-              example: '2022-06-16T13:51:13Z'
-              format: date-time
-              type: string
-            description:
-              description: A description of the issue in Markdown format
-              example: '## Overview\n\n\nAffected versions of this package are vulnerable to XML External Entity (XXE) Injection.'
-              type: string
-            effective_severity_level:
-              description: The type from enumeration of the issue’s severity level. This is usually set from the issue’s producer, but can be overridden by policies.
-              enum:
-              - info
-              - low
-              - medium
-              - high
-              - critical
-              type: string
-            problems:
-              items:
-                $ref: '#/components/schemas/Problem3'
-              type: array
-            severities:
-              description: An array of dictionaries containing all known data related to the vulnerability
-              items:
-                $ref: '#/components/schemas/Severity3'
-              type: array
-            slots:
-              $ref: '#/components/schemas/Slots'
-            title:
-              description: A human-readable title for this issue.
-              example: XML External Entity (XXE) Injection
-              type: string
-            type:
-              description: The issue type
-              example: package_vulnerability
-              type: string
-            updated_at:
-              description: When the vulnerability information was last modified.
-              example: '2022-06-16T14:00:24.315507Z'
-              format: date-time
-              type: string
-          type: object
-        id:
-          description: The Snyk ID of the vulnerability.
-          example: SNYK-JAVA-COMFASTERXMLWOODSTOX-2928754
+        included_in_score:
+          default: false
+          type: boolean
+        links:
+          $ref: '#/components/schemas/RiskFactorLinks'
+        name:
           type: string
-        type:
-          description: The type of the REST resource. Always ‘issue’.
-          example: issue
+        updated_at:
+          format: date-time
           type: string
+        value:
+          type: boolean
+      required:
+      - name
+      - updated_at
+      - value
       type: object
     IssueRelationships:
       additionalProperties: false
@@ -4465,6 +3941,343 @@ components:
       - organization
       - scan_item
       type: object
+    Issue:
+      additionalProperties: false
+      description: A Snyk Issue.
+      properties:
+        attributes:
+          $ref: '#/components/schemas/IssueAttributes'
+        id:
+          example: 73832c6c-19ff-4a92-850c-2e1ff2800c16
+          format: uuid
+          type: string
+        relationships:
+          $ref: '#/components/schemas/IssueRelationships'
+        type:
+          $ref: '#/components/schemas/IssueType'
+      required:
+      - id
+      - type
+      - attributes
+      - relationships
+      type: object
+    CommonIssueModelVThree:
+      properties:
+        attributes:
+          properties:
+            coordinates:
+              items:
+                $ref: '#/components/schemas/Coordinate'
+              type: array
+            created_at:
+              example: '2022-06-16T13:51:13Z'
+              format: date-time
+              type: string
+            description:
+              description: A description of the issue in Markdown format
+              example: '## Overview\n\n\nAffected versions of this package are vulnerable to XML External Entity (XXE) Injection.'
+              type: string
+            effective_severity_level:
+              description: The type from enumeration of the issue’s severity level. This is usually set from the issue’s producer, but can be overridden by policies.
+              enum:
+              - info
+              - low
+              - medium
+              - high
+              - critical
+              type: string
+            problems:
+              items:
+                $ref: '#/components/schemas/Problem3'
+              type: array
+            severities:
+              description: An array of dictionaries containing all known data related to the vulnerability
+              items:
+                $ref: '#/components/schemas/Severity3'
+              type: array
+            slots:
+              $ref: '#/components/schemas/Slots'
+            title:
+              description: A human-readable title for this issue.
+              example: XML External Entity (XXE) Injection
+              type: string
+            type:
+              description: The issue type
+              example: package_vulnerability
+              type: string
+            updated_at:
+              description: When the vulnerability information was last modified.
+              example: '2022-06-16T14:00:24.315507Z'
+              format: date-time
+              type: string
+          type: object
+        id:
+          description: The Snyk ID of the vulnerability.
+          example: SNYK-JAVA-COMFASTERXMLWOODSTOX-2928754
+          type: string
+        type:
+          description: The type of the REST resource. Always ‘issue’.
+          example: issue
+          type: string
+      type: object
+    ResolutionTypeDef:
+      enum:
+      - disappeared
+      - fixed
+      type: string
+    QueryVersion:
+      description: Requested API version
+      example: '2026-03-25'
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+      type: string
+    Resolution:
+      additionalProperties: false
+      description: 'An optional field recording when and via what means an issue was resolved, if it was resolved.
+
+        Resolved issues are retained for XX days.
+
+        '
+      properties:
+        details:
+          description: Optional details about the resolution. Used by Snyk Cloud so far.
+          type: string
+        resolved_at:
+          description: The time when this issue was resolved.
+          format: date-time
+          type: string
+        type:
+          $ref: '#/components/schemas/ResolutionTypeDef'
+      required:
+      - type
+      - resolved_at
+      type: object
+    PackageRepresentation:
+      properties:
+        package:
+          $ref: '#/components/schemas/PackageMeta'
+      type: object
+    ErrorDocument:
+      additionalProperties: false
+      example:
+        errors:
+        - detail: Permission denied for this resource
+          status: '403'
+        jsonapi:
+          version: '1.0'
+      properties:
+        errors:
+          example:
+          - detail: Permission denied for this resource
+            status: '403'
+          items:
+            additionalProperties: false
+            example:
+              detail: Not Found
+              status: '404'
+            properties:
+              code:
+                description: An application-specific error code, expressed as a string value.
+                example: entity-not-found
+                type: string
+              detail:
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: 'The request was missing these required fields: ...'
+                type: string
+              id:
+                description: A unique identifier for this particular occurrence of the problem.
+                example: f16c31b5-6129-4571-add8-d589da9be524
+                format: uuid
+                type: string
+              links:
+                additionalProperties: false
+                description: A link that leads to further details about this particular occurrance of the problem.
+                example:
+                  about: https://example.com/about_this_error
+                properties:
+                  about:
+                    example: https://example.com/api/resource
+                    oneOf:
+                    - description: A string containing the link’s URL.
+                      example: https://example.com/api/resource
+                      type: string
+                    - additionalProperties: false
+                      example:
+                        href: https://example.com/api/resource
+                      properties:
+                        href:
+                          description: A string containing the link’s URL.
+                          example: https://example.com/api/resource
+                          type: string
+                        meta:
+                          additionalProperties: true
+                          description: Free-form object that may contain non-standard information.
+                          example:
+                            key1: value1
+                            key2:
+                              sub_key: sub_value
+                            key3:
+                            - array_value1
+                            - array_value2
+                          type: object
+                      required:
+                      - href
+                      type: object
+                type: object
+              meta:
+                additionalProperties: true
+                example:
+                  key: value
+                type: object
+              source:
+                additionalProperties: false
+                example:
+                  pointer: /data/attributes
+                properties:
+                  parameter:
+                    description: A string indicating which URI query parameter caused the error.
+                    example: param1
+                    type: string
+                  pointer:
+                    description: A JSON Pointer [RFC6901] to the associated entity in the request document.
+                    example: /data/attributes
+                    type: string
+                type: object
+              status:
+                description: The HTTP status code applicable to this problem, expressed as a string value.
+                example: '400'
+                pattern: ^[45]\d\d$
+                type: string
+              title:
+                description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+                example: Bad request
+                type: string
+            required:
+            - status
+            - detail
+            type: object
+          minItems: 1
+          type: array
+        jsonapi:
+          additionalProperties: false
+          example:
+            version: '1.0'
+          properties:
+            version:
+              description: Version of the JSON API specification this server supports.
+              example: '1.0'
+              pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+              type: string
+          required:
+          - version
+          type: object
+      required:
+      - jsonapi
+      - errors
+      type: object
+    ScanItemType:
+      enum:
+      - project
+      - environment
+      example: project
+      type: string
+    RiskScore:
+      description: Risk prioritization score based on an analysis model
+      example:
+        model: v1
+        value: 700
+      properties:
+        model:
+          description: Risk scoring model used to calculate the score value
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        value:
+          description: Risk score value, which may be used for overall prioritization
+          maximum: 1000
+          minimum: 0
+          type: integer
+      required:
+      - value
+      - model
+      type: object
+    Severity3:
+      properties:
+        level:
+          description: Level of severity calculated via vector
+          example: medium
+          type: string
+        score:
+          description: The CVSS score calculated from the vector, representing the severity of the vulnerability on a scale from 0 to 10.
+          example: 5.3
+          type:
+          - number
+          - 'null'
+        source:
+          description: The source of this severity. The value must be the id of a referenced problem or class, in which case that problem or class is the source of this issue. If source is omitted, this severity is sourced internally in the Snyk application.
+          example: Snyk
+          type: string
+        type:
+          description: Indicates if the CVSS item is primary or secondary. Clients should prefer the primary CVSS vector.
+          example: primary
+          type: string
+        vector:
+          description: CVSS vector string detailing the metrics of a vulnerability.
+          example: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L
+          type:
+          - string
+          - 'null'
+        version:
+          description: CVSS version being described.
+          example: '4.0'
+          type: string
+      type: object
+    PaginatedLinks:
+      additionalProperties: false
+      example:
+        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
+        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
+        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
     IssuesMeta:
       properties:
         match:
@@ -4472,91 +4285,15 @@ components:
         package:
           $ref: '#/components/schemas/PackageMeta__0'
       type: object
-    OSConditionRiskFactor:
-      properties:
-        included_in_score:
-          default: false
-          type: boolean
-        links:
-          $ref: '#/components/schemas/RiskFactorLinks'
-        name:
-          type: string
-        updated_at:
-          format: date-time
-          type: string
-        value:
-          type: boolean
-      required:
-      - name
-      - updated_at
-      - value
-      type: object
-    Slots:
-      properties:
-        disclosure_time:
-          description: The time at which this vulnerability was disclosed.
-          example: '2022-06-16T13:51:13Z'
-          format: date-time
-          type: string
-        exploit_details:
-          $ref: '#/components/schemas/ExploitDetails'
-        publication_time:
-          description: The time at which this vulnerability was published.
-          example: '2022-06-16T14:00:24.315507Z'
-          type: string
-        references:
-          items:
-            properties:
-              title:
-                description: Descriptor for an external reference to the issue
-                type: string
-              url:
-                description: URL for an external reference to the issue
-                type: string
-            type: object
-          type: array
-      type: object
-    ResolutionTypeDef:
-      enum:
-      - disappeared
-      - fixed
-      type: string
-    JsonApi:
-      additionalProperties: false
-      example:
-        version: '1.0'
-      properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          example: '1.0'
-          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
-          type: string
-      required:
-      - version
-      type: object
-    IssuesWithPurlsResponse:
-      additionalProperties: false
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/CommonIssueModelVThree'
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-        meta:
-          $ref: '#/components/schemas/PurlIssuesMeta'
-      type: object
-    PackageMeta:
+    PackageMeta__0:
       properties:
         name:
           description: The package’s name
-          example: woodstox-core
+          example: spring-core
           type: string
         namespace:
           description: A name prefix, such as a maven group id or docker image owner
-          example: com.fasterxml.woodstox
+          example: org.springframework
           type: string
         type:
           description: The package type or protocol
@@ -4568,32 +4305,22 @@ components:
           type: string
         version:
           description: The version of the package
-          example: 5.0.0
+          example: 1.0.0
           type: string
       type: object
-    LoadedPackageRiskFactor:
+    IssuesResponse:
+      additionalProperties: false
       properties:
-        included_in_score:
-          default: false
-          type: boolean
+        data:
+          items:
+            $ref: '#/components/schemas/CommonIssueModelVThree'
+          type: array
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
         links:
-          $ref: '#/components/schemas/RiskFactorLinks'
-        name:
-          type: string
-        updated_at:
-          format: date-time
-          type: string
-        value:
-          type: boolean
-      required:
-      - name
-      - updated_at
-      - value
-      type: object
-    RiskFactorLinks:
-      properties:
-        evidence:
-          $ref: '#/components/schemas/LinkProperty'
+          $ref: '#/components/schemas/PaginatedLinks'
+        meta:
+          $ref: '#/components/schemas/IssuesMeta'
       type: object
     Class:
       additionalProperties: false
@@ -4624,41 +4351,11 @@ components:
       - type
       - source
       type: object
-    ProblemTypeDef:
+    TestExecutionType:
       enum:
-      - rule
-      - vulnerability
+      - test-workflow-execution
+      - custom-execution
       type: string
-    OrganizationType:
-      enum:
-      - organization
-      example: organization
-      type: string
-    TypeDef:
-      description: The type of an issue.
-      enum:
-      - package_vulnerability
-      - license
-      - cloud
-      - code
-      - custom
-      - config
-      example: cloud
-      type: string
-    ExploitDetails:
-      description: Details about the exploits
-      properties:
-        maturity_levels:
-          description: List of maturity levels
-          items:
-            $ref: '#/components/schemas/MaturityLevel'
-          type: array
-        sources:
-          description: Sources for determining exploit maturity level, e.g., CISA, ExploitDB, Snyk.
-          items:
-            type: string
-          type: array
-      type: object
     Problem:
       additionalProperties: false
       example:
@@ -4700,80 +4397,364 @@ components:
       - type
       - source
       type: object
-    ResourcePathRepresentation:
-      description: An object that contains an opaque identifying string.
-      properties:
-        resource_path:
-          $ref: '#/components/schemas/ResourcePath'
-      required:
-      - resource_path
-      type: object
-    ScanItemType:
-      enum:
-      - project
-      - environment
-      example: project
+    Types:
+      example: resource
+      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
       type: string
-    Risk:
-      additionalProperties: false
-      description: Risk prioritization information for an issue
-      example:
-        factors:
-        - name: deployed
-          updated_at: '2023-09-07T13:36:37Z'
-          value: true
-        score:
-          model: v4
-          value: 700
+    MaturityLevel:
+      description: Details about the maturity level
       properties:
-        factors:
-          description: Risk factors identified for an issue
-          items:
-            $ref: '#/components/schemas/RiskFactor'
-          type: array
-        score:
-          $ref: '#/components/schemas/RiskScore'
-      required:
-      - factors
+        format:
+          description: The standard by which the “maturity” value is shown.
+          example: CVSSv4
+          type: string
+        level:
+          description: 'Exploit maturity of the vulnerability. For CVSSv3: Proof of Concept, Functional, High. For CVSSv4: Unreported, Proof of Concept, Attacked.'
+          example: Attacked
+          type: string
+        type:
+          description: Indicates if the CVSS item is primary or secondary. Clients should prefer the primary CVSS vector.
+          example: primary
+          type: string
       type: object
-    PaginatedLinks:
+    PackageMeta:
+      properties:
+        name:
+          description: The package’s name
+          example: woodstox-core
+          type: string
+        namespace:
+          description: A name prefix, such as a maven group id or docker image owner
+          example: com.fasterxml.woodstox
+          type: string
+        type:
+          description: The package type or protocol
+          example: maven
+          type: string
+        url:
+          description: The purl of the package
+          example: pkg:maven/com.fasterxml.woodstox/woodstox-core@5.0.0
+          type: string
+        version:
+          description: The version of the package
+          example: 5.0.0
+          type: string
+      type: object
+    Remedy3:
+      properties:
+        description:
+          description: A markdown-formatted optional description of this remedy.
+          example: Upgrade the package version to 5.4.0,6.4.0 to fix this vulnerability
+          type: string
+        details:
+          properties:
+            upgrade_package:
+              description: A minimum version to upgrade to in order to remedy the issue.
+              example: 5.4.0,6.4.0
+              type: string
+          type: object
+        type:
+          description: The type of the remedy. Always ‘indeterminate’.
+          example: indeterminate
+          type: string
+      type: object
+    IssuesWithPurlsResponse:
+      additionalProperties: false
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/CommonIssueModelVThree'
+          type: array
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+        meta:
+          $ref: '#/components/schemas/PurlIssuesMeta'
+      type: object
+    JsonApi:
       additionalProperties: false
       example:
-        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
-        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
-        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+        version: '1.0'
       properties:
-        first:
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
+      type: object
+    TypeDef:
+      description: The type of an issue.
+      enum:
+      - package_vulnerability
+      - license
+      - cloud
+      - code
+      - custom
+      - config
+      example: cloud
+      type: string
+    IgnoreType:
+      enum:
+      - ignore
+      example: ignore
+      type: string
+    PurlIssuesMeta:
+      properties:
+        errors:
+          items:
+            $ref: '#/components/schemas/Error'
+          type: array
+        packages:
+          additionalProperties:
+            properties:
+              match:
+                $ref: '#/components/schemas/ChecksumValidationMeta'
+              package:
+                $ref: '#/components/schemas/PackageMeta__0'
+            required:
+            - package
+            type: object
+          description: 'Package metadata and checksum validation results, keyed by PURL.
+
+            Keys must be valid Package URLs (e.g., "pkg:maven/com.example/foo@1.0.0").
+
+            '
+          type: object
+      type: object
+    Coordinate:
+      properties:
+        remedies:
+          items:
+            $ref: '#/components/schemas/Remedy3'
+          type: array
+        representations:
+          description: The affected versions of this vulnerability.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/ResourcePathRepresentation'
+            - $ref: '#/components/schemas/PackageRepresentation'
+          type: array
+      required:
+      - representations
+      type: object
+    CVSSSource:
+      additionalProperties: false
+      properties:
+        level:
+          example: medium
+          minLength: 1
+          type: string
+        modification_time:
+          description: The time this CVSS data was last updated
+          format: date-time
+          type: string
+        score:
+          example: 4.2
+          format: float
+          type: number
+        source:
+          example: snyk
+          minLength: 1
+          type: string
+        vector:
+          example: CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:A/VC:N/VI:N/VA:N/SC:H/SI:L/SA:L/E:A
+          minLength: 1
+          type: string
+        version:
+          example: '4.0'
+          minLength: 1
+          type: string
+      required:
+      - level
+      - source
+      - score
+      - vector
+      - version
+      - modification_time
+      type: object
+    Slots:
+      properties:
+        disclosure_time:
+          description: The time at which this vulnerability was disclosed.
+          example: '2022-06-16T13:51:13Z'
+          format: date-time
+          type: string
+        exploit_details:
+          $ref: '#/components/schemas/ExploitDetails'
+        publication_time:
+          description: The time at which this vulnerability was published.
+          example: '2022-06-16T14:00:24.315507Z'
+          type: string
+        references:
+          items:
+            properties:
+              title:
+                description: Descriptor for an external reference to the issue
+                type: string
+              url:
+                description: URL for an external reference to the issue
+                type: string
+            type: object
+          type: array
+      type: object
+    PublicFacingRiskFactor:
+      properties:
+        included_in_score:
+          default: false
+          type: boolean
+        links:
+          $ref: '#/components/schemas/RiskFactorLinks'
+        name:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        value:
+          type: boolean
+      required:
+      - name
+      - updated_at
+      - value
+      type: object
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
+    IssueType:
+      enum:
+      - issue
+      example: issue
+      type: string
+    ResourcePath:
+      example: ',5.4.0),[6.0.0.pr1,6.4.0)'
+      maxLength: 2024
+      minLength: 1
+      type: string
+    ClassTypeDef:
+      enum:
+      - rule-category
+      - compliance
+      - weakness
+      example: compliance
+      type: string
+    RiskFactorLinks:
+      properties:
+        evidence:
           $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    BulkPackageUrlsRequestBody:
+      properties:
+        data:
+          properties:
+            attributes:
+              properties:
+                purls:
+                  description: An array of Package URLs (purl). Supported purl types are apk, cargo, cocoapods, composer, conan, deb, gem, generic, golang, hex, maven, npm, nuget, pub, pypi, rpm, and swift. A version for the package is also required.
+                  items:
+                    type: string
+                  type: array
+              required:
+              - purls
+              type: object
+            type:
+              $ref: '#/components/schemas/Types'
+          required:
+          - attributes
+          type: object
+      required:
+      - data
+      type: object
+    Error:
+      additionalProperties: false
+      example:
+        detail: Not Found
+        status: '404'
+      properties:
+        code:
+          description: An application-specific error code, expressed as a string value.
+          example: entity-not-found
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          example: 'The request was missing these required fields: ...'
+          type: string
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          example: f16c31b5-6129-4571-add8-d589da9be524
+          format: uuid
+          type: string
+        links:
+          additionalProperties: false
+          description: A link that leads to further details about this particular occurrance of the problem.
+          example:
+            about: https://example.com/about_this_error
+          properties:
+            about:
+              example: https://example.com/api/resource
+              oneOf:
+              - description: A string containing the link’s URL.
+                example: https://example.com/api/resource
+                type: string
+              - additionalProperties: false
+                example:
+                  href: https://example.com/api/resource
+                properties:
+                  href:
+                    description: A string containing the link’s URL.
+                    example: https://example.com/api/resource
+                    type: string
+                  meta:
+                    additionalProperties: true
+                    description: Free-form object that may contain non-standard information.
+                    example:
+                      key1: value1
+                      key2:
+                        sub_key: sub_value
+                      key3:
+                      - array_value1
+                      - array_value2
+                    type: object
+                required:
+                - href
+                type: object
+          type: object
+        meta:
+          additionalProperties: true
+          example:
+            key: value
+          type: object
+        source:
+          additionalProperties: false
+          example:
+            pointer: /data/attributes
+          properties:
+            parameter:
+              description: A string indicating which URI query parameter caused the error.
+              example: param1
+              type: string
+            pointer:
+              description: A JSON Pointer [RFC6901] to the associated entity in the request document.
+              example: /data/attributes
+              type: string
+          type: object
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          example: '400'
+          pattern: ^[45]\d\d$
+          type: string
+        title:
+          description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          example: Bad request
+          type: string
+      required:
+      - status
+      - detail
       type: object
   responses:
-    '401':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Unauthorized: the request requires an authentication token.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
     '500':
       content:
         application/vnd.api+json:
@@ -4793,6 +4774,42 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
+    GetIssue20020240123:
+      content:
+        application/vnd.api+json:
+          schema:
+            properties:
+              data:
+                $ref: '#/components/schemas/Issue'
+              jsonapi:
+                $ref: '#/components/schemas/JsonApi'
+              links:
+                $ref: '#/components/schemas/PaginatedLinks'
+            required:
+            - jsonapi
+            - data
+      description: Returns an instance of an issue
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader__0'
+        location:
+          description: 'A header providing a URL for the location of a resource
+
+            '
+          example: https://example.com/resource/4
+          schema:
+            format: uri
+            type: string
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader__0'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader__0'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader__0'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader__0'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader__0'
     '400':
       content:
         application/vnd.api+json:
@@ -4812,12 +4829,12 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '409':
+    '403':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
-      description: 'Conflict: The requested operation conflicts with the current state of the resource in some way.'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -4870,6 +4887,25 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader__0'
         sunset:
           $ref: '#/components/headers/SunsetHeader__0'
+    '401':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Unauthorized: the request requires an authentication token.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
     '404':
       content:
         application/vnd.api+json:
@@ -4889,12 +4925,12 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '403':
+    '409':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
-      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      description: 'Conflict: The requested operation conflicts with the current state of the resource in some way.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -4908,62 +4944,33 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    GetIssue20020240123:
-      content:
-        application/vnd.api+json:
-          schema:
-            properties:
-              data:
-                $ref: '#/components/schemas/Issue'
-              jsonapi:
-                $ref: '#/components/schemas/JsonApi'
-              links:
-                $ref: '#/components/schemas/PaginatedLinks'
-            required:
-            - jsonapi
-            - data
-      description: Returns an instance of an issue
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader__0'
-        location:
-          description: 'A header providing a URL for the location of a resource
-
-            '
-          example: https://example.com/resource/4
-          schema:
-            format: uri
-            type: string
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader__0'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader__0'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader__0'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader__0'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader__0'
   headers:
     VersionRequestedResponseHeader:
       description: A header containing the version of the endpoint requested by the caller.
       example: '2026-03-25'
       schema:
         $ref: '#/components/schemas/QueryVersion'
-    SunsetHeader__0:
+    DeprecationHeader__0:
+      description: 'The deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
+    SunsetHeader:
       description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
       example: '2021-08-02'
       schema:
         format: date
         type: string
-    RequestIdResponseHeader__0:
-      description: 'A unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
-
-        '
-      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
       schema:
-        format: uuid
-        type: string
+        $ref: '#/components/schemas/ActualVersion'
     DeprecationHeader:
       description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
 
@@ -4973,6 +4980,45 @@ components:
       example: '2021-07-01T00:00:00Z'
       schema:
         format: date-time
+        type: string
+    RequestIdResponseHeader__0:
+      description: 'A unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
+
+        '
+      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
+      schema:
+        format: uuid
+        type: string
+    Location:
+      schema:
+        type: string
+    VersionRequestedResponseHeader__0:
+      description: The version of the endpoint requested by the caller.
+      example: '2021-06-04'
+      schema:
+        description: Requested API version
+        pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+        type: string
+    SunsetHeader__0:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    RequestIdResponseHeader:
+      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
+
+        '
+      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
+      schema:
+        format: uuid
+        type: string
+    VersionServedResponseHeader__0:
+      description: The version of the endpoint that was served by the API.
+      example: '2021-06-04'
+      schema:
+        description: Resolved API version
+        pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
         type: string
     VersionStageResponseHeader__0:
       description: 'The version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
@@ -4988,21 +5034,6 @@ components:
         - sunset
         example: ga
         type: string
-    Location:
-      schema:
-        type: string
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/ActualVersion'
-    VersionRequestedResponseHeader__0:
-      description: The version of the endpoint requested by the caller.
-      example: '2021-06-04'
-      schema:
-        description: Requested API version
-        pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
-        type: string
     VersionStageResponseHeader:
       description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
 
@@ -5017,161 +5048,19 @@ components:
         - sunset
         example: ga
         type: string
-    VersionServedResponseHeader__0:
-      description: The version of the endpoint that was served by the API.
-      example: '2021-06-04'
-      schema:
-        description: Resolved API version
-        pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
-        type: string
-    RequestIdResponseHeader:
-      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
-
-        '
-      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
-      schema:
-        format: uuid
-        type: string
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
-    DeprecationHeader__0:
-      description: 'The deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
-
-        '
-      example: '2021-07-01T00:00:00Z'
-      schema:
-        format: date-time
-        type: string
-  parameters:
-    Version:
-      description: The requested version of the endpoint to process the request
-      example: '2026-03-25'
-      in: query
-      name: version
-      required: true
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    EndingBefore:
-      description: Return the page of results immediately before this cursor
-      example: v1.eyJpZCI6IjExMDAifQo=
-      in: query
-      name: ending_before
-      schema:
-        type: string
-    Status:
-      description: An issue's status
-      explode: false
-      in: query
-      name: status
-      schema:
-        items:
-          enum:
-          - open
-          - resolved
-          type: string
-        type: array
-      style: form
-    StartingAfter:
-      description: Return the page of results immediately after this cursor
-      example: v1.eyJpZCI6IjEwMDAifQo=
-      in: query
-      name: starting_after
-      schema:
-        type: string
-    EffectiveSeverityLevel:
-      description: One or more effective severity levels to filter issues.
-      explode: false
-      in: query
-      name: effective_severity_level
-      schema:
-        items:
-          enum:
-          - info
-          - low
-          - medium
-          - high
-          - critical
-          type: string
-        type: array
-      style: form
-    Ignored:
-      description: Whether an issue is ignored or not.
-      in: query
-      name: ignored
-      schema:
-        type: boolean
-      style: form
-    PackageUrl:
-      description: 'A URI-encoded Package URL (purl). Supported purl types are apk, cargo, cocoapods, composer, conan, deb, gem, generic, golang, hex, maven, npm, nuget, pub, pypi, rpm, and swift. A version for the package is also required. Maven packages support an optional checksum qualifier to request checksum validation. When provided, the response will include checksum validation metadata indicating whether the package and checksum match records in Snyk''s database. Checksum format: `algorithm:hex_value` (lowercase), for example `sha1:ad9503c3e994a4f611a4892f2e67ac82df727086`. Only one checksum is supported per request. Supported algorithms: md5, sha1, sha256, sha512.'
-      example: pkg:maven/com.fasterxml.woodstox/woodstox-core@5.0.0?checksum=sha1:ad9503c3e994a4f611a4892f2e67ac82df727086
-      in: path
-      name: purl
-      required: true
-      schema:
-        type: string
-    Type:
-      description: An issue type to filter issues.
-      in: query
-      name: type
-      schema:
-        $ref: '#/components/schemas/TypeDef'
-      style: form
-    Limit:
-      description: Number of results to return per page
-      example: 10
-      in: query
-      name: limit
-      schema:
-        default: 10
-        format: int32
-        maximum: 100
-        minimum: 10
-        multipleOf: 10
-        type: integer
-    PathIssueId20240123:
-      description: Issue ID
-      in: path
-      name: issue_id
-      required: true
-      schema:
-        example: 4a18d42f-0706-4ad0-b127-24078731fbed
-        format: uuid
-        type: string
-    ScanItemType:
-      description: A scan item types to filter issues through their scan item relationship.
-      in: query
-      name: scan_item.type
-      schema:
-        $ref: '#/components/schemas/ScanItemType'
-      style: form
-    ScanItemId:
-      description: A scan item id to filter issues through their scan item relationship.
-      in: query
-      name: scan_item.id
-      schema:
-        example: 4a18d42f-0706-4ad0-b127-24078731fbee
-        format: uuid
-        type: string
-      style: form
   examples:
-    OpenSourceListIssuesResponse20240123:
-      summary: An example of a list issue response for an Open Source issue.
+    CodeListIssuesResponse20240123:
+      summary: An example of a list issue response for a Code issue.
       value:
         data:
         - attributes:
             created_at: '2022-09-27T20:09:05Z'
-            effective_severity_level: medium
+            effective_severity_level: low
             ignored: false
-            key: npm:hoek:20180212:hoek:2.16.3
+            key: 24018479-6bb1-4196-a41b-e54c7c5dcc82:1c6ddc45.7f41fd64.a214ef38.72ad650e.f0ecbaa5.18c3080a.b570850e.89112ac5.1a6d2cd5.71413d6f.a924ef28.71cdd50e.d0e1bea5.52c3a80a.1a0c4319.a9127ac5:1
             status: resolved
-            title: Hoek - Prototype Pollution
-            type: package_vulnerability
+            title: Insecure hash function used
+            type: code
             updated_at: '2022-09-27T20:09:05Z'
           id: d5b640e5-d88c-4c17-9bf0-93597b7a1ce2
           relationships:
@@ -5277,6 +5166,32 @@ components:
           type: issue
         jsonapi:
           version: '1.0'
+    OpenSourceListIssuesResponse20240123:
+      summary: An example of a list issue response for an Open Source issue.
+      value:
+        data:
+        - attributes:
+            created_at: '2022-09-27T20:09:05Z'
+            effective_severity_level: medium
+            ignored: false
+            key: npm:hoek:20180212:hoek:2.16.3
+            status: resolved
+            title: Hoek - Prototype Pollution
+            type: package_vulnerability
+            updated_at: '2022-09-27T20:09:05Z'
+          id: d5b640e5-d88c-4c17-9bf0-93597b7a1ce2
+          relationships:
+            organization:
+              data:
+                id: a3952187-0d8e-45d8-9aa2-036642857b5b
+                type: organization
+            scan_item:
+              data:
+                id: a3952187-0d8e-45d8-9aa2-036642857b5c
+                type: project
+          type: issue
+        jsonapi:
+          version: '1.0'
     IaCListIssuesResponse20240123:
       summary: An example of a list issue response for an Infrastructure as Code issue.
       value:
@@ -5303,32 +5218,117 @@ components:
           type: issue
         jsonapi:
           version: '1.0'
-    CodeListIssuesResponse20240123:
-      summary: An example of a list issue response for a Code issue.
-      value:
-        data:
-        - attributes:
-            created_at: '2022-09-27T20:09:05Z'
-            effective_severity_level: low
-            ignored: false
-            key: 24018479-6bb1-4196-a41b-e54c7c5dcc82:1c6ddc45.7f41fd64.a214ef38.72ad650e.f0ecbaa5.18c3080a.b570850e.89112ac5.1a6d2cd5.71413d6f.a924ef28.71cdd50e.d0e1bea5.52c3a80a.1a0c4319.a9127ac5:1
-            status: resolved
-            title: Insecure hash function used
-            type: code
-            updated_at: '2022-09-27T20:09:05Z'
-          id: d5b640e5-d88c-4c17-9bf0-93597b7a1ce2
-          relationships:
-            organization:
-              data:
-                id: a3952187-0d8e-45d8-9aa2-036642857b5b
-                type: organization
-            scan_item:
-              data:
-                id: a3952187-0d8e-45d8-9aa2-036642857b5c
-                type: project
-          type: issue
-        jsonapi:
-          version: '1.0'
+  parameters:
+    Ignored:
+      description: Whether an issue is ignored or not.
+      in: query
+      name: ignored
+      schema:
+        type: boolean
+      style: form
+    ScanItemId:
+      description: A scan item id to filter issues through their scan item relationship.
+      in: query
+      name: scan_item.id
+      schema:
+        example: 4a18d42f-0706-4ad0-b127-24078731fbee
+        format: uuid
+        type: string
+      style: form
+    Status:
+      description: An issue's status
+      explode: false
+      in: query
+      name: status
+      schema:
+        items:
+          enum:
+          - open
+          - resolved
+          type: string
+        type: array
+      style: form
+    PathIssueId20240123:
+      description: Issue ID
+      in: path
+      name: issue_id
+      required: true
+      schema:
+        example: 4a18d42f-0706-4ad0-b127-24078731fbed
+        format: uuid
+        type: string
+    Type:
+      description: An issue type to filter issues.
+      in: query
+      name: type
+      schema:
+        $ref: '#/components/schemas/TypeDef'
+      style: form
+    ScanItemType:
+      description: A scan item types to filter issues through their scan item relationship.
+      in: query
+      name: scan_item.type
+      schema:
+        $ref: '#/components/schemas/ScanItemType'
+      style: form
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
+    EffectiveSeverityLevel:
+      description: One or more effective severity levels to filter issues.
+      explode: false
+      in: query
+      name: effective_severity_level
+      schema:
+        items:
+          enum:
+          - info
+          - low
+          - medium
+          - high
+          - critical
+          type: string
+        type: array
+      style: form
+    Version:
+      description: The requested version of the endpoint to process the request
+      example: '2026-03-25'
+      in: query
+      name: version
+      required: true
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
+        type: string
+    PackageUrl:
+      description: 'A URI-encoded Package URL (purl). Supported purl types are apk, cargo, cocoapods, composer, conan, deb, gem, generic, golang, hex, maven, npm, nuget, pub, pypi, rpm, and swift. A version for the package is also required. Maven packages support an optional checksum qualifier to request checksum validation. When provided, the response will include checksum validation metadata indicating whether the package and checksum match records in Snyk''s database. Checksum format: `algorithm:hex_value` (lowercase), for example `sha1:ad9503c3e994a4f611a4892f2e67ac82df727086`. Only one checksum is supported per request. Supported algorithms: md5, sha1, sha256, sha512.'
+      example: pkg:maven/com.fasterxml.woodstox/woodstox-core@5.0.0?checksum=sha1:ad9503c3e994a4f611a4892f2e67ac82df727086
+      in: path
+      name: purl
+      required: true
+      schema:
+        type: string
+    Limit:
+      description: Number of results to return per page
+      example: 10
+      in: query
+      name: limit
+      schema:
+        default: 10
+        format: int32
+        maximum: 100
+        minimum: 10
+        multipleOf: 10
+        type: integer
   securitySchemes:
     APIToken:
       description: API key value must be prefixed with \"Token \".

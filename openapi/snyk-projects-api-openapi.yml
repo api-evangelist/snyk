@@ -657,408 +657,25 @@ paths:
       x-stability-level: stable
 components:
   schemas:
-    PullRequestsSettings20240531:
-      additionalProperties: false
-      description: Settings which describe how pull requests for a project are tested.
-      properties:
-        fail_only_for_issues_with_fix:
-          description: Only fail when the issues found have a fix available.
-          example: true
-          type: boolean
-        is_enabled:
-          description: Test pull requests for vulnerabilities. If this value is unset, the setting is inherited from the org default.
-          example: true
-          type: boolean
-        policy:
-          description: Fail if the project has any issues ("all"), or fail if a PR is introducing a new dependency with issues ("only_new"). If this value is unset, the setting is inherited from the org default.
-          enum:
-          - all
-          - only_new
-          example: all
-          type: string
-        severity_threshold:
-          description: Only fail for issues greater than or equal to the specified severity. If this value is unset, the setting is inherited from the org default.
-          enum:
-          - low
-          - medium
-          - high
-          - critical
-          example: high
-          type: string
-      type: object
-    ActualVersion:
-      description: Resolved API version
+    QueryVersion:
+      description: Requested API version
       example: '2026-03-25'
-      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
       type: string
-    Meta:
-      additionalProperties: true
-      description: Free-form object that may contain non-standard information.
-      example:
-        key1: value1
-        key2:
-          sub_key: sub_value
-        key3:
-        - array_value1
-        - array_value2
-      type: object
-    YarnBuildArgs:
+    LatestIssueCounts:
       additionalProperties: false
       properties:
-        root_workspace:
-          type: string
-      required:
-      - root_workspace
-      type: object
-    RecurringTestsSettings:
-      additionalProperties: false
-      description: Settings which describe how recurring tests are run for a project.
-      properties:
-        frequency:
-          description: Test frequency of a project. Also controls when automated PRs may be created.
-          enum:
-          - daily
-          - weekly
-          - never
-          example: daily
-          type: string
-      type: object
-    Links:
-      additionalProperties: false
-      properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        related:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
-        type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
-    AutoDependencyUpgradeSettings20240531:
-      additionalProperties: false
-      description: Automatically create pull requests on recurring tests for dependencies as upgrades become available. If not specified, settings will be inherited from the Organization's integration.
-      properties:
-        ignored_dependencies:
-          description: Dependencies which should NOT be included in an automatic upgrade operation.
-          example:
-          - typescript
-          items:
-            type: string
-          type: array
-        is_enabled:
-          description: Automatically raise pull requests to update out-of-date dependencies.
-          example: true
-          type: boolean
-        is_inherited:
-          description: Apply the auto dependency integration settings of the Organization to this project.
-          example: true
-          type: boolean
-        is_major_upgrade_enabled:
-          description: Include major version in dependency upgrade recommendation.
-          example: true
-          type: boolean
-        limit:
-          description: Limit of dependency upgrade PRs which can be opened simultaneously. When the limit is reached, no new upgrade PRs are created. If specified, must be between 1 and 10.
-          example: 10
-          maximum: 10
-          minimum: 1
+        critical:
           type: number
-        minimum_age:
-          description: Minimum dependency maturity period in days. If specified, must be between 1 and 365.
-          example: 365
+        high:
           type: number
-      type: object
-    ContainerBuildArgs:
-      additionalProperties: false
-      properties:
-        platform:
-          type: string
-      required:
-      - platform
-      type: object
-    ProjectSettings20240531:
-      additionalProperties: false
-      properties:
-        auto_dependency_upgrade:
-          $ref: '#/components/schemas/AutoDependencyUpgradeSettings20240531'
-        auto_remediation_prs:
-          $ref: '#/components/schemas/AutoRemediationPRsSettings20240531'
-        manual_remediation_prs:
-          $ref: '#/components/schemas/ManualRemediationPRsSettings20240531'
-        pull_request_assignment:
-          $ref: '#/components/schemas/PullRequestAssignmentSettings20240531'
-        pull_requests:
-          $ref: '#/components/schemas/PullRequestsSettings20240531'
-        recurring_tests:
-          $ref: '#/components/schemas/RecurringTestsSettings'
-      required:
-      - recurring_tests
-      - pull_requests
-      type: object
-    LatestDependencyTotal:
-      additionalProperties: false
-      properties:
-        total:
+        low:
+          type: number
+        medium:
           type: number
         updated_at:
           format: date-time
           type: string
-      type: object
-    ProjectAttributes:
-      additionalProperties: false
-      properties:
-        build_args:
-          oneOf:
-          - $ref: '#/components/schemas/YarnBuildArgs'
-          - $ref: '#/components/schemas/ContainerBuildArgs'
-          - $ref: '#/components/schemas/NugetBuildArgs'
-        business_criticality:
-          example:
-          - medium
-          items:
-            enum:
-            - critical
-            - high
-            - medium
-            - low
-            type: string
-          type: array
-        created:
-          description: The date that the project was created on
-          example: '2021-05-29T09:50:54.014Z'
-          format: date-time
-          type: string
-        environment:
-          example:
-          - external
-          - hosted
-          items:
-            enum:
-            - frontend
-            - backend
-            - internal
-            - external
-            - mobile
-            - saas
-            - onprem
-            - hosted
-            - distributed
-            type: string
-          type: array
-        lifecycle:
-          example:
-          - production
-          items:
-            enum:
-            - production
-            - development
-            - sandbox
-            type: string
-          type: array
-        name:
-          description: Project name.
-          example: snyk/goof
-          type: string
-        origin:
-          description: The origin the project was added from.
-          example: github
-          type: string
-        read_only:
-          description: Whether the project is read-only
-          type: boolean
-        settings:
-          $ref: '#/components/schemas/ProjectSettings20240531'
-        status:
-          description: Describes if a project is currently monitored or it is de-activated.
-          enum:
-          - active
-          - inactive
-          example: active
-          type: string
-        tags:
-          example:
-          - key: tag-key
-            value: tag-value
-          items:
-            properties:
-              key:
-                example: tag-key
-                type: string
-              value:
-                example: tag-value
-                type: string
-            type: object
-          type: array
-        target_file:
-          description: Path within the target to identify a specific file/directory/image etc. when scanning just part  of the target, and not the entity.
-          example: package.json
-          type: string
-        target_reference:
-          description: The additional information required to resolve which revision of the resource should be scanned.
-          example: main
-          type: string
-        target_runtime:
-          description: Dotnet Target, for relevant projects
-          type: string
-        type:
-          description: The package manager of the project.
-          example: maven
-          type: string
-      required:
-      - name
-      - type
-      - target_file
-      - target_reference
-      - origin
-      - created
-      - status
-      - read_only
-      - settings
-      type: object
-    PatchProjectRequest:
-      additionalProperties: false
-      properties:
-        data:
-          additionalProperties: false
-          properties:
-            attributes:
-              properties:
-                business_criticality:
-                  example:
-                  - medium
-                  items:
-                    enum:
-                    - critical
-                    - high
-                    - medium
-                    - low
-                    type: string
-                  type: array
-                environment:
-                  example:
-                  - external
-                  - hosted
-                  items:
-                    enum:
-                    - frontend
-                    - backend
-                    - internal
-                    - external
-                    - mobile
-                    - saas
-                    - onprem
-                    - hosted
-                    - distributed
-                    type: string
-                  type: array
-                lifecycle:
-                  example:
-                  - production
-                  items:
-                    enum:
-                    - production
-                    - development
-                    - sandbox
-                    type: string
-                  type: array
-                tags:
-                  example:
-                  - key: tag-key
-                    value: tag-value
-                  items:
-                    properties:
-                      key:
-                        example: tag-key
-                        type: string
-                      value:
-                        example: tag-value
-                        type: string
-                    type: object
-                  type: array
-                test_frequency:
-                  description: Test frequency of a project. Also controls when automated PRs may be created.
-                  enum:
-                  - daily
-                  - weekly
-                  - never
-                  example: daily
-                  type: string
-              type: object
-            id:
-              description: The Resource ID.
-              example: 331ede0a-de94-456f-b788-166caeca58bf
-              format: uuid
-              type: string
-            relationships:
-              properties:
-                owner:
-                  properties:
-                    data:
-                      properties:
-                        id:
-                          description: The public ID of the user that owns the project
-                          example: 331ede0a-de94-456f-b788-166caeca58bf
-                          format: uuid
-                          type:
-                          - string
-                          - 'null'
-                        type:
-                          enum:
-                          - user
-                      required:
-                      - type
-                      - id
-                      type: object
-                  required:
-                  - data
-                  type: object
-              type: object
-            type:
-              description: The Resource type.
-              enum:
-              - project
-              type: string
-          required:
-          - type
-          - id
-          - attributes
-          - relationships
-          type: object
-      required:
-      - data
       type: object
     AutoRemediationPRsSettings20240531:
       additionalProperties: false
@@ -1077,75 +694,22 @@ components:
           example: true
           type: boolean
       type: object
-    PullRequestAssignmentSettings20240531:
+    ProjectRelationships:
       additionalProperties: false
-      description: Automatically assign pull requests created by Snyk (limited to private repos). If not specified, settings will be inherited from the Organization's integration.
       properties:
-        assignees:
-          description: Manually specify users to assign (and all will be assigned).
-          example:
-          - my-github-username
-          items:
-            type: string
-          type: array
-        is_enabled:
-          description: Automatically assign pull requests created by Snyk.
-          example: true
-          type: boolean
-        type:
-          description: Automatically assign the last user to change the manifest file ("auto"), or manually specify a list of users ("manual").
-          enum:
-          - auto
-          - manual
-          example: auto
-          type: string
-      type: object
-    QueryVersion:
-      description: Requested API version
-      example: '2026-03-25'
-      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
-      type: string
-    ManualRemediationPRsSettings20240531:
-      additionalProperties: false
-      description: Manually raise pull requests to fix new and existing vulnerabilities. If not specified, settings will be inherited from the Organization's integration.
-      properties:
-        is_patch_remediation_enabled:
-          description: Include vulnerability patches in manual pull requests.
-          example: true
-          type: boolean
-      type: object
-    Relationship:
-      example:
-        data:
-          id: 4a72d1db-b465-4764-99e1-ecedad03b06a
-          type: resource
-        links:
-          related:
-            href: https://example.com/api/resource/4a72d1db-b465-4764-99e1-ecedad03b06a
-      properties:
-        data:
-          additionalProperties: false
-          properties:
-            id:
-              example: 4a72d1db-b465-4764-99e1-ecedad03b06a
-              format: uuid
-              type: string
-            type:
-              description: Type of the related resource
-              example: resource
-              pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
-              type: string
-          required:
-          - type
-          - id
-          type: object
-        links:
-          $ref: '#/components/schemas/RelatedLink'
-        meta:
-          $ref: '#/components/schemas/Meta'
+        importer:
+          $ref: '#/components/schemas/Relationship'
+        organization:
+          $ref: '#/components/schemas/Relationship'
+        owner:
+          $ref: '#/components/schemas/Relationship'
+        target:
+          oneOf:
+          - $ref: '#/components/schemas/Relationship'
+          - $ref: '#/components/schemas/ProjectRelationshipsTarget'
       required:
-      - data
-      - links
+      - target
+      - organization
       type: object
     NugetBuildArgs:
       additionalProperties: false
@@ -1154,54 +718,6 @@ components:
           type: string
       required:
       - target_framework
-      type: object
-    ProjectRelationshipsTarget:
-      additionalProperties: false
-      properties:
-        data:
-          properties:
-            attributes:
-              additionalProperties: false
-              properties:
-                display_name:
-                  description: 'The human readable name that represents this target. These are generated based on the provided properties, and the source. In the future we may support updating this value.
-
-                    '
-                  example: snyk-fixtures/goof
-                  type: string
-                url:
-                  description: 'The URL for the resource. We do not use this as part of our representation of the identity of the target, as it can      be changed externally to Snyk We are reliant on individual integrations providing us with this value. Currently it is only provided by the CLI
-
-                    '
-                  example: http://github.com/snyk/local-goof
-                  type:
-                  - string
-                  - 'null'
-              type: object
-            id:
-              description: The Resource ID.
-              format: uuid
-              type: string
-            meta:
-              properties:
-                integration_data:
-                  description: A collection of properties regarding integration data
-                  type: object
-              type: object
-            type:
-              description: The Resource type.
-              example: target
-              type: string
-          required:
-          - type
-          - id
-          - attributes
-          type: object
-        links:
-          $ref: '#/components/schemas/RelatedLink'
-      required:
-      - data
-      - links
       type: object
     ErrorDocument:
       additionalProperties: false
@@ -1321,6 +837,39 @@ components:
       - jsonapi
       - errors
       type: object
+    ProjectSettings20240531:
+      additionalProperties: false
+      properties:
+        auto_dependency_upgrade:
+          $ref: '#/components/schemas/AutoDependencyUpgradeSettings20240531'
+        auto_remediation_prs:
+          $ref: '#/components/schemas/AutoRemediationPRsSettings20240531'
+        manual_remediation_prs:
+          $ref: '#/components/schemas/ManualRemediationPRsSettings20240531'
+        pull_request_assignment:
+          $ref: '#/components/schemas/PullRequestAssignmentSettings20240531'
+        pull_requests:
+          $ref: '#/components/schemas/PullRequestsSettings20240531'
+        recurring_tests:
+          $ref: '#/components/schemas/RecurringTestsSettings'
+      required:
+      - recurring_tests
+      - pull_requests
+      type: object
+    LatestDependencyTotal:
+      additionalProperties: false
+      properties:
+        total:
+          type: number
+        updated_at:
+          format: date-time
+          type: string
+      type: object
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
     JsonApi:
       additionalProperties: false
       example:
@@ -1334,20 +883,153 @@ components:
       required:
       - version
       type: object
-    LatestIssueCounts:
+    RecurringTestsSettings:
+      additionalProperties: false
+      description: Settings which describe how recurring tests are run for a project.
+      properties:
+        frequency:
+          description: Test frequency of a project. Also controls when automated PRs may be created.
+          enum:
+          - daily
+          - weekly
+          - never
+          example: daily
+          type: string
+      type: object
+    YarnBuildArgs:
       additionalProperties: false
       properties:
-        critical:
-          type: number
-        high:
-          type: number
-        low:
-          type: number
-        medium:
-          type: number
-        updated_at:
+        root_workspace:
+          type: string
+      required:
+      - root_workspace
+      type: object
+    ProjectAttributes:
+      additionalProperties: false
+      properties:
+        build_args:
+          oneOf:
+          - $ref: '#/components/schemas/YarnBuildArgs'
+          - $ref: '#/components/schemas/ContainerBuildArgs'
+          - $ref: '#/components/schemas/NugetBuildArgs'
+        business_criticality:
+          example:
+          - medium
+          items:
+            enum:
+            - critical
+            - high
+            - medium
+            - low
+            type: string
+          type: array
+        created:
+          description: The date that the project was created on
+          example: '2021-05-29T09:50:54.014Z'
           format: date-time
           type: string
+        environment:
+          example:
+          - external
+          - hosted
+          items:
+            enum:
+            - frontend
+            - backend
+            - internal
+            - external
+            - mobile
+            - saas
+            - onprem
+            - hosted
+            - distributed
+            type: string
+          type: array
+        lifecycle:
+          example:
+          - production
+          items:
+            enum:
+            - production
+            - development
+            - sandbox
+            type: string
+          type: array
+        name:
+          description: Project name.
+          example: snyk/goof
+          type: string
+        origin:
+          description: The origin the project was added from.
+          example: github
+          type: string
+        read_only:
+          description: Whether the project is read-only
+          type: boolean
+        settings:
+          $ref: '#/components/schemas/ProjectSettings20240531'
+        status:
+          description: Describes if a project is currently monitored or it is de-activated.
+          enum:
+          - active
+          - inactive
+          example: active
+          type: string
+        tags:
+          example:
+          - key: tag-key
+            value: tag-value
+          items:
+            properties:
+              key:
+                example: tag-key
+                type: string
+              value:
+                example: tag-value
+                type: string
+            type: object
+          type: array
+        target_file:
+          description: Path within the target to identify a specific file/directory/image etc. when scanning just part  of the target, and not the entity.
+          example: package.json
+          type: string
+        target_reference:
+          description: The additional information required to resolve which revision of the resource should be scanned.
+          example: main
+          type: string
+        target_runtime:
+          description: Dotnet Target, for relevant projects
+          type: string
+        type:
+          description: The package manager of the project.
+          example: maven
+          type: string
+      required:
+      - name
+      - type
+      - target_file
+      - target_reference
+      - origin
+      - created
+      - status
+      - read_only
+      - settings
+      type: object
+    Links:
+      additionalProperties: false
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        related:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
       type: object
     RelatedLink:
       additionalProperties: false
@@ -1357,30 +1039,348 @@ components:
         related:
           $ref: '#/components/schemas/LinkProperty'
       type: object
-    ProjectRelationships:
+    ProjectRelationshipsTarget:
       additionalProperties: false
       properties:
-        importer:
-          $ref: '#/components/schemas/Relationship'
-        organization:
-          $ref: '#/components/schemas/Relationship'
-        owner:
-          $ref: '#/components/schemas/Relationship'
-        target:
-          oneOf:
-          - $ref: '#/components/schemas/Relationship'
-          - $ref: '#/components/schemas/ProjectRelationshipsTarget'
+        data:
+          properties:
+            attributes:
+              additionalProperties: false
+              properties:
+                display_name:
+                  description: 'The human readable name that represents this target. These are generated based on the provided properties, and the source. In the future we may support updating this value.
+
+                    '
+                  example: snyk-fixtures/goof
+                  type: string
+                url:
+                  description: 'The URL for the resource. We do not use this as part of our representation of the identity of the target, as it can      be changed externally to Snyk We are reliant on individual integrations providing us with this value. Currently it is only provided by the CLI
+
+                    '
+                  example: http://github.com/snyk/local-goof
+                  type:
+                  - string
+                  - 'null'
+              type: object
+            id:
+              description: The Resource ID.
+              format: uuid
+              type: string
+            meta:
+              properties:
+                integration_data:
+                  description: A collection of properties regarding integration data
+                  type: object
+              type: object
+            type:
+              description: The Resource type.
+              example: target
+              type: string
+          required:
+          - type
+          - id
+          - attributes
+          type: object
+        links:
+          $ref: '#/components/schemas/RelatedLink'
       required:
-      - target
-      - organization
+      - data
+      - links
+      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
+    PullRequestsSettings20240531:
+      additionalProperties: false
+      description: Settings which describe how pull requests for a project are tested.
+      properties:
+        fail_only_for_issues_with_fix:
+          description: Only fail when the issues found have a fix available.
+          example: true
+          type: boolean
+        is_enabled:
+          description: Test pull requests for vulnerabilities. If this value is unset, the setting is inherited from the org default.
+          example: true
+          type: boolean
+        policy:
+          description: Fail if the project has any issues ("all"), or fail if a PR is introducing a new dependency with issues ("only_new"). If this value is unset, the setting is inherited from the org default.
+          enum:
+          - all
+          - only_new
+          example: all
+          type: string
+        severity_threshold:
+          description: Only fail for issues greater than or equal to the specified severity. If this value is unset, the setting is inherited from the org default.
+          enum:
+          - low
+          - medium
+          - high
+          - critical
+          example: high
+          type: string
+      type: object
+    ContainerBuildArgs:
+      additionalProperties: false
+      properties:
+        platform:
+          type: string
+      required:
+      - platform
+      type: object
+    ManualRemediationPRsSettings20240531:
+      additionalProperties: false
+      description: Manually raise pull requests to fix new and existing vulnerabilities. If not specified, settings will be inherited from the Organization's integration.
+      properties:
+        is_patch_remediation_enabled:
+          description: Include vulnerability patches in manual pull requests.
+          example: true
+          type: boolean
+      type: object
+    PullRequestAssignmentSettings20240531:
+      additionalProperties: false
+      description: Automatically assign pull requests created by Snyk (limited to private repos). If not specified, settings will be inherited from the Organization's integration.
+      properties:
+        assignees:
+          description: Manually specify users to assign (and all will be assigned).
+          example:
+          - my-github-username
+          items:
+            type: string
+          type: array
+        is_enabled:
+          description: Automatically assign pull requests created by Snyk.
+          example: true
+          type: boolean
+        type:
+          description: Automatically assign the last user to change the manifest file ("auto"), or manually specify a list of users ("manual").
+          enum:
+          - auto
+          - manual
+          example: auto
+          type: string
+      type: object
+    AutoDependencyUpgradeSettings20240531:
+      additionalProperties: false
+      description: Automatically create pull requests on recurring tests for dependencies as upgrades become available. If not specified, settings will be inherited from the Organization's integration.
+      properties:
+        ignored_dependencies:
+          description: Dependencies which should NOT be included in an automatic upgrade operation.
+          example:
+          - typescript
+          items:
+            type: string
+          type: array
+        is_enabled:
+          description: Automatically raise pull requests to update out-of-date dependencies.
+          example: true
+          type: boolean
+        is_inherited:
+          description: Apply the auto dependency integration settings of the Organization to this project.
+          example: true
+          type: boolean
+        is_major_upgrade_enabled:
+          description: Include major version in dependency upgrade recommendation.
+          example: true
+          type: boolean
+        limit:
+          description: Limit of dependency upgrade PRs which can be opened simultaneously. When the limit is reached, no new upgrade PRs are created. If specified, must be between 1 and 10.
+          example: 10
+          maximum: 10
+          minimum: 1
+          type: number
+        minimum_age:
+          description: Minimum dependency maturity period in days. If specified, must be between 1 and 365.
+          example: 365
+          type: number
+      type: object
+    Relationship:
+      example:
+        data:
+          id: 4a72d1db-b465-4764-99e1-ecedad03b06a
+          type: resource
+        links:
+          related:
+            href: https://example.com/api/resource/4a72d1db-b465-4764-99e1-ecedad03b06a
+      properties:
+        data:
+          additionalProperties: false
+          properties:
+            id:
+              example: 4a72d1db-b465-4764-99e1-ecedad03b06a
+              format: uuid
+              type: string
+            type:
+              description: Type of the related resource
+              example: resource
+              pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
+              type: string
+          required:
+          - type
+          - id
+          type: object
+        links:
+          $ref: '#/components/schemas/RelatedLink'
+        meta:
+          $ref: '#/components/schemas/Meta'
+      required:
+      - data
+      - links
+      type: object
+    PatchProjectRequest:
+      additionalProperties: false
+      properties:
+        data:
+          additionalProperties: false
+          properties:
+            attributes:
+              properties:
+                business_criticality:
+                  example:
+                  - medium
+                  items:
+                    enum:
+                    - critical
+                    - high
+                    - medium
+                    - low
+                    type: string
+                  type: array
+                environment:
+                  example:
+                  - external
+                  - hosted
+                  items:
+                    enum:
+                    - frontend
+                    - backend
+                    - internal
+                    - external
+                    - mobile
+                    - saas
+                    - onprem
+                    - hosted
+                    - distributed
+                    type: string
+                  type: array
+                lifecycle:
+                  example:
+                  - production
+                  items:
+                    enum:
+                    - production
+                    - development
+                    - sandbox
+                    type: string
+                  type: array
+                tags:
+                  example:
+                  - key: tag-key
+                    value: tag-value
+                  items:
+                    properties:
+                      key:
+                        example: tag-key
+                        type: string
+                      value:
+                        example: tag-value
+                        type: string
+                    type: object
+                  type: array
+                test_frequency:
+                  description: Test frequency of a project. Also controls when automated PRs may be created.
+                  enum:
+                  - daily
+                  - weekly
+                  - never
+                  example: daily
+                  type: string
+              type: object
+            id:
+              description: The Resource ID.
+              example: 331ede0a-de94-456f-b788-166caeca58bf
+              format: uuid
+              type: string
+            relationships:
+              properties:
+                owner:
+                  properties:
+                    data:
+                      properties:
+                        id:
+                          description: The public ID of the user that owns the project
+                          example: 331ede0a-de94-456f-b788-166caeca58bf
+                          format: uuid
+                          type:
+                          - string
+                          - 'null'
+                        type:
+                          enum:
+                          - user
+                      required:
+                      - type
+                      - id
+                      type: object
+                  required:
+                  - data
+                  type: object
+              type: object
+            type:
+              description: The Resource type.
+              enum:
+              - project
+              type: string
+          required:
+          - type
+          - id
+          - attributes
+          - relationships
+          type: object
+      required:
+      - data
+      type: object
+    Meta:
+      additionalProperties: true
+      description: Free-form object that may contain non-standard information.
+      example:
+        key1: value1
+        key2:
+          sub_key: sub_value
+        key3:
+        - array_value1
+        - array_value2
       type: object
   responses:
-    '403':
+    '500':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
-      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -1432,25 +1432,6 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '500':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
     '404':
       content:
         application/vnd.api+json:
@@ -1470,7 +1451,87 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+  parameters:
+    Limit:
+      description: Number of results to return per page
+      example: 10
+      in: query
+      name: limit
+      schema:
+        default: 10
+        format: int32
+        maximum: 100
+        minimum: 10
+        multipleOf: 10
+        type: integer
+    Version:
+      description: The requested version of the endpoint to process the request
+      example: '2026-03-25'
+      in: query
+      name: version
+      required: true
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
+        type: string
   headers:
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
     VersionStageResponseHeader:
       description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
 
@@ -1493,67 +1554,6 @@ components:
       schema:
         format: uuid
         type: string
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
-    VersionRequestedResponseHeader:
-      description: A header containing the version of the endpoint requested by the caller.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/ActualVersion'
-    DeprecationHeader:
-      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
-
-        '
-      example: '2021-07-01T00:00:00Z'
-      schema:
-        format: date-time
-        type: string
-  parameters:
-    StartingAfter:
-      description: Return the page of results immediately after this cursor
-      example: v1.eyJpZCI6IjEwMDAifQo=
-      in: query
-      name: starting_after
-      schema:
-        type: string
-    Version:
-      description: The requested version of the endpoint to process the request
-      example: '2026-03-25'
-      in: query
-      name: version
-      required: true
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    EndingBefore:
-      description: Return the page of results immediately before this cursor
-      example: v1.eyJpZCI6IjExMDAifQo=
-      in: query
-      name: ending_before
-      schema:
-        type: string
-    Limit:
-      description: Number of results to return per page
-      example: 10
-      in: query
-      name: limit
-      schema:
-        default: 10
-        format: int32
-        maximum: 100
-        minimum: 10
-        multipleOf: 10
-        type: integer
   securitySchemes:
     APIToken:
       description: API key value must be prefixed with \"Token \".

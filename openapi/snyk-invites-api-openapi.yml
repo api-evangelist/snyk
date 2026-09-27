@@ -226,86 +226,6 @@ paths:
       x-stability-level: stable
 components:
   schemas:
-    ActualVersion:
-      description: Resolved API version
-      example: '2026-03-25'
-      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
-      type: string
-    Meta:
-      additionalProperties: true
-      description: Free-form object that may contain non-standard information.
-      example:
-        key1: value1
-        key2:
-          sub_key: sub_value
-        key3:
-        - array_value1
-        - array_value2
-      type: object
-    Links:
-      additionalProperties: false
-      properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        related:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
-    OrgInvitation:
-      additionalProperties: false
-      properties:
-        attributes:
-          $ref: '#/components/schemas/OrgInvitationAttributes'
-        id:
-          format: uuid
-          type: string
-        relationships:
-          properties:
-            org:
-              $ref: '#/components/schemas/Relationship'
-          type: object
-        type:
-          type: string
-      required:
-      - type
-      - id
-      - attributes
-      type: object
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
-        type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
     OrgInvitation20240621:
       additionalProperties: false
       properties:
@@ -328,6 +248,11 @@ components:
       - id
       - attributes
       type: object
+    QueryVersion:
+      description: Requested API version
+      example: '2026-03-25'
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+      type: string
     OrgInvitationAttributes20230828:
       additionalProperties: false
       properties:
@@ -351,71 +276,25 @@ components:
       - is_active
       - role
       type: object
-    OrgInvitationPostData:
+    OrgInvitation:
       additionalProperties: false
       properties:
         attributes:
-          $ref: '#/components/schemas/OrgInvitationPostAttributes'
+          $ref: '#/components/schemas/OrgInvitationAttributes'
+        id:
+          format: uuid
+          type: string
+        relationships:
+          properties:
+            org:
+              $ref: '#/components/schemas/Relationship'
+          type: object
         type:
-          enum:
-          - org_invitation
           type: string
       required:
       - type
+      - id
       - attributes
-      type: object
-    OrgInvitationPostAttributes:
-      additionalProperties: false
-      properties:
-        email:
-          description: The email address of the invitee.
-          example: example@email.com
-          type: string
-        role:
-          description: The role public ID that will be granted to to invitee on acceptance.
-          example: f1968726-1dca-42d4-a4dc-80cab99e2b6c
-          format: uuid
-      required:
-      - email
-      - role
-      type: object
-    QueryVersion:
-      description: Requested API version
-      example: '2026-03-25'
-      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
-      type: string
-    Relationship:
-      example:
-        data:
-          id: 4a72d1db-b465-4764-99e1-ecedad03b06a
-          type: resource
-        links:
-          related:
-            href: https://example.com/api/resource/4a72d1db-b465-4764-99e1-ecedad03b06a
-      properties:
-        data:
-          additionalProperties: false
-          properties:
-            id:
-              example: 4a72d1db-b465-4764-99e1-ecedad03b06a
-              format: uuid
-              type: string
-            type:
-              description: Type of the related resource
-              example: resource
-              pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
-              type: string
-          required:
-          - type
-          - id
-          type: object
-        links:
-          $ref: '#/components/schemas/RelatedLink'
-        meta:
-          $ref: '#/components/schemas/Meta'
-      required:
-      - data
-      - links
       type: object
     ErrorDocument:
       additionalProperties: false
@@ -535,6 +414,24 @@ components:
       - jsonapi
       - errors
       type: object
+    OrgInvitationPostData:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/OrgInvitationPostAttributes'
+        type:
+          enum:
+          - org_invitation
+          type: string
+      required:
+      - type
+      - attributes
+      type: object
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
     JsonApi:
       additionalProperties: false
       example:
@@ -548,6 +445,22 @@ components:
       required:
       - version
       type: object
+    Links:
+      additionalProperties: false
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        related:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
     RelatedLink:
       additionalProperties: false
       example:
@@ -555,6 +468,49 @@ components:
       properties:
         related:
           $ref: '#/components/schemas/LinkProperty'
+      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
+    OrgInvitationPostAttributes:
+      additionalProperties: false
+      properties:
+        email:
+          description: The email address of the invitee.
+          example: example@email.com
+          type: string
+        role:
+          description: The role public ID that will be granted to to invitee on acceptance.
+          example: f1968726-1dca-42d4-a4dc-80cab99e2b6c
+          format: uuid
+      required:
+      - email
+      - role
       type: object
     OrgInvitationAttributes:
       additionalProperties: false
@@ -578,13 +534,72 @@ components:
       - is_active
       - role
       type: object
+    Relationship:
+      example:
+        data:
+          id: 4a72d1db-b465-4764-99e1-ecedad03b06a
+          type: resource
+        links:
+          related:
+            href: https://example.com/api/resource/4a72d1db-b465-4764-99e1-ecedad03b06a
+      properties:
+        data:
+          additionalProperties: false
+          properties:
+            id:
+              example: 4a72d1db-b465-4764-99e1-ecedad03b06a
+              format: uuid
+              type: string
+            type:
+              description: Type of the related resource
+              example: resource
+              pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
+              type: string
+          required:
+          - type
+          - id
+          type: object
+        links:
+          $ref: '#/components/schemas/RelatedLink'
+        meta:
+          $ref: '#/components/schemas/Meta'
+      required:
+      - data
+      - links
+      type: object
+    Meta:
+      additionalProperties: true
+      description: Free-form object that may contain non-standard information.
+      example:
+        key1: value1
+        key2:
+          sub_key: sub_value
+        key3:
+        - array_value1
+        - array_value2
+      type: object
   responses:
-    '403':
+    '500':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
-      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '204':
+      description: The operation completed successfully with no content
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -617,46 +632,12 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '204':
-      description: The operation completed successfully with no content
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
     '400':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
       description: 'Bad Request: A parameter provided as a part of the request was invalid.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
-    '500':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -689,7 +670,87 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+  parameters:
+    Limit:
+      description: Number of results to return per page
+      example: 10
+      in: query
+      name: limit
+      schema:
+        default: 10
+        format: int32
+        maximum: 100
+        minimum: 10
+        multipleOf: 10
+        type: integer
+    Version:
+      description: The requested version of the endpoint to process the request
+      example: '2026-03-25'
+      in: query
+      name: version
+      required: true
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
+        type: string
   headers:
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
     VersionStageResponseHeader:
       description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
 
@@ -712,67 +773,6 @@ components:
       schema:
         format: uuid
         type: string
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
-    VersionRequestedResponseHeader:
-      description: A header containing the version of the endpoint requested by the caller.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/ActualVersion'
-    DeprecationHeader:
-      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
-
-        '
-      example: '2021-07-01T00:00:00Z'
-      schema:
-        format: date-time
-        type: string
-  parameters:
-    StartingAfter:
-      description: Return the page of results immediately after this cursor
-      example: v1.eyJpZCI6IjEwMDAifQo=
-      in: query
-      name: starting_after
-      schema:
-        type: string
-    Version:
-      description: The requested version of the endpoint to process the request
-      example: '2026-03-25'
-      in: query
-      name: version
-      required: true
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    EndingBefore:
-      description: Return the page of results immediately before this cursor
-      example: v1.eyJpZCI6IjExMDAifQo=
-      in: query
-      name: ending_before
-      schema:
-        type: string
-    Limit:
-      description: Number of results to return per page
-      example: 10
-      in: query
-      name: limit
-      schema:
-        default: 10
-        format: int32
-        maximum: 100
-        minimum: 10
-        multipleOf: 10
-        type: integer
   securitySchemes:
     APIToken:
       description: API key value must be prefixed with \"Token \".

@@ -886,12 +886,278 @@ paths:
       x-snyk-api-version: 2022-12-21~beta
       x-stability-level: beta
 components:
-  schemas:
-    ActualVersion:
-      description: Resolved API version
+  parameters:
+    Removed:
+      description: Filter resources by whether they have been removed or not.
+      example: true
+      explode: false
+      in: query
+      name: removed
+      schema:
+        type: boolean
+      style: form
+    Platform:
+      description: 'Filter resources by platform (multi-value, comma-separated): aws'
+      example: aws
+      explode: false
+      in: query
+      name: platform
+      schema:
+        type: string
+      style: form
+    NativeId:
+      description: Filter resources by native ID (multi-value, comma-separated) (AWS ARN)
+      example: arn:aws:s3:::example-bucket
+      explode: false
+      in: query
+      name: native_id
+      schema:
+        type: string
+      style: form
+    ScanId:
+      description: Scan ID
+      example: 56465b1d-8764-458c-1234-0987abcd6543
+      in: path
+      name: scan_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    Limit:
+      description: Number of results to return per page
+      example: 10
+      in: query
+      name: limit
+      schema:
+        default: 10
+        format: int32
+        maximum: 100
+        minimum: 10
+        multipleOf: 10
+        type: integer
+    KindInQuery:
+      description: 'Filter environments by kind (multi-value, comma-separated): aws'
+      example: aws
+      in: query
+      name: kind
+      schema:
+        $ref: '#/components/schemas/EnvironmentKind'
+    UpdatedBefore:
+      description: Return environments updated before this date
+      example: '2022-05-06T12:25:15-04:00'
+      in: query
+      name: updated_before
+      schema:
+        format: date-time
+        type: string
+    IdInQuery:
+      description: Filter environments by environment ID (multi-value, comma-separated)
+      example: 052781a7-17f6-494d-0000-25c8b509abcd
+      in: query
+      name: id
+      schema:
+        format: uuid
+        type: string
+    CreatedAfter:
+      description: Return environments created after this date
+      example: '2022-05-06T12:25:15-04:00'
+      in: query
+      name: created_after
+      schema:
+        format: date-time
+        type: string
+    NameInQuery:
+      description: Filter environments by name (multi-value, comma-separated)
+      example: Demo AWS Environment
+      in: query
+      name: name
+      schema:
+        $ref: '#/components/schemas/EnvironmentName'
+    ResourceId:
+      description: Filter resources by resource ID (multi-value, comma-separated)
+      example: example-bucket
+      explode: false
+      in: query
+      name: resource_id
+      schema:
+        type: string
+      style: form
+    Version:
+      description: The requested version of the endpoint to process the request
       example: '2026-03-25'
-      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      in: query
+      name: version
+      required: true
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    Location:
+      description: Filter resources by location (multi-value, comma-separated) (AWS region)
+      example: us-west-2
+      explode: false
+      in: query
+      name: location
+      schema:
+        type: string
+      style: form
+    EnvironmentId:
+      description: Unique identifier for an environment
+      example: 052781a7-17f6-494d-0000-25c8b509abcd
+      in: path
+      name: environment_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    UpdatedAfter:
+      description: Return environments updated after this date
+      example: '2022-05-06T12:25:15-04:00'
+      in: query
+      name: updated_after
+      schema:
+        format: date-time
+        type: string
+    CreatedBefore:
+      description: Return environments created before this date
+      example: '2022-05-06T12:25:15-04:00'
+      in: query
+      name: created_before
+      schema:
+        format: date-time
+        type: string
+    ResourceType:
+      description: Filter resources by resource type (multi-value, comma-separated)
+      example: aws_s3_bucket
+      explode: false
+      in: query
+      name: resource_type
+      schema:
+        type: string
+      style: form
+    StatusInQuery:
+      description: Filter environments by latest scan status (multi-value, comma-separated)
+      example: error
+      in: query
+      name: status
+      schema:
+        enum:
+        - queued
+        - in_progress
+        - success
+        - error
+        - 'null'
+        type: string
+    EnvironmentIdQuery:
+      description: Filter resources by environment ID (multi-value, comma-separated)
+      example: 052781a7-17f6-494d-0000-25c8b509abcd
+      explode: false
+      in: query
+      name: environment_id
+      schema:
+        format: uuid
+        type: string
+      style: form
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
+    Name:
+      description: Filter resources by name (multi-value, comma-separated)
+      example: example-bucket
+      explode: false
+      in: query
+      name: name
+      schema:
+        type: string
+      style: form
+    Id:
+      description: Filter resources by resource UUID (multi-value, comma-separated)
+      example: 4a662442-7445-55c3-adcc-cbbbdd99999
+      explode: false
+      in: query
+      name: id
+      schema:
+        type: string
+      style: form
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
+        type: string
+    Kind:
+      description: 'Filter resources by kind (multi-value, comma-separated): cloud'
+      example: cloud
+      explode: false
+      in: query
+      name: kind
+      schema:
+        $ref: '#/components/schemas/ResourceKind'
+      style: form
+  schemas:
+    EnvironmentName:
+      description: Environment name
+      example: Demo AWS Environment
       type: string
+    QueryVersion:
+      description: Requested API version
+      example: '2026-03-25'
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+      type: string
+    ResourceRelationships:
+      additionalProperties: true
+      description: Resource relationships
+      example:
+        environment:
+          data:
+            id: 11000000-0000-0000-0000-000000000000
+            type: environment
+          links:
+            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
+        organization:
+          data:
+            id: 10000000-0000-0000-0000-000000000000
+            type: organization
+          links:
+            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
+        scan:
+          data:
+            id: 12000000-0000-0000-0000-000000000000
+            type: scan
+          links:
+            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
+      type: object
+    EnvironmentKind:
+      description: 'Environment kind: aws'
+      enum:
+      - aws
+      - google
+      - azure
+      - scm
+      - tfc
+      - cli
+      type: string
+    AzureOptions:
+      description: Options for generating an Azure environment permissions script
+      example:
+        subscription_id: 6884d000-8dd4-11ed-a1eb-0242ac120002
+        tenant_id: 51627f08-8dd4-11ed-a1eb-0242ac120002
+      properties:
+        subscription_id:
+          description: ID of the Azure subscription to be scanned
+          example: 6884d000-8dd4-11ed-a1eb-0242ac120002
+          type: string
+        tenant_id:
+          description: Azure Tenant (directory) ID
+          example: 51627f08-8dd4-11ed-a1eb-0242ac120002
+          type: string
+      required:
+      - tenant_id
+      - subscription_id
+      type: object
     PermissionsAttributes:
       properties:
         data:
@@ -902,23 +1168,6 @@ components:
       - data
       - type
       type: object
-    AwsOptions:
-      additionalProperties: false
-      description: Options for creating an AWS environment
-      example:
-        role_arn: arn:aws:iam::12345678910:role/SnykCloud1234
-      properties:
-        role_arn:
-          description: AWS IAM role ARN for Snyk
-          example: arn:aws:iam::12345678910:role/SnykCloud1234
-          type: string
-      required:
-      - role_arn
-      type: object
-    ResourceKind:
-      description: 'Kind of resource: cloud'
-      example: cloud - cloud - iac
-      type: string
     ScanAttributes:
       description: Scan attributes
       example:
@@ -1014,352 +1263,6 @@ components:
       - kind
       - status
       - error
-      type: object
-    ScanCreateAttributes:
-      additionalProperties: false
-      description: Scan create attributes
-      type: object
-    ResourceRelationships:
-      additionalProperties: true
-      description: Resource relationships
-      example:
-        environment:
-          data:
-            id: 11000000-0000-0000-0000-000000000000
-            type: environment
-          links:
-            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
-        organization:
-          data:
-            id: 10000000-0000-0000-0000-000000000000
-            type: organization
-          links:
-            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
-        scan:
-          data:
-            id: 12000000-0000-0000-0000-000000000000
-            type: scan
-          links:
-            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
-      type: object
-    EnvironmentAttributes:
-      description: Environment attributes
-      example:
-        created_at: '2022-05-06T12:25:15-04:00'
-        kind: aws
-        name: Demo AWS Environment
-        native_id: '12345678910'
-        options:
-          role_arn: arn:aws:iam::123456789012:role/SnykCloud1234
-        properties:
-          account_id: '123456789012'
-        revision: 1
-        status: success
-        updated_at: '2022-05-06T12:25:15-04:00'
-      properties:
-        created_at:
-          description: When the environment was created
-          example: '2022-05-06T12:25:15-04:00'
-          format: date-time
-          type: string
-        deleted_at:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        kind:
-          $ref: '#/components/schemas/EnvironmentKind'
-        name:
-          $ref: '#/components/schemas/EnvironmentName'
-        options:
-          type: object
-        properties:
-          type: object
-        revision:
-          description: Increment for each change to an environment
-          example: 1
-          type: integer
-        updated_at:
-          description: When the environment was last updated
-          example: '2022-05-07T12:25:15-04:00'
-          format: date-time
-          type:
-          - string
-          - 'null'
-      required:
-      - kind
-      - name
-      - created_at
-      type: object
-    GoogleOptions:
-      additionalProperties: false
-      description: Options for creating a Google environment
-      example:
-        identity_provider: https://iam.googleapis.com/projects/123/locations/global/workloadIdentityPools/snyk-workload-identity-123/providers/snyk-identity-provider-123
-        project_id: demo-project
-        service_account_email: snyk-demo@demo-project.iam.gserviceaccount.com
-      properties:
-        identity_provider:
-          description: The full resource name of the workload identity provider
-          example: https://iam.googleapis.com/projects/123/locations/global/workloadIdentityPools/snyk-workload-identity-123/providers/snyk-identity-provider-123
-          format: uri
-          type: string
-        project_id:
-          description: Google project ID
-          example: demo-project
-          type: string
-        service_account_email:
-          description: Google service account email
-          example: snyk-demo@demo-project.iam.gserviceaccount.com
-          format: email
-          type: string
-      required:
-      - service_account_email
-      - identity_provider
-      type: object
-    PlatformType:
-      enum:
-      - aws
-      - azure
-      - google
-      type: string
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
-        type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
-    EnvironmentCreateAttributes:
-      example:
-        kind: aws
-        options:
-          role_arn: arn:aws:iam::336447867772:role/SnykCloud1234
-      properties:
-        kind:
-          $ref: '#/components/schemas/EnvironmentKind'
-        name:
-          $ref: '#/components/schemas/EnvironmentName'
-        options:
-          $ref: '#/components/schemas/EnvironmentOptions'
-      required:
-      - kind
-      - options
-      type: object
-    EnvironmentUpdateAttributes:
-      description: Environment update attributes. Only the AWS role ARN can be updated; new ARN must have the same account ID as the old ARN.
-      example:
-        options:
-          role_arn: arn:aws:iam::123456789012:role/SnykCloud1234
-      properties:
-        name:
-          $ref: '#/components/schemas/EnvironmentName'
-        options:
-          $ref: '#/components/schemas/EnvironmentOptions'
-      required:
-      - options
-      type: object
-    EnvironmentRelationships:
-      additionalProperties: true
-      description: Environment relationships
-      example:
-        organization:
-          data:
-            id: 00000000-0000-0000-0000-000000000000
-            type: organization
-          links:
-            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
-        project:
-          data:
-            id: 11111111-1111-11111-1111-111111111111
-            type: project
-      type: object
-    QueryVersion:
-      description: Requested API version
-      example: '2026-03-25'
-      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
-      type: string
-    ScanCreateRelationships:
-      description: Scan create relationships
-      properties:
-        environment:
-          properties:
-            data:
-              example:
-                id: 12000000-0000-0000-0000-000000000000
-                type: environment
-              properties:
-                id:
-                  type: string
-                type:
-                  type: string
-              required:
-              - type
-              - id
-              type: object
-          type: object
-      type: object
-    EnvironmentOptions:
-      oneOf:
-      - $ref: '#/components/schemas/AwsOptions'
-      - $ref: '#/components/schemas/GoogleOptions'
-      - $ref: '#/components/schemas/AzureOptions__0'
-    ResourceAttributes:
-      example:
-        created_at: '2022-08-10T17:19:33.14749Z'
-        hash: 3333342563a86c675333de5848c9220a7bb35c039e7b9c0688c10f72b4666666
-        kind: runtime
-        location: us-west-2
-        name: example-bucket
-        namespace: us-west-2
-        native_id: arn:aws:s3:::example-bucket
-        options: json here
-        origin: aws-account
-        platform: aws
-        resource_id: example-bucket
-        resource_type: aws_s3_bucket
-        revision: 1
-        state:
-          acl: private
-          arn: arn:aws:s3:::example-bucket
-          bucket: example-bucket
-        tags:
-          stage: prod
-        updated_at: '2022-08-10T17:19:33.14749Z'
-      properties:
-        created_at:
-          description: When the resource was first recorded
-          example: '2022-08-10T17:19:33.14749Z'
-          format: date-time
-          type: string
-        deleted_at:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        hash:
-          description: Computed hash value for the resource based on its attributes
-          example: 3333342563a86c675333de5848c9220a7bb35c039e7b9c0688c10f72b4666666
-          type: string
-        is_managed:
-          type:
-          - boolean
-          - 'null'
-        kind:
-          $ref: '#/components/schemas/ResourceKind'
-        location:
-          description: Physical location (AWS region)
-          example: us-west-2
-          type: string
-        name:
-          description: Human friendly resource name
-          example: example-bucket
-          type: string
-        namespace:
-          description: Resource namespace (AWS region)
-          example: us-west-2
-          type: string
-        native_id:
-          description: ID of the physical resource from the cloud provider (AWS ARN, if available)
-          example: arn:aws:s3:::example-bucket
-          type: string
-        platform:
-          description: 'Resource platform: aws'
-          example: aws
-          type: string
-        relationships:
-          additionalProperties: true
-          type: object
-        removed_at:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        resource_id:
-          description: Unique ID for the resource
-          example: 4a662442-7445-55c3-adcc-cbbbdd99999
-          type: string
-        resource_type:
-          description: Terraform resource type
-          example: aws_s3_bucket
-          type: string
-        revision:
-          description: Increment for each change to a resource
-          example: 2
-          type: integer
-        schema_version:
-          type:
-          - string
-          - 'null'
-        source_location:
-          items:
-            additionalProperties: true
-            type: object
-          type: array
-        state:
-          additionalProperties: true
-          description: Terraform state attributes
-          type: object
-        tags:
-          additionalProperties: true
-          description: Resource tags from the cloud provider
-          example:
-            stage: prod
-          type: object
-        updated_at:
-          description: When the resource was last updated
-          example: '2022-08-10T17:19:33.14749Z'
-          format: date-time
-          type:
-          - string
-          - 'null'
-      required:
-      - created_at
-      - updated_at
-      - revision
-      - kind
-      - hash
-      - platform
-      - resource_type
-      - resource_id
-      type: object
-    ScanRelationships:
-      additionalProperties: true
-      description: Scan relationships
-      example:
-        environment:
-          data:
-            id: 12000000-0000-0000-0000-000000000000
-            type: environment
-          links:
-            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
-        organization:
-          data:
-            id: 10000000-0000-0000-0000-000000000000
-            type: organization
-          links:
-            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
       type: object
     ErrorDocument:
       additionalProperties: false
@@ -1479,6 +1382,236 @@ components:
       - jsonapi
       - errors
       type: object
+    ScanCreateRelationships:
+      description: Scan create relationships
+      properties:
+        environment:
+          properties:
+            data:
+              example:
+                id: 12000000-0000-0000-0000-000000000000
+                type: environment
+              properties:
+                id:
+                  type: string
+                type:
+                  type: string
+              required:
+              - type
+              - id
+              type: object
+          type: object
+      type: object
+    EnvironmentAttributes:
+      description: Environment attributes
+      example:
+        created_at: '2022-05-06T12:25:15-04:00'
+        kind: aws
+        name: Demo AWS Environment
+        native_id: '12345678910'
+        options:
+          role_arn: arn:aws:iam::123456789012:role/SnykCloud1234
+        properties:
+          account_id: '123456789012'
+        revision: 1
+        status: success
+        updated_at: '2022-05-06T12:25:15-04:00'
+      properties:
+        created_at:
+          description: When the environment was created
+          example: '2022-05-06T12:25:15-04:00'
+          format: date-time
+          type: string
+        deleted_at:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        kind:
+          $ref: '#/components/schemas/EnvironmentKind'
+        name:
+          $ref: '#/components/schemas/EnvironmentName'
+        options:
+          type: object
+        properties:
+          type: object
+        revision:
+          description: Increment for each change to an environment
+          example: 1
+          type: integer
+        updated_at:
+          description: When the environment was last updated
+          example: '2022-05-07T12:25:15-04:00'
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - kind
+      - name
+      - created_at
+      type: object
+    ResourceAttributes:
+      example:
+        created_at: '2022-08-10T17:19:33.14749Z'
+        hash: 3333342563a86c675333de5848c9220a7bb35c039e7b9c0688c10f72b4666666
+        kind: runtime
+        location: us-west-2
+        name: example-bucket
+        namespace: us-west-2
+        native_id: arn:aws:s3:::example-bucket
+        options: json here
+        origin: aws-account
+        platform: aws
+        resource_id: example-bucket
+        resource_type: aws_s3_bucket
+        revision: 1
+        state:
+          acl: private
+          arn: arn:aws:s3:::example-bucket
+          bucket: example-bucket
+        tags:
+          stage: prod
+        updated_at: '2022-08-10T17:19:33.14749Z'
+      properties:
+        created_at:
+          description: When the resource was first recorded
+          example: '2022-08-10T17:19:33.14749Z'
+          format: date-time
+          type: string
+        deleted_at:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        hash:
+          description: Computed hash value for the resource based on its attributes
+          example: 3333342563a86c675333de5848c9220a7bb35c039e7b9c0688c10f72b4666666
+          type: string
+        is_managed:
+          type:
+          - boolean
+          - 'null'
+        kind:
+          $ref: '#/components/schemas/ResourceKind'
+        location:
+          description: Physical location (AWS region)
+          example: us-west-2
+          type: string
+        name:
+          description: Human friendly resource name
+          example: example-bucket
+          type: string
+        namespace:
+          description: Resource namespace (AWS region)
+          example: us-west-2
+          type: string
+        native_id:
+          description: ID of the physical resource from the cloud provider (AWS ARN, if available)
+          example: arn:aws:s3:::example-bucket
+          type: string
+        platform:
+          description: 'Resource platform: aws'
+          example: aws
+          type: string
+        relationships:
+          additionalProperties: true
+          type: object
+        removed_at:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        resource_id:
+          description: Unique ID for the resource
+          example: 4a662442-7445-55c3-adcc-cbbbdd99999
+          type: string
+        resource_type:
+          description: Terraform resource type
+          example: aws_s3_bucket
+          type: string
+        revision:
+          description: Increment for each change to a resource
+          example: 2
+          type: integer
+        schema_version:
+          type:
+          - string
+          - 'null'
+        source_location:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        state:
+          additionalProperties: true
+          description: Terraform state attributes
+          type: object
+        tags:
+          additionalProperties: true
+          description: Resource tags from the cloud provider
+          example:
+            stage: prod
+          type: object
+        updated_at:
+          description: When the resource was last updated
+          example: '2022-08-10T17:19:33.14749Z'
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - created_at
+      - updated_at
+      - revision
+      - kind
+      - hash
+      - platform
+      - resource_type
+      - resource_id
+      type: object
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
+    CreatePermissionsAttributes:
+      example:
+        platform: aws
+        type: cf
+      properties:
+        options:
+          anyOf:
+          - $ref: '#/components/schemas/AzureOptions'
+        platform:
+          $ref: '#/components/schemas/PlatformType'
+        type:
+          $ref: '#/components/schemas/PermissionType'
+      required:
+      - type
+      - platform
+      type: object
+    PermissionType:
+      enum:
+      - cf
+      - tf
+      - bash
+      type: string
+    EnvironmentRelationships:
+      additionalProperties: true
+      description: Environment relationships
+      example:
+        organization:
+          data:
+            id: 00000000-0000-0000-0000-000000000000
+            type: organization
+          links:
+            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
+        project:
+          data:
+            id: 11111111-1111-11111-1111-111111111111
+            type: project
+      type: object
     JsonApi:
       additionalProperties: false
       example:
@@ -1492,21 +1625,118 @@ components:
       required:
       - version
       type: object
-    EnvironmentType:
-      example: environment
-      type: string
+    GoogleOptions:
+      additionalProperties: false
+      description: Options for creating a Google environment
+      example:
+        identity_provider: https://iam.googleapis.com/projects/123/locations/global/workloadIdentityPools/snyk-workload-identity-123/providers/snyk-identity-provider-123
+        project_id: demo-project
+        service_account_email: snyk-demo@demo-project.iam.gserviceaccount.com
+      properties:
+        identity_provider:
+          description: The full resource name of the workload identity provider
+          example: https://iam.googleapis.com/projects/123/locations/global/workloadIdentityPools/snyk-workload-identity-123/providers/snyk-identity-provider-123
+          format: uri
+          type: string
+        project_id:
+          description: Google project ID
+          example: demo-project
+          type: string
+        service_account_email:
+          description: Google service account email
+          example: snyk-demo@demo-project.iam.gserviceaccount.com
+          format: email
+          type: string
+      required:
+      - service_account_email
+      - identity_provider
+      type: object
+    EnvironmentCreateAttributes:
+      example:
+        kind: aws
+        options:
+          role_arn: arn:aws:iam::336447867772:role/SnykCloud1234
+      properties:
+        kind:
+          $ref: '#/components/schemas/EnvironmentKind'
+        name:
+          $ref: '#/components/schemas/EnvironmentName'
+        options:
+          $ref: '#/components/schemas/EnvironmentOptions'
+      required:
+      - kind
+      - options
+      type: object
+    PaginatedLinks:
+      additionalProperties: false
+      example:
+        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
+        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
+        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
     ScanType:
       example: scan
       type: string
-    EnvironmentName:
-      description: Environment name
-      example: Demo AWS Environment
-      type: string
-    PermissionType:
-      enum:
-      - cf
-      - tf
-      - bash
+    EnvironmentOptions:
+      oneOf:
+      - $ref: '#/components/schemas/AwsOptions'
+      - $ref: '#/components/schemas/GoogleOptions'
+      - $ref: '#/components/schemas/AzureOptions__0'
+    AwsOptions:
+      additionalProperties: false
+      description: Options for creating an AWS environment
+      example:
+        role_arn: arn:aws:iam::12345678910:role/SnykCloud1234
+      properties:
+        role_arn:
+          description: AWS IAM role ARN for Snyk
+          example: arn:aws:iam::12345678910:role/SnykCloud1234
+          type: string
+      required:
+      - role_arn
+      type: object
+    ResourceKind:
+      description: 'Kind of resource: cloud'
+      example: cloud - cloud - iac
       type: string
     AzureOptions__0:
       additionalProperties: false
@@ -1532,75 +1762,56 @@ components:
       - tenant_id
       - subscription_id
       type: object
-    EnvironmentKind:
-      description: 'Environment kind: aws'
+    ScanCreateAttributes:
+      additionalProperties: false
+      description: Scan create attributes
+      type: object
+    EnvironmentType:
+      example: environment
+      type: string
+    ScanRelationships:
+      additionalProperties: true
+      description: Scan relationships
+      example:
+        environment:
+          data:
+            id: 12000000-0000-0000-0000-000000000000
+            type: environment
+          links:
+            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
+        organization:
+          data:
+            id: 10000000-0000-0000-0000-000000000000
+            type: organization
+          links:
+            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
+      type: object
+    EnvironmentUpdateAttributes:
+      description: Environment update attributes. Only the AWS role ARN can be updated; new ARN must have the same account ID as the old ARN.
+      example:
+        options:
+          role_arn: arn:aws:iam::123456789012:role/SnykCloud1234
+      properties:
+        name:
+          $ref: '#/components/schemas/EnvironmentName'
+        options:
+          $ref: '#/components/schemas/EnvironmentOptions'
+      required:
+      - options
+      type: object
+    PlatformType:
       enum:
       - aws
-      - google
       - azure
-      - scm
-      - tfc
-      - cli
+      - google
       type: string
-    CreatePermissionsAttributes:
-      example:
-        platform: aws
-        type: cf
-      properties:
-        options:
-          anyOf:
-          - $ref: '#/components/schemas/AzureOptions'
-        platform:
-          $ref: '#/components/schemas/PlatformType'
-        type:
-          $ref: '#/components/schemas/PermissionType'
-      required:
-      - type
-      - platform
-      type: object
-    PaginatedLinks:
-      additionalProperties: false
-      example:
-        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
-        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
-        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
-      properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
-    AzureOptions:
-      description: Options for generating an Azure environment permissions script
-      example:
-        subscription_id: 6884d000-8dd4-11ed-a1eb-0242ac120002
-        tenant_id: 51627f08-8dd4-11ed-a1eb-0242ac120002
-      properties:
-        subscription_id:
-          description: ID of the Azure subscription to be scanned
-          example: 6884d000-8dd4-11ed-a1eb-0242ac120002
-          type: string
-        tenant_id:
-          description: Azure Tenant (directory) ID
-          example: 51627f08-8dd4-11ed-a1eb-0242ac120002
-          type: string
-      required:
-      - tenant_id
-      - subscription_id
-      type: object
   responses:
-    '403':
+    '500':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
-      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -1652,44 +1863,6 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '409':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Conflict: The requested operation conflicts with the current state of the resource in some way.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
-    '500':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
     '404':
       content:
         application/vnd.api+json:
@@ -1709,7 +1882,79 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '409':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Conflict: The requested operation conflicts with the current state of the resource in some way.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
   headers:
+    LocationHeader:
+      description: 'A header providing a URL for the location of a resource
+
+        '
+      example: https://example.com/resource/4
+      schema:
+        format: url
+        type: string
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
     VersionStageResponseHeader:
       description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
 
@@ -1732,251 +1977,6 @@ components:
       schema:
         format: uuid
         type: string
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
-    VersionRequestedResponseHeader:
-      description: A header containing the version of the endpoint requested by the caller.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    LocationHeader:
-      description: 'A header providing a URL for the location of a resource
-
-        '
-      example: https://example.com/resource/4
-      schema:
-        format: url
-        type: string
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/ActualVersion'
-    DeprecationHeader:
-      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
-
-        '
-      example: '2021-07-01T00:00:00Z'
-      schema:
-        format: date-time
-        type: string
-  parameters:
-    UpdatedBefore:
-      description: Return environments updated before this date
-      example: '2022-05-06T12:25:15-04:00'
-      in: query
-      name: updated_before
-      schema:
-        format: date-time
-        type: string
-    UpdatedAfter:
-      description: Return environments updated after this date
-      example: '2022-05-06T12:25:15-04:00'
-      in: query
-      name: updated_after
-      schema:
-        format: date-time
-        type: string
-    ResourceId:
-      description: Filter resources by resource ID (multi-value, comma-separated)
-      example: example-bucket
-      explode: false
-      in: query
-      name: resource_id
-      schema:
-        type: string
-      style: form
-    Platform:
-      description: 'Filter resources by platform (multi-value, comma-separated): aws'
-      example: aws
-      explode: false
-      in: query
-      name: platform
-      schema:
-        type: string
-      style: form
-    CreatedBefore:
-      description: Return environments created before this date
-      example: '2022-05-06T12:25:15-04:00'
-      in: query
-      name: created_before
-      schema:
-        format: date-time
-        type: string
-    Removed:
-      description: Filter resources by whether they have been removed or not.
-      example: true
-      explode: false
-      in: query
-      name: removed
-      schema:
-        type: boolean
-      style: form
-    KindInQuery:
-      description: 'Filter environments by kind (multi-value, comma-separated): aws'
-      example: aws
-      in: query
-      name: kind
-      schema:
-        $ref: '#/components/schemas/EnvironmentKind'
-    Kind:
-      description: 'Filter resources by kind (multi-value, comma-separated): cloud'
-      example: cloud
-      explode: false
-      in: query
-      name: kind
-      schema:
-        $ref: '#/components/schemas/ResourceKind'
-      style: form
-    Id:
-      description: Filter resources by resource UUID (multi-value, comma-separated)
-      example: 4a662442-7445-55c3-adcc-cbbbdd99999
-      explode: false
-      in: query
-      name: id
-      schema:
-        type: string
-      style: form
-    StartingAfter:
-      description: Return the page of results immediately after this cursor
-      example: v1.eyJpZCI6IjEwMDAifQo=
-      in: query
-      name: starting_after
-      schema:
-        type: string
-    StatusInQuery:
-      description: Filter environments by latest scan status (multi-value, comma-separated)
-      example: error
-      in: query
-      name: status
-      schema:
-        enum:
-        - queued
-        - in_progress
-        - success
-        - error
-        - 'null'
-        type: string
-    IdInQuery:
-      description: Filter environments by environment ID (multi-value, comma-separated)
-      example: 052781a7-17f6-494d-0000-25c8b509abcd
-      in: query
-      name: id
-      schema:
-        format: uuid
-        type: string
-    NativeId:
-      description: Filter resources by native ID (multi-value, comma-separated) (AWS ARN)
-      example: arn:aws:s3:::example-bucket
-      explode: false
-      in: query
-      name: native_id
-      schema:
-        type: string
-      style: form
-    Name:
-      description: Filter resources by name (multi-value, comma-separated)
-      example: example-bucket
-      explode: false
-      in: query
-      name: name
-      schema:
-        type: string
-      style: form
-    NameInQuery:
-      description: Filter environments by name (multi-value, comma-separated)
-      example: Demo AWS Environment
-      in: query
-      name: name
-      schema:
-        $ref: '#/components/schemas/EnvironmentName'
-    Location:
-      description: Filter resources by location (multi-value, comma-separated) (AWS region)
-      example: us-west-2
-      explode: false
-      in: query
-      name: location
-      schema:
-        type: string
-      style: form
-    EnvironmentIdQuery:
-      description: Filter resources by environment ID (multi-value, comma-separated)
-      example: 052781a7-17f6-494d-0000-25c8b509abcd
-      explode: false
-      in: query
-      name: environment_id
-      schema:
-        format: uuid
-        type: string
-      style: form
-    Version:
-      description: The requested version of the endpoint to process the request
-      example: '2026-03-25'
-      in: query
-      name: version
-      required: true
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    ResourceType:
-      description: Filter resources by resource type (multi-value, comma-separated)
-      example: aws_s3_bucket
-      explode: false
-      in: query
-      name: resource_type
-      schema:
-        type: string
-      style: form
-    EnvironmentId:
-      description: Unique identifier for an environment
-      example: 052781a7-17f6-494d-0000-25c8b509abcd
-      in: path
-      name: environment_id
-      required: true
-      schema:
-        format: uuid
-        type: string
-    EndingBefore:
-      description: Return the page of results immediately before this cursor
-      example: v1.eyJpZCI6IjExMDAifQo=
-      in: query
-      name: ending_before
-      schema:
-        type: string
-    ScanId:
-      description: Scan ID
-      example: 56465b1d-8764-458c-1234-0987abcd6543
-      in: path
-      name: scan_id
-      required: true
-      schema:
-        format: uuid
-        type: string
-    CreatedAfter:
-      description: Return environments created after this date
-      example: '2022-05-06T12:25:15-04:00'
-      in: query
-      name: created_after
-      schema:
-        format: date-time
-        type: string
-    Limit:
-      description: Number of results to return per page
-      example: 10
-      in: query
-      name: limit
-      schema:
-        default: 10
-        format: int32
-        maximum: 100
-        minimum: 10
-        multipleOf: 10
-        type: integer
   securitySchemes:
     APIToken:
       description: API key value must be prefixed with \"Token \".

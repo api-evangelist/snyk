@@ -170,210 +170,10 @@ paths:
       x-stability-level: beta
 components:
   schemas:
-    CatalogRelationship:
-      properties:
-        data:
-          properties:
-            attributes:
-              properties:
-                cves:
-                  items:
-                    type: string
-                  type: array
-                cwes:
-                  items:
-                    type: string
-                  type: array
-                slug:
-                  type: string
-                title:
-                  type: string
-              required:
-              - title
-              - slug
-              - cwes
-              - cves
-              type: object
-            id:
-              type: string
-            type:
-              enum:
-              - lesson
-              - learning_path
-              type: string
-          required:
-          - type
-          - id
-          - attributes
-          type: object
-        links:
-          properties:
-            self:
-              type: string
-          required:
-          - self
-          type: object
-      required:
-      - links
-      - data
-      type: object
-    ActualVersion:
-      description: Resolved API version
-      example: '2026-03-25'
-      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
-      type: string
-    CatalogProgressAttributes:
-      properties:
-        completed_count:
-          description: Percentage of users in the organization who have completed the resource.
-          maximum: 100
-          minimum: 0
-          type: number
-        in_progress_count:
-          description: Percentage of users in the organization who have started progress on the resource.
-          maximum: 100
-          minimum: 0
-          type: number
-        todo_count:
-          description: Percentage of users in the organization who have not started progress on the resource.
-          maximum: 100
-          minimum: 0
-          type: number
-        users_completed_count:
-          description: Number of users in the organization who have completed the resource.
-          minimum: 0
-          type: integer
-        users_in_progress_count:
-          description: Number of users in the organization who are in-progress who have started progress on the resource.
-          minimum: 0
-          type: integer
-        users_todo_count:
-          description: Number of users in the organization who have not started not started progress on the resource.
-          minimum: 0
-          type: integer
-      required:
-      - todo_count
-      - in_progress_count
-      - completed_count
-      type: object
-    Cves:
-      items:
-        pattern: ^(CVE)-\d+-\d+(,(CVE)-\d+-\d+)*$
-        type: string
-      maxItems: 50
-      minItems: 1
-      type: array
-      uniqueItems: true
-    UsersProgressResponse:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/UsersProgress'
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-      required:
-      - jsonapi
-      - links
-      - data
-      type: object
-    UsersProgressAttributes:
-      properties:
-        completion_date:
-          format: date-time
-          type: string
-        completion_history:
-          items:
-            format: date-time
-            type: string
-          type: array
-        is_expired:
-          type: boolean
-        resource:
-          enum:
-          - learning_path
-          - lesson
-          type: string
-        status:
-          enum:
-          - completed
-          - inProgress
-          - todo
-          type: string
-      required:
-      - status
-      - resource
-      - completion_history
-      type: object
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
-        type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
-    CatalogProgressResponse:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/CatalogProgress'
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-        meta:
-          properties:
-            total_org_members:
-              description: Total number of organization members for which the progress report is generated
-              minimum: 0
-              type: integer
-          required:
-          - total_org_members
-          type: object
-      required:
-      - jsonapi
-      - links
-      - data
-      type: object
-    Cwes:
-      items:
-        pattern: ^CWE-\d+$
-        type: string
-      maxItems: 50
-      minItems: 1
-      type: array
-      uniqueItems: true
     QueryVersion:
       description: Requested API version
       example: '2026-03-25'
       pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
-      type: string
-    DateInterval:
-      pattern: ^[\d]{4}-[\d]{2}-[\d]{2}/[\d]{4}-[\d]{2}-[\d]{2}$
       type: string
     CatalogProgress:
       properties:
@@ -398,37 +198,6 @@ components:
       - type
       - attributes
       - relationships
-      type: object
-    UserRelationship:
-      properties:
-        data:
-          properties:
-            attributes:
-              properties:
-                email:
-                  type: string
-                username:
-                  type: string
-              required:
-              - email
-              - username
-              type: object
-            id:
-              type: string
-            type:
-              enum:
-              - user
-              type: string
-          required:
-          - type
-          - id
-          - attributes
-          type: object
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-      required:
-      - links
-      - data
       type: object
     ErrorDocument:
       additionalProperties: false
@@ -548,29 +317,6 @@ components:
       - jsonapi
       - errors
       type: object
-    ProgressRelationships:
-      properties:
-        catalog:
-          $ref: '#/components/schemas/CatalogRelationship'
-        user:
-          $ref: '#/components/schemas/UserRelationship'
-      required:
-      - user
-      - catalog
-      type: object
-    JsonApi:
-      additionalProperties: false
-      example:
-        version: '1.0'
-      properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          example: '1.0'
-          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
-          type: string
-      required:
-      - version
-      type: object
     UsersProgress:
       properties:
         attributes:
@@ -590,16 +336,167 @@ components:
       - attributes
       - relationships
       type: object
-    Emails:
+    CatalogRelationship:
+      properties:
+        data:
+          properties:
+            attributes:
+              properties:
+                cves:
+                  items:
+                    type: string
+                  type: array
+                cwes:
+                  items:
+                    type: string
+                  type: array
+                slug:
+                  type: string
+                title:
+                  type: string
+              required:
+              - title
+              - slug
+              - cwes
+              - cves
+              type: object
+            id:
+              type: string
+            type:
+              enum:
+              - lesson
+              - learning_path
+              type: string
+          required:
+          - type
+          - id
+          - attributes
+          type: object
+        links:
+          properties:
+            self:
+              type: string
+          required:
+          - self
+          type: object
+      required:
+      - links
+      - data
+      type: object
+    UsersProgressAttributes:
+      properties:
+        completion_date:
+          format: date-time
+          type: string
+        completion_history:
+          items:
+            format: date-time
+            type: string
+          type: array
+        is_expired:
+          type: boolean
+        resource:
+          enum:
+          - learning_path
+          - lesson
+          type: string
+        status:
+          enum:
+          - completed
+          - inProgress
+          - todo
+          type: string
+      required:
+      - status
+      - resource
+      - completion_history
+      type: object
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
+    JsonApi:
+      additionalProperties: false
       example:
-      - john.doe@example.com
-      - jane.smith@example.com
-      items:
-        format: email
-        type: string
-      maxItems: 50
-      minItems: 1
-      type: array
+        version: '1.0'
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
+      type: object
+    DateInterval:
+      pattern: ^[\d]{4}-[\d]{2}-[\d]{2}/[\d]{4}-[\d]{2}-[\d]{2}$
+      type: string
+    UserRelationship:
+      properties:
+        data:
+          properties:
+            attributes:
+              properties:
+                email:
+                  type: string
+                username:
+                  type: string
+              required:
+              - email
+              - username
+              type: object
+            id:
+              type: string
+            type:
+              enum:
+              - user
+              type: string
+          required:
+          - type
+          - id
+          - attributes
+          type: object
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+      required:
+      - links
+      - data
+      type: object
+    CatalogProgressAttributes:
+      properties:
+        completed_count:
+          description: Percentage of users in the organization who have completed the resource.
+          maximum: 100
+          minimum: 0
+          type: number
+        in_progress_count:
+          description: Percentage of users in the organization who have started progress on the resource.
+          maximum: 100
+          minimum: 0
+          type: number
+        todo_count:
+          description: Percentage of users in the organization who have not started progress on the resource.
+          maximum: 100
+          minimum: 0
+          type: number
+        users_completed_count:
+          description: Number of users in the organization who have completed the resource.
+          minimum: 0
+          type: integer
+        users_in_progress_count:
+          description: Number of users in the organization who are in-progress who have started progress on the resource.
+          minimum: 0
+          type: integer
+        users_todo_count:
+          description: Number of users in the organization who have not started not started progress on the resource.
+          minimum: 0
+          type: integer
+      required:
+      - todo_count
+      - in_progress_count
+      - completed_count
+      type: object
     PaginatedLinks:
       additionalProperties: false
       example:
@@ -618,6 +515,109 @@ components:
         self:
           $ref: '#/components/schemas/LinkProperty'
       type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
+    ProgressRelationships:
+      properties:
+        catalog:
+          $ref: '#/components/schemas/CatalogRelationship'
+        user:
+          $ref: '#/components/schemas/UserRelationship'
+      required:
+      - user
+      - catalog
+      type: object
+    Cwes:
+      items:
+        pattern: ^CWE-\d+$
+        type: string
+      maxItems: 50
+      minItems: 1
+      type: array
+      uniqueItems: true
+    Cves:
+      items:
+        pattern: ^(CVE)-\d+-\d+(,(CVE)-\d+-\d+)*$
+        type: string
+      maxItems: 50
+      minItems: 1
+      type: array
+      uniqueItems: true
+    Emails:
+      example:
+      - john.doe@example.com
+      - jane.smith@example.com
+      items:
+        format: email
+        type: string
+      maxItems: 50
+      minItems: 1
+      type: array
+    UsersProgressResponse:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/UsersProgress'
+          type: array
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+      required:
+      - jsonapi
+      - links
+      - data
+      type: object
+    CatalogProgressResponse:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/CatalogProgress'
+          type: array
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+        meta:
+          properties:
+            total_org_members:
+              description: Total number of organization members for which the progress report is generated
+              minimum: 0
+              type: integer
+          required:
+          - total_org_members
+          type: object
+      required:
+      - jsonapi
+      - links
+      - data
+      type: object
     Titles:
       items:
         type: string
@@ -625,12 +625,12 @@ components:
       minItems: 1
       type: array
   responses:
-    '403':
+    '500':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
-      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -663,12 +663,12 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '500':
+    '404':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
-      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
+      description: 'Not Found: The resource being operated on could not be found.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -682,12 +682,12 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '404':
+    '403':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
-      description: 'Not Found: The resource being operated on could not be found.'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -714,12 +714,6 @@ components:
         minimum: 10
         multipleOf: 10
         type: integer
-    Cves:
-      description: Filter by CVE rules
-      in: query
-      name: cves
-      schema:
-        $ref: '#/components/schemas/Cves'
     Title:
       deprecated: true
       description: This is deprecated, use Titles instead
@@ -727,12 +721,6 @@ components:
       name: title
       schema:
         type: string
-    CompletionInterval:
-      description: Filter by date interval in ISO 8601 format (e.g. 2024-01-01/2024-02-01)
-      in: query
-      name: completion_interval
-      schema:
-        $ref: '#/components/schemas/DateInterval'
     Emails:
       description: Filter by user email addresses
       example:
@@ -744,12 +732,12 @@ components:
       schema:
         $ref: '#/components/schemas/Emails'
       style: form
-    Cwes:
-      description: Filter by CWE rules
+    Titles:
+      description: Filter by the title of the learning path or lesson resource
       in: query
-      name: cwes
+      name: titles
       schema:
-        $ref: '#/components/schemas/Cwes'
+        $ref: '#/components/schemas/Titles'
     ApiVersion:
       description: The requested version of the endpoint to process the request
       example: '2025-11-05'
@@ -761,19 +749,12 @@ components:
         description: Requested API version
         pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
         type: string
-    Titles:
-      description: Filter by the title of the learning path or lesson resource
+    Cwes:
+      description: Filter by CWE rules
       in: query
-      name: titles
+      name: cwes
       schema:
-        $ref: '#/components/schemas/Titles'
-    StartingAfter:
-      description: Return the page of results immediately after this cursor
-      example: v1.eyJpZCI6IjEwMDAifQo=
-      in: query
-      name: starting_after
-      schema:
-        type: string
+        $ref: '#/components/schemas/Cwes'
     EndingBefore:
       description: Return the page of results immediately before this cursor
       example: v1.eyJpZCI6IjExMDAifQo=
@@ -781,7 +762,52 @@ components:
       name: ending_before
       schema:
         type: string
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
+        type: string
+    Cves:
+      description: Filter by CVE rules
+      in: query
+      name: cves
+      schema:
+        $ref: '#/components/schemas/Cves'
+    CompletionInterval:
+      description: Filter by date interval in ISO 8601 format (e.g. 2024-01-01/2024-02-01)
+      in: query
+      name: completion_interval
+      schema:
+        $ref: '#/components/schemas/DateInterval'
   headers:
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
     VersionStageResponseHeader:
       description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
 
@@ -803,32 +829,6 @@ components:
       example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
       schema:
         format: uuid
-        type: string
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
-    VersionRequestedResponseHeader:
-      description: A header containing the version of the endpoint requested by the caller.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/ActualVersion'
-    DeprecationHeader:
-      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
-
-        '
-      example: '2021-07-01T00:00:00Z'
-      schema:
-        format: date-time
         type: string
   securitySchemes:
     APIToken:

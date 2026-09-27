@@ -1649,8 +1649,6 @@ apis:
   humanURL: https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/snyk-apps-apis
   baseURL: https://api.snyk.io/rest
   tags:
-  - AccessRequests
-  tags_raw:
   - Access Requests
   properties:
   - type: OpenAPI
@@ -1689,8 +1687,6 @@ apis:
   humanURL: https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/snyk-apps-apis
   baseURL: https://api.snyk.io/rest
   tags:
-  - Container Images
-  tags_raw:
   - Container Image
   properties:
   - type: OpenAPI
@@ -1729,8 +1725,6 @@ apis:
   humanURL: https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/snyk-apps-apis
   baseURL: https://api.snyk.io/rest
   tags:
-  - OpenAPI
-  tags_raw:
   - Open API
   properties:
   - type: OpenAPI

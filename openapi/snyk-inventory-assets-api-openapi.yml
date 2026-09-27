@@ -3435,171 +3435,60 @@ paths:
       x-stability-level: beta
 components:
   schemas:
-    ActualVersion:
-      description: Resolved API version
+    IssueCounts:
+      description: Issue counts by severity
+      properties:
+        critical:
+          description: Count of critical severity issues
+          format: int32
+          minimum: 0
+          type: integer
+        high:
+          description: Count of high severity issues
+          format: int32
+          minimum: 0
+          type: integer
+        low:
+          description: Count of low severity issues
+          format: int32
+          minimum: 0
+          type: integer
+        medium:
+          description: Count of medium severity issues
+          format: int32
+          minimum: 0
+          type: integer
+      required:
+      - critical
+      - high
+      - medium
+      - low
+      type: object
+    QueryVersion:
+      description: Requested API version
       example: '2026-03-25'
-      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
       type: string
-    LabelsReplace:
-      description: 'Full replacement of all labels on the asset.
-
-        All existing labels will be removed and replaced with the provided labels.
-
-        '
-      items:
-        maxLength: 40
-        minLength: 1
-        pattern: ^[a-zA-Z0-9_/:?#@&=+%~-]+$
-        type: string
-      maxItems: 50
-      type: array
-    ProjectRelationshipListResponse:
+    TargetRelationshipData:
       additionalProperties: false
-      description: Response containing linked projects with full attributes
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ProjectRelationshipData'
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/JsonApiVersion'
-        links:
-          $ref: '#/components/schemas/RelationshipLinks'
-      required:
-      - data
-      - jsonapi
-      - links
-      type: object
-    GroupFieldAttributes:
-      additionalProperties: false
-      properties:
-        asset_types:
-          description: List of asset types this field applies to
-          items:
-            type: string
-          type: array
-        name:
-          description: The field name used for grouping (e.g., "class", "registry")
-          type: string
-      required:
-      - name
-      - asset_types
-      type: object
-    ScanEngine:
-      description: Scan engine information associated with an asset
-      properties:
-        issues:
-          $ref: '#/components/schemas/IssueCounts'
-        last_seen:
-          description: When the scan engine was last seen
-          format: date-time
-          type: string
-        link:
-          description: Link to the scan engine details
-          format: uri
-          maxLength: 1024
-          type: string
-        name:
-          description: Name of the scan engine
-          maxLength: 256
-          type: string
-        type:
-          description: Type of scan engine
-          enum:
-          - sca
-          - sast
-          - container
-          - iac
-          - secrets
-          type: string
-      required:
-      - type
-      - name
-      - last_seen
-      - issues
-      type: object
-    AssetPatchData:
-      additionalProperties: false
+      description: Full target resource with attributes
       properties:
         attributes:
-          $ref: '#/components/schemas/AssetPatchAttributes'
+          $ref: '#/components/schemas/TargetRelationshipAttributes'
         id:
-          description: The unique identifier of the asset
+          description: The unique identifier of the target
+          example: 66666666-7777-8888-9999-000000000000
           format: uuid
           type: string
         type:
           description: The JSON:API resource type
           enum:
-          - container_images
+          - target
+          example: target
           type: string
       required:
-      - type
       - id
-      - attributes
-      type: object
-    AssetBaseAttributes:
-      description: Asset-level fields shared across all asset types.
-      properties:
-        class:
-          $ref: '#/components/schemas/ClassResponse'
-        created_at:
-          description: When the asset was created
-          format: date-time
-          type: string
-        issues:
-          $ref: '#/components/schemas/IssueCounts'
-        labels:
-          description: Labels associated with the asset
-          items:
-            maxLength: 40
-            type: string
-          maxItems: 50
-          type: array
-        last_scan:
-          format: date-time
-          type: string
-        last_seen_at:
-          description: 'When the asset was last seen (i.e., confirmed to exist) via any discovery source.
-
-            Updated on every upsert operation.
-
-            '
-          format: date-time
-          type: string
-        risk_score:
-          description: Risk score for the asset
-          format: int32
-          type: integer
-        scan_engines:
-          description: Scan engines applied to the asset
-          items:
-            $ref: '#/components/schemas/ScanEngine'
-          maxItems: 50
-          type: array
-        tags:
-          additionalProperties:
-            maxLength: 40
-            type: string
-          description: Key-value tags for the asset
-          maxProperties: 100
-          type: object
-        teams:
-          description: Teams associated with the asset
-          items:
-            maxLength: 64
-            type: string
-          maxItems: 20
-          type: array
-        test_surfaces:
-          description: Test surfaces for the asset
-          items:
-            type: string
-          maxItems: 100
-          type: array
-        updated_at:
-          description: When the asset was last updated
-          format: date-time
-          type: string
+      - type
       type: object
     ImageConfig:
       description: 'Runtime configuration for the container (OCI image config).
@@ -3688,18 +3577,551 @@ components:
           - string
           - 'null'
       type: object
-    DistributionDigest:
-      description: Distribution digest information for a container image
+    CreateSearchRequestBody:
+      additionalProperties: false
       properties:
-        index_digest:
-          description: Index digest
-          maxLength: 256
+        data:
+          additionalProperties: false
+          properties:
+            attributes:
+              additionalProperties: false
+              properties:
+                filter:
+                  $ref: '#/components/schemas/RsqlFilterString'
+                limit:
+                  default: 10
+                  description: Number of results to return per page
+                  maximum: 100
+                  minimum: 10
+                  type: integer
+                meta_count:
+                  description: 'Whether to include the total count of results in the response meta object.
+
+                    When `with` is provided, the count will be included in the response meta object.
+
+                    When `only` is provided, the count will be included in the response meta object and no data will be returned.
+
+                    '
+                  enum:
+                  - with
+                  - only
+                  example: with
+                  type: string
+                sort:
+                  description: 'Comma-separated sort fields. Prefix with `-` for descending order.
+
+
+                    **Supported fields:**
+
+                    - `created_at` - Asset creation timestamp
+
+                    - `updated_at` - Asset last update timestamp
+
+                    - `type` - Asset type (container_images)
+
+                    - `class` - Asset class
+
+                    - `risk_score` - Asset risk score (max across project sources)
+
+                    - `issues` - Issue counts by severity (critical, high, medium, low)
+
+                    - `built_at` - Image build timestamp (container images only)
+
+                    - `last_scan` - Last scan timestamp
+
+                    '
+                  example: -created_at
+                  type: string
+              type: object
+            type:
+              enum:
+              - searches
+              type: string
+          type: object
+      type: object
+    AssetPatchData:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/AssetPatchAttributes'
+        id:
+          description: The unique identifier of the asset
+          format: uuid
           type: string
-        manifest_digest:
-          description: Manifest digest
-          maxLength: 256
+        type:
+          description: The JSON:API resource type
+          enum:
+          - container_images
+          type: string
+      required:
+      - type
+      - id
+      - attributes
+      type: object
+    GroupValueMeta:
+      additionalProperties: false
+      description: 'Computed aggregations across all assets within this group value.
+
+        Fields are only present when explicitly requested via the `meta_fields` query parameter.
+
+        If `meta_fields` is not specified, the meta object is omitted from the response.
+
+        '
+      properties:
+        built_at:
+          description: 'Aggregated container image build timestamp across all assets in this group.
+
+            The aggregation function is controlled by the `aggregate[built_at]` parameter (default: last).
+
+            Null if no assets have a built_at value.
+
+            '
+          format: date-time
+          type: string
+        count:
+          description: Number of assets with this value.
+          minimum: 0
+          type: integer
+        issues:
+          $ref: '#/components/schemas/GroupValueIssuesAggregation'
+        labels:
+          description: 'Unique labels across all assets in this group.
+
+            Limited to the first 1000 unique labels (alphabetically sorted).
+
+            Empty array if no assets have labels.
+
+            '
+          items:
+            type: string
+          maxItems: 1000
+          type: array
+        last_seen_at:
+          description: 'Aggregated last_seen_at timestamp across all assets in this group.
+
+            The aggregation function is controlled by the `aggregate[last_seen_at]` parameter (default: last).
+
+            Null if no assets have a last_seen_at value.
+
+            '
+          format: date-time
+          type: string
+        risk_score:
+          description: 'Aggregated risk_score from discovery sources across all assets in this group.
+
+            The aggregation function is controlled by the `aggregate[risk_score]` parameter (default: last).
+
+            Derived from project-type discovery sources. Null if no assets have
+
+            discovery sources with risk scores.
+
+            '
+          minimum: 0
+          type: integer
+        tags:
+          description: 'Unique tags across all assets in this group.
+
+            Limited to the first 1000 unique tags (alphabetically sorted).
+
+            Empty array if no assets have tags.
+
+            '
+          items:
+            properties:
+              key:
+                description: The tag key
+                type: string
+              value:
+                description: The tag value
+                type: string
+            type: object
+          maxItems: 1000
+          type: array
+        updated_at:
+          description: 'Aggregated updated_at timestamp across all assets in this group.
+
+            The aggregation function is controlled by the `aggregate[updated_at]` parameter (default: last).
+
+            '
+          format: date-time
           type: string
       type: object
+    FilterFieldsResponse:
+      additionalProperties: false
+      properties:
+        data:
+          description: List of available filter fields
+          items:
+            $ref: '#/components/schemas/FilterFieldData'
+          type: array
+        links:
+          description: Self-referencing link
+          properties:
+            self:
+              description: Link to the current resource
+              format: uri
+              type: string
+          required:
+          - self
+          type: object
+      required:
+      - data
+      - links
+      type: object
+    ScanEngine:
+      description: Scan engine information associated with an asset
+      properties:
+        issues:
+          $ref: '#/components/schemas/IssueCounts'
+        last_seen:
+          description: When the scan engine was last seen
+          format: date-time
+          type: string
+        link:
+          description: Link to the scan engine details
+          format: uri
+          maxLength: 1024
+          type: string
+        name:
+          description: Name of the scan engine
+          maxLength: 256
+          type: string
+        type:
+          description: Type of scan engine
+          enum:
+          - sca
+          - sast
+          - container
+          - iac
+          - secrets
+          type: string
+      required:
+      - type
+      - name
+      - last_seen
+      - issues
+      type: object
+    ClassResponse:
+      additionalProperties: false
+      description: Asset classification in response
+      properties:
+        display_name:
+          enum:
+          - A
+          - B
+          - C
+          - D
+          type: string
+        locked:
+          default: false
+          type: boolean
+        rank:
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          type: integer
+      required:
+      - display_name
+      - rank
+      type: object
+    LabelsReplace:
+      description: 'Full replacement of all labels on the asset.
+
+        All existing labels will be removed and replaced with the provided labels.
+
+        '
+      items:
+        maxLength: 40
+        minLength: 1
+        pattern: ^[a-zA-Z0-9_/:?#@&=+%~-]+$
+        type: string
+      maxItems: 50
+      type: array
+    ErrorDocument:
+      additionalProperties: false
+      example:
+        errors:
+        - detail: Permission denied for this resource
+          status: '403'
+        jsonapi:
+          version: '1.0'
+      properties:
+        errors:
+          example:
+          - detail: Permission denied for this resource
+            status: '403'
+          items:
+            additionalProperties: false
+            example:
+              detail: Not Found
+              status: '404'
+            properties:
+              code:
+                description: An application-specific error code, expressed as a string value.
+                example: entity-not-found
+                type: string
+              detail:
+                description: A human-readable explanation specific to this occurrence of the problem.
+                example: 'The request was missing these required fields: ...'
+                type: string
+              id:
+                description: A unique identifier for this particular occurrence of the problem.
+                example: f16c31b5-6129-4571-add8-d589da9be524
+                format: uuid
+                type: string
+              links:
+                additionalProperties: false
+                description: A link that leads to further details about this particular occurrance of the problem.
+                example:
+                  about: https://example.com/about_this_error
+                properties:
+                  about:
+                    example: https://example.com/api/resource
+                    oneOf:
+                    - description: A string containing the link’s URL.
+                      example: https://example.com/api/resource
+                      type: string
+                    - additionalProperties: false
+                      example:
+                        href: https://example.com/api/resource
+                      properties:
+                        href:
+                          description: A string containing the link’s URL.
+                          example: https://example.com/api/resource
+                          type: string
+                        meta:
+                          additionalProperties: true
+                          description: Free-form object that may contain non-standard information.
+                          example:
+                            key1: value1
+                            key2:
+                              sub_key: sub_value
+                            key3:
+                            - array_value1
+                            - array_value2
+                          type: object
+                      required:
+                      - href
+                      type: object
+                type: object
+              meta:
+                additionalProperties: true
+                example:
+                  key: value
+                type: object
+              source:
+                additionalProperties: false
+                example:
+                  pointer: /data/attributes
+                properties:
+                  parameter:
+                    description: A string indicating which URI query parameter caused the error.
+                    example: param1
+                    type: string
+                  pointer:
+                    description: A JSON Pointer [RFC6901] to the associated entity in the request document.
+                    example: /data/attributes
+                    type: string
+                type: object
+              status:
+                description: The HTTP status code applicable to this problem, expressed as a string value.
+                example: '400'
+                pattern: ^[45]\d\d$
+                type: string
+              title:
+                description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+                example: Bad request
+                type: string
+            required:
+            - status
+            - detail
+            type: object
+          minItems: 1
+          type: array
+        jsonapi:
+          additionalProperties: false
+          example:
+            version: '1.0'
+          properties:
+            version:
+              description: Version of the JSON API specification this server supports.
+              example: '1.0'
+              pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+              type: string
+          required:
+          - version
+          type: object
+      required:
+      - jsonapi
+      - errors
+      type: object
+    BaseImageRemediation:
+      description: Base image upgrade recommendation data from container scanning
+      properties:
+        base_image:
+          $ref: '#/components/schemas/ImageInfo'
+        base_image_name:
+          description: The name of the current base image
+          type: string
+        base_image_outdated:
+          description: Whether the current base image is outdated
+          type: boolean
+        code:
+          description: Remediation code identifying the type of recommendation
+          type: string
+        distro_alert:
+          description: Alert message about the base image distribution
+          type: string
+        proposed_base_images:
+          $ref: '#/components/schemas/ProposedBaseImages'
+      required:
+      - code
+      - base_image_name
+      type: object
+    ProjectRelationshipListResponse:
+      additionalProperties: false
+      description: Response containing linked projects with full attributes
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ProjectRelationshipData'
+          type: array
+        jsonapi:
+          $ref: '#/components/schemas/JsonApiVersion'
+        links:
+          $ref: '#/components/schemas/RelationshipLinks'
+      required:
+      - data
+      - jsonapi
+      - links
+      type: object
+    PaginationLinks:
+      description: Cursor-based pagination links
+      properties:
+        first:
+          description: Link to the first page
+          format: uri
+          type: string
+        next:
+          description: Link to the next page (if available)
+          format: uri
+          type: string
+        prev:
+          description: Link to the previous page (if available)
+          format: uri
+          type: string
+        self:
+          description: Link to the current page
+          format: uri
+          type: string
+      type: object
+    TagsReplace:
+      additionalProperties:
+        maxLength: 40
+        pattern: ^[a-zA-Z0-9_/:?#@&=+%~-]+$
+        type: string
+      description: 'Full replacement of all tags on the asset.
+
+        All existing tags will be removed and replaced with the provided tags.
+
+        '
+      maxProperties: 100
+      type: object
+    GroupValuesResponse:
+      additionalProperties: false
+      properties:
+        data:
+          description: List of group values with their aggregated metadata
+          items:
+            $ref: '#/components/schemas/GroupValueData'
+          type: array
+        links:
+          description: Self-referencing link
+          properties:
+            self:
+              description: Link to the current resource
+              format: uri
+              type: string
+          required:
+          - self
+          type: object
+      required:
+      - data
+      - links
+      type: object
+    TargetRelationshipListResponse:
+      additionalProperties: false
+      description: Response containing linked targets with full attributes
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TargetRelationshipData'
+          type: array
+        jsonapi:
+          $ref: '#/components/schemas/JsonApiVersion'
+        links:
+          $ref: '#/components/schemas/RelationshipLinks'
+      required:
+      - data
+      - jsonapi
+      - links
+      type: object
+    FilterFieldData:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/FilterFieldAttributes'
+        id:
+          description: UUID identifier for the filter field
+          format: uuid
+          type: string
+        relationships:
+          description: Relationships for this filter field (only present for fields supporting autocomplete)
+          properties:
+            values:
+              properties:
+                links:
+                  properties:
+                    related:
+                      description: Relative path to get autocomplete values for this filter field
+                      format: uri-reference
+                      type: string
+                  required:
+                  - related
+                  type: object
+              type: object
+          type: object
+        type:
+          description: The JSON:API resource type
+          enum:
+          - filter_fields
+          type: string
+      required:
+      - type
+      - id
+      type: object
+    OperatingSystem:
+      description: Operating system for container images (Go GOOS conventions)
+      enum:
+      - aix
+      - android
+      - darwin
+      - dragonfly
+      - freebsd
+      - illumos
+      - ios
+      - js
+      - linux
+      - netbsd
+      - openbsd
+      - plan9
+      - solaris
+      - wasip1
+      - windows
+      - other
+      type: string
     ImageInfo:
       description: Container image with vulnerability summary
       properties:
@@ -3733,43 +4155,317 @@ components:
       - tag
       - total_issues
       type: object
-    TagsUpdate:
+    ContainerImageAttributesResponse:
+      allOf:
+      - $ref: '#/components/schemas/AssetBaseAttributes'
+      - description: Attributes specific to container image assets.
+        properties:
+          architecture:
+            $ref: '#/components/schemas/Architecture'
+          author:
+            description: Author of the image
+            maxLength: 256
+            type: string
+          built_at:
+            description: When the image was built
+            format: date-time
+            type: string
+          config:
+            $ref: '#/components/schemas/ImageConfig'
+          config_digest:
+            description: Image config digest
+            maxLength: 256
+            type: string
+          distribution_digests:
+            description: Distribution digests (manifest/index pairs)
+            items:
+              $ref: '#/components/schemas/DistributionDigest'
+            maxItems: 100
+            type: array
+          history:
+            description: Image build history
+            items:
+              $ref: '#/components/schemas/History'
+            maxItems: 1000
+            type: array
+          image_tags:
+            description: Distinct image tags across all discovery sources
+            items:
+              maxLength: 256
+              type: string
+            maxItems: 20
+            type: array
+          inferred_base_images:
+            description: Inferred base images
+            items:
+              maxLength: 512
+              type: string
+            maxItems: 100
+            type: array
+          os:
+            $ref: '#/components/schemas/OperatingSystem'
+          os_features:
+            description: OS features
+            items:
+              maxLength: 256
+              type: string
+            maxItems: 100
+            type: array
+          os_version:
+            description: Operating system version
+            maxLength: 256
+            type: string
+          registry:
+            description: Container registry hostname
+            maxLength: 256
+            type: string
+          repository:
+            description: Repository path, e.g. "library/nginx"
+            maxLength: 256
+            type: string
+          root_fs:
+            $ref: '#/components/schemas/RootFs'
+          size_bytes:
+            description: Size of the image in bytes
+            format: int64
+            type: integer
+          total_image_tags:
+            description: Total count of distinct image tags across all discovery sources
+            minimum: 0
+            type: integer
+          variant:
+            description: Variant of the CPU architecture
+            maxLength: 64
+            type: string
+        type: object
+    LabelsUpdate:
       additionalProperties: false
-      description: 'Updates the asset''s tags by adding or removing key-value pairs.
+      description: 'Updates the asset''s labels by adding or removing label values.
 
-        Both add and remove can be specified in the same request.
-
-        If a tag key appears in both add and remove, the request will fail.
+        At least one of ''add'' or ''remove'' must be provided.
 
         '
       minProperties: 1
       properties:
         add:
-          additionalProperties:
-            maxLength: 40
-            pattern: ^[a-zA-Z0-9_/:?#@&=+%~-]+$
-            type: string
-          description: 'Tags to add to the asset (key-value pairs).
+          description: 'Labels to add to the asset.
 
-            Tag keys must be 1-30 characters and contain only alphanumeric characters, underscores, and hyphens.
-
-            Tag values must be up to 40 characters and contain only alphanumeric characters and _/:?#@&=+%~- symbols.
-
-            '
-          maxProperties: 100
-          type: object
-        remove:
-          description: 'Tag keys to remove from the asset.
-
-            Tag keys must be 1-30 characters and contain only alphanumeric characters, underscores, and hyphens.
+            Labels must be 1-40 characters and contain only alphanumeric characters and _/:?#@&=+%~- symbols.
 
             '
           items:
-            maxLength: 30
-            pattern: ^[a-zA-Z0-9_-]+$
+            maxLength: 40
+            minLength: 1
+            pattern: ^[a-zA-Z0-9_/:?#@&=+%~-]+$
+            type: string
+          maxItems: 50
+          type: array
+        remove:
+          description: 'Labels to remove from the asset.
+
+            Labels must be 1-40 characters and contain only alphanumeric characters and _/:?#@&=+%~- symbols
+
+            '
+          items:
+            maxLength: 40
+            minLength: 1
+            pattern: ^[a-zA-Z0-9_/:?#@&=+%~-]+$
+            type: string
+          maxItems: 50
+          type: array
+      type: object
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
+    AssetListResponse:
+      additionalProperties: false
+      properties:
+        data:
+          description: Polymorphic array of asset objects of different types
+          items:
+            $ref: '#/components/schemas/PolymorphicAssetData'
+          type: array
+        links:
+          $ref: '#/components/schemas/PaginationLinks'
+        meta:
+          description: Metadata about the response
+          properties:
+            count:
+              description: Total number of assets matching the query
+              type: integer
+          type: object
+      type: object
+    GroupFieldAttributes:
+      additionalProperties: false
+      properties:
+        asset_types:
+          description: List of asset types this field applies to
+          items:
+            type: string
+          type: array
+        name:
+          description: The field name used for grouping (e.g., "class", "registry")
+          type: string
+      required:
+      - name
+      - asset_types
+      type: object
+    AssetBaseAttributes:
+      description: Asset-level fields shared across all asset types.
+      properties:
+        class:
+          $ref: '#/components/schemas/ClassResponse'
+        created_at:
+          description: When the asset was created
+          format: date-time
+          type: string
+        issues:
+          $ref: '#/components/schemas/IssueCounts'
+        labels:
+          description: Labels associated with the asset
+          items:
+            maxLength: 40
+            type: string
+          maxItems: 50
+          type: array
+        last_scan:
+          format: date-time
+          type: string
+        last_seen_at:
+          description: 'When the asset was last seen (i.e., confirmed to exist) via any discovery source.
+
+            Updated on every upsert operation.
+
+            '
+          format: date-time
+          type: string
+        risk_score:
+          description: Risk score for the asset
+          format: int32
+          type: integer
+        scan_engines:
+          description: Scan engines applied to the asset
+          items:
+            $ref: '#/components/schemas/ScanEngine'
+          maxItems: 50
+          type: array
+        tags:
+          additionalProperties:
+            maxLength: 40
+            type: string
+          description: Key-value tags for the asset
+          maxProperties: 100
+          type: object
+        teams:
+          description: Teams associated with the asset
+          items:
+            maxLength: 64
+            type: string
+          maxItems: 20
+          type: array
+        test_surfaces:
+          description: Test surfaces for the asset
+          items:
             type: string
           maxItems: 100
           type: array
+        updated_at:
+          description: When the asset was last updated
+          format: date-time
+          type: string
+      type: object
+    DistributionDigest:
+      description: Distribution digest information for a container image
+      properties:
+        index_digest:
+          description: Index digest
+          maxLength: 256
+          type: string
+        manifest_digest:
+          description: Manifest digest
+          maxLength: 256
+          type: string
+      type: object
+    AssetPatchAttributes:
+      additionalProperties: false
+      description: 'Attributes that can be updated via PATCH.
+
+        At least one attribute must be provided.
+
+        Labels and tags support add/remove operations for atomic modifications.
+
+        '
+      properties:
+        class:
+          additionalProperties: false
+          anyOf:
+          - required:
+            - display_name
+          - required:
+            - rank
+          description: Asset classification for input. Either display_name or rank must be provided.
+          properties:
+            display_name:
+              enum:
+              - A
+              - B
+              - C
+              - D
+              type: string
+            locked:
+              type: boolean
+            rank:
+              enum:
+              - 1
+              - 2
+              - 3
+              - 4
+              type: integer
+          type: object
+        labels:
+          oneOf:
+          - $ref: '#/components/schemas/LabelsUpdate'
+          - $ref: '#/components/schemas/LabelsReplace'
+        tags:
+          oneOf:
+          - $ref: '#/components/schemas/TagsUpdate'
+          - $ref: '#/components/schemas/TagsReplace'
+      type: object
+    GroupFieldData:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/GroupFieldAttributes'
+        id:
+          description: UUID identifier for the group field
+          format: uuid
+          type: string
+        relationships:
+          description: Relationships for this group field
+          properties:
+            values:
+              properties:
+                links:
+                  properties:
+                    related:
+                      description: Relative path to get aggregated values for this group field
+                      format: uri-reference
+                      type: string
+                  required:
+                  - related
+                  type: object
+              type: object
+          type: object
+        type:
+          description: The JSON:API resource type
+          enum:
+          - group_fields
+          type: string
+      required:
+      - type
+      - id
       type: object
     RsqlFilterString:
       description: 'RSQL filter expression for filtering results.
@@ -3911,1000 +4607,26 @@ components:
         '
       example: type==container_images;created_at>2024-01-01
       type: string
-    GroupFieldsResponse:
+    TargetRelationshipAttributes:
       additionalProperties: false
+      description: Attributes of the target resource
       properties:
-        data:
-          description: List of available group fields
-          items:
-            $ref: '#/components/schemas/GroupFieldData'
-          type: array
-        links:
-          description: Self-referencing link
-          properties:
-            self:
-              description: Link to the current resource
-              format: uri
-              type: string
-          required:
-          - self
-          type: object
-      required:
-      - data
-      - links
-      type: object
-    TargetRelationshipListResponse:
-      additionalProperties: false
-      description: Response containing linked targets with full attributes
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/TargetRelationshipData'
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/JsonApiVersion'
-        links:
-          $ref: '#/components/schemas/RelationshipLinks'
-      required:
-      - data
-      - jsonapi
-      - links
-      type: object
-    ProposedBaseImages:
-      description: Categorized base image upgrade recommendations
-      properties:
-        alternative_upgrade:
-          items:
-            $ref: '#/components/schemas/ImageInfo'
-          type: array
-        major_upgrade:
-          items:
-            $ref: '#/components/schemas/ImageInfo'
-          type: array
-        minor_upgrade:
-          items:
-            $ref: '#/components/schemas/ImageInfo'
-          type: array
-      type: object
-    AssetPatchAttributes:
-      additionalProperties: false
-      description: 'Attributes that can be updated via PATCH.
-
-        At least one attribute must be provided.
-
-        Labels and tags support add/remove operations for atomic modifications.
-
-        '
-      properties:
-        class:
-          additionalProperties: false
-          anyOf:
-          - required:
-            - display_name
-          - required:
-            - rank
-          description: Asset classification for input. Either display_name or rank must be provided.
-          properties:
-            display_name:
-              enum:
-              - A
-              - B
-              - C
-              - D
-              type: string
-            locked:
-              type: boolean
-            rank:
-              enum:
-              - 1
-              - 2
-              - 3
-              - 4
-              type: integer
-          type: object
-        labels:
-          oneOf:
-          - $ref: '#/components/schemas/LabelsUpdate'
-          - $ref: '#/components/schemas/LabelsReplace'
-        tags:
-          oneOf:
-          - $ref: '#/components/schemas/TagsUpdate'
-          - $ref: '#/components/schemas/TagsReplace'
-      type: object
-    ContainerImageAttributesResponse:
-      allOf:
-      - $ref: '#/components/schemas/AssetBaseAttributes'
-      - description: Attributes specific to container image assets.
-        properties:
-          architecture:
-            $ref: '#/components/schemas/Architecture'
-          author:
-            description: Author of the image
-            maxLength: 256
-            type: string
-          built_at:
-            description: When the image was built
-            format: date-time
-            type: string
-          config:
-            $ref: '#/components/schemas/ImageConfig'
-          config_digest:
-            description: Image config digest
-            maxLength: 256
-            type: string
-          distribution_digests:
-            description: Distribution digests (manifest/index pairs)
-            items:
-              $ref: '#/components/schemas/DistributionDigest'
-            maxItems: 100
-            type: array
-          history:
-            description: Image build history
-            items:
-              $ref: '#/components/schemas/History'
-            maxItems: 1000
-            type: array
-          image_tags:
-            description: Distinct image tags across all discovery sources
-            items:
-              maxLength: 256
-              type: string
-            maxItems: 20
-            type: array
-          inferred_base_images:
-            description: Inferred base images
-            items:
-              maxLength: 512
-              type: string
-            maxItems: 100
-            type: array
-          os:
-            $ref: '#/components/schemas/OperatingSystem'
-          os_features:
-            description: OS features
-            items:
-              maxLength: 256
-              type: string
-            maxItems: 100
-            type: array
-          os_version:
-            description: Operating system version
-            maxLength: 256
-            type: string
-          registry:
-            description: Container registry hostname
-            maxLength: 256
-            type: string
-          repository:
-            description: Repository path, e.g. "library/nginx"
-            maxLength: 256
-            type: string
-          root_fs:
-            $ref: '#/components/schemas/RootFs'
-          size_bytes:
-            description: Size of the image in bytes
-            format: int64
-            type: integer
-          total_image_tags:
-            description: Total count of distinct image tags across all discovery sources
-            minimum: 0
-            type: integer
-          variant:
-            description: Variant of the CPU architecture
-            maxLength: 64
-            type: string
-        type: object
-    FilterFieldAttributes:
-      additionalProperties: false
-      properties:
-        asset_types:
-          description: List of asset types this field applies to
-          items:
-            enum:
-            - container_images
-            type: string
-          type: array
-        name:
-          description: The field name used in RSQL filters (e.g., "class", "registry")
-          type: string
-        type:
-          description: Data type of the field (string, boolean, datetime, array, object)
-          enum:
-          - string
-          - boolean
-          - datetime
-          - array
-          - object
-          type: string
-      required:
-      - name
-      - type
-      - asset_types
-      type: object
-    ClassResponse:
-      additionalProperties: false
-      description: Asset classification in response
-      properties:
-        display_name:
-          enum:
-          - A
-          - B
-          - C
-          - D
-          type: string
-        locked:
-          default: false
-          type: boolean
-        rank:
-          enum:
-          - 1
-          - 2
-          - 3
-          - 4
-          type: integer
-      required:
-      - display_name
-      - rank
-      type: object
-    FilterFieldData:
-      additionalProperties: false
-      properties:
-        attributes:
-          $ref: '#/components/schemas/FilterFieldAttributes'
-        id:
-          description: UUID identifier for the filter field
-          format: uuid
-          type: string
-        relationships:
-          description: Relationships for this filter field (only present for fields supporting autocomplete)
-          properties:
-            values:
-              properties:
-                links:
-                  properties:
-                    related:
-                      description: Relative path to get autocomplete values for this filter field
-                      format: uri-reference
-                      type: string
-                  required:
-                  - related
-                  type: object
-              type: object
-          type: object
-        type:
-          description: The JSON:API resource type
-          enum:
-          - filter_fields
-          type: string
-      required:
-      - type
-      - id
-      type: object
-    FilterValueData:
-      additionalProperties: false
-      properties:
-        attributes:
-          $ref: '#/components/schemas/FilterValueAttributes'
-        id:
-          description: UUID identifier for the filter value
-          format: uuid
-          type: string
-        type:
-          description: The JSON:API resource type
-          enum:
-          - filter_values
-          type: string
-      required:
-      - type
-      - id
-      type: object
-    Architecture:
-      description: CPU architecture for container images (Go GOARCH conventions)
-      enum:
-      - '386'
-      - amd64
-      - arm
-      - arm64
-      - loong64
-      - mips
-      - mips64
-      - mips64le
-      - mipsle
-      - ppc64
-      - ppc64le
-      - riscv64
-      - s390x
-      - wasm
-      - other
-      type: string
-    RootFs:
-      description: 'Root filesystem information with ordered layer diff IDs.
-
-        Each diff_id is a SHA256 digest of the uncompressed layer content.
-
-        '
-      properties:
-        diff_ids:
-          description: Diff IDs for each layer (SHA256 of uncompressed content)
-          items:
-            maxLength: 1024
-            type: string
-          maxItems: 256
-          type: array
-        type:
-          description: Root filesystem type (e.g., "layers")
-          maxLength: 128
-          type: string
-      required:
-      - diff_ids
-      - type
-      type: object
-    CreateSearchRequestBody:
-      additionalProperties: false
-      properties:
-        data:
-          additionalProperties: false
-          properties:
-            attributes:
-              additionalProperties: false
-              properties:
-                filter:
-                  $ref: '#/components/schemas/RsqlFilterString'
-                limit:
-                  default: 10
-                  description: Number of results to return per page
-                  maximum: 100
-                  minimum: 10
-                  type: integer
-                meta_count:
-                  description: 'Whether to include the total count of results in the response meta object.
-
-                    When `with` is provided, the count will be included in the response meta object.
-
-                    When `only` is provided, the count will be included in the response meta object and no data will be returned.
-
-                    '
-                  enum:
-                  - with
-                  - only
-                  example: with
-                  type: string
-                sort:
-                  description: 'Comma-separated sort fields. Prefix with `-` for descending order.
-
-
-                    **Supported fields:**
-
-                    - `created_at` - Asset creation timestamp
-
-                    - `updated_at` - Asset last update timestamp
-
-                    - `type` - Asset type (container_images)
-
-                    - `class` - Asset class
-
-                    - `risk_score` - Asset risk score (max across project sources)
-
-                    - `issues` - Issue counts by severity (critical, high, medium, low)
-
-                    - `built_at` - Image build timestamp (container images only)
-
-                    - `last_scan` - Last scan timestamp
-
-                    '
-                  example: -created_at
-                  type: string
-              type: object
-            type:
-              enum:
-              - searches
-              type: string
-          type: object
-      type: object
-    RelationshipLinks:
-      allOf:
-      - $ref: '#/components/schemas/JsonApiLinks'
-      - $ref: '#/components/schemas/PaginationLinks'
-      description: Links for relationship endpoint responses (combines relationship + pagination links)
-    BaseImageRemediation:
-      description: Base image upgrade recommendation data from container scanning
-      properties:
-        base_image:
-          $ref: '#/components/schemas/ImageInfo'
-        base_image_name:
-          description: The name of the current base image
-          type: string
-        base_image_outdated:
-          description: Whether the current base image is outdated
-          type: boolean
-        code:
-          description: Remediation code identifying the type of recommendation
-          type: string
-        distro_alert:
-          description: Alert message about the base image distribution
-          type: string
-        proposed_base_images:
-          $ref: '#/components/schemas/ProposedBaseImages'
-      required:
-      - code
-      - base_image_name
-      type: object
-    TargetRelationshipData:
-      additionalProperties: false
-      description: Full target resource with attributes
-      properties:
-        attributes:
-          $ref: '#/components/schemas/TargetRelationshipAttributes'
-        id:
-          description: The unique identifier of the target
-          example: 66666666-7777-8888-9999-000000000000
-          format: uuid
-          type: string
-        type:
-          description: The JSON:API resource type
-          enum:
-          - target
-          example: target
-          type: string
-      required:
-      - id
-      - type
-      type: object
-    LabelsUpdate:
-      additionalProperties: false
-      description: 'Updates the asset''s labels by adding or removing label values.
-
-        At least one of ''add'' or ''remove'' must be provided.
-
-        '
-      minProperties: 1
-      properties:
-        add:
-          description: 'Labels to add to the asset.
-
-            Labels must be 1-40 characters and contain only alphanumeric characters and _/:?#@&=+%~- symbols.
-
-            '
-          items:
-            maxLength: 40
-            minLength: 1
-            pattern: ^[a-zA-Z0-9_/:?#@&=+%~-]+$
-            type: string
-          maxItems: 50
-          type: array
-        remove:
-          description: 'Labels to remove from the asset.
-
-            Labels must be 1-40 characters and contain only alphanumeric characters and _/:?#@&=+%~- symbols
-
-            '
-          items:
-            maxLength: 40
-            minLength: 1
-            pattern: ^[a-zA-Z0-9_/:?#@&=+%~-]+$
-            type: string
-          maxItems: 50
-          type: array
-      type: object
-    QueryVersion:
-      description: Requested API version
-      example: '2026-03-25'
-      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
-      type: string
-    GroupValueMeta:
-      additionalProperties: false
-      description: 'Computed aggregations across all assets within this group value.
-
-        Fields are only present when explicitly requested via the `meta_fields` query parameter.
-
-        If `meta_fields` is not specified, the meta object is omitted from the response.
-
-        '
-      properties:
-        built_at:
-          description: 'Aggregated container image build timestamp across all assets in this group.
-
-            The aggregation function is controlled by the `aggregate[built_at]` parameter (default: last).
-
-            Null if no assets have a built_at value.
-
-            '
+        imported_at:
+          description: Timestamp when the target was imported
           format: date-time
           type: string
-        count:
-          description: Number of assets with this value.
-          minimum: 0
-          type: integer
-        issues:
-          $ref: '#/components/schemas/GroupValueIssuesAggregation'
-        labels:
-          description: 'Unique labels across all assets in this group.
-
-            Limited to the first 1000 unique labels (alphabetically sorted).
-
-            Empty array if no assets have labels.
-
-            '
-          items:
-            type: string
-          maxItems: 1000
-          type: array
-        last_seen_at:
-          description: 'Aggregated last_seen_at timestamp across all assets in this group.
-
-            The aggregation function is controlled by the `aggregate[last_seen_at]` parameter (default: last).
-
-            Null if no assets have a last_seen_at value.
-
-            '
-          format: date-time
-          type: string
-        risk_score:
-          description: 'Aggregated risk_score from discovery sources across all assets in this group.
-
-            The aggregation function is controlled by the `aggregate[risk_score]` parameter (default: last).
-
-            Derived from project-type discovery sources. Null if no assets have
-
-            discovery sources with risk scores.
-
-            '
-          minimum: 0
-          type: integer
-        tags:
-          description: 'Unique tags across all assets in this group.
-
-            Limited to the first 1000 unique tags (alphabetically sorted).
-
-            Empty array if no assets have tags.
-
-            '
-          items:
-            properties:
-              key:
-                description: The tag key
-                type: string
-              value:
-                description: The tag value
-                type: string
-            type: object
-          maxItems: 1000
-          type: array
-        updated_at:
-          description: 'Aggregated updated_at timestamp across all assets in this group.
-
-            The aggregation function is controlled by the `aggregate[updated_at]` parameter (default: last).
-
-            '
-          format: date-time
-          type: string
-      type: object
-    GroupValueIssuesAggregation:
-      additionalProperties: false
-      description: 'Aggregated issue counts from discovery sources across all assets in this group.
-
-        Counts are summed from all project-type discovery sources.
-
-        '
-      properties:
-        critical:
-          description: Total count of critical severity issues
-          minimum: 0
-          type: integer
-        high:
-          description: Total count of high severity issues
-          minimum: 0
-          type: integer
-        low:
-          description: Total count of low severity issues
-          minimum: 0
-          type: integer
-        medium:
-          description: Total count of medium severity issues
-          minimum: 0
-          type: integer
-        total:
-          description: Sum of all issue counts (critical + high + medium + low)
-          minimum: 0
-          type: integer
-      type: object
-    ProjectRelationshipData:
-      additionalProperties: false
-      description: Full project resource with attributes
-      properties:
-        attributes:
-          $ref: '#/components/schemas/ProjectRelationshipAttributes'
-        id:
-          description: The unique identifier of the project
-          example: 11111111-2222-3333-4444-555555555555
+        integration_id:
+          description: The ID of the integration associated with this target
           format: uuid
           type: string
-        type:
-          description: The JSON:API resource type
-          enum:
-          - project
-          example: project
+        target_file:
+          description: Path to the manifest file
           type: string
-      required:
-      - id
-      - type
-      type: object
-    GroupValueAttributes:
-      additionalProperties: false
-      properties:
-        value:
-          description: The grouped value
+        target_origin:
+          description: Origin of the target (e.g., github, gitlab)
           type: string
-      required:
-      - value
-      type: object
-    AssetPatchRequestBody:
-      additionalProperties: false
-      properties:
-        data:
-          $ref: '#/components/schemas/AssetPatchData'
-      required:
-      - data
-      type: object
-    FilterValuesResponse:
-      additionalProperties: false
-      properties:
-        data:
-          description: List of filter values
-          items:
-            $ref: '#/components/schemas/FilterValueData'
-          type: array
-        links:
-          description: Self-referencing link
-          properties:
-            self:
-              description: Link to the current resource
-              format: uri
-              type: string
-          required:
-          - self
-          type: object
-      required:
-      - data
-      - links
-      type: object
-    PolymorphicAssetData:
-      description: JSON:API data for any asset type (polymorphic)
-      properties:
-        attributes:
-          oneOf:
-          - $ref: '#/components/schemas/ContainerImageAttributesResponse'
-        id:
-          description: The unique identifier of the asset
-          format: uuid
-          type: string
-        links:
-          description: Self-referencing link
-          properties:
-            self:
-              description: Link to the current resource
-              format: uri
-              type: string
-          required:
-          - self
-          type: object
-        relationships:
-          description: JSON:API relationships linking to related resources
-          properties:
-            projects:
-              description: Link to the asset's related projects
-              properties:
-                links:
-                  properties:
-                    related:
-                      description: URL to the related projects endpoint
-                      type: string
-                  type: object
-              type: object
-            targets:
-              description: Link to the asset's related targets
-              properties:
-                links:
-                  properties:
-                    related:
-                      description: URL to the related targets endpoint
-                      type: string
-                  type: object
-              type: object
-          type: object
-        type:
-          description: The JSON:API resource type
-          enum:
-          - container_images
-          type: string
-      required:
-      - type
-      - id
-      type: object
-    ErrorDocument:
-      additionalProperties: false
-      example:
-        errors:
-        - detail: Permission denied for this resource
-          status: '403'
-        jsonapi:
-          version: '1.0'
-      properties:
-        errors:
-          example:
-          - detail: Permission denied for this resource
-            status: '403'
-          items:
-            additionalProperties: false
-            example:
-              detail: Not Found
-              status: '404'
-            properties:
-              code:
-                description: An application-specific error code, expressed as a string value.
-                example: entity-not-found
-                type: string
-              detail:
-                description: A human-readable explanation specific to this occurrence of the problem.
-                example: 'The request was missing these required fields: ...'
-                type: string
-              id:
-                description: A unique identifier for this particular occurrence of the problem.
-                example: f16c31b5-6129-4571-add8-d589da9be524
-                format: uuid
-                type: string
-              links:
-                additionalProperties: false
-                description: A link that leads to further details about this particular occurrance of the problem.
-                example:
-                  about: https://example.com/about_this_error
-                properties:
-                  about:
-                    example: https://example.com/api/resource
-                    oneOf:
-                    - description: A string containing the link’s URL.
-                      example: https://example.com/api/resource
-                      type: string
-                    - additionalProperties: false
-                      example:
-                        href: https://example.com/api/resource
-                      properties:
-                        href:
-                          description: A string containing the link’s URL.
-                          example: https://example.com/api/resource
-                          type: string
-                        meta:
-                          additionalProperties: true
-                          description: Free-form object that may contain non-standard information.
-                          example:
-                            key1: value1
-                            key2:
-                              sub_key: sub_value
-                            key3:
-                            - array_value1
-                            - array_value2
-                          type: object
-                      required:
-                      - href
-                      type: object
-                type: object
-              meta:
-                additionalProperties: true
-                example:
-                  key: value
-                type: object
-              source:
-                additionalProperties: false
-                example:
-                  pointer: /data/attributes
-                properties:
-                  parameter:
-                    description: A string indicating which URI query parameter caused the error.
-                    example: param1
-                    type: string
-                  pointer:
-                    description: A JSON Pointer [RFC6901] to the associated entity in the request document.
-                    example: /data/attributes
-                    type: string
-                type: object
-              status:
-                description: The HTTP status code applicable to this problem, expressed as a string value.
-                example: '400'
-                pattern: ^[45]\d\d$
-                type: string
-              title:
-                description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-                example: Bad request
-                type: string
-            required:
-            - status
-            - detail
-            type: object
-          minItems: 1
-          type: array
-        jsonapi:
-          additionalProperties: false
-          example:
-            version: '1.0'
-          properties:
-            version:
-              description: Version of the JSON API specification this server supports.
-              example: '1.0'
-              pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
-              type: string
-          required:
-          - version
-          type: object
-      required:
-      - jsonapi
-      - errors
-      type: object
-    GroupFieldData:
-      additionalProperties: false
-      properties:
-        attributes:
-          $ref: '#/components/schemas/GroupFieldAttributes'
-        id:
-          description: UUID identifier for the group field
-          format: uuid
-          type: string
-        relationships:
-          description: Relationships for this group field
-          properties:
-            values:
-              properties:
-                links:
-                  properties:
-                    related:
-                      description: Relative path to get aggregated values for this group field
-                      format: uri-reference
-                      type: string
-                  required:
-                  - related
-                  type: object
-              type: object
-          type: object
-        type:
-          description: The JSON:API resource type
-          enum:
-          - group_fields
-          type: string
-      required:
-      - type
-      - id
-      type: object
-    JsonApiVersion:
-      properties:
-        version:
-          description: JSON:API specification version
-          example: '1.0'
-          type: string
-      required:
-      - version
-      type: object
-    AssetBulkPatchRequestBody:
-      additionalProperties: false
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/AssetPatchData'
-          maxItems: 100
-          minItems: 1
-          type: array
-      required:
-      - data
-      type: object
-    PaginationLinks:
-      description: Cursor-based pagination links
-      properties:
-        first:
-          description: Link to the first page
-          format: uri
-          type: string
-        next:
-          description: Link to the next page (if available)
-          format: uri
-          type: string
-        prev:
-          description: Link to the previous page (if available)
-          format: uri
-          type: string
-        self:
-          description: Link to the current page
-          format: uri
-          type: string
-      type: object
-    GroupValueData:
-      additionalProperties: false
-      properties:
-        attributes:
-          $ref: '#/components/schemas/GroupValueAttributes'
-        id:
-          description: UUID identifier for the group value
-          format: uuid
-          type: string
-        meta:
-          $ref: '#/components/schemas/GroupValueMeta'
-        type:
-          description: The JSON:API resource type
-          enum:
-          - group_values
-          type: string
-      required:
-      - type
-      - id
-      - attributes
-      type: object
-    IssueCounts:
-      description: Issue counts by severity
-      properties:
-        critical:
-          description: Count of critical severity issues
-          format: int32
-          minimum: 0
-          type: integer
-        high:
-          description: Count of high severity issues
-          format: int32
-          minimum: 0
-          type: integer
-        low:
-          description: Count of low severity issues
-          format: int32
-          minimum: 0
-          type: integer
-        medium:
-          description: Count of medium severity issues
-          format: int32
-          minimum: 0
-          type: integer
-      required:
-      - critical
-      - high
-      - medium
-      - low
-      type: object
-    History:
-      description: A single entry in the container image build history
-      properties:
-        author:
-          description: Author of the layer
-          maxLength: 128
-          type:
-          - string
-          - 'null'
-        comment:
-          description: Comment for the layer
-          maxLength: 4096
-          type:
-          - string
-          - 'null'
-        created_at:
-          description: When the layer was created
-          format: date-time
-          type:
-          - string
-          - 'null'
-        created_by:
-          description: Command that created the layer
-          maxLength: 4096
-          type:
-          - string
-          - 'null'
-        empty_layer:
-          description: Whether this is an empty layer (metadata-only)
-          type:
-          - boolean
-          - 'null'
-      type: object
-    FilterValueAttributes:
-      additionalProperties: false
-      properties:
-        key:
-          description: For object-type filters (e.g., tags), the key name. Only present for object-type filter values.
-          type: string
-        value:
-          description: The filter value. For simple filters, this is the value itself. For object-type filters (e.g., tags), this is the value associated with the key.
+        target_ref:
+          description: The target reference (e.g., branch name)
           type: string
       type: object
     ProjectRelationshipAttributes:
@@ -5029,121 +4751,170 @@ components:
           description: The target reference (e.g., branch name)
           type: string
       type: object
-    AssetListResponse:
+    TagsUpdate:
       additionalProperties: false
-      properties:
-        data:
-          description: Polymorphic array of asset objects of different types
-          items:
-            $ref: '#/components/schemas/PolymorphicAssetData'
-          type: array
-        links:
-          $ref: '#/components/schemas/PaginationLinks'
-        meta:
-          description: Metadata about the response
-          properties:
-            count:
-              description: Total number of assets matching the query
-              type: integer
-          type: object
-      type: object
-    OperatingSystem:
-      description: Operating system for container images (Go GOOS conventions)
-      enum:
-      - aix
-      - android
-      - darwin
-      - dragonfly
-      - freebsd
-      - illumos
-      - ios
-      - js
-      - linux
-      - netbsd
-      - openbsd
-      - plan9
-      - solaris
-      - wasip1
-      - windows
-      - other
-      type: string
-    TargetRelationshipAttributes:
-      additionalProperties: false
-      description: Attributes of the target resource
-      properties:
-        imported_at:
-          description: Timestamp when the target was imported
-          format: date-time
-          type: string
-        integration_id:
-          description: The ID of the integration associated with this target
-          format: uuid
-          type: string
-        target_file:
-          description: Path to the manifest file
-          type: string
-        target_origin:
-          description: Origin of the target (e.g., github, gitlab)
-          type: string
-        target_ref:
-          description: The target reference (e.g., branch name)
-          type: string
-      type: object
-    GroupValuesResponse:
-      additionalProperties: false
-      properties:
-        data:
-          description: List of group values with their aggregated metadata
-          items:
-            $ref: '#/components/schemas/GroupValueData'
-          type: array
-        links:
-          description: Self-referencing link
-          properties:
-            self:
-              description: Link to the current resource
-              format: uri
-              type: string
-          required:
-          - self
-          type: object
-      required:
-      - data
-      - links
-      type: object
-    FilterFieldsResponse:
-      additionalProperties: false
-      properties:
-        data:
-          description: List of available filter fields
-          items:
-            $ref: '#/components/schemas/FilterFieldData'
-          type: array
-        links:
-          description: Self-referencing link
-          properties:
-            self:
-              description: Link to the current resource
-              format: uri
-              type: string
-          required:
-          - self
-          type: object
-      required:
-      - data
-      - links
-      type: object
-    TagsReplace:
-      additionalProperties:
-        maxLength: 40
-        pattern: ^[a-zA-Z0-9_/:?#@&=+%~-]+$
-        type: string
-      description: 'Full replacement of all tags on the asset.
+      description: 'Updates the asset''s tags by adding or removing key-value pairs.
 
-        All existing tags will be removed and replaced with the provided tags.
+        Both add and remove can be specified in the same request.
+
+        If a tag key appears in both add and remove, the request will fail.
 
         '
-      maxProperties: 100
+      minProperties: 1
+      properties:
+        add:
+          additionalProperties:
+            maxLength: 40
+            pattern: ^[a-zA-Z0-9_/:?#@&=+%~-]+$
+            type: string
+          description: 'Tags to add to the asset (key-value pairs).
+
+            Tag keys must be 1-30 characters and contain only alphanumeric characters, underscores, and hyphens.
+
+            Tag values must be up to 40 characters and contain only alphanumeric characters and _/:?#@&=+%~- symbols.
+
+            '
+          maxProperties: 100
+          type: object
+        remove:
+          description: 'Tag keys to remove from the asset.
+
+            Tag keys must be 1-30 characters and contain only alphanumeric characters, underscores, and hyphens.
+
+            '
+          items:
+            maxLength: 30
+            pattern: ^[a-zA-Z0-9_-]+$
+            type: string
+          maxItems: 100
+          type: array
+      type: object
+    Architecture:
+      description: CPU architecture for container images (Go GOARCH conventions)
+      enum:
+      - '386'
+      - amd64
+      - arm
+      - arm64
+      - loong64
+      - mips
+      - mips64
+      - mips64le
+      - mipsle
+      - ppc64
+      - ppc64le
+      - riscv64
+      - s390x
+      - wasm
+      - other
+      type: string
+    RootFs:
+      description: 'Root filesystem information with ordered layer diff IDs.
+
+        Each diff_id is a SHA256 digest of the uncompressed layer content.
+
+        '
+      properties:
+        diff_ids:
+          description: Diff IDs for each layer (SHA256 of uncompressed content)
+          items:
+            maxLength: 1024
+            type: string
+          maxItems: 256
+          type: array
+        type:
+          description: Root filesystem type (e.g., "layers")
+          maxLength: 128
+          type: string
+      required:
+      - diff_ids
+      - type
+      type: object
+    FilterValuesResponse:
+      additionalProperties: false
+      properties:
+        data:
+          description: List of filter values
+          items:
+            $ref: '#/components/schemas/FilterValueData'
+          type: array
+        links:
+          description: Self-referencing link
+          properties:
+            self:
+              description: Link to the current resource
+              format: uri
+              type: string
+          required:
+          - self
+          type: object
+      required:
+      - data
+      - links
+      type: object
+    FilterValueAttributes:
+      additionalProperties: false
+      properties:
+        key:
+          description: For object-type filters (e.g., tags), the key name. Only present for object-type filter values.
+          type: string
+        value:
+          description: The filter value. For simple filters, this is the value itself. For object-type filters (e.g., tags), this is the value associated with the key.
+          type: string
+      type: object
+    History:
+      description: A single entry in the container image build history
+      properties:
+        author:
+          description: Author of the layer
+          maxLength: 128
+          type:
+          - string
+          - 'null'
+        comment:
+          description: Comment for the layer
+          maxLength: 4096
+          type:
+          - string
+          - 'null'
+        created_at:
+          description: When the layer was created
+          format: date-time
+          type:
+          - string
+          - 'null'
+        created_by:
+          description: Command that created the layer
+          maxLength: 4096
+          type:
+          - string
+          - 'null'
+        empty_layer:
+          description: Whether this is an empty layer (metadata-only)
+          type:
+          - boolean
+          - 'null'
+      type: object
+    GroupValueData:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/GroupValueAttributes'
+        id:
+          description: UUID identifier for the group value
+          format: uuid
+          type: string
+        meta:
+          $ref: '#/components/schemas/GroupValueMeta'
+        type:
+          description: The JSON:API resource type
+          enum:
+          - group_values
+          type: string
+      required:
+      - type
+      - id
+      - attributes
       type: object
     JsonApiLinks:
       description: Links for relationship objects within a resource
@@ -5157,13 +4928,242 @@ components:
           format: uri
           type: string
       type: object
+    ProposedBaseImages:
+      description: Categorized base image upgrade recommendations
+      properties:
+        alternative_upgrade:
+          items:
+            $ref: '#/components/schemas/ImageInfo'
+          type: array
+        major_upgrade:
+          items:
+            $ref: '#/components/schemas/ImageInfo'
+          type: array
+        minor_upgrade:
+          items:
+            $ref: '#/components/schemas/ImageInfo'
+          type: array
+      type: object
+    AssetPatchRequestBody:
+      additionalProperties: false
+      properties:
+        data:
+          $ref: '#/components/schemas/AssetPatchData'
+      required:
+      - data
+      type: object
+    GroupFieldsResponse:
+      additionalProperties: false
+      properties:
+        data:
+          description: List of available group fields
+          items:
+            $ref: '#/components/schemas/GroupFieldData'
+          type: array
+        links:
+          description: Self-referencing link
+          properties:
+            self:
+              description: Link to the current resource
+              format: uri
+              type: string
+          required:
+          - self
+          type: object
+      required:
+      - data
+      - links
+      type: object
+    FilterFieldAttributes:
+      additionalProperties: false
+      properties:
+        asset_types:
+          description: List of asset types this field applies to
+          items:
+            enum:
+            - container_images
+            type: string
+          type: array
+        name:
+          description: The field name used in RSQL filters (e.g., "class", "registry")
+          type: string
+        type:
+          description: Data type of the field (string, boolean, datetime, array, object)
+          enum:
+          - string
+          - boolean
+          - datetime
+          - array
+          - object
+          type: string
+      required:
+      - name
+      - type
+      - asset_types
+      type: object
+    FilterValueData:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/FilterValueAttributes'
+        id:
+          description: UUID identifier for the filter value
+          format: uuid
+          type: string
+        type:
+          description: The JSON:API resource type
+          enum:
+          - filter_values
+          type: string
+      required:
+      - type
+      - id
+      type: object
+    RelationshipLinks:
+      allOf:
+      - $ref: '#/components/schemas/JsonApiLinks'
+      - $ref: '#/components/schemas/PaginationLinks'
+      description: Links for relationship endpoint responses (combines relationship + pagination links)
+    PolymorphicAssetData:
+      description: JSON:API data for any asset type (polymorphic)
+      properties:
+        attributes:
+          oneOf:
+          - $ref: '#/components/schemas/ContainerImageAttributesResponse'
+        id:
+          description: The unique identifier of the asset
+          format: uuid
+          type: string
+        links:
+          description: Self-referencing link
+          properties:
+            self:
+              description: Link to the current resource
+              format: uri
+              type: string
+          required:
+          - self
+          type: object
+        relationships:
+          description: JSON:API relationships linking to related resources
+          properties:
+            projects:
+              description: Link to the asset's related projects
+              properties:
+                links:
+                  properties:
+                    related:
+                      description: URL to the related projects endpoint
+                      type: string
+                  type: object
+              type: object
+            targets:
+              description: Link to the asset's related targets
+              properties:
+                links:
+                  properties:
+                    related:
+                      description: URL to the related targets endpoint
+                      type: string
+                  type: object
+              type: object
+          type: object
+        type:
+          description: The JSON:API resource type
+          enum:
+          - container_images
+          type: string
+      required:
+      - type
+      - id
+      type: object
+    AssetBulkPatchRequestBody:
+      additionalProperties: false
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AssetPatchData'
+          maxItems: 100
+          minItems: 1
+          type: array
+      required:
+      - data
+      type: object
+    GroupValueAttributes:
+      additionalProperties: false
+      properties:
+        value:
+          description: The grouped value
+          type: string
+      required:
+      - value
+      type: object
+    GroupValueIssuesAggregation:
+      additionalProperties: false
+      description: 'Aggregated issue counts from discovery sources across all assets in this group.
+
+        Counts are summed from all project-type discovery sources.
+
+        '
+      properties:
+        critical:
+          description: Total count of critical severity issues
+          minimum: 0
+          type: integer
+        high:
+          description: Total count of high severity issues
+          minimum: 0
+          type: integer
+        low:
+          description: Total count of low severity issues
+          minimum: 0
+          type: integer
+        medium:
+          description: Total count of medium severity issues
+          minimum: 0
+          type: integer
+        total:
+          description: Sum of all issue counts (critical + high + medium + low)
+          minimum: 0
+          type: integer
+      type: object
+    ProjectRelationshipData:
+      additionalProperties: false
+      description: Full project resource with attributes
+      properties:
+        attributes:
+          $ref: '#/components/schemas/ProjectRelationshipAttributes'
+        id:
+          description: The unique identifier of the project
+          example: 11111111-2222-3333-4444-555555555555
+          format: uuid
+          type: string
+        type:
+          description: The JSON:API resource type
+          enum:
+          - project
+          example: project
+          type: string
+      required:
+      - id
+      - type
+      type: object
+    JsonApiVersion:
+      properties:
+        version:
+          description: JSON:API specification version
+          example: '1.0'
+          type: string
+      required:
+      - version
+      type: object
   responses:
-    '403':
+    '500':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
-      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -5215,25 +5215,6 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '500':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
     '404':
       content:
         application/vnd.api+json:
@@ -5253,82 +5234,26 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-  headers:
-    VersionStageResponseHeader:
-      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
-
-        '
-      schema:
-        enum:
-        - wip
-        - experimental
-        - beta
-        - ga
-        - deprecated
-        - sunset
-        example: ga
-        type: string
-    RequestIdResponseHeader:
-      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
-
-        '
-      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
-      schema:
-        format: uuid
-        type: string
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
-    VersionRequestedResponseHeader:
-      description: A header containing the version of the endpoint requested by the caller.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/ActualVersion'
-    DeprecationHeader:
-      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
-
-        '
-      example: '2021-07-01T00:00:00Z'
-      schema:
-        format: date-time
-        type: string
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
   parameters:
-    SearchId:
-      description: The unique identifier of the search operation
-      in: path
-      name: search_id
-      required: true
-      schema:
-        format: uuid
-        type: string
-    RsqlFilterGroupValues:
-      description: 'RSQL filter expression for filtering which assets are included in aggregation.
-
-        Supports the same syntax as the main search filter including full text search with the `q` field.
-
-        See the RsqlFilterString schema for complete documentation.
-
-        '
-      in: query
-      name: filter
-      schema:
-        $ref: '#/components/schemas/RsqlFilterString'
-    RsqlFilter:
-      description: RSQL filter expression for filtering results. See schema for full documentation.
-      in: query
-      name: filter
-      schema:
-        $ref: '#/components/schemas/RsqlFilterString'
     SparseFieldsets:
       description: 'Sparse fieldsets allow clients to request only specific fields for a given resource type.
 
@@ -5407,22 +5332,6 @@ components:
           type: string
         type: object
       style: deepObject
-    MetaCount:
-      description: 'Provide summary count in the response meta object when requested.
-
-        When `with` is provided, the count will be included in the response meta object.
-
-        When `only` is provided, the count will be included in the response meta object and no data will be returned.
-
-        '
-      example: with
-      in: query
-      name: meta_count
-      schema:
-        enum:
-        - with
-        - only
-        type: string
     AggregateGroupValues:
       description: 'Per-field aggregate function override for meta fields.
 
@@ -5505,6 +5414,18 @@ components:
       name: sort
       schema:
         type: string
+    RsqlFilterGroupValues:
+      description: 'RSQL filter expression for filtering which assets are included in aggregation.
+
+        Supports the same syntax as the main search filter including full text search with the `q` field.
+
+        See the RsqlFilterString schema for complete documentation.
+
+        '
+      in: query
+      name: filter
+      schema:
+        $ref: '#/components/schemas/RsqlFilterString'
     ProjectSortParam:
       description: 'Sort field with optional direction prefix. Prefix with `-` for descending order.
 
@@ -5528,6 +5449,36 @@ components:
         - -snapshot_created_at
         - issues
         - -issues
+        type: string
+    MetaCount:
+      description: 'Provide summary count in the response meta object when requested.
+
+        When `with` is provided, the count will be included in the response meta object.
+
+        When `only` is provided, the count will be included in the response meta object and no data will be returned.
+
+        '
+      example: with
+      in: query
+      name: meta_count
+      schema:
+        enum:
+        - with
+        - only
+        type: string
+    RsqlFilter:
+      description: RSQL filter expression for filtering results. See schema for full documentation.
+      in: query
+      name: filter
+      schema:
+        $ref: '#/components/schemas/RsqlFilterString'
+    SearchId:
+      description: The unique identifier of the search operation
+      in: path
+      name: search_id
+      required: true
+      schema:
+        format: uuid
         type: string
     MetaFieldsGroupValues:
       description: "Meta fields to include in the response. Multiple fields can be specified.\n\nAvailable fields:\n  - `count` - Number of assets with this value\n  - `last_seen_at` - Aggregated last_seen_at timestamp (default aggregation: last)\n  - `updated_at` - Aggregated updated_at timestamp (default aggregation: last)\n  - `risk_score` - Aggregated risk score from discovery sources (default aggregation: last)\n  - `issues` - Aggregated issue counts (critical, high, medium, low, total) (default aggregation: last)\n  - `labels` - Labels across assets (default aggregation: last)\n  - `tags` - Tags across assets (default aggregation: last)\n  - `built_at` - Aggregated container image build timestamp (default aggregation: last)\n  - `all` - Include all available meta fields\n\nAll fields default to the `last` aggregation function, which returns the value\nfrom the asset with the most recent updated_at in the group. Use the `aggregate`\nparameter to override the aggregation function per field.\n\nIf not specified, the meta object is not included in the response.\n\nNote: Requesting meta fields may impact response time as aggregations\nrequire additional computation.\n"
@@ -5554,6 +5505,55 @@ components:
           type: string
         type: array
       style: form
+  headers:
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
+    VersionStageResponseHeader:
+      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
+
+        '
+      schema:
+        enum:
+        - wip
+        - experimental
+        - beta
+        - ga
+        - deprecated
+        - sunset
+        example: ga
+        type: string
+    RequestIdResponseHeader:
+      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
+
+        '
+      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
+      schema:
+        format: uuid
+        type: string
   securitySchemes:
     APIToken:
       description: API key value must be prefixed with \"Token \".

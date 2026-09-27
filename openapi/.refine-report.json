@@ -55,7 +55,7 @@
     "snyk-users-api-openapi.yml"
   ],
   "archived": [
-    "deleted 6 superseded output(s) from the previous generation"
+    "deleted 5 superseded output(s) from the previous generation"
   ],
   "errors": [],
   "warnings": [],
@@ -111,8 +111,8 @@
     "snyk-rest-openapi.json: declared missing tag: Tests",
     "snyk-rest-openapi.json: declared missing tag: Users",
     "tag 'oauth2' spans 2 source specs (snyk-oauth2-app-openapi.yml, snyk-oauth2-token-openapi.yml): per-path servers applied",
-    "superseded outputs removed: snyk-access-requests-api-openapi.yml, snyk-container-image-api-openapi.yml, snyk-o-auth2-api-openapi.yml, snyk-open-api-api-openapi.yml, snyk-personal-access-token-api-openapi.yml \u2026",
-    "apis.yml register: written (+6 apis, 50 total)"
+    "superseded outputs removed: snyk-access-requests-api-openapi.yml, snyk-container-image-api-openapi.yml, snyk-open-api-api-openapi.yml, snyk-personal-access-token-api-openapi.yml, snyk-service-accounts-api-openapi.yml",
+    "apis.yml register: written (+5 apis, 50 total)"
   ],
   "skipped": [
     "snyk-access-requests-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -142,7 +142,7 @@
     "snyk-languagessettings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "snyk-learn-assignment-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "snyk-learn-progress-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "snyk-o-auth2-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "snyk-oauth2-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "snyk-open-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "snyk-opensourcesettings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "snyk-orgs-api-openapi.yml: previously refined output, superseded by openapi/_original/",

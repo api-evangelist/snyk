@@ -914,247 +914,6 @@ paths:
       x-stability-level: beta
 components:
   schemas:
-    AssetTagsUpdate:
-      additionalProperties: false
-      description: 'Updates the asset''s custom tags by adding or removing tag key-value pairs.
-
-        '
-      properties:
-        add:
-          additionalProperties:
-            maxLength: 40
-            pattern: ^[a-zA-Z0-9_/:?#@&=+%~-]+$
-            type: string
-          description: 'Tags to add to the asset (key-value pairs). Tag keys must be 1-30 characters long and contain only alphanumeric characters, underscores, and hyphens.
-
-            '
-          type: object
-        remove:
-          description: Tag keys to remove from the asset
-          items:
-            maxLength: 30
-            pattern: ^[a-zA-Z0-9_-]+$
-            type: string
-          type: array
-      type: object
-    ActualVersion:
-      description: Resolved API version
-      example: '2026-03-25'
-      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
-      type: string
-    AssetClass:
-      additionalProperties: false
-      anyOf:
-      - required:
-        - display_name
-      - required:
-        - rank
-      description: "Sets the asset's class using either a rank (a number between 1 and 4) or a display name (e.g., \"A,\" \"B,\" \"C,\" or \"D\"). If both rank and name are provided, rank takes precedence.\n* This attribute accepts a single value. It can be locked: When a class attribute is \"locked\", this attribute will not be affected by any policy.\n  * UI: When the user changes the asset class, by default is \"locked\".\n  * API: The user will need to indicate wether they want to \"lock\" the class attribute.\n"
-      properties:
-        display_name:
-          description: Asset class display name
-          enum:
-          - A
-          - B
-          - C
-          - D
-          type: string
-        locked:
-          description: Whether the asset class is locked
-          type: boolean
-        rank:
-          description: Asset class rank (1-4)
-          enum:
-          - 1
-          - 2
-          - 3
-          - 4
-          type: integer
-      type: object
-    DeveloperAttributes:
-      example:
-        discovered_by: github
-        email: john.doe@example.com
-        url: https://github.com/johndoe
-        username: johndoe
-      properties:
-        discovered_by:
-          description: The SCM integration that was discovered by the developer
-          type:
-          - string
-          - 'null'
-        email:
-          description: Email address of the developer
-          format: email
-          type:
-          - string
-          - 'null'
-        url:
-          description: URL of the developer's profile
-          format: uri
-          type:
-          - string
-          - 'null'
-        username:
-          description: Username of the developer
-          type:
-          - string
-          - 'null'
-      type: object
-    AssetProjectAttributes:
-      properties:
-        issues_counts:
-          properties:
-            critical:
-              type: number
-            high:
-              type: number
-            low:
-              type: number
-            medium:
-              type: number
-          type: object
-        last_scan:
-          type: string
-        name:
-          type: string
-        organization_id:
-          type: string
-        organization_name:
-          type: string
-        project_type:
-          type: string
-        target_file:
-          type: string
-        target_id:
-          type: string
-        target_reference:
-          type: string
-        test_surface:
-          type: string
-        url:
-          type: string
-      type: object
-    ListRepositoryAliasesResponse:
-      additionalProperties: false
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/RepositoryAliasesData'
-          type: array
-        jsonapi:
-          additionalProperties: false
-          properties:
-            version:
-              type: string
-          type: object
-        links:
-          $ref: '#/components/schemas/PaginationLinks'
-      type: object
-    RepositoryAliasesData:
-      additionalProperties: false
-      properties:
-        attributes:
-          $ref: '#/components/schemas/RepositoryAliasItemAttributes'
-        id:
-          description: The _id of the canonical reference document in the asset-reference collection
-          format: uuid
-          type: string
-        type:
-          enum:
-          - asset_aliases
-          type: string
-      required:
-      - id
-      - type
-      - attributes
-      type: object
-    RepositoryAliasItemAttributes:
-      additionalProperties: false
-      properties:
-        new_url:
-          description: The alias URL on the canonical document
-          type: string
-        url:
-          description: The primary URL of the canonical document
-          type: string
-      required:
-      - url
-      - new_url
-      type: object
-    Links:
-      additionalProperties: false
-      properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        related:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
-    RemoveRepositoryAliasRequestData:
-      properties:
-        attributes:
-          $ref: '#/components/schemas/RemoveRepositoryAliasAttributes'
-        id:
-          description: The _id of the canonical reference document in the asset-reference collection
-          format: uuid
-          type: string
-        type:
-          enum:
-          - asset_aliases
-          type: string
-      required:
-      - type
-      - id
-      - attributes
-      type: object
-    AssetProjectResponseData:
-      description: asset project resource object
-      properties:
-        attributes:
-          $ref: '#/components/schemas/AssetProjectAttributes'
-        id:
-          format: uuid
-          type: string
-        type:
-          enum:
-          - project
-          example: project
-          type: string
-      required:
-      - id
-      - type
-      type: object
-    AssetResponseData:
-      description: asset resource object
-      properties:
-        attributes:
-          $ref: '#/components/schemas/AssetAttributes'
-        id:
-          format: uuid
-          type: string
-        relationships:
-          $ref: '#/components/schemas/AssetRelationships'
-        removed:
-          type: boolean
-        type:
-          enum:
-          - repository
-          - image
-          - package
-          example: repository
-          type: string
-      required:
-      - id
-      - type
-      type: object
     AssetAttributes:
       properties:
         app_context:
@@ -1312,155 +1071,21 @@ components:
           format: date-time
           type: string
       type: object
-    AssetRelationships:
-      properties:
-        assets:
-          properties:
-            links:
-              properties:
-                related:
-                  type: string
-              type: object
-          type: object
-        organizations:
-          description: Snyk Organizations with Projects that map to this asset
-          properties:
-            data:
-              items:
-                properties:
-                  attributes:
-                    properties:
-                      name:
-                        type:
-                        - string
-                        - 'null'
-                    type: object
-                  id:
-                    type: string
-                  type:
-                    type: string
-                type: object
-              type: array
-          type:
-          - object
-          - 'null'
-        projects:
-          properties:
-            links:
-              properties:
-                related:
-                  type: string
-              type: object
-          type: object
-      type: object
-    IssuesCountAttributes:
-      example:
-        critical: 5
-        high: 12
-        low: 3
-        medium: 7
-      properties:
-        critical:
-          description: Number of critical issues
-          type: integer
-        high:
-          description: Number of high-severity issues
-          type: integer
-        low:
-          description: Number of low-severity issues
-          type: integer
-        medium:
-          description: Number of medium-severity issues
-          type: integer
-      type: object
-    AddRepositoryAliasAttributes:
-      properties:
-        new_url:
-          description: The alias URL to link to the canonical URL
-          example: https://github.com/org/repo-renamed.git
-          type: string
-        url:
-          description: The canonical URL
-          example: https://github.com/org/repo.git
-          type: string
-      required:
-      - url
-      - new_url
-      type: object
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
-        type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
-    RemoveRepositoryAliasAttributes:
-      properties:
-        new_url:
-          description: The aliased URL to detach from its canonical asset
-          example: https://github.com/org/repo-renamed.git
-          type: string
-        url:
-          description: The primary URL of the canonical document that owns the alias. Used to verify the request targets the correct document.
-          example: https://github.com/org/repo.git
-          type: string
-      required:
-      - url
-      - new_url
-      type: object
-    UpdateAssetRequestData:
-      description: Asset update request data
-      properties:
-        attributes:
-          $ref: '#/components/schemas/UpdateAssetAttributes'
-        id:
-          format: uuid
-          type: string
-        type:
-          enum:
-          - repository
-          - image
-          - package
-          type: string
-      required:
-      - type
-      - id
-      - attributes
-      type: object
-    SelfLink:
-      additionalProperties: false
-      example:
-        self: https://example.com/api/this_resource
-      properties:
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
     QueryVersion:
       description: Requested API version
       example: '2026-03-25'
       pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
       type: string
+    UpdateAssetAttributes:
+      additionalProperties: false
+      properties:
+        class:
+          $ref: '#/components/schemas/AssetClass'
+        labels:
+          $ref: '#/components/schemas/AssetLabelsUpdate'
+        tags:
+          $ref: '#/components/schemas/AssetTagsUpdate'
+      type: object
     AssetLabelsUpdate:
       additionalProperties: false
       description: 'Updates the asset''s labels by adding or removing label values.
@@ -1481,34 +1106,6 @@ components:
             minLength: 1
             type: string
           type: array
-      type: object
-    CoverageControlAttributes:
-      example:
-        category: security
-        gap: true
-        issues_count:
-          critical: 1
-          high: 2
-          low: 0
-          medium: 0
-        last_scan: '2023-10-10T08:00:00Z'
-        name: control1
-      properties:
-        category:
-          description: Category of the control
-          type: string
-        gap:
-          description: indicates if there is a coverage gap
-          type: boolean
-        issues_count:
-          $ref: '#/components/schemas/IssuesCountAttributes'
-        last_scan:
-          description: Last scan date for this control
-          format: date-time
-          type: string
-        name:
-          description: Name of the control
-          type: string
       type: object
     AssetClassAttributes:
       additionalProperties: false
@@ -1532,95 +1129,56 @@ components:
           description: Rank associated with the asset class
           type: integer
       type: object
-    SearchAttributesObject:
+    SelfLink:
+      additionalProperties: false
+      example:
+        self: https://example.com/api/this_resource
       properties:
-        attribute:
-          description: 'Name of the Asset attribute to filter on, not required if a logical operator is used.
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    IssuesCountAttributes:
+      example:
+        critical: 5
+        high: 12
+        low: 3
+        medium: 7
+      properties:
+        critical:
+          description: Number of critical issues
+          type: integer
+        high:
+          description: Number of high-severity issues
+          type: integer
+        low:
+          description: Number of low-severity issues
+          type: integer
+        medium:
+          description: Number of medium-severity issues
+          type: integer
+      type: object
+    AssetTagsUpdate:
+      additionalProperties: false
+      description: 'Updates the asset''s custom tags by adding or removing tag key-value pairs.
 
-
-            **Tags Filtering:**
-
-
-            The API supports filtering on tags using dot notation:
-
-
-            - **Tags**: `tags.{tagName}` - Filter by tag keys (e.g., `tags.environment`, `tags.team`, `tags.owner`)
+        '
+      properties:
+        add:
+          additionalProperties:
+            maxLength: 40
+            pattern: ^[a-zA-Z0-9_/:?#@&=+%~-]+$
+            type: string
+          description: 'Tags to add to the asset (key-value pairs). Tag keys must be 1-30 characters long and contain only alphanumeric characters, underscores, and hyphens.
 
             '
-          oneOf:
-          - enum:
-            - id
-            - type
-            - removed
-            - name
-            - repository_url
-            - file_path
-            - sources
-            - risk_factors
-            - repository_freshness
-            - browse_url
-            - image_id
-            - image_digests
-            - image_tags
-            - image_repositories
-            - image_registries
-            - labels
-            - class
-            - organizations
-            - created_at
-            - updated_at
-            type: string
-          - description: Tag attribute in the format `tags.{tagName}`
-            pattern: ^tags\.[a-zA-Z0-9_-]{1,30}$
-            type: string
-        operator:
-          description: Required, name of the Operator for the query
-          enum:
-          - and
-          - or
-          - equal
-          - not_equal
-          - contains
-          - not_contains
-          - starts_with
-          - ends_with
-          - in
-          - not_in
-          - greater_than
-          - lower_than
-          - equal_or_greater_than
-          - equal_or_lower_than
-          type: string
-        values:
-          description: Required values, which can be strings, dates, integers, booleans, or nested attributes
+          type: object
+        remove:
+          description: Tag keys to remove from the asset
           items:
-            oneOf:
-            - description: A string value
-              type: string
-            - description: A date value in ISO 8601 format
-              format: date
-              type: string
-            - description: An integer value
-              type: integer
-            - $ref: '#/components/schemas/SearchAttributesObject'
-            - description: A boolean value
-              type: boolean
+            maxLength: 30
+            pattern: ^[a-zA-Z0-9_-]+$
+            type: string
           type: array
-      required:
-      - operator
-      - values
-      type: object
-    AddRepositoryAliasRequestData:
-      properties:
-        attributes:
-          $ref: '#/components/schemas/AddRepositoryAliasAttributes'
-        type:
-          enum:
-          - asset_aliases
-          type: string
-      required:
-      - type
-      - attributes
       type: object
     ErrorDocument:
       additionalProperties: false
@@ -1740,6 +1298,75 @@ components:
       - jsonapi
       - errors
       type: object
+    AssetProjectResponseData:
+      description: asset project resource object
+      properties:
+        attributes:
+          $ref: '#/components/schemas/AssetProjectAttributes'
+        id:
+          format: uuid
+          type: string
+        type:
+          enum:
+          - project
+          example: project
+          type: string
+      required:
+      - id
+      - type
+      type: object
+    AssetClass:
+      additionalProperties: false
+      anyOf:
+      - required:
+        - display_name
+      - required:
+        - rank
+      description: "Sets the asset's class using either a rank (a number between 1 and 4) or a display name (e.g., \"A,\" \"B,\" \"C,\" or \"D\"). If both rank and name are provided, rank takes precedence.\n* This attribute accepts a single value. It can be locked: When a class attribute is \"locked\", this attribute will not be affected by any policy.\n  * UI: When the user changes the asset class, by default is \"locked\".\n  * API: The user will need to indicate wether they want to \"lock\" the class attribute.\n"
+      properties:
+        display_name:
+          description: Asset class display name
+          enum:
+          - A
+          - B
+          - C
+          - D
+          type: string
+        locked:
+          description: Whether the asset class is locked
+          type: boolean
+        rank:
+          description: Asset class rank (1-4)
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          type: integer
+      type: object
+    AssetResponseData:
+      description: asset resource object
+      properties:
+        attributes:
+          $ref: '#/components/schemas/AssetAttributes'
+        id:
+          format: uuid
+          type: string
+        relationships:
+          $ref: '#/components/schemas/AssetRelationships'
+        removed:
+          type: boolean
+        type:
+          enum:
+          - repository
+          - image
+          - package
+          example: repository
+          type: string
+      required:
+      - id
+      - type
+      type: object
     PaginationLinks:
       description: Cursor-based pagination links
       properties:
@@ -1760,15 +1387,333 @@ components:
           format: uri
           type: string
       type: object
-    UpdateAssetAttributes:
+    SearchAttributesObject:
+      properties:
+        attribute:
+          description: 'Name of the Asset attribute to filter on, not required if a logical operator is used.
+
+
+            **Tags Filtering:**
+
+
+            The API supports filtering on tags using dot notation:
+
+
+            - **Tags**: `tags.{tagName}` - Filter by tag keys (e.g., `tags.environment`, `tags.team`, `tags.owner`)
+
+            '
+          oneOf:
+          - enum:
+            - id
+            - type
+            - removed
+            - name
+            - repository_url
+            - file_path
+            - sources
+            - risk_factors
+            - repository_freshness
+            - browse_url
+            - image_id
+            - image_digests
+            - image_tags
+            - image_repositories
+            - image_registries
+            - labels
+            - class
+            - organizations
+            - created_at
+            - updated_at
+            type: string
+          - description: Tag attribute in the format `tags.{tagName}`
+            pattern: ^tags\.[a-zA-Z0-9_-]{1,30}$
+            type: string
+        operator:
+          description: Required, name of the Operator for the query
+          enum:
+          - and
+          - or
+          - equal
+          - not_equal
+          - contains
+          - not_contains
+          - starts_with
+          - ends_with
+          - in
+          - not_in
+          - greater_than
+          - lower_than
+          - equal_or_greater_than
+          - equal_or_lower_than
+          type: string
+        values:
+          description: Required values, which can be strings, dates, integers, booleans, or nested attributes
+          items:
+            oneOf:
+            - description: A string value
+              type: string
+            - description: A date value in ISO 8601 format
+              format: date
+              type: string
+            - description: An integer value
+              type: integer
+            - $ref: '#/components/schemas/SearchAttributesObject'
+            - description: A boolean value
+              type: boolean
+          type: array
+      required:
+      - operator
+      - values
+      type: object
+    AddRepositoryAliasRequestData:
+      properties:
+        attributes:
+          $ref: '#/components/schemas/AddRepositoryAliasAttributes'
+        type:
+          enum:
+          - asset_aliases
+          type: string
+      required:
+      - type
+      - attributes
+      type: object
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
+    RemoveRepositoryAliasRequestData:
+      properties:
+        attributes:
+          $ref: '#/components/schemas/RemoveRepositoryAliasAttributes'
+        id:
+          description: The _id of the canonical reference document in the asset-reference collection
+          format: uuid
+          type: string
+        type:
+          enum:
+          - asset_aliases
+          type: string
+      required:
+      - type
+      - id
+      - attributes
+      type: object
+    CoverageControlAttributes:
+      example:
+        category: security
+        gap: true
+        issues_count:
+          critical: 1
+          high: 2
+          low: 0
+          medium: 0
+        last_scan: '2023-10-10T08:00:00Z'
+        name: control1
+      properties:
+        category:
+          description: Category of the control
+          type: string
+        gap:
+          description: indicates if there is a coverage gap
+          type: boolean
+        issues_count:
+          $ref: '#/components/schemas/IssuesCountAttributes'
+        last_scan:
+          description: Last scan date for this control
+          format: date-time
+          type: string
+        name:
+          description: Name of the control
+          type: string
+      type: object
+    AddRepositoryAliasAttributes:
+      properties:
+        new_url:
+          description: The alias URL to link to the canonical URL
+          example: https://github.com/org/repo-renamed.git
+          type: string
+        url:
+          description: The canonical URL
+          example: https://github.com/org/repo.git
+          type: string
+      required:
+      - url
+      - new_url
+      type: object
+    AssetProjectAttributes:
+      properties:
+        issues_counts:
+          properties:
+            critical:
+              type: number
+            high:
+              type: number
+            low:
+              type: number
+            medium:
+              type: number
+          type: object
+        last_scan:
+          type: string
+        name:
+          type: string
+        organization_id:
+          type: string
+        organization_name:
+          type: string
+        project_type:
+          type: string
+        target_file:
+          type: string
+        target_id:
+          type: string
+        target_reference:
+          type: string
+        test_surface:
+          type: string
+        url:
+          type: string
+      type: object
+    RepositoryAliasesData:
       additionalProperties: false
       properties:
-        class:
-          $ref: '#/components/schemas/AssetClass'
-        labels:
-          $ref: '#/components/schemas/AssetLabelsUpdate'
-        tags:
-          $ref: '#/components/schemas/AssetTagsUpdate'
+        attributes:
+          $ref: '#/components/schemas/RepositoryAliasItemAttributes'
+        id:
+          description: The _id of the canonical reference document in the asset-reference collection
+          format: uuid
+          type: string
+        type:
+          enum:
+          - asset_aliases
+          type: string
+      required:
+      - id
+      - type
+      - attributes
+      type: object
+    RepositoryAliasItemAttributes:
+      additionalProperties: false
+      properties:
+        new_url:
+          description: The alias URL on the canonical document
+          type: string
+        url:
+          description: The primary URL of the canonical document
+          type: string
+      required:
+      - url
+      - new_url
+      type: object
+    DeveloperAttributes:
+      example:
+        discovered_by: github
+        email: john.doe@example.com
+        url: https://github.com/johndoe
+        username: johndoe
+      properties:
+        discovered_by:
+          description: The SCM integration that was discovered by the developer
+          type:
+          - string
+          - 'null'
+        email:
+          description: Email address of the developer
+          format: email
+          type:
+          - string
+          - 'null'
+        url:
+          description: URL of the developer's profile
+          format: uri
+          type:
+          - string
+          - 'null'
+        username:
+          description: Username of the developer
+          type:
+          - string
+          - 'null'
+      type: object
+    Links:
+      additionalProperties: false
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        related:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    ListRepositoryAliasesResponse:
+      additionalProperties: false
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/RepositoryAliasesData'
+          type: array
+        jsonapi:
+          additionalProperties: false
+          properties:
+            version:
+              type: string
+          type: object
+        links:
+          $ref: '#/components/schemas/PaginationLinks'
+      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
+    UpdateAssetRequestData:
+      description: Asset update request data
+      properties:
+        attributes:
+          $ref: '#/components/schemas/UpdateAssetAttributes'
+        id:
+          format: uuid
+          type: string
+        type:
+          enum:
+          - repository
+          - image
+          - package
+          type: string
+      required:
+      - type
+      - id
+      - attributes
       type: object
     SearchObject:
       description: The request body can be empty or include query parameters.
@@ -1783,13 +1728,68 @@ components:
       required:
       - query
       type: object
+    RemoveRepositoryAliasAttributes:
+      properties:
+        new_url:
+          description: The aliased URL to detach from its canonical asset
+          example: https://github.com/org/repo-renamed.git
+          type: string
+        url:
+          description: The primary URL of the canonical document that owns the alias. Used to verify the request targets the correct document.
+          example: https://github.com/org/repo.git
+          type: string
+      required:
+      - url
+      - new_url
+      type: object
+    AssetRelationships:
+      properties:
+        assets:
+          properties:
+            links:
+              properties:
+                related:
+                  type: string
+              type: object
+          type: object
+        organizations:
+          description: Snyk Organizations with Projects that map to this asset
+          properties:
+            data:
+              items:
+                properties:
+                  attributes:
+                    properties:
+                      name:
+                        type:
+                        - string
+                        - 'null'
+                    type: object
+                  id:
+                    type: string
+                  type:
+                    type: string
+                type: object
+              type: array
+          type:
+          - object
+          - 'null'
+        projects:
+          properties:
+            links:
+              properties:
+                related:
+                  type: string
+              type: object
+          type: object
+      type: object
   responses:
-    '403':
+    '500':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
-      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -1841,44 +1841,6 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '409':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Conflict: The requested operation conflicts with the current state of the resource in some way.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
-    '500':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
     '404':
       content:
         application/vnd.api+json:
@@ -1898,7 +1860,79 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '409':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Conflict: The requested operation conflicts with the current state of the resource in some way.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
   headers:
+    LocationHeader:
+      description: 'A header providing a URL for the location of a resource
+
+        '
+      example: https://example.com/resource/4
+      schema:
+        format: url
+        type: string
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
     VersionStageResponseHeader:
       description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
 
@@ -1921,81 +1955,9 @@ components:
       schema:
         format: uuid
         type: string
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
-    VersionRequestedResponseHeader:
-      description: A header containing the version of the endpoint requested by the caller.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    LocationHeader:
-      description: 'A header providing a URL for the location of a resource
-
-        '
-      example: https://example.com/resource/4
-      schema:
-        format: url
-        type: string
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/ActualVersion'
-    DeprecationHeader:
-      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
-
-        '
-      example: '2021-07-01T00:00:00Z'
-      schema:
-        format: date-time
-        type: string
   parameters:
-    RepositoryUrlQuery:
-      description: Optional repository URL filter — restricts results to the canonical document containing this URL
-      in: query
-      name: url
-      schema:
-        type: string
-    AssetId:
-      description: Unique identifier for the Asset
-      in: path
-      name: asset_id
-      required: true
-      schema:
-        format: uuid
-        type: string
-    StartingAfterCursor:
-      description: Return records after the record identified by this cursor
-      example: v1.MTIzNDU2Nzg5MHxhYmNkZWY=
-      in: query
-      name: starting_after
-      schema:
-        type: string
     EndingBeforeCursor__0:
       description: Return records before the record identified by cursor position ending_before
-      in: query
-      name: ending_before
-      schema:
-        type: string
-    AssetTypeFilter:
-      description: Filter by asset type
-      in: query
-      name: type
-      schema:
-        enum:
-        - repository
-        - package
-        - image
-        type: string
-    EndingBeforeCursor:
-      description: Return records before the record identified by this cursor
-      example: v1.MTIzNDU2Nzg5MHxhYmNkZWY=
       in: query
       name: ending_before
       schema:
@@ -2006,6 +1968,39 @@ components:
       name: starting_after
       schema:
         type: string
+    Version:
+      description: The requested version of the endpoint to process the request
+      example: '2026-03-25'
+      in: query
+      name: version
+      required: true
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    AssetTypeFilter:
+      description: Filter by asset type
+      in: query
+      name: type
+      schema:
+        enum:
+        - repository
+        - package
+        - image
+        type: string
+    StartingAfterCursor:
+      description: Return records after the record identified by this cursor
+      example: v1.MTIzNDU2Nzg5MHxhYmNkZWY=
+      in: query
+      name: starting_after
+      schema:
+        type: string
+    AssetId:
+      description: Unique identifier for the Asset
+      in: path
+      name: asset_id
+      required: true
+      schema:
+        format: uuid
+        type: string
     Limit__0:
       description: Number of records to return
       in: query
@@ -2015,14 +2010,19 @@ components:
         maximum: 100
         minimum: 10
         type: number
-    Version:
-      description: The requested version of the endpoint to process the request
-      example: '2026-03-25'
+    RepositoryUrlQuery:
+      description: Optional repository URL filter — restricts results to the canonical document containing this URL
       in: query
-      name: version
-      required: true
+      name: url
       schema:
-        $ref: '#/components/schemas/QueryVersion'
+        type: string
+    EndingBeforeCursor:
+      description: Return records before the record identified by this cursor
+      example: v1.MTIzNDU2Nzg5MHxhYmNkZWY=
+      in: query
+      name: ending_before
+      schema:
+        type: string
   securitySchemes:
     APIToken:
       description: API key value must be prefixed with \"Token \".

@@ -667,36 +667,20 @@ paths:
       x-stability-level: beta
 components:
   schemas:
-    Group:
-      additionalProperties: true
+    SSOConnectionAttributes:
+      additionalProperties: false
       properties:
-        attributes:
-          additionalProperties: true
-          properties:
-            name:
-              description: The name of the group.
-              example: My Group
-              type: string
-          required:
-          - name
-          type: object
-        id:
-          example: 331ede0a-de94-456f-b788-166caeca58bf
-          format: uuid
-          type: string
-        type:
-          description: Content type.
-          example: group
+        name:
+          description: The display name of the sso connection.
+          example: My SSO
           type: string
       required:
-      - type
-      - id
-      - attributes
+      - name
       type: object
-    ActualVersion:
-      description: Resolved API version
+    QueryVersion:
+      description: Requested API version
       example: '2026-03-25'
-      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
       type: string
     GroupMembershipOrgMembershipUserData:
       properties:
@@ -734,34 +718,39 @@ components:
           - attributes
           type: object
       type: object
-    GroupMembershipAttributes:
-      additionalProperties: false
-      properties:
-        created_at:
-          description: The time when this group membership was created
-          example: '2022-03-16T00:00:00Z'
-          format: date-time
-          type: string
-      required:
-      - created_at
-      type: object
-    SSOConnection:
-      additionalProperties: false
+    MembershipPatchRequestBody:
       properties:
         attributes:
-          $ref: '#/components/schemas/SSOConnectionAttributes'
+          type: object
         id:
           example: 331ede0a-de94-456f-b788-166caeca58bf
           format: uuid
           type: string
+        relationships:
+          additionalProperties: false
+          properties:
+            role:
+              additionalProperties: false
+              properties:
+                data:
+                  properties:
+                    id:
+                      example: 331ede0a-de94-456f-b788-166caeca58bf
+                      format: uuid
+                      type: string
+                    type:
+                      description: Always "group_role"
+                      example: Always "group_role"
+                      type: string
+                  type: object
+              type: object
+          required:
+          - role
+          type: object
         type:
-          description: Content type.
-          example: sso_connection
+          description: type of membership according to its entity
+          example: group_membership
           type: string
-      required:
-      - type
-      - id
-      - attributes
       type: object
     GroupMembershipRoleData:
       properties:
@@ -783,48 +772,6 @@ components:
               type: string
             type:
               example: group_role
-              type: string
-          required:
-          - id
-          - attributes
-          type: object
-      type: object
-    Links:
-      additionalProperties: false
-      properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        related:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
-    GroupMembershipOrgMembershipOrgData:
-      properties:
-        data:
-          additionalProperties: false
-          properties:
-            attributes:
-              properties:
-                name:
-                  description: The name of the prg
-                  example: Example org
-                  type: string
-              required:
-              - name
-              type: object
-            id:
-              example: 331ede0a-de94-456f-b788-166caeca58bf
-              format: uuid
-              type: string
-            type:
-              example: org
               type: string
           required:
           - id
@@ -869,200 +816,6 @@ components:
           - id
           - attributes
           type: object
-      type: object
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
-        type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
-    User:
-      additionalProperties: false
-      properties:
-        attributes:
-          additionalProperties: false
-          properties:
-            active:
-              description: Whether the user status is enabled or not
-              example: true
-              type: boolean
-            email:
-              description: The email of the user.
-              example: user@someorg.com
-              type: string
-            membership:
-              properties:
-                created_at:
-                  description: The date the membership was established.
-                  example: '2022-09-14T09:19:29.206Z'
-                  format: date-time
-                  type: string
-                strategy:
-                  description: Whether the membership is a direct, or indirect membership.
-                  enum:
-                  - direct
-                  - indirect
-                  example: direct
-                  type: string
-              type: object
-            name:
-              description: The name of the user.
-              example: user
-              type: string
-            username:
-              description: The username of the user.
-              example: username
-              type: string
-          type: object
-        id:
-          description: The Snyk ID corresponding to this user
-          example: 55a348e2-c3ad-4bbc-b40e-9b232d1f4121
-          format: uuid
-          type: string
-        type:
-          description: Content type.
-          example: user
-          type: string
-      required:
-      - type
-      - id
-      - attributes
-      type: object
-    MembershipPatchRequestBody:
-      properties:
-        attributes:
-          type: object
-        id:
-          example: 331ede0a-de94-456f-b788-166caeca58bf
-          format: uuid
-          type: string
-        relationships:
-          additionalProperties: false
-          properties:
-            role:
-              additionalProperties: false
-              properties:
-                data:
-                  properties:
-                    id:
-                      example: 331ede0a-de94-456f-b788-166caeca58bf
-                      format: uuid
-                      type: string
-                    type:
-                      description: Always "group_role"
-                      example: Always "group_role"
-                      type: string
-                  type: object
-              type: object
-          required:
-          - role
-          type: object
-        type:
-          description: type of membership according to its entity
-          example: group_membership
-          type: string
-      type: object
-    GroupMembershipOrgMembershipRoleData:
-      properties:
-        data:
-          additionalProperties: false
-          properties:
-            attributes:
-              properties:
-                name:
-                  description: The name of the role
-                  example: Admin role
-                  type: string
-              required:
-              - name
-              type: object
-            id:
-              example: 331ede0a-de94-456f-b788-166caeca58bf
-              format: uuid
-              type: string
-            type:
-              example: org_role
-              type: string
-          required:
-          - id
-          - attributes
-          type: object
-      type: object
-    GroupMembershipMeta:
-      additionalProperties: false
-      properties:
-        group_membership_count:
-          type: number
-      type: object
-    QueryVersion:
-      description: Requested API version
-      example: '2026-03-25'
-      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
-      type: string
-    GroupMembershipOrgMembership:
-      additionalProperties: false
-      properties:
-        attributes:
-          properties:
-            created_at:
-              description: The date that the org membership was created on
-              example: '2021-05-29T09:50:54.014Z'
-              format: date-time
-          type: object
-        id:
-          example: 331ede0a-de94-456f-b788-166caeca58bf
-          format: uuid
-          type: string
-        org_membership_count:
-          description: Org memberships for this user within this group.
-          type: number
-        relationships:
-          $ref: '#/components/schemas/GroupMembershipOrgMembershipRelationships'
-        type:
-          description: Content type.
-          example: org_membership
-          type: string
-      required:
-      - type
-      - id
-      - attributes
-      - relationships
-      type: object
-    GroupMembershipRelationships:
-      additionalProperties: false
-      properties:
-        group:
-          $ref: '#/components/schemas/GroupMembershipGroupData'
-        role:
-          $ref: '#/components/schemas/GroupMembershipRoleData'
-        user:
-          $ref: '#/components/schemas/GroupMembershipUserData'
-      required:
-      - role
-      - group
-      - user
       type: object
     ErrorDocument:
       additionalProperties: false
@@ -1182,20 +935,6 @@ components:
       - jsonapi
       - errors
       type: object
-    GroupMembershipOrgMembershipRelationships:
-      additionalProperties: false
-      properties:
-        org:
-          $ref: '#/components/schemas/GroupMembershipOrgMembershipOrgData'
-        role:
-          $ref: '#/components/schemas/GroupMembershipOrgMembershipRoleData'
-        user:
-          $ref: '#/components/schemas/GroupMembershipOrgMembershipUserData'
-      required:
-      - role
-      - org
-      - user
-      type: object
     GroupMembership:
       additionalProperties: false
       properties:
@@ -1222,6 +961,126 @@ components:
       - attributes
       - relationships
       type: object
+    Group:
+      additionalProperties: true
+      properties:
+        attributes:
+          additionalProperties: true
+          properties:
+            name:
+              description: The name of the group.
+              example: My Group
+              type: string
+          required:
+          - name
+          type: object
+        id:
+          example: 331ede0a-de94-456f-b788-166caeca58bf
+          format: uuid
+          type: string
+        type:
+          description: Content type.
+          example: group
+          type: string
+      required:
+      - type
+      - id
+      - attributes
+      type: object
+    GroupMembershipRelationships:
+      additionalProperties: false
+      properties:
+        group:
+          $ref: '#/components/schemas/GroupMembershipGroupData'
+        role:
+          $ref: '#/components/schemas/GroupMembershipRoleData'
+        user:
+          $ref: '#/components/schemas/GroupMembershipUserData'
+      required:
+      - role
+      - group
+      - user
+      type: object
+    GroupMembershipOrgMembership:
+      additionalProperties: false
+      properties:
+        attributes:
+          properties:
+            created_at:
+              description: The date that the org membership was created on
+              example: '2021-05-29T09:50:54.014Z'
+              format: date-time
+          type: object
+        id:
+          example: 331ede0a-de94-456f-b788-166caeca58bf
+          format: uuid
+          type: string
+        org_membership_count:
+          description: Org memberships for this user within this group.
+          type: number
+        relationships:
+          $ref: '#/components/schemas/GroupMembershipOrgMembershipRelationships'
+        type:
+          description: Content type.
+          example: org_membership
+          type: string
+      required:
+      - type
+      - id
+      - attributes
+      - relationships
+      type: object
+    GroupMembershipResponseData:
+      additionalProperties: false
+      items:
+        properties:
+          attributes:
+            $ref: '#/components/schemas/GroupMembershipAttributes'
+          id:
+            example: 331ede0a-de94-456f-b788-166caeca58bf
+            format: uuid
+            type: string
+          meta:
+            $ref: '#/components/schemas/GroupMembershipMeta'
+          relationships:
+            $ref: '#/components/schemas/GroupMembershipRelationships'
+          type:
+            description: Content type
+            example: group_membership
+            type: string
+        type: object
+      type: array
+    GroupMembershipOrgMembershipOrgData:
+      properties:
+        data:
+          additionalProperties: false
+          properties:
+            attributes:
+              properties:
+                name:
+                  description: The name of the prg
+                  example: Example org
+                  type: string
+              required:
+              - name
+              type: object
+            id:
+              example: 331ede0a-de94-456f-b788-166caeca58bf
+              format: uuid
+              type: string
+            type:
+              example: org
+              type: string
+          required:
+          - id
+          - attributes
+          type: object
+      type: object
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
     JsonApi:
       additionalProperties: false
       example:
@@ -1234,6 +1093,12 @@ components:
           type: string
       required:
       - version
+      type: object
+    GroupMembershipMeta:
+      additionalProperties: false
+      properties:
+        group_membership_count:
+          type: number
       type: object
     CreateGroupMembershipRequestBody:
       properties:
@@ -1333,43 +1198,311 @@ components:
           - attributes
           type: object
       type: object
-    GroupMembershipResponseData:
-      additionalProperties: false
-      items:
-        properties:
-          attributes:
-            $ref: '#/components/schemas/GroupMembershipAttributes'
-          id:
-            example: 331ede0a-de94-456f-b788-166caeca58bf
-            format: uuid
-            type: string
-          meta:
-            $ref: '#/components/schemas/GroupMembershipMeta'
-          relationships:
-            $ref: '#/components/schemas/GroupMembershipRelationships'
-          type:
-            description: Content type
-            example: group_membership
-            type: string
-        type: object
-      type: array
-    SSOConnectionAttributes:
+    User:
       additionalProperties: false
       properties:
-        name:
-          description: The display name of the sso connection.
-          example: My SSO
+        attributes:
+          additionalProperties: false
+          properties:
+            active:
+              description: Whether the user status is enabled or not
+              example: true
+              type: boolean
+            email:
+              description: The email of the user.
+              example: user@someorg.com
+              type: string
+            membership:
+              properties:
+                created_at:
+                  description: The date the membership was established.
+                  example: '2022-09-14T09:19:29.206Z'
+                  format: date-time
+                  type: string
+                strategy:
+                  description: Whether the membership is a direct, or indirect membership.
+                  enum:
+                  - direct
+                  - indirect
+                  example: direct
+                  type: string
+              type: object
+            name:
+              description: The name of the user.
+              example: user
+              type: string
+            username:
+              description: The username of the user.
+              example: username
+              type: string
+          type: object
+        id:
+          description: The Snyk ID corresponding to this user
+          example: 55a348e2-c3ad-4bbc-b40e-9b232d1f4121
+          format: uuid
+          type: string
+        type:
+          description: Content type.
+          example: user
           type: string
       required:
-      - name
+      - type
+      - id
+      - attributes
       type: object
+    GroupMembershipAttributes:
+      additionalProperties: false
+      properties:
+        created_at:
+          description: The time when this group membership was created
+          example: '2022-03-16T00:00:00Z'
+          format: date-time
+          type: string
+      required:
+      - created_at
+      type: object
+    Links:
+      additionalProperties: false
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        related:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
+    GroupMembershipOrgMembershipRoleData:
+      properties:
+        data:
+          additionalProperties: false
+          properties:
+            attributes:
+              properties:
+                name:
+                  description: The name of the role
+                  example: Admin role
+                  type: string
+              required:
+              - name
+              type: object
+            id:
+              example: 331ede0a-de94-456f-b788-166caeca58bf
+              format: uuid
+              type: string
+            type:
+              example: org_role
+              type: string
+          required:
+          - id
+          - attributes
+          type: object
+      type: object
+    SSOConnection:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/SSOConnectionAttributes'
+        id:
+          example: 331ede0a-de94-456f-b788-166caeca58bf
+          format: uuid
+          type: string
+        type:
+          description: Content type.
+          example: sso_connection
+          type: string
+      required:
+      - type
+      - id
+      - attributes
+      type: object
+    GroupMembershipOrgMembershipRelationships:
+      additionalProperties: false
+      properties:
+        org:
+          $ref: '#/components/schemas/GroupMembershipOrgMembershipOrgData'
+        role:
+          $ref: '#/components/schemas/GroupMembershipOrgMembershipRoleData'
+        user:
+          $ref: '#/components/schemas/GroupMembershipOrgMembershipUserData'
+      required:
+      - role
+      - org
+      - user
+      type: object
+  parameters:
+    UserIdFilter:
+      description: Filter the response by Users that match the provided user ID
+      in: query
+      name: user_id
+      schema:
+        type: string
+    Limit:
+      description: Number of results to return per page
+      example: 10
+      in: query
+      name: limit
+      schema:
+        default: 10
+        format: int32
+        maximum: 100
+        minimum: 10
+        multipleOf: 10
+        type: integer
+    EmailFilter:
+      description: Filter the response by Users that match the provided email
+      in: query
+      name: email
+      schema:
+        type: string
+    RoleFilter:
+      description: Filter the response for results only with the specified role.
+      in: query
+      name: role_name
+      schema:
+        type: string
+    Version:
+      description: The requested version of the endpoint to process the request
+      example: '2026-03-25'
+      in: query
+      name: version
+      required: true
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    IncludeGroupMembershipCount:
+      description: indicates whether the count of group memberships is included
+      in: query
+      name: include_group_membership_count
+      schema:
+        type: boolean
+    UsernameFilter:
+      description: Filter the response by Users that match the provided username
+      in: query
+      name: username
+      schema:
+        type: string
+    SortBy__0:
+      description: Which column to sort by.
+      in: query
+      name: sort_by
+      schema:
+        enum:
+        - username
+        - user_display_name
+        - email
+        - login_method
+        - role_name
+        type: string
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
+    SsoId:
+      description: The ID of the SSO
+      in: path
+      name: sso_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    UserId20230130:
+      description: The ID of the User
+      in: path
+      name: user_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
+        type: string
+    SortOrder__0:
+      description: Order in which results are returned.
+      example: ASC
+      in: query
+      name: sort_order
+      schema:
+        default: DESC
+        enum:
+        - ASC
+        - DESC
+        type: string
+    Cascade:
+      description: indicates whether to delete the child org memberships of the group membership.
+      in: query
+      name: cascade
+      schema:
+        type: boolean
+    OrgName:
+      description: The Name of the org
+      in: query
+      name: org_name
+      schema:
+        description: Organization name
+        example: Org name
+        type: string
   responses:
-    '403':
+    '500':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
-      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '204':
+      description: The operation completed successfully with no content
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -1402,65 +1535,12 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-    '204':
-      description: The operation completed successfully with no content
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
     '400':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
       description: 'Bad Request: A parameter provided as a part of the request was invalid.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
-    '409':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Conflict: The requested operation conflicts with the current state of the resource in some way.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
-    '500':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -1493,7 +1573,79 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '409':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Conflict: The requested operation conflicts with the current state of the resource in some way.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
   headers:
+    LocationHeader:
+      description: 'A header providing a URL for the location of a resource
+
+        '
+      example: https://example.com/resource/4
+      schema:
+        format: url
+        type: string
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
     VersionStageResponseHeader:
       description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
 
@@ -1516,158 +1668,6 @@ components:
       schema:
         format: uuid
         type: string
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
-    VersionRequestedResponseHeader:
-      description: A header containing the version of the endpoint requested by the caller.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    LocationHeader:
-      description: 'A header providing a URL for the location of a resource
-
-        '
-      example: https://example.com/resource/4
-      schema:
-        format: url
-        type: string
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/ActualVersion'
-    DeprecationHeader:
-      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
-
-        '
-      example: '2021-07-01T00:00:00Z'
-      schema:
-        format: date-time
-        type: string
-  parameters:
-    UserIdFilter:
-      description: Filter the response by Users that match the provided user ID
-      in: query
-      name: user_id
-      schema:
-        type: string
-    SortBy__0:
-      description: Which column to sort by.
-      in: query
-      name: sort_by
-      schema:
-        enum:
-        - username
-        - user_display_name
-        - email
-        - login_method
-        - role_name
-        type: string
-    Cascade:
-      description: indicates whether to delete the child org memberships of the group membership.
-      in: query
-      name: cascade
-      schema:
-        type: boolean
-    EmailFilter:
-      description: Filter the response by Users that match the provided email
-      in: query
-      name: email
-      schema:
-        type: string
-    RoleFilter:
-      description: Filter the response for results only with the specified role.
-      in: query
-      name: role_name
-      schema:
-        type: string
-    SsoId:
-      description: The ID of the SSO
-      in: path
-      name: sso_id
-      required: true
-      schema:
-        format: uuid
-        type: string
-    StartingAfter:
-      description: Return the page of results immediately after this cursor
-      example: v1.eyJpZCI6IjEwMDAifQo=
-      in: query
-      name: starting_after
-      schema:
-        type: string
-    OrgName:
-      description: The Name of the org
-      in: query
-      name: org_name
-      schema:
-        description: Organization name
-        example: Org name
-        type: string
-    SortOrder__0:
-      description: Order in which results are returned.
-      example: ASC
-      in: query
-      name: sort_order
-      schema:
-        default: DESC
-        enum:
-        - ASC
-        - DESC
-        type: string
-    Version:
-      description: The requested version of the endpoint to process the request
-      example: '2026-03-25'
-      in: query
-      name: version
-      required: true
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    UsernameFilter:
-      description: Filter the response by Users that match the provided username
-      in: query
-      name: username
-      schema:
-        type: string
-    UserId20230130:
-      description: The ID of the User
-      in: path
-      name: user_id
-      required: true
-      schema:
-        format: uuid
-        type: string
-    EndingBefore:
-      description: Return the page of results immediately before this cursor
-      example: v1.eyJpZCI6IjExMDAifQo=
-      in: query
-      name: ending_before
-      schema:
-        type: string
-    IncludeGroupMembershipCount:
-      description: indicates whether the count of group memberships is included
-      in: query
-      name: include_group_membership_count
-      schema:
-        type: boolean
-    Limit:
-      description: Number of results to return per page
-      example: 10
-      in: query
-      name: limit
-      schema:
-        default: 10
-        format: int32
-        maximum: 100
-        minimum: 10
-        multipleOf: 10
-        type: integer
   securitySchemes:
     APIToken:
       description: API key value must be prefixed with \"Token \".
