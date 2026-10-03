@@ -808,6 +808,80 @@ paths:
       x-stability-level: beta
 components:
   schemas:
+    PaginatedLinks:
+      additionalProperties: false
+      example:
+        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
+        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
+        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    GroupPolicyConditionSnykId:
+      additionalProperties: false
+      description: Matches on the Snyk ID.
+      properties:
+        field:
+          enum:
+          - snyk-id
+          type: string
+          x-enum-varnames:
+          - GroupPolicySnykId
+        operator:
+          $ref: '#/components/schemas/GroupPolicyConditionOperator'
+        value:
+          items:
+            type: string
+          minItems: 1
+          type: array
+      required:
+      - field
+      - operator
+      - value
+      type: object
+    GroupPolicyOperator:
+      enum:
+      - and
+      type: string
+      x-enum-varnames:
+      - GroupPolicyAnd
+    GroupPolicyResponse:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/GroupPolicyResponseAttributes'
+        id:
+          description: A unique identifier for this particular occurrence of the group level policy.
+          example: f16c31b5-6129-4571-add8-d589da9be524
+          format: uuid
+          type: string
+        type:
+          enum:
+          - policy
+          type: string
+      required:
+      - id
+      - type
+      - attributes
+      type: object
+    GroupPolicyActionAnnotation:
+      additionalProperties: false
+      description: Annotation action
+      properties:
+        data:
+          $ref: '#/components/schemas/GroupPolicyActionAnnotationData'
+      required:
+      - data
+      type: object
     PolicyAttributes:
       additionalProperties: false
       properties:
@@ -836,6 +910,516 @@ components:
       - conditions_group
       - action
       - action_type
+      type: object
+    PolicyEventResponse:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/PolicyEventAttributes'
+        id:
+          description: A unique identifier for this event.
+          example: f16c31b5-6129-4571-add8-d589da9be524
+          format: uuid
+          type: string
+        type:
+          enum:
+          - policy_event
+          type: string
+      required:
+      - id
+      - type
+      - attributes
+      type: object
+    SeverityLevel:
+      enum:
+      - low
+      - medium
+      - high
+      - critical
+      type: string
+      x-enum-varnames:
+      - Low
+      - Medium
+      - High
+      - Critical
+    GroupPolicyConditionSnykAssetFindingV1:
+      additionalProperties: false
+      description: Matches on the Snyk Asset Finding V1 identifier.
+      properties:
+        field:
+          enum:
+          - snyk/asset/finding/v1
+          type: string
+          x-enum-varnames:
+          - GroupPolicySnykAssetFindingV1
+        operator:
+          $ref: '#/components/schemas/GroupPolicyConditionOperator'
+        value:
+          items:
+            format: uuid
+            type: string
+          minItems: 1
+          type: array
+      required:
+      - field
+      - operator
+      - value
+      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
+    GroupPolicyConditionsGroup:
+      additionalProperties: false
+      properties:
+        conditions:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/GroupPolicyConditionExploitMaturity'
+            - $ref: '#/components/schemas/GroupPolicyConditionSnykAssetFindingV1'
+            - $ref: '#/components/schemas/GroupPolicyConditionRuleId'
+            - $ref: '#/components/schemas/GroupPolicyConditionSeverity'
+            - $ref: '#/components/schemas/GroupPolicyConditionCWE'
+            - $ref: '#/components/schemas/GroupPolicyConditionCVE'
+            - $ref: '#/components/schemas/GroupPolicyConditionSnykId'
+            - $ref: '#/components/schemas/GroupPolicyConditionOrgID'
+            - $ref: '#/components/schemas/GroupPolicyConditionProjectTags'
+            - $ref: '#/components/schemas/GroupPolicyConditionBusinessCriticality'
+            - $ref: '#/components/schemas/GroupPolicyConditionEnvironment'
+            - $ref: '#/components/schemas/GroupPolicyConditionLifecycle'
+          minItems: 1
+          type: array
+        logical_operator:
+          $ref: '#/components/schemas/GroupPolicyOperator'
+      required:
+      - logical_operator
+      - conditions
+      type: object
+    GroupPolicyActionIgnoreData:
+      additionalProperties: false
+      properties:
+        ignore_type:
+          enum:
+          - wont-fix
+          - not-vulnerable
+          - temporary-ignore
+          type: string
+          x-enum-varnames:
+          - GroupPolicyWontFix
+          - GroupPolicyNotVulnerable
+          - GroupPolicyTemporaryIgnore
+        reason:
+          maxLength: 10000
+          type: string
+      required:
+      - ignore_type
+      type: object
+    CreateGroupPolicyPayload:
+      properties:
+        data:
+          additionalProperties: false
+          properties:
+            attributes:
+              $ref: '#/components/schemas/GroupPolicyRequestAttributes'
+            type:
+              enum:
+              - policy
+              type: string
+          required:
+          - type
+          - attributes
+          type: object
+      required:
+      - data
+      type: object
+    PolicyActionIgnoreDataNotVulnerable:
+      additionalProperties: false
+      properties:
+        expires:
+          example: '2024-03-16T00:00:00Z'
+          format: date-time
+          type: string
+        ignore_type:
+          enum:
+          - not-vulnerable
+          type: string
+        reason:
+          maxLength: 10000
+          type: string
+      required:
+      - ignore_type
+      type: object
+    GroupPolicyConditionOperator:
+      enum:
+      - includes
+      - not-includes
+      type: string
+      x-enum-varnames:
+      - GroupPolicyIncludes
+      - GroupPolicyNotIncludes
+    PolicyResponseAttributes:
+      additionalProperties: false
+      properties:
+        action:
+          $ref: '#/components/schemas/PolicyActionIgnore'
+        action_type:
+          enum:
+          - ignore
+          type: string
+        conditions_group:
+          $ref: '#/components/schemas/PolicyConditionsGroup'
+        created_at:
+          example: '2024-03-16T00:00:00Z'
+          format: date-time
+          type: string
+        created_by:
+          $ref: '#/components/schemas/Principal'
+        name:
+          type: string
+        review:
+          $ref: '#/components/schemas/PolicyReview'
+        updated_at:
+          example: '2024-03-16T00:00:00Z'
+          format: date-time
+          type: string
+      required:
+      - name
+      - conditions_group
+      - action
+      - action_type
+      - review
+      - created_at
+      - updated_at
+      type: object
+    PolicyCondition:
+      additionalProperties: false
+      properties:
+        field:
+          description: "field refers to the type of identifier used in the condition of the policy.  The available value is versioned and hierarchical:\n- `snyk/asset/finding/v1` : identity of the finding scoped to a Snyk assets (e.g. a repository).\nFor a given issue, `snyk/asset/finding/v1` can be extracted from the `key_asset` field in the [issues API](https://apidocs.snyk.io/?version=2024-10-15#get-/orgs/-org_id-/issues). \nIn addition, finding identities can be extracted from the fingerprints section of the SARIF, which is accessible via the Snyk CLI. More details can be found in the [CLI documentation](https://docs.snyk.io/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-code/view-snyk-code-cli-results#export-test-results).\n"
+          enum:
+          - snyk/asset/finding/v1
+          type: string
+        operator:
+          description: 'Operator for the field to value matching. Currently
+
+            only ''includes'' is supported, which does an exact
+
+            string match on the value.
+
+            '
+          enum:
+          - includes
+          type: string
+        value:
+          description: 'The value of the field to match on.
+
+            '
+          type: string
+      required:
+      - field
+      - operator
+      - value
+      type: object
+    Links:
+      additionalProperties: false
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        related:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    GroupPolicyConditionLifecycle:
+      additionalProperties: false
+      description: Matches on the project lifecycle - if lifecycle is provided, the policy will only apply to projects with the specified lifecycle.
+      properties:
+        field:
+          enum:
+          - lifecycle
+          type: string
+          x-enum-varnames:
+          - GroupPolicyLifecycle
+        operator:
+          $ref: '#/components/schemas/GroupPolicyConditionOperator'
+        value:
+          items:
+            enum:
+            - development
+            - production
+            - sandbox
+            type: string
+          minItems: 1
+          type: array
+      required:
+      - field
+      - operator
+      - value
+      type: object
+    PolicyActionIgnoreDataWontFix:
+      additionalProperties: false
+      properties:
+        expires:
+          example: '2024-03-16T00:00:00Z'
+          format: date-time
+          type: string
+        ignore_type:
+          enum:
+          - wont-fix
+          type: string
+        reason:
+          maxLength: 10000
+          type: string
+      required:
+      - ignore_type
+      type: object
+    GroupPolicyConditionOrgID:
+      additionalProperties: false
+      description: Matches on the organization ID - if org ID is provided, the policy will only apply to the specified organization. If no org ID is provided, the policy will apply to all organizations.
+      properties:
+        field:
+          enum:
+          - org-id
+          type: string
+          x-enum-varnames:
+          - GroupPolicyOrgID
+        operator:
+          $ref: '#/components/schemas/GroupPolicyConditionOperator'
+        value:
+          items:
+            format: uuid
+            type: string
+          minItems: 1
+          type: array
+      required:
+      - field
+      - operator
+      - value
+      type: object
+    PolicyResponse:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/PolicyResponseAttributes'
+        id:
+          description: A unique identifier for this particular occurrence of the policy.
+          example: f16c31b5-6129-4571-add8-d589da9be524
+          format: uuid
+          type: string
+        type:
+          enum:
+          - policy
+          type: string
+      required:
+      - id
+      - type
+      - attributes
+      type: object
+    UpdateGroupPolicyPayload:
+      additionalProperties: false
+      properties:
+        data:
+          additionalProperties: false
+          properties:
+            attributes:
+              $ref: '#/components/schemas/UpdateGroupPolicyAttributes'
+            id:
+              description: the UUID of the policy to update.
+              example: f16c31b5-6129-4571-add8-d589da9be524
+              format: uuid
+              type: string
+            type:
+              enum:
+              - policy
+              type: string
+          required:
+          - type
+          - attributes
+          - id
+          type: object
+      required:
+      - data
+      type: object
+    PolicyActionIgnore__0:
+      additionalProperties: false
+      properties:
+        data:
+          $ref: '#/components/schemas/PolicyActionIgnoreData__0'
+      required:
+      - data
+      type: object
+    GroupPolicyRequestAttributes:
+      additionalProperties: false
+      properties:
+        action:
+          $ref: '#/components/schemas/GroupPolicyAction'
+        action_type:
+          $ref: '#/components/schemas/GroupPolicyActionType'
+        conditions_group:
+          $ref: '#/components/schemas/GroupPolicyConditionsGroup'
+        name:
+          type: string
+      required:
+      - name
+      - conditions_group
+      - action_type
+      - action
+      type: object
+    GroupPolicyActionType:
+      enum:
+      - ignore
+      - annotation
+      - severity-override
+      type: string
+    QueryVersion:
+      description: Requested API version
+      example: '2026-03-25'
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+      type: string
+    GroupPolicyConditionSeverity:
+      additionalProperties: false
+      description: Matches on the severity.
+      properties:
+        field:
+          enum:
+          - severity
+          type: string
+          x-enum-varnames:
+          - GroupPolicySeverity
+        operator:
+          $ref: '#/components/schemas/GroupPolicyConditionOperator'
+        value:
+          items:
+            enum:
+            - low
+            - medium
+            - high
+            - critical
+            type: string
+          minItems: 1
+          type: array
+      required:
+      - field
+      - operator
+      - value
+      type: object
+    GroupPolicyConditionBusinessCriticality:
+      additionalProperties: false
+      description: Matches on the project business criticality - if business criticality is provided, the policy will only apply to projects with the specified business criticality.
+      properties:
+        field:
+          enum:
+          - business-criticality
+          type: string
+          x-enum-varnames:
+          - GroupPolicyBusinessCriticality
+        operator:
+          $ref: '#/components/schemas/GroupPolicyConditionOperator'
+        value:
+          items:
+            enum:
+            - low
+            - medium
+            - high
+            - critical
+            type: string
+          minItems: 1
+          type: array
+      required:
+      - field
+      - operator
+      - value
+      type: object
+    GroupPolicyActionSeverityOverride:
+      additionalProperties: false
+      description: Severity override action
+      properties:
+        data:
+          $ref: '#/components/schemas/GroupPolicyActionSeverityOverrideData'
+      required:
+      - data
+      type: object
+    GroupPolicyActionAnnotationData:
+      additionalProperties: false
+      properties:
+        reason:
+          type: string
+        value:
+          type: string
+      required:
+      - value
+      type: object
+    GroupPolicyPrincipal:
+      additionalProperties: false
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+        id:
+          description: The Snyk ID corresponding to this user or service account that created the policy
+          format: uuid
+          type: string
+        name:
+          description: Name of the user or service account that created the policy
+          type: string
+      required:
+      - name
+      - id
+      type: object
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
+    PolicyActionIgnoreData__0:
+      additionalProperties: false
+      properties:
+        expires:
+          example: '2024-03-16T00:00:00Z'
+          format: date-time
+          type: string
+        ignore_type:
+          enum:
+          - wont-fix
+          - not-vulnerable
+          - temporary-ignore
+          type: string
+        reason:
+          maxLength: 10000
+          type: string
+      required:
+      - ignore_type
       type: object
     GroupPolicyConditionProjectTags:
       additionalProperties: false
@@ -867,105 +1451,68 @@ components:
       - operator
       - value
       type: object
-    PolicyCondition:
-      additionalProperties: false
+    Meta:
+      additionalProperties: true
+      description: Free-form object that may contain non-standard information.
+      example:
+        key1: value1
+        key2:
+          sub_key: sub_value
+        key3:
+        - array_value1
+        - array_value2
+      type: object
+    GroupPolicyAction:
+      oneOf:
+      - $ref: '#/components/schemas/GroupPolicyActionIgnore'
+      - $ref: '#/components/schemas/GroupPolicyActionAnnotation'
+      - $ref: '#/components/schemas/GroupPolicyActionSeverityOverride'
+    PolicyEventType:
+      enum:
+      - approve
+      - reject
+      - cancel
+      - reopen
+      - edit
+      - create
+      type: string
+    CreatePolicyPayload:
       properties:
-        field:
-          description: "field refers to the type of identifier used in the condition of the policy.  The available value is versioned and hierarchical:\n- `snyk/asset/finding/v1` : identity of the finding scoped to a Snyk assets (e.g. a repository).\nFor a given issue, `snyk/asset/finding/v1` can be extracted from the `key_asset` field in the [issues API](https://apidocs.snyk.io/?version=2024-10-15#get-/orgs/-org_id-/issues). \nIn addition, finding identities can be extracted from the fingerprints section of the SARIF, which is accessible via the Snyk CLI. More details can be found in the [CLI documentation](https://docs.snyk.io/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-code/view-snyk-code-cli-results#export-test-results).\n"
-          enum:
-          - snyk/asset/finding/v1
-          type: string
-        operator:
-          description: 'Operator for the field to value matching. Currently
-
-            only ''includes'' is supported, which does an exact
-
-            string match on the value.
-
-            '
-          enum:
-          - includes
-          type: string
-        value:
-          description: 'The value of the field to match on.
-
-            '
-          type: string
+        data:
+          additionalProperties: false
+          properties:
+            attributes:
+              $ref: '#/components/schemas/PolicyAttributes'
+            meta:
+              $ref: '#/components/schemas/Meta'
+            type:
+              enum:
+              - policy
+              type: string
+          required:
+          - type
+          - attributes
+          type: object
       required:
-      - field
-      - operator
-      - value
+      - data
       type: object
-    PolicyEventChanges:
+    UpdateGroupPolicyAttributes:
       additionalProperties: false
-      properties:
-        new_action:
-          $ref: '#/components/schemas/PolicyActionIgnore__0'
-        new_conditions_group:
-          $ref: '#/components/schemas/PolicyConditionsGroup'
-        new_name:
-          type: string
-        new_review:
-          $ref: '#/components/schemas/PolicyReview'
-        old_action:
-          $ref: '#/components/schemas/PolicyActionIgnore__0'
-        old_conditions_group:
-          $ref: '#/components/schemas/PolicyConditionsGroup'
-        old_name:
-          type: string
-        old_review:
-          $ref: '#/components/schemas/PolicyReview'
-      type: object
-    PolicyActionIgnoreDataWontFix:
-      additionalProperties: false
-      properties:
-        expires:
-          example: '2024-03-16T00:00:00Z'
-          format: date-time
-          type: string
-        ignore_type:
-          enum:
-          - wont-fix
-          type: string
-        reason:
-          maxLength: 10000
-          type: string
-      required:
-      - ignore_type
-      type: object
-    UpdatePolicyReview:
-      description: 'Review update.
+      description: 'Attributes of a policy that can be updated.
 
-
-        To provide an optional message relating to the review state change, add a string ''message'' property to the ''meta'' object.
+        At least one of ''name'', ''conditions_group'', ''action_type'', or ''action'' must be provided.
 
         '
-      enum:
-      - pending
-      - approved
-      - rejected
-      type: string
-    GroupPolicyConditionCVE:
-      additionalProperties: false
-      description: Matches on the CVE.
+      minProperties: 1
       properties:
-        field:
-          enum:
-          - cve
+        action:
+          $ref: '#/components/schemas/GroupPolicyAction'
+        action_type:
+          $ref: '#/components/schemas/GroupPolicyActionType'
+        conditions_group:
+          $ref: '#/components/schemas/GroupPolicyConditionsGroup'
+        name:
           type: string
-          x-enum-varnames:
-          - GroupPolicyCVE
-        operator:
-          $ref: '#/components/schemas/GroupPolicyConditionOperator'
-        value:
-          items:
-            type: string
-          minItems: 1
-          type: array
-      required:
-      - field
-      - operator
-      - value
       type: object
     GroupPolicyConditionCWE:
       additionalProperties: false
@@ -989,16 +1536,138 @@ components:
       - operator
       - value
       type: object
-    GroupPolicyConditionSnykId:
+    PolicyActionIgnoreData:
+      discriminator:
+        mapping:
+          not-vulnerable: '#/components/schemas/PolicyActionIgnoreDataNotVulnerable'
+          temporary-ignore: '#/components/schemas/PolicyActionIgnoreDataTemporaryIgnore'
+          wont-fix: '#/components/schemas/PolicyActionIgnoreDataWontFix'
+        propertyName: ignore_type
+      oneOf:
+      - $ref: '#/components/schemas/PolicyActionIgnoreDataWontFix'
+      - $ref: '#/components/schemas/PolicyActionIgnoreDataTemporaryIgnore'
+      - $ref: '#/components/schemas/PolicyActionIgnoreDataNotVulnerable'
+      type: object
+    GroupPolicyResponseAttributes:
       additionalProperties: false
-      description: Matches on the Snyk ID.
+      properties:
+        action:
+          $ref: '#/components/schemas/GroupPolicyAction'
+        action_type:
+          $ref: '#/components/schemas/GroupPolicyActionType'
+        conditions_group:
+          $ref: '#/components/schemas/GroupPolicyConditionsGroup'
+        created_at:
+          example: '2024-03-16T00:00:00Z'
+          format: date-time
+          type: string
+        created_by:
+          $ref: '#/components/schemas/GroupPolicyPrincipal'
+        name:
+          type: string
+        updated_at:
+          example: '2024-03-16T00:00:00Z'
+          format: date-time
+          type: string
+      required:
+      - name
+      - conditions_group
+      - action_type
+      - action
+      - created_by
+      - created_at
+      - updated_at
+      type: object
+    PolicyActionIgnore:
+      additionalProperties: false
+      properties:
+        data:
+          $ref: '#/components/schemas/PolicyActionIgnoreData'
+      required:
+      - data
+      type: object
+    SelfLink:
+      additionalProperties: false
+      example:
+        self: https://example.com/api/this_resource
+      properties:
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    GroupPolicyActionSeverityOverrideData:
+      additionalProperties: false
+      properties:
+        reason:
+          type: string
+        severity:
+          $ref: '#/components/schemas/SeverityLevel'
+      required:
+      - severity
+      type: object
+    PolicyReview:
+      description: Review status.
+      enum:
+      - pending
+      - approved
+      - rejected
+      - not-required
+      type: string
+    UpdatePolicyPayload:
+      additionalProperties: false
+      properties:
+        data:
+          additionalProperties: false
+          properties:
+            attributes:
+              $ref: '#/components/schemas/UpdatePolicyAttributes'
+            id:
+              description: the UUID of the policy to update.
+              example: f16c31b5-6129-4571-add8-d589da9be524
+              format: uuid
+              type: string
+            meta:
+              $ref: '#/components/schemas/Meta'
+            type:
+              enum:
+              - policy
+              type: string
+          required:
+          - type
+          - attributes
+          type: object
+      required:
+      - data
+      type: object
+    PolicyEventChanges:
+      additionalProperties: false
+      properties:
+        new_action:
+          $ref: '#/components/schemas/PolicyActionIgnore__0'
+        new_conditions_group:
+          $ref: '#/components/schemas/PolicyConditionsGroup'
+        new_name:
+          type: string
+        new_review:
+          $ref: '#/components/schemas/PolicyReview'
+        old_action:
+          $ref: '#/components/schemas/PolicyActionIgnore__0'
+        old_conditions_group:
+          $ref: '#/components/schemas/PolicyConditionsGroup'
+        old_name:
+          type: string
+        old_review:
+          $ref: '#/components/schemas/PolicyReview'
+      type: object
+    GroupPolicyConditionCVE:
+      additionalProperties: false
+      description: Matches on the CVE.
       properties:
         field:
           enum:
-          - snyk-id
+          - cve
           type: string
           x-enum-varnames:
-          - GroupPolicySnykId
+          - GroupPolicyCVE
         operator:
           $ref: '#/components/schemas/GroupPolicyConditionOperator'
         value:
@@ -1011,50 +1680,98 @@ components:
       - operator
       - value
       type: object
-    PolicyActionIgnore:
+    PolicyEventAttributes:
       additionalProperties: false
       properties:
+        changes:
+          $ref: '#/components/schemas/PolicyEventChanges'
+        comment:
+          type: string
+        created_at:
+          example: '2024-03-16T00:00:00Z'
+          format: date-time
+          type: string
+        created_by:
+          $ref: '#/components/schemas/Principal'
+        type:
+          $ref: '#/components/schemas/PolicyEventType'
+      required:
+      - created_at
+      - type
+      - created_by
+      - changes
+      type: object
+    GroupPolicyActionIgnore:
+      additionalProperties: false
+      description: Ignore action
+      properties:
         data:
-          $ref: '#/components/schemas/PolicyActionIgnoreData'
+          $ref: '#/components/schemas/GroupPolicyActionIgnoreData'
       required:
       - data
       type: object
-    GroupPolicyActionSeverityOverrideData:
-      additionalProperties: false
+    PolicyConditionsGroup:
       properties:
-        reason:
+        conditions:
+          items:
+            $ref: '#/components/schemas/PolicyCondition'
+          maxItems: 1
+          minItems: 1
+          type: array
+        logical_operator:
+          description: The logical operator for the policy condition. Currently only 'and' is supported.
+          enum:
+          - and
           type: string
-        severity:
-          $ref: '#/components/schemas/SeverityLevel'
       required:
-      - severity
+      - logical_operator
+      - conditions
       type: object
-    GroupPolicyActionAnnotationData:
+    GroupPolicyConditionRuleId:
       additionalProperties: false
+      description: Matches on the rule ID.
       properties:
-        reason:
+        field:
+          enum:
+          - rule-id
           type: string
+          x-enum-varnames:
+          - GroupPolicyRuleId
+        operator:
+          $ref: '#/components/schemas/GroupPolicyConditionOperator'
         value:
-          type: string
+          items:
+            type: string
+          minItems: 1
+          type: array
       required:
+      - field
+      - operator
       - value
       type: object
-    Meta:
-      additionalProperties: true
-      description: Free-form object that may contain non-standard information.
-      example:
-        key1: value1
-        key2:
-          sub_key: sub_value
-        key3:
-        - array_value1
-        - array_value2
+    UpdatePolicyAttributes:
+      additionalProperties: false
+      description: 'Attributes of a policy that can be updated.
+
+        At least one of ''name'', ''conditions_group'', ''action'', or ''review'' must be provided.
+
+
+        In order to update the review field, the caller will need to have the
+
+        "Review Ignore Request" permission.
+
+        '
+      properties:
+        action:
+          $ref: '#/components/schemas/PolicyActionIgnore'
+        conditions_group:
+          $ref: '#/components/schemas/PolicyConditionsGroup'
+        name:
+          maxLength: 255
+          type: string
+        review:
+          $ref: '#/components/schemas/UpdatePolicyReview'
       type: object
-    QueryVersion:
-      description: Requested API version
-      example: '2026-03-25'
-      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
-      type: string
     ErrorDocument:
       additionalProperties: false
       example:
@@ -1173,25 +1890,18 @@ components:
       - jsonapi
       - errors
       type: object
-    PolicyResponse:
-      additionalProperties: false
-      properties:
-        attributes:
-          $ref: '#/components/schemas/PolicyResponseAttributes'
-        id:
-          description: A unique identifier for this particular occurrence of the policy.
-          example: f16c31b5-6129-4571-add8-d589da9be524
-          format: uuid
-          type: string
-        type:
-          enum:
-          - policy
-          type: string
-      required:
-      - id
-      - type
-      - attributes
-      type: object
+    UpdatePolicyReview:
+      description: 'Review update.
+
+
+        To provide an optional message relating to the review state change, add a string ''message'' property to the ''meta'' object.
+
+        '
+      enum:
+      - pending
+      - approved
+      - rejected
+      type: string
     Principal:
       properties:
         email:
@@ -1206,465 +1916,6 @@ components:
       required:
       - name
       - id
-      type: object
-    GroupPolicyConditionOperator:
-      enum:
-      - includes
-      - not-includes
-      type: string
-      x-enum-varnames:
-      - GroupPolicyIncludes
-      - GroupPolicyNotIncludes
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
-        type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
-    GroupPolicyConditionRuleId:
-      additionalProperties: false
-      description: Matches on the rule ID.
-      properties:
-        field:
-          enum:
-          - rule-id
-          type: string
-          x-enum-varnames:
-          - GroupPolicyRuleId
-        operator:
-          $ref: '#/components/schemas/GroupPolicyConditionOperator'
-        value:
-          items:
-            type: string
-          minItems: 1
-          type: array
-      required:
-      - field
-      - operator
-      - value
-      type: object
-    PaginatedLinks:
-      additionalProperties: false
-      example:
-        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
-        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
-        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
-      properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
-    PolicyEventType:
-      enum:
-      - approve
-      - reject
-      - cancel
-      - reopen
-      - edit
-      - create
-      type: string
-    GroupPolicyConditionBusinessCriticality:
-      additionalProperties: false
-      description: Matches on the project business criticality - if business criticality is provided, the policy will only apply to projects with the specified business criticality.
-      properties:
-        field:
-          enum:
-          - business-criticality
-          type: string
-          x-enum-varnames:
-          - GroupPolicyBusinessCriticality
-        operator:
-          $ref: '#/components/schemas/GroupPolicyConditionOperator'
-        value:
-          items:
-            enum:
-            - low
-            - medium
-            - high
-            - critical
-            type: string
-          minItems: 1
-          type: array
-      required:
-      - field
-      - operator
-      - value
-      type: object
-    GroupPolicyConditionLifecycle:
-      additionalProperties: false
-      description: Matches on the project lifecycle - if lifecycle is provided, the policy will only apply to projects with the specified lifecycle.
-      properties:
-        field:
-          enum:
-          - lifecycle
-          type: string
-          x-enum-varnames:
-          - GroupPolicyLifecycle
-        operator:
-          $ref: '#/components/schemas/GroupPolicyConditionOperator'
-        value:
-          items:
-            enum:
-            - development
-            - production
-            - sandbox
-            type: string
-          minItems: 1
-          type: array
-      required:
-      - field
-      - operator
-      - value
-      type: object
-    PolicyActionIgnoreData__0:
-      additionalProperties: false
-      properties:
-        expires:
-          example: '2024-03-16T00:00:00Z'
-          format: date-time
-          type: string
-        ignore_type:
-          enum:
-          - wont-fix
-          - not-vulnerable
-          - temporary-ignore
-          type: string
-        reason:
-          maxLength: 10000
-          type: string
-      required:
-      - ignore_type
-      type: object
-    UpdateGroupPolicyAttributes:
-      additionalProperties: false
-      description: 'Attributes of a policy that can be updated.
-
-        At least one of ''name'', ''conditions_group'', ''action_type'', or ''action'' must be provided.
-
-        '
-      minProperties: 1
-      properties:
-        action:
-          $ref: '#/components/schemas/GroupPolicyAction'
-        action_type:
-          $ref: '#/components/schemas/GroupPolicyActionType'
-        conditions_group:
-          $ref: '#/components/schemas/GroupPolicyConditionsGroup'
-        name:
-          type: string
-      type: object
-    GroupPolicyResponse:
-      additionalProperties: false
-      properties:
-        attributes:
-          $ref: '#/components/schemas/GroupPolicyResponseAttributes'
-        id:
-          description: A unique identifier for this particular occurrence of the group level policy.
-          example: f16c31b5-6129-4571-add8-d589da9be524
-          format: uuid
-          type: string
-        type:
-          enum:
-          - policy
-          type: string
-      required:
-      - id
-      - type
-      - attributes
-      type: object
-    GroupPolicyRequestAttributes:
-      additionalProperties: false
-      properties:
-        action:
-          $ref: '#/components/schemas/GroupPolicyAction'
-        action_type:
-          $ref: '#/components/schemas/GroupPolicyActionType'
-        conditions_group:
-          $ref: '#/components/schemas/GroupPolicyConditionsGroup'
-        name:
-          type: string
-      required:
-      - name
-      - conditions_group
-      - action_type
-      - action
-      type: object
-    PolicyEventAttributes:
-      additionalProperties: false
-      properties:
-        changes:
-          $ref: '#/components/schemas/PolicyEventChanges'
-        comment:
-          type: string
-        created_at:
-          example: '2024-03-16T00:00:00Z'
-          format: date-time
-          type: string
-        created_by:
-          $ref: '#/components/schemas/Principal'
-        type:
-          $ref: '#/components/schemas/PolicyEventType'
-      required:
-      - created_at
-      - type
-      - created_by
-      - changes
-      type: object
-    UpdatePolicyPayload:
-      additionalProperties: false
-      properties:
-        data:
-          additionalProperties: false
-          properties:
-            attributes:
-              $ref: '#/components/schemas/UpdatePolicyAttributes'
-            id:
-              description: the UUID of the policy to update.
-              example: f16c31b5-6129-4571-add8-d589da9be524
-              format: uuid
-              type: string
-            meta:
-              $ref: '#/components/schemas/Meta'
-            type:
-              enum:
-              - policy
-              type: string
-          required:
-          - type
-          - attributes
-          type: object
-      required:
-      - data
-      type: object
-    SeverityLevel:
-      enum:
-      - low
-      - medium
-      - high
-      - critical
-      type: string
-      x-enum-varnames:
-      - Low
-      - Medium
-      - High
-      - Critical
-    GroupPolicyAction:
-      oneOf:
-      - $ref: '#/components/schemas/GroupPolicyActionIgnore'
-      - $ref: '#/components/schemas/GroupPolicyActionAnnotation'
-      - $ref: '#/components/schemas/GroupPolicyActionSeverityOverride'
-    GroupPolicyActionAnnotation:
-      additionalProperties: false
-      description: Annotation action
-      properties:
-        data:
-          $ref: '#/components/schemas/GroupPolicyActionAnnotationData'
-      required:
-      - data
-      type: object
-    JsonApi:
-      additionalProperties: false
-      example:
-        version: '1.0'
-      properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          example: '1.0'
-          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
-          type: string
-      required:
-      - version
-      type: object
-    GroupPolicyConditionsGroup:
-      additionalProperties: false
-      properties:
-        conditions:
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/GroupPolicyConditionExploitMaturity'
-            - $ref: '#/components/schemas/GroupPolicyConditionSnykAssetFindingV1'
-            - $ref: '#/components/schemas/GroupPolicyConditionRuleId'
-            - $ref: '#/components/schemas/GroupPolicyConditionSeverity'
-            - $ref: '#/components/schemas/GroupPolicyConditionCWE'
-            - $ref: '#/components/schemas/GroupPolicyConditionCVE'
-            - $ref: '#/components/schemas/GroupPolicyConditionSnykId'
-            - $ref: '#/components/schemas/GroupPolicyConditionOrgID'
-            - $ref: '#/components/schemas/GroupPolicyConditionProjectTags'
-            - $ref: '#/components/schemas/GroupPolicyConditionBusinessCriticality'
-            - $ref: '#/components/schemas/GroupPolicyConditionEnvironment'
-            - $ref: '#/components/schemas/GroupPolicyConditionLifecycle'
-          minItems: 1
-          type: array
-        logical_operator:
-          $ref: '#/components/schemas/GroupPolicyOperator'
-      required:
-      - logical_operator
-      - conditions
-      type: object
-    GroupPolicyOperator:
-      enum:
-      - and
-      type: string
-      x-enum-varnames:
-      - GroupPolicyAnd
-    PolicyActionIgnoreData:
-      discriminator:
-        mapping:
-          not-vulnerable: '#/components/schemas/PolicyActionIgnoreDataNotVulnerable'
-          temporary-ignore: '#/components/schemas/PolicyActionIgnoreDataTemporaryIgnore'
-          wont-fix: '#/components/schemas/PolicyActionIgnoreDataWontFix'
-        propertyName: ignore_type
-      oneOf:
-      - $ref: '#/components/schemas/PolicyActionIgnoreDataWontFix'
-      - $ref: '#/components/schemas/PolicyActionIgnoreDataTemporaryIgnore'
-      - $ref: '#/components/schemas/PolicyActionIgnoreDataNotVulnerable'
-      type: object
-    GroupPolicyConditionExploitMaturity:
-      additionalProperties: false
-      description: Matches on the exploit maturity.
-      properties:
-        field:
-          enum:
-          - exploit-maturity
-          type: string
-          x-enum-varnames:
-          - GroupPolicyExploitMaturity
-        operator:
-          $ref: '#/components/schemas/GroupPolicyConditionOperator'
-        value:
-          items:
-            enum:
-            - mature
-            - proof-of-concept
-            - no-known-exploit
-            - no-data
-            type: string
-          minItems: 1
-          type: array
-      required:
-      - field
-      - operator
-      - value
-      type: object
-    GroupPolicyConditionSeverity:
-      additionalProperties: false
-      description: Matches on the severity.
-      properties:
-        field:
-          enum:
-          - severity
-          type: string
-          x-enum-varnames:
-          - GroupPolicySeverity
-        operator:
-          $ref: '#/components/schemas/GroupPolicyConditionOperator'
-        value:
-          items:
-            enum:
-            - low
-            - medium
-            - high
-            - critical
-            type: string
-          minItems: 1
-          type: array
-      required:
-      - field
-      - operator
-      - value
-      type: object
-    GroupPolicyResponseAttributes:
-      additionalProperties: false
-      properties:
-        action:
-          $ref: '#/components/schemas/GroupPolicyAction'
-        action_type:
-          $ref: '#/components/schemas/GroupPolicyActionType'
-        conditions_group:
-          $ref: '#/components/schemas/GroupPolicyConditionsGroup'
-        created_at:
-          example: '2024-03-16T00:00:00Z'
-          format: date-time
-          type: string
-        created_by:
-          $ref: '#/components/schemas/GroupPolicyPrincipal'
-        name:
-          type: string
-        updated_at:
-          example: '2024-03-16T00:00:00Z'
-          format: date-time
-          type: string
-      required:
-      - name
-      - conditions_group
-      - action_type
-      - action
-      - created_by
-      - created_at
-      - updated_at
-      type: object
-    PolicyResponseAttributes:
-      additionalProperties: false
-      properties:
-        action:
-          $ref: '#/components/schemas/PolicyActionIgnore'
-        action_type:
-          enum:
-          - ignore
-          type: string
-        conditions_group:
-          $ref: '#/components/schemas/PolicyConditionsGroup'
-        created_at:
-          example: '2024-03-16T00:00:00Z'
-          format: date-time
-          type: string
-        created_by:
-          $ref: '#/components/schemas/Principal'
-        name:
-          type: string
-        review:
-          $ref: '#/components/schemas/PolicyReview'
-        updated_at:
-          example: '2024-03-16T00:00:00Z'
-          format: date-time
-          type: string
-      required:
-      - name
-      - conditions_group
-      - action
-      - action_type
-      - review
-      - created_at
-      - updated_at
       type: object
     GroupPolicyConditionEnvironment:
       additionalProperties: false
@@ -1698,297 +1949,6 @@ components:
       - operator
       - value
       type: object
-    PolicyActionIgnore__0:
-      additionalProperties: false
-      properties:
-        data:
-          $ref: '#/components/schemas/PolicyActionIgnoreData__0'
-      required:
-      - data
-      type: object
-    UpdatePolicyAttributes:
-      additionalProperties: false
-      description: 'Attributes of a policy that can be updated.
-
-        At least one of ''name'', ''conditions_group'', ''action'', or ''review'' must be provided.
-
-
-        In order to update the review field, the caller will need to have the
-
-        "Review Ignore Request" permission.
-
-        '
-      properties:
-        action:
-          $ref: '#/components/schemas/PolicyActionIgnore'
-        conditions_group:
-          $ref: '#/components/schemas/PolicyConditionsGroup'
-        name:
-          maxLength: 255
-          type: string
-        review:
-          $ref: '#/components/schemas/UpdatePolicyReview'
-      type: object
-    GroupPolicyActionIgnore:
-      additionalProperties: false
-      description: Ignore action
-      properties:
-        data:
-          $ref: '#/components/schemas/GroupPolicyActionIgnoreData'
-      required:
-      - data
-      type: object
-    SelfLink:
-      additionalProperties: false
-      example:
-        self: https://example.com/api/this_resource
-      properties:
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
-    CreateGroupPolicyPayload:
-      properties:
-        data:
-          additionalProperties: false
-          properties:
-            attributes:
-              $ref: '#/components/schemas/GroupPolicyRequestAttributes'
-            type:
-              enum:
-              - policy
-              type: string
-          required:
-          - type
-          - attributes
-          type: object
-      required:
-      - data
-      type: object
-    PolicyReview:
-      description: Review status.
-      enum:
-      - pending
-      - approved
-      - rejected
-      - not-required
-      type: string
-    GroupPolicyActionIgnoreData:
-      additionalProperties: false
-      properties:
-        ignore_type:
-          enum:
-          - wont-fix
-          - not-vulnerable
-          - temporary-ignore
-          type: string
-          x-enum-varnames:
-          - GroupPolicyWontFix
-          - GroupPolicyNotVulnerable
-          - GroupPolicyTemporaryIgnore
-        reason:
-          maxLength: 10000
-          type: string
-      required:
-      - ignore_type
-      type: object
-    PolicyConditionsGroup:
-      properties:
-        conditions:
-          items:
-            $ref: '#/components/schemas/PolicyCondition'
-          maxItems: 1
-          minItems: 1
-          type: array
-        logical_operator:
-          description: The logical operator for the policy condition. Currently only 'and' is supported.
-          enum:
-          - and
-          type: string
-      required:
-      - logical_operator
-      - conditions
-      type: object
-    PolicyActionIgnoreDataNotVulnerable:
-      additionalProperties: false
-      properties:
-        expires:
-          example: '2024-03-16T00:00:00Z'
-          format: date-time
-          type: string
-        ignore_type:
-          enum:
-          - not-vulnerable
-          type: string
-        reason:
-          maxLength: 10000
-          type: string
-      required:
-      - ignore_type
-      type: object
-    UpdateGroupPolicyPayload:
-      additionalProperties: false
-      properties:
-        data:
-          additionalProperties: false
-          properties:
-            attributes:
-              $ref: '#/components/schemas/UpdateGroupPolicyAttributes'
-            id:
-              description: the UUID of the policy to update.
-              example: f16c31b5-6129-4571-add8-d589da9be524
-              format: uuid
-              type: string
-            type:
-              enum:
-              - policy
-              type: string
-          required:
-          - type
-          - attributes
-          - id
-          type: object
-      required:
-      - data
-      type: object
-    GroupPolicyConditionOrgID:
-      additionalProperties: false
-      description: Matches on the organization ID - if org ID is provided, the policy will only apply to the specified organization. If no org ID is provided, the policy will apply to all organizations.
-      properties:
-        field:
-          enum:
-          - org-id
-          type: string
-          x-enum-varnames:
-          - GroupPolicyOrgID
-        operator:
-          $ref: '#/components/schemas/GroupPolicyConditionOperator'
-        value:
-          items:
-            format: uuid
-            type: string
-          minItems: 1
-          type: array
-      required:
-      - field
-      - operator
-      - value
-      type: object
-    ActualVersion:
-      description: Resolved API version
-      example: '2026-03-25'
-      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
-      type: string
-    GroupPolicyPrincipal:
-      additionalProperties: false
-      properties:
-        email:
-          type:
-          - string
-          - 'null'
-        id:
-          description: The Snyk ID corresponding to this user or service account that created the policy
-          format: uuid
-          type: string
-        name:
-          description: Name of the user or service account that created the policy
-          type: string
-      required:
-      - name
-      - id
-      type: object
-    GroupPolicyActionType:
-      enum:
-      - ignore
-      - annotation
-      - severity-override
-      type: string
-    Links:
-      additionalProperties: false
-      properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        related:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
-    CreatePolicyPayload:
-      properties:
-        data:
-          additionalProperties: false
-          properties:
-            attributes:
-              $ref: '#/components/schemas/PolicyAttributes'
-            meta:
-              $ref: '#/components/schemas/Meta'
-            type:
-              enum:
-              - policy
-              type: string
-          required:
-          - type
-          - attributes
-          type: object
-      required:
-      - data
-      type: object
-    GroupPolicyActionSeverityOverride:
-      additionalProperties: false
-      description: Severity override action
-      properties:
-        data:
-          $ref: '#/components/schemas/GroupPolicyActionSeverityOverrideData'
-      required:
-      - data
-      type: object
-    GroupPolicyConditionSnykAssetFindingV1:
-      additionalProperties: false
-      description: Matches on the Snyk Asset Finding V1 identifier.
-      properties:
-        field:
-          enum:
-          - snyk/asset/finding/v1
-          type: string
-          x-enum-varnames:
-          - GroupPolicySnykAssetFindingV1
-        operator:
-          $ref: '#/components/schemas/GroupPolicyConditionOperator'
-        value:
-          items:
-            format: uuid
-            type: string
-          minItems: 1
-          type: array
-      required:
-      - field
-      - operator
-      - value
-      type: object
-    PolicyEventResponse:
-      additionalProperties: false
-      properties:
-        attributes:
-          $ref: '#/components/schemas/PolicyEventAttributes'
-        id:
-          description: A unique identifier for this event.
-          example: f16c31b5-6129-4571-add8-d589da9be524
-          format: uuid
-          type: string
-        type:
-          enum:
-          - policy_event
-          type: string
-      required:
-      - id
-      - type
-      - attributes
-      type: object
     PolicyActionIgnoreDataTemporaryIgnore:
       additionalProperties: false
       properties:
@@ -2007,104 +1967,102 @@ components:
       - ignore_type
       - expires
       type: object
+    GroupPolicyConditionExploitMaturity:
+      additionalProperties: false
+      description: Matches on the exploit maturity.
+      properties:
+        field:
+          enum:
+          - exploit-maturity
+          type: string
+          x-enum-varnames:
+          - GroupPolicyExploitMaturity
+        operator:
+          $ref: '#/components/schemas/GroupPolicyConditionOperator'
+        value:
+          items:
+            enum:
+            - mature
+            - proof-of-concept
+            - no-known-exploit
+            - no-data
+            type: string
+          minItems: 1
+          type: array
+      required:
+      - field
+      - operator
+      - value
+      type: object
+    JsonApi:
+      additionalProperties: false
+      example:
+        version: '1.0'
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
+      type: object
+  headers:
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
+    RequestIdResponseHeader:
+      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
+
+        '
+      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
+      schema:
+        format: uuid
+        type: string
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    VersionStageResponseHeader:
+      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
+
+        '
+      schema:
+        enum:
+        - wip
+        - experimental
+        - beta
+        - ga
+        - deprecated
+        - sunset
+        example: ga
+        type: string
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
   responses:
-    '500':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
     '400':
       content:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/ErrorDocument'
       description: 'Bad Request: A parameter provided as a part of the request was invalid.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
-    '403':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
-    '204':
-      description: The operation completed successfully with no content
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
-    '401':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Unauthorized: the request requires an authentication token.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
-    '404':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Not Found: The resource being operated on could not be found.'
       headers:
         deprecation:
           $ref: '#/components/headers/DeprecationHeader'
@@ -2137,55 +2095,97 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
-  headers:
-    VersionRequestedResponseHeader:
-      description: A header containing the version of the endpoint requested by the caller.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/ActualVersion'
-    DeprecationHeader:
-      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
-
-        '
-      example: '2021-07-01T00:00:00Z'
-      schema:
-        format: date-time
-        type: string
-    RequestIdResponseHeader:
-      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
-
-        '
-      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
-      schema:
-        format: uuid
-        type: string
-    VersionStageResponseHeader:
-      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
-
-        '
-      schema:
-        enum:
-        - wip
-        - experimental
-        - beta
-        - ga
-        - deprecated
-        - sunset
-        example: ga
-        type: string
+    '204':
+      description: The operation completed successfully with no content
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '404':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Not Found: The resource being operated on could not be found.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '401':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Unauthorized: the request requires an authentication token.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '500':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
   parameters:
     Review:
       description: Policy rule review state e.g. approved
@@ -2205,17 +2205,6 @@ components:
         enum:
         - asc
         - desc
-        type: string
-    OrderBy:
-      description: The column name to sort on
-      in: query
-      name: order_by
-      schema:
-        enum:
-        - created
-        - expires
-        - ignore-type
-        - requested-by
         type: string
     EndingBefore:
       description: Return the page of results immediately before this cursor
@@ -2239,6 +2228,14 @@ components:
       name: starting_after
       schema:
         type: string
+    PolicyId:
+      description: Policy ID
+      in: path
+      name: policy_id
+      required: true
+      schema:
+        format: uuid
+        type: string
     Limit:
       description: Number of results to return per page
       example: 10
@@ -2257,13 +2254,16 @@ components:
       name: search
       schema:
         type: string
-    PolicyId:
-      description: Policy ID
-      in: path
-      name: policy_id
-      required: true
+    OrderBy:
+      description: The column name to sort on
+      in: query
+      name: order_by
       schema:
-        format: uuid
+        enum:
+        - created
+        - expires
+        - ignore-type
+        - requested-by
         type: string
   securitySchemes:
     APIToken:

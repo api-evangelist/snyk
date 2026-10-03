@@ -74,28 +74,28 @@ paths:
       x-stability-level: beta
 components:
   schemas:
-    Tag:
+    PaginatedLinks:
+      additionalProperties: false
+      example:
+        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
+        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
+        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
       properties:
-        tag_type:
-          description: 'The classification type for this tag. Possible values: ecosystem - programming language or platform (e.g. java, python, javascript, golang, cpp, csharp, kubernetes, docker, aiml, rust, ruby, swift, general). topic - security or product training topic (freeform string). cwe - Common Weakness Enumeration identifier (format: CWE-{id}, e.g. CWE-79). cve - Common Vulnerabilities and Exposures identifier (format: CVE-{year}-{id}, e.g. CVE-2021-44228). snyk_vuln_id - Snyk vulnerability rule identifier (format: SNYK-{LANG}-{PKG}-{ID}, e.g. SNYK-JAVA-ORGAPACHELOGGINGLOG4J-2314720).'
-          example: cwe
-          type: string
-        tag_values:
-          description: Array of values associated with this tag type. Values follow the format described by the corresponding tag_type.
-          example:
-          - CWE-79
-          - CWE-89
-          items:
-            type: string
-          type: array
-      required:
-      - tag_type
-      - tag_values
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
       type: object
-    QueryVersion:
-      description: Requested API version
+    ActualVersion:
+      description: Resolved API version
       example: '2026-03-25'
-      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
       type: string
     EducationResourceExtended:
       properties:
@@ -157,6 +157,11 @@ components:
       - type
       - attributes
       type: object
+    QueryVersion:
+      description: Requested API version
+      example: '2026-03-25'
+      pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+      type: string
     ErrorDocument:
       additionalProperties: false
       example:
@@ -275,42 +280,6 @@ components:
       - jsonapi
       - errors
       type: object
-    ActualVersion:
-      description: Resolved API version
-      example: '2026-03-25'
-      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
-      type: string
-    JsonApi:
-      additionalProperties: false
-      example:
-        version: '1.0'
-      properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          example: '1.0'
-          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
-          type: string
-      required:
-      - version
-      type: object
-    PaginatedLinks:
-      additionalProperties: false
-      example:
-        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
-        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
-        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
-      properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
     LinkProperty:
       example: https://example.com/api/resource
       oneOf:
@@ -339,73 +308,38 @@ components:
         required:
         - href
         type: object
-  parameters:
-    ContentSource:
-      description: The source of educational resources
-      in: query
-      name: content_source
-      schema:
-        enum:
-        - source-preview
-        - cache
-        type: string
-    Limit:
-      description: Number of results to return per page
-      example: 10
-      in: query
-      name: limit
-      schema:
-        default: 10
-        format: int32
-        maximum: 100
-        minimum: 10
-        multipleOf: 10
-        type: integer
-    ApiVersion:
-      description: The requested version of the endpoint to process the request
-      example: '2025-11-05'
-      in: query
-      name: version
-      required: true
-      schema:
-        default: '2025-11-05'
-        description: Requested API version
-        pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
-        type: string
-    EndingBefore:
-      description: Return the page of results immediately before this cursor
-      example: v1.eyJpZCI6IjExMDAifQo=
-      in: query
-      name: ending_before
-      schema:
-        type: string
-    StartingAfter:
-      description: Return the page of results immediately after this cursor
-      example: v1.eyJpZCI6IjEwMDAifQo=
-      in: query
-      name: starting_after
-      schema:
-        type: string
+    Tag:
+      properties:
+        tag_type:
+          description: 'The classification type for this tag. Possible values: ecosystem - programming language or platform (e.g. java, python, javascript, golang, cpp, csharp, kubernetes, docker, aiml, rust, ruby, swift, general). topic - security or product training topic (freeform string). cwe - Common Weakness Enumeration identifier (format: CWE-{id}, e.g. CWE-79). cve - Common Vulnerabilities and Exposures identifier (format: CVE-{year}-{id}, e.g. CVE-2021-44228). snyk_vuln_id - Snyk vulnerability rule identifier (format: SNYK-{LANG}-{PKG}-{ID}, e.g. SNYK-JAVA-ORGAPACHELOGGINGLOG4J-2314720).'
+          example: cwe
+          type: string
+        tag_values:
+          description: Array of values associated with this tag type. Values follow the format described by the corresponding tag_type.
+          example:
+          - CWE-79
+          - CWE-89
+          items:
+            type: string
+          type: array
+      required:
+      - tag_type
+      - tag_values
+      type: object
+    JsonApi:
+      additionalProperties: false
+      example:
+        version: '1.0'
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
+      type: object
   responses:
-    '500':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
     '404':
       content:
         application/vnd.api+json:
@@ -425,32 +359,44 @@ components:
           $ref: '#/components/headers/VersionServedResponseHeader'
         sunset:
           $ref: '#/components/headers/SunsetHeader'
+    '500':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
   headers:
-    VersionRequestedResponseHeader:
-      description: A header containing the version of the endpoint requested by the caller.
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
       example: '2026-03-25'
       schema:
-        $ref: '#/components/schemas/QueryVersion'
+        $ref: '#/components/schemas/ActualVersion'
     SunsetHeader:
       description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
       example: '2021-08-02'
       schema:
         format: date
         type: string
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/ActualVersion'
-    DeprecationHeader:
-      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+    RequestIdResponseHeader:
+      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
 
         '
-      example: '2021-07-01T00:00:00Z'
+      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
       schema:
-        format: date-time
+        format: uuid
         type: string
     VersionStageResponseHeader:
       description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
@@ -466,14 +412,68 @@ components:
         - sunset
         example: ga
         type: string
-    RequestIdResponseHeader:
-      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
 
         '
-      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
+      example: '2021-07-01T00:00:00Z'
       schema:
-        format: uuid
+        format: date-time
         type: string
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+  parameters:
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
+    ContentSource:
+      description: The source of educational resources
+      in: query
+      name: content_source
+      schema:
+        enum:
+        - source-preview
+        - cache
+        type: string
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
+        type: string
+    ApiVersion:
+      description: The requested version of the endpoint to process the request
+      example: '2025-11-05'
+      in: query
+      name: version
+      required: true
+      schema:
+        default: '2025-11-05'
+        description: Requested API version
+        pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+        type: string
+    Limit:
+      description: Number of results to return per page
+      example: 10
+      in: query
+      name: limit
+      schema:
+        default: 10
+        format: int32
+        maximum: 100
+        minimum: 10
+        multipleOf: 10
+        type: integer
   securitySchemes:
     APIToken:
       description: API key value must be prefixed with \"Token \".

@@ -152,521 +152,66 @@ paths:
       x-stability-level: beta
 components:
   schemas:
-    FileRegion:
-      description: FileRegion models a location where vulnerable code is found.
+    PackageLocation:
+      description: 'Package dependency version.
+
+
+        Finding type: SCA'
+      example:
+        package:
+          name: log4j
+          version: 2.4.1
+        type: package
       properties:
-        file_path:
-          description: File path for the code snippet.
-          type: string
-        from_column:
-          description: Column on which the snippet starts.
-          type: integer
-        from_line:
-          description: Line in the file where the code snippet starts.
-          type: integer
-        to_column:
-          description: Column at which the code snippet ends.
-          type: integer
-        to_line:
-          description: Line on which the code snippet ends.
-          type: integer
-      required:
-      - file_path
-      - from_line
-      type: object
-    DependencyPathEvidence:
-      description: 'Dependency path to a software component within an SBOM dependency graph.
-
-
-        Finding types: SCA'
-      properties:
-        path:
-          description: 'Series of component identifiers starting from the top-level component tested,
-
-            and ending in the vulnerable software component.
-
-
-            The identifiers are domain-specific and determined by the test subject.'
-          items:
-            $ref: '#/components/schemas/Package'
-          type: array
-        source:
-          enum:
-          - dependency_path
-          type: string
-      required:
-      - source
-      - path
-      type: object
-    Rating:
-      description: Rating represents qualitative metrics on a finding.
-      properties:
-        severity:
-          allOf:
-          - $ref: '#/components/schemas/Severity'
-          description: Severity level of the finding.
-      required:
-      - severity
-      type: object
-    FindingData:
-      description: FindingData represents a Finding resource object.
-      properties:
-        attributes:
-          allOf:
-          - $ref: '#/components/schemas/FindingAttributes'
-          readOnly: true
-        id:
-          format: uuid
-          readOnly: true
-          type: string
-        links:
-          description: 'Links to external resources outside this API.
-
-
-            Because these are not REST API resources, they are expressed here as links,
-
-            rather than as relationships.'
-          properties:
-            snyk_advisory:
-              allOf:
-              - $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
-              description: 'Link to Snyk''s vulnerability advisory for more information on the
-
-                finding, if applicable.'
-              example: https://security.snyk.io/vuln/SNYK-JAVA-ORGAPACHELOGGINGLOG4J-2314720
-            snyk_learn:
-              allOf:
-              - $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
-              description: Link to a Snyk Learn lesson relevant to the finding, if applicable.
-              example: https://learn.snyk.io/lesson/csrf-attack/
-          type: object
-        relationships:
-          properties:
-            asset:
-              description: Originating asset in which this finding was discovered.
-              properties:
-                data:
-                  properties:
-                    id:
-                      format: uuid
-                      type: string
-                    type:
-                      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
-                      type: string
-                  required:
-                  - type
-                  - id
-                  type: object
-                links:
-                  $ref: '#/components/schemas/io.snyk.api.common.RelatedLink'
-                meta:
-                  $ref: '#/components/schemas/io.snyk.api.common.Meta'
-              required:
-              - links
-              type: object
-            fix:
-              description: Fix for this finding, it comes expanded with all data preloaded
-              properties:
-                data:
-                  properties:
-                    attributes:
-                      allOf:
-                      - $ref: '#/components/schemas/FixAttributes'
-                      description: 'Inlined attributes included in the relationship, if it is expanded.
-
-
-                        Expansion is a Snyk variation on JSON API. See
-
-                        https://snyk.roadie.so/docs/default/component/sweater-comb/standards/rest/#expansion'
-                    id:
-                      format: uuid
-                      type: string
-                    type:
-                      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
-                      type: string
-                  required:
-                  - type
-                  - id
-                  type: object
-              type: object
-            org:
-              description: Snyk organization scope in which the finding was discovered.
-              properties:
-                data:
-                  properties:
-                    id:
-                      format: uuid
-                      type: string
-                    type:
-                      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
-                      type: string
-                  required:
-                  - type
-                  - id
-                  type: object
-              type: object
-            policy:
-              description: Relate to the policy or policies applied to this finding.
-              properties:
-                data:
-                  properties:
-                    attributes:
-                      allOf:
-                      - properties:
-                          policies:
-                            items:
-                              properties:
-                                applied_policy:
-                                  anyOf:
-                                  - properties:
-                                      action_type:
-                                        enum:
-                                        - severity-change
-                                        type: string
-                                      policy_ref:
-                                        description: Reference to a policy, serving as a container for a set of policy-rules and can be owned by the group or the org.
-                                        properties:
-                                          id:
-                                            format: uuid
-                                            type: string
-                                          owner:
-                                            enum:
-                                            - org
-                                            - group
-                                            type: string
-                                        required:
-                                        - id
-                                        - owner
-                                        type: object
-                                      rule:
-                                        description: 'A policy rule is the central entity of a policy, including an action as well as conditions
-
-                                          when this policy applies.
-
-                                          Only a subset of fields are included, for more details see the API documentation
-
-                                          https://apidocs.snyk.io/?version=2024-10-15#get-/orgs/-org_id-/policies/-policy_id-'
-                                        properties:
-                                          created:
-                                            format: date-time
-                                            type: string
-                                          id:
-                                            format: uuid
-                                            type: string
-                                          modified:
-                                            format: date-time
-                                            type: string
-                                          name:
-                                            type: string
-                                          review:
-                                            enum:
-                                            - approved
-                                            - rejected
-                                            - pending
-                                            - cancelled
-                                            - not-required
-                                            - unknown
-                                            type: string
-                                        required:
-                                        - id
-                                        - name
-                                        - modified
-                                        - created
-                                        - review
-                                        type: object
-                                      severity_change:
-                                        properties:
-                                          new_severity:
-                                            description: Indicate the severity of a finding discovered by a Test.
-                                            enum:
-                                            - critical
-                                            - high
-                                            - medium
-                                            - low
-                                            - none
-                                            - other
-                                            type: string
-                                          original_severity:
-                                            description: Indicate the severity of a finding discovered by a Test.
-                                            enum:
-                                            - critical
-                                            - high
-                                            - medium
-                                            - low
-                                            - none
-                                            - other
-                                            type: string
-                                        required:
-                                        - original_severity
-                                        - new_severity
-                                        type: object
-                                    required:
-                                    - action_type
-                                    - policy_ref
-                                    - rule
-                                    - severity_change
-                                    type: object
-                                  - properties:
-                                      action_type:
-                                        enum:
-                                        - ignore
-                                        type: string
-                                      ignore:
-                                        properties:
-                                          created:
-                                            format: date-time
-                                            type: string
-                                          disregard_if_fixable:
-                                            description: Disregards the policy if set to true and the finding this policy is applied to is fixable
-                                            type: boolean
-                                          expires:
-                                            format: date-time
-                                            type: string
-                                          ignored_by:
-                                            properties:
-                                              email:
-                                                description: Email of the user who created the ignore
-                                                type: string
-                                              id:
-                                                description: User ID of the author of the ignore
-                                                format: uuid
-                                                type: string
-                                              name:
-                                                description: Name of the user who created the ignore
-                                                type: string
-                                            required:
-                                            - id
-                                            - name
-                                            type: object
-                                          path:
-                                            items:
-                                              type: string
-                                            maxItems: 10
-                                            type: array
-                                          reason:
-                                            type: string
-                                          reason_type:
-                                            enum:
-                                            - wont-fix
-                                            - not-vulnerable
-                                            - temporary-ignore
-                                            type: string
-                                          source:
-                                            type: string
-                                        required:
-                                        - reason
-                                        - source
-                                        type: object
-                                      policy_ref:
-                                        description: Reference to a policy, serving as a container for a set of policy-rules and can be owned by the group or the org.
-                                        properties:
-                                          id:
-                                            format: uuid
-                                            type: string
-                                          owner:
-                                            enum:
-                                            - org
-                                            - group
-                                            type: string
-                                        required:
-                                        - id
-                                        - owner
-                                        type: object
-                                      rule:
-                                        description: 'A policy rule is the central entity of a policy, including an action as well as conditions
-
-                                          when this policy applies.
-
-                                          Only a subset of fields are included, for more details see the API documentation
-
-                                          https://apidocs.snyk.io/?version=2024-10-15#get-/orgs/-org_id-/policies/-policy_id-'
-                                        properties:
-                                          created:
-                                            format: date-time
-                                            type: string
-                                          id:
-                                            format: uuid
-                                            type: string
-                                          modified:
-                                            format: date-time
-                                            type: string
-                                          name:
-                                            type: string
-                                          review:
-                                            enum:
-                                            - approved
-                                            - rejected
-                                            - pending
-                                            - cancelled
-                                            - not-required
-                                            - unknown
-                                            type: string
-                                        required:
-                                        - id
-                                        - name
-                                        - modified
-                                        - created
-                                        - review
-                                        type: object
-                                    required:
-                                    - action_type
-                                    - ignore
-                                    type: object
-                                  discriminator:
-                                    propertyName: action_type
-                                id:
-                                  format: uuid
-                                  type: string
-                                type:
-                                  enum:
-                                  - legacy_policy_snapshot
-                                  type: string
-                              required:
-                              - type
-                              - id
-                              - applied_policy
-                              type: object
-                            type: array
-                        required:
-                        - policies
-                        type: object
-                      description: 'Inlined attributes included in the relationship, if it is expanded.
-
-
-                        Expansion is a Snyk variation on JSON API. See
-
-                        https://snyk.roadie.so/docs/default/component/sweater-comb/standards/rest/#expansion'
-                    id:
-                      format: uuid
-                      type: string
-                    type:
-                      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
-                      type: string
-                  required:
-                  - type
-                  - id
-                  type: object
-                links:
-                  $ref: '#/components/schemas/io.snyk.api.common.RelatedLink'
-                meta:
-                  $ref: '#/components/schemas/io.snyk.api.common.Meta'
-              required:
-              - links
-              type: object
-            project:
-              description: Snyk Project in which the Finding was discovered
-              properties:
-                data:
-                  properties:
-                    id:
-                      format: uuid
-                      type: string
-                    type:
-                      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
-                      type: string
-                  required:
-                  - type
-                  - id
-                  type: object
-              type: object
-            test:
-              description: Test in which this finding was discovered.
-              properties:
-                data:
-                  properties:
-                    id:
-                      format: uuid
-                      type: string
-                    type:
-                      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
-                      type: string
-                  required:
-                  - type
-                  - id
-                  type: object
-                links:
-                  $ref: '#/components/schemas/io.snyk.api.common.RelatedLink'
-                meta:
-                  $ref: '#/components/schemas/io.snyk.api.common.Meta'
-              required:
-              - links
-              type: object
-          readOnly: true
-          type: object
+        package:
+          $ref: '#/components/schemas/Package'
         type:
           enum:
-          - findings
-          readOnly: true
+          - package
           type: string
       required:
-      - id
       - type
-      - attributes
+      - package
       type: object
-    ReachabilityEvidence:
-      description: Indicate the reachability signals as additional evidence for the finding.
+    ReachablePath:
+      description: ReachablePath represents the paths to a vulnerable function.
       properties:
-        paths:
-          description: 'Paths by which the vulnerable code can be reached.
-
-
-            Includes the name of the function, the path through the
-
-            source code that reaches the function, and the location
-
-            at which the vulnerable function is called.'
+        call_paths:
+          description: Paths in code bundle that call the vulnerable function.
           items:
-            $ref: '#/components/schemas/ReachablePath'
-          minItems: 1
+            type: string
           type: array
-        reachability:
-          $ref: '#/components/schemas/ReachabilityType'
-        source:
+        function_name:
+          description: Vulnerable function name.
+          type: string
+        location:
+          allOf:
+          - $ref: '#/components/schemas/FileRegion'
+          description: Location in a file where the vulnerability can be found.
+      required:
+      - function_name
+      - call_paths
+      type: object
+    OtherLocation:
+      description: 'Finding locations which this API version is not capable of expressing.
+
+
+        This location may be available in a newer version of this API.'
+      properties:
+        type:
           enum:
-          - reachability
+          - other
           type: string
       required:
-      - source
-      - reachability
+      - type
       type: object
-    io.snyk.api.common.LinkProperty:
-      oneOf:
-      - $ref: '#/components/schemas/io.snyk.api.common.LinkString'
-      - $ref: '#/components/schemas/io.snyk.api.common.LinkObject'
-    PolicyRef:
-      description: Reference to a single policy.
-      oneOf:
-      - enum:
-        - local_policy
-        type: string
-      - $ref: '#/components/schemas/ManagedPolicyRef'
-    io.snyk.api.common.PaginatedLinks:
-      properties:
-        first:
-          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
-        last:
-          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
-        next:
-          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
-        prev:
-          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
-        self:
-          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
-      type: object
-    io.snyk.api.common.RelatedLink:
-      properties:
-        related:
-          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
-      type: object
-    FixAppliedOutcome:
-      description: Indicates the outcome of a fix in terms of resolving the finding at hand
+    ReachabilityType:
+      description: Reachability enum for reachability signal.
       enum:
-      - fully_resolved
-      - partially_resolved
-      - unresolved
-      type: string
-    String256:
-      maxLength: 256
+      - none
+      - function
+      - no_info
+      - not_applicable
       type: string
     UpgradePackageAdvice:
       description: Upgrade a package from one version to another.
@@ -703,52 +248,149 @@ components:
       - package_name
       - upgrade_paths
       type: object
-    ReachablePath:
-      description: ReachablePath represents the paths to a vulnerable function.
+    io.snyk.api.common.Error:
       properties:
-        call_paths:
-          description: Paths in code bundle that call the vulnerable function.
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          format: uuid
+          type: string
+        links:
+          $ref: '#/components/schemas/io.snyk.api.common.ErrorLink'
+        meta:
+          type: object
+        source:
+          properties:
+            parameter:
+              type: string
+            pointer:
+              type: string
+          type: object
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          pattern: ^[45]\d\d$
+          type: string
+        title:
+          description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+      required:
+      - status
+      - detail
+      type: object
+    Diff:
+      description: 'Fix suggestions in the unified diff format that introduce code changes
+
+        to remediate the vulnerability.'
+      example:
+        format: diff
+        suggestions:
+        - diff: '--- a/auth.ts
+
+            +++ b/auth.ts
+
+            @@ -1,1 +1,1 @@
+
+            -eval(userInput)
+
+            +safeEval(userInput)
+
+            '
+          external_id: 550e8400-e29b-41d4-a716-446655440000
+          rank: 1
+        - diff: '--- a/auth.ts
+
+            +++ b/auth.ts
+
+            @@ -1,1 +1,1 @@
+
+            -password === input
+
+            +bcrypt.compare(input, password)
+
+            '
+          external_id: 550e8400-e29b-41d4-a716-446655440001
+          rank: 2
+      properties:
+        format:
+          enum:
+          - diff
+          type: string
+        suggestions:
+          description: 'Alternative suggestions - choose one to fix the vulnerability.
+
+            The ''rank'' field signals the relative confidence in each one.'
           items:
-            type: string
+            $ref: '#/components/schemas/DiffSuggestion'
           type: array
-        function_name:
-          description: Vulnerable function name.
-          type: string
-        location:
-          allOf:
-          - $ref: '#/components/schemas/FileRegion'
-          description: Location in a file where the vulnerability can be found.
       required:
-      - function_name
-      - call_paths
+      - format
+      - suggestions
       type: object
-    io.snyk.api.common.JsonApi:
+    ReachabilityEvidence:
+      description: Indicate the reachability signals as additional evidence for the finding.
       properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          enum:
-          - '1.0'
-          type: string
-      required:
-      - version
-      type: object
-    OtherLocation:
-      description: 'Finding locations which this API version is not capable of expressing.
+        paths:
+          description: 'Paths by which the vulnerable code can be reached.
 
 
-        This location may be available in a newer version of this API.'
-      properties:
-        type:
+            Includes the name of the function, the path through the
+
+            source code that reaches the function, and the location
+
+            at which the vulnerable function is called.'
+          items:
+            $ref: '#/components/schemas/ReachablePath'
+          minItems: 1
+          type: array
+        reachability:
+          $ref: '#/components/schemas/ReachabilityType'
+        source:
           enum:
-          - other
+          - reachability
           type: string
       required:
-      - type
+      - source
+      - reachability
       type: object
-    io.snyk.api.common.Meta:
-      additionalProperties: {}
-      description: Free-form object that may contain non-standard information.
+    SuppressionStatus:
+      description: Status of a suppression on a finding.
+      enum:
+      - ignored
+      - pending_ignore_approval
+      - other
+      type: string
+    UpgradePath:
+      description: Upgrade path model all known dependency paths that will change when applying an upgrade action.
+      properties:
+        dependency_path:
+          items:
+            $ref: '#/components/schemas/Package'
+          maxItems: 100
+          type: array
+        is_drop:
+          description: 'A drop describes an upgrade path, where the vulnerability gets addressed by removing the vulnerable dependency.
+
+            This typically happens when a package somewhere mid-way drops this library in newer versions.
+
+
+            Note: For drops, the length of the upgradePath will be smaller than the length of the original dependencyPath.'
+          type: boolean
+      required:
+      - dependency_path
+      - is_drop
       type: object
+    PolicyRef:
+      description: Reference to a single policy.
+      oneOf:
+      - enum:
+        - local_policy
+        type: string
+      - $ref: '#/components/schemas/ManagedPolicyRef'
     Severity:
       description: Indicate the severity of a finding discovered by a Test.
       enum:
@@ -759,6 +401,118 @@ components:
       - none
       - other
       type: string
+    OtherEvidence:
+      description: 'Evidence which this API version is not capable of expressing.
+
+
+        More information may be available in a newer version of this API.'
+      properties:
+        source:
+          enum:
+          - other
+          type: string
+      required:
+      - source
+      type: object
+    ExecutionFlowEvidence:
+      description: Indicate a program flow of execution as additional evidence for the finding.
+      properties:
+        flow:
+          description: 'Sequence of locations within this flow of execution.
+
+
+            For example, a sequence of locations connecting the "source" location
+
+            where input data is obtained, to a "sink" location where it is used.'
+          items:
+            $ref: '#/components/schemas/FileRegion'
+          minItems: 1
+          type: array
+        source:
+          enum:
+          - execution_flow
+          type: string
+      required:
+      - source
+      - flow
+      type: object
+    io.snyk.api.common.LinkProperty:
+      oneOf:
+      - $ref: '#/components/schemas/io.snyk.api.common.LinkString'
+      - $ref: '#/components/schemas/io.snyk.api.common.LinkObject'
+    DependencyPathEvidence:
+      description: 'Dependency path to a software component within an SBOM dependency graph.
+
+
+        Finding types: SCA'
+      properties:
+        path:
+          description: 'Series of component identifiers starting from the top-level component tested,
+
+            and ending in the vulnerable software component.
+
+
+            The identifiers are domain-specific and determined by the test subject.'
+          items:
+            $ref: '#/components/schemas/Package'
+          type: array
+        source:
+          enum:
+          - dependency_path
+          type: string
+      required:
+      - source
+      - path
+      type: object
+    Evidence:
+      description: 'Supporting evidence for (rather than representative of) the finding in other
+
+        security domains and systems, lacking a well-known identifier.
+
+
+        More detailed attributes may also be included inline, especially when this
+
+        information is not yet generally available in a well-known public APIs.
+
+
+        Examples include:
+
+        - Detailed enumeration of dependency paths
+
+        - Execution flows leading to a code rule violation'
+      discriminator:
+        mapping:
+          dependency_path: '#/components/schemas/DependencyPathEvidence'
+          execution_flow: '#/components/schemas/ExecutionFlowEvidence'
+          other: '#/components/schemas/OtherEvidence'
+          reachability: '#/components/schemas/ReachabilityEvidence'
+        propertyName: source
+      oneOf:
+      - $ref: '#/components/schemas/DependencyPathEvidence'
+      - $ref: '#/components/schemas/ExecutionFlowEvidence'
+      - $ref: '#/components/schemas/ReachabilityEvidence'
+      - $ref: '#/components/schemas/OtherEvidence'
+    FixAttributes:
+      description: FixAttributes is the main payload modelling a fix
+      properties:
+        action:
+          allOf:
+          - $ref: '#/components/schemas/FixAction'
+          description: 'Applying the steps specified by the action within the fix leads to resolving either completely or partially this finding.
+
+            An action may be a simple upgrade, a code swap, or may model sets of boolean operations.
+
+
+            For now only simple actions are modelled but could be extended to include more complex actions in the future.
+
+            See doc for more info: https://docs.google.com/document/d/151vAXurvX4k8fNOWspSI2Ou9OF1G5fj8LHa-NuKOfgw'
+        outcome:
+          allOf:
+          - $ref: '#/components/schemas/FixAppliedOutcome'
+          description: Indicates whether applying these actions will address the finding or not
+      required:
+      - outcome
+      type: object
     ManagedPolicyRef:
       description: Reference to a managed policy.
       properties:
@@ -767,16 +521,54 @@ components:
       required:
       - id
       type: object
-    ReachabilityType:
-      description: Reachability enum for reachability signal.
-      enum:
-      - none
-      - function
-      - no_info
-      - not_applicable
+    String256:
+      maxLength: 256
       type: string
-    io.snyk.api.common.LinkString:
-      format: uri
+    PinPackageAdvice:
+      description: 'Pin a package at a specific version. Pinning is a capability not supported
+
+        by all ecosystems, which causes a transitive dependency to be pinned at
+
+        a specific version with an override.
+
+
+        For example, the `replace` go.mod directive can override package dependency
+
+        constraints, forcing a specific version to be used in the application.
+
+
+        Pinning could break an application.
+
+
+        Note: In practice pin actions today are solely used in python pip''s packages as pip does not calculate upgrade paths'
+      example:
+        format: pin_package_advice
+        package_name: requests
+        pin_version: 2.25.1
+      properties:
+        format:
+          enum:
+          - pin_package_advice
+          type: string
+        package_name:
+          type: string
+        pin_version:
+          type: string
+      required:
+      - format
+      - package_name
+      - pin_version
+      type: object
+    FindingType:
+      description: Type of Finding which was discovered.
+      enum:
+      - sca
+      - sast
+      - dast
+      - other
+      - config
+      - secret
+      - secrets
       type: string
     FindingAttributes:
       description: FindingAttributes represent the attributes of a Finding resource.
@@ -1943,124 +1735,121 @@ components:
       - rating
       - risk
       type: object
-    io.snyk.api.common.ErrorDocument:
+    io.snyk.api.common.RelatedLink:
       properties:
-        errors:
-          items:
-            $ref: '#/components/schemas/io.snyk.api.common.Error'
-          minItems: 1
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/io.snyk.api.common.JsonApi'
-      required:
-      - jsonapi
-      - errors
+        related:
+          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
       type: object
-    Package:
-      description: Dependency models a package dependency.
+    FileRegion:
+      description: FileRegion models a location where vulnerable code is found.
       properties:
-        name:
-          description: Name is the name of the package.
-          example: lodash
+        file_path:
+          description: File path for the code snippet.
           type: string
-        version:
-          description: Version is the version of the named package.
-          example: 1.2.3
-          type: string
+        from_column:
+          description: Column on which the snippet starts.
+          type: integer
+        from_line:
+          description: Line in the file where the code snippet starts.
+          type: integer
+        to_column:
+          description: Column at which the code snippet ends.
+          type: integer
+        to_line:
+          description: Line on which the code snippet ends.
+          type: integer
       required:
-      - name
-      - version
+      - file_path
+      - from_line
       type: object
-    ExecutionFlowEvidence:
-      description: Indicate a program flow of execution as additional evidence for the finding.
+    io.snyk.api.common.LinkObject:
       properties:
-        flow:
-          description: 'Sequence of locations within this flow of execution.
-
-
-            For example, a sequence of locations connecting the "source" location
-
-            where input data is obtained, to a "sink" location where it is used.'
-          items:
-            $ref: '#/components/schemas/FileRegion'
-          minItems: 1
-          type: array
-        source:
-          enum:
-          - execution_flow
-          type: string
+        href:
+          $ref: '#/components/schemas/io.snyk.api.common.LinkString'
+        meta:
+          $ref: '#/components/schemas/io.snyk.api.common.Meta'
       required:
-      - source
-      - flow
+      - href
       type: object
-    FixAttributes:
-      description: FixAttributes is the main payload modelling a fix
+    Rating:
+      description: Rating represents qualitative metrics on a finding.
       properties:
-        action:
+        severity:
           allOf:
-          - $ref: '#/components/schemas/FixAction'
-          description: 'Applying the steps specified by the action within the fix leads to resolving either completely or partially this finding.
-
-            An action may be a simple upgrade, a code swap, or may model sets of boolean operations.
-
-
-            For now only simple actions are modelled but could be extended to include more complex actions in the future.
-
-            See doc for more info: https://docs.google.com/document/d/151vAXurvX4k8fNOWspSI2Ou9OF1G5fj8LHa-NuKOfgw'
-        outcome:
-          allOf:
-          - $ref: '#/components/schemas/FixAppliedOutcome'
-          description: Indicates whether applying these actions will address the finding or not
+          - $ref: '#/components/schemas/Severity'
+          description: Severity level of the finding.
       required:
-      - outcome
+      - severity
       type: object
-    FixAction:
-      description: 'Different fix formats in which the fix action is represented. We distinguish between advice and diff formats.
+    Suppression:
+      description: 'Details about a finding''s suppression in test results.
 
 
-        Advice - Fix advice in a display only / informational format. These are highly product line specific, so they have their own model.
+        Suppressed findings do not contribute to the test outcome, but they are still
 
-        - upgradePackageAdvice: Upgrade a direct package from one version to a newer one that resolves the vulnerability.
-
-        - pinPackageAdvice: Pin a package at a specific version.
-
-
-        Diff - Fix suggestions in the unified diff format that introduce code changes
-
-        to remediate the vulnerability. Can be used to represent fix actions for any product line.'
-      discriminator:
-        mapping:
-          diff: '#/components/schemas/Diff'
-          pin_package_advice: '#/components/schemas/PinPackageAdvice'
-          upgrade_package_advice: '#/components/schemas/UpgradePackageAdvice'
-        propertyName: format
-      oneOf:
-      - $ref: '#/components/schemas/UpgradePackageAdvice'
-      - $ref: '#/components/schemas/PinPackageAdvice'
-      - $ref: '#/components/schemas/Diff'
-    PolicyModification:
-      description: Prior attribute values and the reason they were modified.
+        provided in the results.'
       properties:
-        pointer:
-          description: 'A JSON Pointer (RFC 6901) reference to the modified value, relative to
-
-            the top-level attributes of the same Finding.'
-          example: /rating/severity
+        created_at:
+          description: When the suppression was first created.
+          format: date-time
           type: string
+        expires_at:
+          description: When the suppression will expire.
+          format: date-time
+          type: string
+        justification:
+          description: Reason given for an ignore pending approval.
+          type: string
+        path:
+          description: 'Dependency path to the vulnerable package to be suppressed.
+
+
+            If not provided, the suppression will apply to all packages with the given
+
+            vulnerability ID.'
+          items:
+            type: string
+          type: array
         policy:
           allOf:
           - $ref: '#/components/schemas/PolicyRef'
-          description: Policy which modified the finding, if available.
-        prior:
-          description: The prior value at the referenced pointer.
-          example: low
-        reason:
-          description: A human-readable explanation for why the value was modified.
-          example: CWE-123 poses an elevated risk to workloads exposed to the public internet
+          description: Policy responsible for the state of suppression represented here, if available.
+        skipIfFixable:
+          description: Skip the suppression if an actual fix is available.
+          type: boolean
+        status:
+          allOf:
+          - $ref: '#/components/schemas/SuppressionStatus'
+          description: Status of the suppression.
+      required:
+      - status
+      type: object
+    io.snyk.api.common.JsonApi:
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          enum:
+          - '1.0'
           type: string
       required:
-      - pointer
-      - reason
+      - version
+      type: object
+    io.snyk.api.common.PaginatedLinks:
+      properties:
+        first:
+          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+        last:
+          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+        next:
+          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+        prev:
+          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+        self:
+          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+      type: object
+    io.snyk.api.common.Meta:
+      additionalProperties: {}
+      description: Free-form object that may contain non-standard information.
       type: object
     FindingLocation:
       description: Location within an Subject's contents where the finding was discovered.
@@ -2108,137 +1897,47 @@ components:
         - from_line
         type: object
       - $ref: '#/components/schemas/OtherLocation'
-    Evidence:
-      description: 'Supporting evidence for (rather than representative of) the finding in other
-
-        security domains and systems, lacking a well-known identifier.
-
-
-        More detailed attributes may also be included inline, especially when this
-
-        information is not yet generally available in a well-known public APIs.
+    io.snyk.api.common.LinkString:
+      format: uri
+      type: string
+    FixAction:
+      description: 'Different fix formats in which the fix action is represented. We distinguish between advice and diff formats.
 
 
-        Examples include:
+        Advice - Fix advice in a display only / informational format. These are highly product line specific, so they have their own model.
 
-        - Detailed enumeration of dependency paths
+        - upgradePackageAdvice: Upgrade a direct package from one version to a newer one that resolves the vulnerability.
 
-        - Execution flows leading to a code rule violation'
+        - pinPackageAdvice: Pin a package at a specific version.
+
+
+        Diff - Fix suggestions in the unified diff format that introduce code changes
+
+        to remediate the vulnerability. Can be used to represent fix actions for any product line.'
       discriminator:
         mapping:
-          dependency_path: '#/components/schemas/DependencyPathEvidence'
-          execution_flow: '#/components/schemas/ExecutionFlowEvidence'
-          other: '#/components/schemas/OtherEvidence'
-          reachability: '#/components/schemas/ReachabilityEvidence'
-        propertyName: source
+          diff: '#/components/schemas/Diff'
+          pin_package_advice: '#/components/schemas/PinPackageAdvice'
+          upgrade_package_advice: '#/components/schemas/UpgradePackageAdvice'
+        propertyName: format
       oneOf:
-      - $ref: '#/components/schemas/DependencyPathEvidence'
-      - $ref: '#/components/schemas/ExecutionFlowEvidence'
-      - $ref: '#/components/schemas/ReachabilityEvidence'
-      - $ref: '#/components/schemas/OtherEvidence'
-    PackageLocation:
-      description: 'Package dependency version.
-
-
-        Finding type: SCA'
-      example:
-        package:
-          name: log4j
-          version: 2.4.1
-        type: package
+      - $ref: '#/components/schemas/UpgradePackageAdvice'
+      - $ref: '#/components/schemas/PinPackageAdvice'
+      - $ref: '#/components/schemas/Diff'
+    Package:
+      description: Dependency models a package dependency.
       properties:
-        package:
-          $ref: '#/components/schemas/Package'
-        type:
-          enum:
-          - package
+        name:
+          description: Name is the name of the package.
+          example: lodash
+          type: string
+        version:
+          description: Version is the version of the named package.
+          example: 1.2.3
           type: string
       required:
-      - type
-      - package
-      type: object
-    UpgradePath:
-      description: Upgrade path model all known dependency paths that will change when applying an upgrade action.
-      properties:
-        dependency_path:
-          items:
-            $ref: '#/components/schemas/Package'
-          maxItems: 100
-          type: array
-        is_drop:
-          description: 'A drop describes an upgrade path, where the vulnerability gets addressed by removing the vulnerable dependency.
-
-            This typically happens when a package somewhere mid-way drops this library in newer versions.
-
-
-            Note: For drops, the length of the upgradePath will be smaller than the length of the original dependencyPath.'
-          type: boolean
-      required:
-      - dependency_path
-      - is_drop
-      type: object
-    FindingType:
-      description: Type of Finding which was discovered.
-      enum:
-      - sca
-      - sast
-      - dast
-      - other
-      - config
-      - secret
-      - secrets
-      type: string
-    io.snyk.api.common.LinkObject:
-      properties:
-        href:
-          $ref: '#/components/schemas/io.snyk.api.common.LinkString'
-        meta:
-          $ref: '#/components/schemas/io.snyk.api.common.Meta'
-      required:
-      - href
-      type: object
-    Suppression:
-      description: 'Details about a finding''s suppression in test results.
-
-
-        Suppressed findings do not contribute to the test outcome, but they are still
-
-        provided in the results.'
-      properties:
-        created_at:
-          description: When the suppression was first created.
-          format: date-time
-          type: string
-        expires_at:
-          description: When the suppression will expire.
-          format: date-time
-          type: string
-        justification:
-          description: Reason given for an ignore pending approval.
-          type: string
-        path:
-          description: 'Dependency path to the vulnerable package to be suppressed.
-
-
-            If not provided, the suppression will apply to all packages with the given
-
-            vulnerability ID.'
-          items:
-            type: string
-          type: array
-        policy:
-          allOf:
-          - $ref: '#/components/schemas/PolicyRef'
-          description: Policy responsible for the state of suppression represented here, if available.
-        skipIfFixable:
-          description: Skip the suppression if an actual fix is available.
-          type: boolean
-        status:
-          allOf:
-          - $ref: '#/components/schemas/SuppressionStatus'
-          description: Status of the suppression.
-      required:
-      - status
+      - name
+      - version
       type: object
     DiffSuggestion:
       description: A suggestion in unified diff format representing the code changes to fix the vulnerability.
@@ -2259,144 +1958,448 @@ components:
       required:
       - diff
       type: object
-    PinPackageAdvice:
-      description: 'Pin a package at a specific version. Pinning is a capability not supported
-
-        by all ecosystems, which causes a transitive dependency to be pinned at
-
-        a specific version with an override.
-
-
-        For example, the `replace` go.mod directive can override package dependency
-
-        constraints, forcing a specific version to be used in the application.
-
-
-        Pinning could break an application.
-
-
-        Note: In practice pin actions today are solely used in python pip''s packages as pip does not calculate upgrade paths'
-      example:
-        format: pin_package_advice
-        package_name: requests
-        pin_version: 2.25.1
+    PolicyModification:
+      description: Prior attribute values and the reason they were modified.
       properties:
-        format:
-          enum:
-          - pin_package_advice
+        pointer:
+          description: 'A JSON Pointer (RFC 6901) reference to the modified value, relative to
+
+            the top-level attributes of the same Finding.'
+          example: /rating/severity
           type: string
-        package_name:
-          type: string
-        pin_version:
+        policy:
+          allOf:
+          - $ref: '#/components/schemas/PolicyRef'
+          description: Policy which modified the finding, if available.
+        prior:
+          description: The prior value at the referenced pointer.
+          example: low
+        reason:
+          description: A human-readable explanation for why the value was modified.
+          example: CWE-123 poses an elevated risk to workloads exposed to the public internet
           type: string
       required:
-      - format
-      - package_name
-      - pin_version
+      - pointer
+      - reason
       type: object
-    SuppressionStatus:
-      description: Status of a suppression on a finding.
-      enum:
-      - ignored
-      - pending_ignore_approval
-      - other
-      type: string
-    OtherEvidence:
-      description: 'Evidence which this API version is not capable of expressing.
-
-
-        More information may be available in a newer version of this API.'
+    io.snyk.api.common.ErrorDocument:
       properties:
-        source:
-          enum:
-          - other
-          type: string
-      required:
-      - source
-      type: object
-    Diff:
-      description: 'Fix suggestions in the unified diff format that introduce code changes
-
-        to remediate the vulnerability.'
-      example:
-        format: diff
-        suggestions:
-        - diff: '--- a/auth.ts
-
-            +++ b/auth.ts
-
-            @@ -1,1 +1,1 @@
-
-            -eval(userInput)
-
-            +safeEval(userInput)
-
-            '
-          external_id: 550e8400-e29b-41d4-a716-446655440000
-          rank: 1
-        - diff: '--- a/auth.ts
-
-            +++ b/auth.ts
-
-            @@ -1,1 +1,1 @@
-
-            -password === input
-
-            +bcrypt.compare(input, password)
-
-            '
-          external_id: 550e8400-e29b-41d4-a716-446655440001
-          rank: 2
-      properties:
-        format:
-          enum:
-          - diff
-          type: string
-        suggestions:
-          description: 'Alternative suggestions - choose one to fix the vulnerability.
-
-            The ''rank'' field signals the relative confidence in each one.'
+        errors:
           items:
-            $ref: '#/components/schemas/DiffSuggestion'
+            $ref: '#/components/schemas/io.snyk.api.common.Error'
+          minItems: 1
           type: array
+        jsonapi:
+          $ref: '#/components/schemas/io.snyk.api.common.JsonApi'
       required:
-      - format
-      - suggestions
+      - jsonapi
+      - errors
       type: object
-    io.snyk.api.common.Error:
+    FindingData:
+      description: FindingData represents a Finding resource object.
       properties:
-        code:
-          description: An application-specific error code, expressed as a string value.
-          type: string
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
+        attributes:
+          allOf:
+          - $ref: '#/components/schemas/FindingAttributes'
+          readOnly: true
         id:
-          description: A unique identifier for this particular occurrence of the problem.
           format: uuid
+          readOnly: true
           type: string
         links:
-          $ref: '#/components/schemas/io.snyk.api.common.ErrorLink'
-        meta:
-          type: object
-        source:
+          description: 'Links to external resources outside this API.
+
+
+            Because these are not REST API resources, they are expressed here as links,
+
+            rather than as relationships.'
           properties:
-            parameter:
-              type: string
-            pointer:
-              type: string
+            snyk_advisory:
+              allOf:
+              - $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+              description: 'Link to Snyk''s vulnerability advisory for more information on the
+
+                finding, if applicable.'
+              example: https://security.snyk.io/vuln/SNYK-JAVA-ORGAPACHELOGGINGLOG4J-2314720
+            snyk_learn:
+              allOf:
+              - $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+              description: Link to a Snyk Learn lesson relevant to the finding, if applicable.
+              example: https://learn.snyk.io/lesson/csrf-attack/
           type: object
-        status:
-          description: The HTTP status code applicable to this problem, expressed as a string value.
-          pattern: ^[45]\d\d$
-          type: string
-        title:
-          description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+        relationships:
+          properties:
+            asset:
+              description: Originating asset in which this finding was discovered.
+              properties:
+                data:
+                  properties:
+                    id:
+                      format: uuid
+                      type: string
+                    type:
+                      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
+                      type: string
+                  required:
+                  - type
+                  - id
+                  type: object
+                links:
+                  $ref: '#/components/schemas/io.snyk.api.common.RelatedLink'
+                meta:
+                  $ref: '#/components/schemas/io.snyk.api.common.Meta'
+              required:
+              - links
+              type: object
+            fix:
+              description: Fix for this finding, it comes expanded with all data preloaded
+              properties:
+                data:
+                  properties:
+                    attributes:
+                      allOf:
+                      - $ref: '#/components/schemas/FixAttributes'
+                      description: 'Inlined attributes included in the relationship, if it is expanded.
+
+
+                        Expansion is a Snyk variation on JSON API. See
+
+                        https://snyk.roadie.so/docs/default/component/sweater-comb/standards/rest/#expansion'
+                    id:
+                      format: uuid
+                      type: string
+                    type:
+                      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
+                      type: string
+                  required:
+                  - type
+                  - id
+                  type: object
+              type: object
+            org:
+              description: Snyk organization scope in which the finding was discovered.
+              properties:
+                data:
+                  properties:
+                    id:
+                      format: uuid
+                      type: string
+                    type:
+                      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
+                      type: string
+                  required:
+                  - type
+                  - id
+                  type: object
+              type: object
+            policy:
+              description: Relate to the policy or policies applied to this finding.
+              properties:
+                data:
+                  properties:
+                    attributes:
+                      allOf:
+                      - properties:
+                          policies:
+                            items:
+                              properties:
+                                applied_policy:
+                                  anyOf:
+                                  - properties:
+                                      action_type:
+                                        enum:
+                                        - severity-change
+                                        type: string
+                                      policy_ref:
+                                        description: Reference to a policy, serving as a container for a set of policy-rules and can be owned by the group or the org.
+                                        properties:
+                                          id:
+                                            format: uuid
+                                            type: string
+                                          owner:
+                                            enum:
+                                            - org
+                                            - group
+                                            type: string
+                                        required:
+                                        - id
+                                        - owner
+                                        type: object
+                                      rule:
+                                        description: 'A policy rule is the central entity of a policy, including an action as well as conditions
+
+                                          when this policy applies.
+
+                                          Only a subset of fields are included, for more details see the API documentation
+
+                                          https://apidocs.snyk.io/?version=2024-10-15#get-/orgs/-org_id-/policies/-policy_id-'
+                                        properties:
+                                          created:
+                                            format: date-time
+                                            type: string
+                                          id:
+                                            format: uuid
+                                            type: string
+                                          modified:
+                                            format: date-time
+                                            type: string
+                                          name:
+                                            type: string
+                                          review:
+                                            enum:
+                                            - approved
+                                            - rejected
+                                            - pending
+                                            - cancelled
+                                            - not-required
+                                            - unknown
+                                            type: string
+                                        required:
+                                        - id
+                                        - name
+                                        - modified
+                                        - created
+                                        - review
+                                        type: object
+                                      severity_change:
+                                        properties:
+                                          new_severity:
+                                            description: Indicate the severity of a finding discovered by a Test.
+                                            enum:
+                                            - critical
+                                            - high
+                                            - medium
+                                            - low
+                                            - none
+                                            - other
+                                            type: string
+                                          original_severity:
+                                            description: Indicate the severity of a finding discovered by a Test.
+                                            enum:
+                                            - critical
+                                            - high
+                                            - medium
+                                            - low
+                                            - none
+                                            - other
+                                            type: string
+                                        required:
+                                        - original_severity
+                                        - new_severity
+                                        type: object
+                                    required:
+                                    - action_type
+                                    - policy_ref
+                                    - rule
+                                    - severity_change
+                                    type: object
+                                  - properties:
+                                      action_type:
+                                        enum:
+                                        - ignore
+                                        type: string
+                                      ignore:
+                                        properties:
+                                          created:
+                                            format: date-time
+                                            type: string
+                                          disregard_if_fixable:
+                                            description: Disregards the policy if set to true and the finding this policy is applied to is fixable
+                                            type: boolean
+                                          expires:
+                                            format: date-time
+                                            type: string
+                                          ignored_by:
+                                            properties:
+                                              email:
+                                                description: Email of the user who created the ignore
+                                                type: string
+                                              id:
+                                                description: User ID of the author of the ignore
+                                                format: uuid
+                                                type: string
+                                              name:
+                                                description: Name of the user who created the ignore
+                                                type: string
+                                            required:
+                                            - id
+                                            - name
+                                            type: object
+                                          path:
+                                            items:
+                                              type: string
+                                            maxItems: 10
+                                            type: array
+                                          reason:
+                                            type: string
+                                          reason_type:
+                                            enum:
+                                            - wont-fix
+                                            - not-vulnerable
+                                            - temporary-ignore
+                                            type: string
+                                          source:
+                                            type: string
+                                        required:
+                                        - reason
+                                        - source
+                                        type: object
+                                      policy_ref:
+                                        description: Reference to a policy, serving as a container for a set of policy-rules and can be owned by the group or the org.
+                                        properties:
+                                          id:
+                                            format: uuid
+                                            type: string
+                                          owner:
+                                            enum:
+                                            - org
+                                            - group
+                                            type: string
+                                        required:
+                                        - id
+                                        - owner
+                                        type: object
+                                      rule:
+                                        description: 'A policy rule is the central entity of a policy, including an action as well as conditions
+
+                                          when this policy applies.
+
+                                          Only a subset of fields are included, for more details see the API documentation
+
+                                          https://apidocs.snyk.io/?version=2024-10-15#get-/orgs/-org_id-/policies/-policy_id-'
+                                        properties:
+                                          created:
+                                            format: date-time
+                                            type: string
+                                          id:
+                                            format: uuid
+                                            type: string
+                                          modified:
+                                            format: date-time
+                                            type: string
+                                          name:
+                                            type: string
+                                          review:
+                                            enum:
+                                            - approved
+                                            - rejected
+                                            - pending
+                                            - cancelled
+                                            - not-required
+                                            - unknown
+                                            type: string
+                                        required:
+                                        - id
+                                        - name
+                                        - modified
+                                        - created
+                                        - review
+                                        type: object
+                                    required:
+                                    - action_type
+                                    - ignore
+                                    type: object
+                                  discriminator:
+                                    propertyName: action_type
+                                id:
+                                  format: uuid
+                                  type: string
+                                type:
+                                  enum:
+                                  - legacy_policy_snapshot
+                                  type: string
+                              required:
+                              - type
+                              - id
+                              - applied_policy
+                              type: object
+                            type: array
+                        required:
+                        - policies
+                        type: object
+                      description: 'Inlined attributes included in the relationship, if it is expanded.
+
+
+                        Expansion is a Snyk variation on JSON API. See
+
+                        https://snyk.roadie.so/docs/default/component/sweater-comb/standards/rest/#expansion'
+                    id:
+                      format: uuid
+                      type: string
+                    type:
+                      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
+                      type: string
+                  required:
+                  - type
+                  - id
+                  type: object
+                links:
+                  $ref: '#/components/schemas/io.snyk.api.common.RelatedLink'
+                meta:
+                  $ref: '#/components/schemas/io.snyk.api.common.Meta'
+              required:
+              - links
+              type: object
+            project:
+              description: Snyk Project in which the Finding was discovered
+              properties:
+                data:
+                  properties:
+                    id:
+                      format: uuid
+                      type: string
+                    type:
+                      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
+                      type: string
+                  required:
+                  - type
+                  - id
+                  type: object
+              type: object
+            test:
+              description: Test in which this finding was discovered.
+              properties:
+                data:
+                  properties:
+                    id:
+                      format: uuid
+                      type: string
+                    type:
+                      pattern: ^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$
+                      type: string
+                  required:
+                  - type
+                  - id
+                  type: object
+                links:
+                  $ref: '#/components/schemas/io.snyk.api.common.RelatedLink'
+                meta:
+                  $ref: '#/components/schemas/io.snyk.api.common.Meta'
+              required:
+              - links
+              type: object
+          readOnly: true
+          type: object
+        type:
+          enum:
+          - findings
+          readOnly: true
           type: string
       required:
-      - status
-      - detail
+      - id
+      - type
+      - attributes
       type: object
+    Uuid:
+      format: uuid
+      type: string
+    FixAppliedOutcome:
+      description: Indicates the outcome of a fix in terms of resolving the finding at hand
+      enum:
+      - fully_resolved
+      - partially_resolved
+      - unresolved
+      type: string
     io.snyk.api.common.ErrorLink:
       additionalProperties:
         $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
@@ -2405,35 +2408,7 @@ components:
         about:
           $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
       type: object
-    Uuid:
-      format: uuid
-      type: string
   parameters:
-    TestIdParam:
-      description: Test ID returned from the Test API to query.
-      in: path
-      name: test_id
-      required: true
-      schema:
-        format: uuid
-        type: string
-    io.snyk.api.request.SnykApiRequest.request_id:
-      description: 'A unique ID assigned to each API request, for tracing and troubleshooting.
-
-
-        Snyk clients can optionally provide this ID.'
-      in: header
-      name: snyk-request-id
-      schema:
-        format: uuid
-        type: string
-    io.snyk.api.request.PaginatedRequest.ending_before:
-      description: Opaque pagination cursor for reverse traversal.
-      explode: false
-      in: query
-      name: ending_before
-      schema:
-        type: string
     io.snyk.api.request.SnykApiRequest.interaction_id:
       description: 'Identifies the Snyk client interaction in which this API request occurs.
 
@@ -2447,11 +2422,11 @@ components:
         maxLength: 128
         minLength: 36
         type: string
-    io.snyk.api.request.PaginatedRequest.starting_after:
-      description: Opaque pagination cursor for forward traversal.
+    io.snyk.api.request.PaginatedRequest.ending_before:
+      description: Opaque pagination cursor for reverse traversal.
       explode: false
       in: query
-      name: starting_after
+      name: ending_before
       schema:
         type: string
     io.snyk.api.request.SnykApiRequest.version:
@@ -2473,6 +2448,31 @@ components:
         maximum: 100
         minimum: 1
         type: integer
+    io.snyk.api.request.PaginatedRequest.starting_after:
+      description: Opaque pagination cursor for forward traversal.
+      explode: false
+      in: query
+      name: starting_after
+      schema:
+        type: string
+    io.snyk.api.request.SnykApiRequest.request_id:
+      description: 'A unique ID assigned to each API request, for tracing and troubleshooting.
+
+
+        Snyk clients can optionally provide this ID.'
+      in: header
+      name: snyk-request-id
+      schema:
+        format: uuid
+        type: string
+    TestIdParam:
+      description: Test ID returned from the Test API to query.
+      in: path
+      name: test_id
+      required: true
+      schema:
+        format: uuid
+        type: string
   securitySchemes:
     APIToken:
       description: API key value must be prefixed with \"Token \".

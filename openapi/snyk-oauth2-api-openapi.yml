@@ -208,6 +208,78 @@ paths:
       description: Snyk OAuth2 API
 components:
   schemas:
+    ClientCredentialsSecret:
+      allOf:
+      - $ref: '#/components/schemas/ClientCredentialsBase'
+      - type: object
+        properties:
+          client_id:
+            description: The client ID of the client application.
+            type: string
+            example: 64ae3415-5ccd-49e5-91f0-9101a6793ec2
+          client_secret:
+            description: The client secret of the client application.
+            type: string
+            example: super_secret_client_secret
+        required:
+        - client_id
+        - client_secret
+    AuthCode:
+      type: object
+      properties:
+        grant_type:
+          description: The type of grant used in the request. Use `authorization_code` to exchange an authorization code for an access token.
+          type: string
+          enum:
+          - authorization_code
+          example: authorization_code
+        code:
+          description: The authorization code received from the authorization server.
+          type: string
+          example: returned_auth_code
+        client_id:
+          description: The client ID of the client application.
+          type: string
+          example: 64ae3415-5ccd-49e5-91f0-9101a6793ec2
+        client_secret:
+          description: The client secret of the client application.
+          type: string
+          example: super_secret_client_secret
+        code_verifier:
+          description: The code verifier used to generate the code challenge.
+          type: string
+          example: your_secure_code_verifier
+      required:
+      - grant_type
+      - code
+      - client_id
+      - client_secret
+      - code_verifier
+    OAuthError:
+      type: object
+      properties:
+        error:
+          description: 'An error ID. The full list of possible values can be found in the OAuth Extensions Error Registry maintained by IANA: https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml'
+          type: string
+          example: invalid_request
+        error_description:
+          description: Human readable description about what happened.
+          type: string
+          example: The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Request parameter 'grant_type' is missing
+      required:
+      - error
+      - error_description
+    ClientCredentialsBase:
+      type: object
+      properties:
+        grant_type:
+          description: The type of grant used in the request. Use `client_credentials` to exchange credentials for an access token, typically used with Service Accounts. Supports either client_secret or private_key_jwt auth.
+          type: string
+          enum:
+          - client_credentials
+          example: client_credentials
+      required:
+      - grant_type
     ClientCredentialsJWT:
       allOf:
       - $ref: '#/components/schemas/ClientCredentialsBase'
@@ -271,84 +343,12 @@ components:
       - grant_type
       - client_secret
       - refresh_token
-    OAuthError:
-      type: object
-      properties:
-        error:
-          description: 'An error ID. The full list of possible values can be found in the OAuth Extensions Error Registry maintained by IANA: https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml'
-          type: string
-          example: invalid_request
-        error_description:
-          description: Human readable description about what happened.
-          type: string
-          example: The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Request parameter 'grant_type' is missing
-      required:
-      - error
-      - error_description
-    ClientCredentialsBase:
-      type: object
-      properties:
-        grant_type:
-          description: The type of grant used in the request. Use `client_credentials` to exchange credentials for an access token, typically used with Service Accounts. Supports either client_secret or private_key_jwt auth.
-          type: string
-          enum:
-          - client_credentials
-          example: client_credentials
-      required:
-      - grant_type
     ClientCredentials:
       oneOf:
       - $ref: '#/components/schemas/ClientCredentialsSecret'
       - $ref: '#/components/schemas/ClientCredentialsJWT'
       discriminator:
         propertyName: client_assertion_type
-    AuthCode:
-      type: object
-      properties:
-        grant_type:
-          description: The type of grant used in the request. Use `authorization_code` to exchange an authorization code for an access token.
-          type: string
-          enum:
-          - authorization_code
-          example: authorization_code
-        code:
-          description: The authorization code received from the authorization server.
-          type: string
-          example: returned_auth_code
-        client_id:
-          description: The client ID of the client application.
-          type: string
-          example: 64ae3415-5ccd-49e5-91f0-9101a6793ec2
-        client_secret:
-          description: The client secret of the client application.
-          type: string
-          example: super_secret_client_secret
-        code_verifier:
-          description: The code verifier used to generate the code challenge.
-          type: string
-          example: your_secure_code_verifier
-      required:
-      - grant_type
-      - code
-      - client_id
-      - client_secret
-      - code_verifier
-    ClientCredentialsSecret:
-      allOf:
-      - $ref: '#/components/schemas/ClientCredentialsBase'
-      - type: object
-        properties:
-          client_id:
-            description: The client ID of the client application.
-            type: string
-            example: 64ae3415-5ccd-49e5-91f0-9101a6793ec2
-          client_secret:
-            description: The client secret of the client application.
-            type: string
-            example: super_secret_client_secret
-        required:
-        - client_id
-        - client_secret
   responses:
     Unauthorized:
       description: Unauthorized

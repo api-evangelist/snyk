@@ -4058,94 +4058,6 @@ paths:
       x-stability-level: stable
 components:
   schemas:
-    UpdateBrokerDeploymentRequest:
-      additionalProperties: false
-      properties:
-        data:
-          $ref: '#/components/schemas/BrokerDeploymentUpdateResource'
-      required:
-      - data
-      type: object
-    GetBrokerDeploymentResponse:
-      additionalProperties: false
-      properties:
-        data:
-          $ref: '#/components/schemas/BrokerDeploymentResource'
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-      required:
-      - data
-      type: object
-    BrokerDeploymentUpdateAttributes:
-      additionalProperties: false
-      properties:
-        broker_app_installed_in_org_id:
-          description: Org Id in which the Broker App is installed
-          format: uuid
-          type: string
-        install_id:
-          description: Associated Install ID
-          format: uuid
-          type: string
-        metadata:
-          description: Metadata information such user/org id or metrics
-          type: object
-      required:
-      - broker_app_installed_in_org_id
-      - install_id
-      type: object
-    BrokerDeploymentAttributes:
-      additionalProperties: false
-      properties:
-        broker_app_installed_in_org_id:
-          description: Org Id in which the Broker App is installed
-          format: uuid
-          type: string
-        install_id:
-          description: Associated Install ID
-          format: uuid
-          readOnly: true
-          type: string
-        metadata:
-          description: Metadata information such user/org id or metrics
-          type: object
-      required:
-      - broker_app_installed_in_org_id
-      - metadata
-      type: object
-    JsonApi:
-      additionalProperties: false
-      example:
-        version: '1.0'
-      properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          example: '1.0'
-          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
-          type: string
-      required:
-      - version
-      type: object
-    PaginatedLinks:
-      additionalProperties: false
-      example:
-        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
-        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
-        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
-      properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
     LinkProperty:
       example: https://example.com/api/resource
       oneOf:
@@ -4174,19 +4086,61 @@ components:
         required:
         - href
         type: object
-    ListBrokerDeploymentsResponse:
+    CreateBrokerDeploymentRequest:
       additionalProperties: false
       properties:
         data:
-          items:
-            $ref: '#/components/schemas/BrokerDeploymentResource'
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
+          properties:
+            attributes:
+              allOf:
+              - $ref: '#/components/schemas/BrokerDeploymentAttributes'
+            type:
+              enum:
+              - broker_deployment
+              type: string
+          required:
+          - attributes
+          - type
+          type: object
       required:
       - data
+      type: object
+    PaginatedLinks:
+      additionalProperties: false
+      example:
+        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
+        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
+        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    BrokerDeploymentAttributes:
+      additionalProperties: false
+      properties:
+        broker_app_installed_in_org_id:
+          description: Org Id in which the Broker App is installed
+          format: uuid
+          type: string
+        install_id:
+          description: Associated Install ID
+          format: uuid
+          readOnly: true
+          type: string
+        metadata:
+          description: Metadata information such user/org id or metrics
+          type: object
+      required:
+      - broker_app_installed_in_org_id
+      - metadata
       type: object
     BrokerDeploymentResource:
       additionalProperties: false
@@ -4206,22 +4160,15 @@ components:
       - id
       - type
       type: object
-    CreateBrokerDeploymentRequest:
+    GetBrokerDeploymentResponse:
       additionalProperties: false
       properties:
         data:
-          properties:
-            attributes:
-              allOf:
-              - $ref: '#/components/schemas/BrokerDeploymentAttributes'
-            type:
-              enum:
-              - broker_deployment
-              type: string
-          required:
-          - attributes
-          - type
-          type: object
+          $ref: '#/components/schemas/BrokerDeploymentResource'
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
       required:
       - data
       type: object
@@ -4243,21 +4190,76 @@ components:
       - id
       - type
       type: object
+    JsonApi:
+      additionalProperties: false
+      example:
+        version: '1.0'
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
+      type: object
+    ListBrokerDeploymentsResponse:
+      additionalProperties: false
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/BrokerDeploymentResource'
+          type: array
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+      required:
+      - data
+      type: object
+    BrokerDeploymentUpdateAttributes:
+      additionalProperties: false
+      properties:
+        broker_app_installed_in_org_id:
+          description: Org Id in which the Broker App is installed
+          format: uuid
+          type: string
+        install_id:
+          description: Associated Install ID
+          format: uuid
+          type: string
+        metadata:
+          description: Metadata information such user/org id or metrics
+          type: object
+      required:
+      - broker_app_installed_in_org_id
+      - install_id
+      type: object
+    UpdateBrokerDeploymentRequest:
+      additionalProperties: false
+      properties:
+        data:
+          $ref: '#/components/schemas/BrokerDeploymentUpdateResource'
+      required:
+      - data
+      type: object
+  headers:
+    LocationHeader:
+      description: 'A header providing a URL for the location of a resource
+
+        '
+      example: https://example.com/resource/4
+      schema:
+        format: url
+        type: string
   parameters:
-    DeploymentId:
-      description: Deployment ID
+    InstallId:
+      description: Install ID
       in: path
-      name: deployment_id
+      name: install_id
       required: true
       schema:
         format: uuid
-        type: string
-    EndingBefore:
-      description: Return the page of results immediately before this cursor
-      example: v1.eyJpZCI6IjExMDAifQo=
-      in: query
-      name: ending_before
-      schema:
         type: string
     StartingAfter:
       description: Return the page of results immediately after this cursor
@@ -4266,10 +4268,10 @@ components:
       name: starting_after
       schema:
         type: string
-    InstallId:
-      description: Install ID
+    DeploymentId:
+      description: Deployment ID
       in: path
-      name: install_id
+      name: deployment_id
       required: true
       schema:
         format: uuid
@@ -4282,14 +4284,12 @@ components:
       schema:
         format: uuid
         type: string
-  headers:
-    LocationHeader:
-      description: 'A header providing a URL for the location of a resource
-
-        '
-      example: https://example.com/resource/4
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
       schema:
-        format: url
         type: string
   securitySchemes:
     APIToken:

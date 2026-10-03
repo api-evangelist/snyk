@@ -6135,15 +6135,93 @@ paths:
       x-stability-level: stable
 components:
   schemas:
-    BrokerContextAttributes:
+    GetBrokerContextResponse:
       additionalProperties: false
       properties:
-        context:
-          additionalProperties:
-            type: string
+        data:
+          $ref: '#/components/schemas/BrokerContextResource'
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+      required:
+      - data
+      type: object
+    PaginatedLinks:
+      additionalProperties: false
+      example:
+        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
+        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
+        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    ConnectionRelationship:
+      additionalProperties: false
+      properties:
+        data:
+          properties:
+            id:
+              description: Associated item id
+              type: string
+            type:
+              description: Associated item type
+              type: string
+          required:
+          - id
+          - type
           type: object
       required:
-      - context
+      - data
+      type: object
+    UpdateBrokerContextRequest:
+      additionalProperties: false
+      properties:
+        data:
+          properties:
+            attributes:
+              $ref: '#/components/schemas/BrokerContextAttributes'
+            id:
+              format: uuid
+              type: string
+            type:
+              enum:
+              - broker_context
+              type: string
+          required:
+          - attributes
+          - type
+          - id
+          type: object
+      required:
+      - data
+      type: object
+    BrokerConnectionIntegrationWithContextResource:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          readOnly: true
+          type: string
+        relationships:
+          $ref: '#/components/schemas/IntegrationRelationships'
+        type:
+          enum:
+          - broker_context
+          type: string
+      required:
+      - relationships
+      - id
+      - type
       type: object
     IntegrationRelationship:
       additionalProperties: false
@@ -6181,91 +6259,6 @@ components:
       required:
       - applied_integrations
       type: object
-    BrokerContextCreateAttributes:
-      additionalProperties: false
-      properties:
-        connection_id:
-          format: uuid
-          type: string
-        context:
-          additionalProperties:
-            type: string
-          type: object
-      required:
-      - context
-      - connection_id
-      type: object
-    ListBrokerContextsResponse:
-      additionalProperties: false
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/BrokerContextResource'
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-      required:
-      - data
-      type: object
-    UpdateBrokerContextRequest:
-      additionalProperties: false
-      properties:
-        data:
-          properties:
-            attributes:
-              $ref: '#/components/schemas/BrokerContextAttributes'
-            id:
-              format: uuid
-              type: string
-            type:
-              enum:
-              - broker_context
-              type: string
-          required:
-          - attributes
-          - type
-          - id
-          type: object
-      required:
-      - data
-      type: object
-    JsonApi:
-      additionalProperties: false
-      example:
-        version: '1.0'
-      properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          example: '1.0'
-          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
-          type: string
-      required:
-      - version
-      type: object
-    BrokerContextResource:
-      additionalProperties: true
-      properties:
-        attributes:
-          $ref: '#/components/schemas/BrokerContextAttributes'
-        id:
-          format: uuid
-          readOnly: true
-          type: string
-        relationships:
-          allOf:
-          - $ref: '#/components/schemas/ConnectionRelationships__0'
-          - $ref: '#/components/schemas/AppliedIntegrationsRelationships'
-        type:
-          enum:
-          - broker_context
-          type: string
-      required:
-      - attributes
-      - id
-      - type
-      type: object
     UpdateBrokerConnectionIntegrationWithContext:
       additionalProperties: false
       properties:
@@ -6294,53 +6287,33 @@ components:
       required:
       - data
       type: object
-    GetBrokerContextResponse:
+    BrokerContextCreateAttributes:
       additionalProperties: false
       properties:
-        data:
-          $ref: '#/components/schemas/BrokerContextResource'
+        connection_id:
+          format: uuid
+          type: string
+        context:
+          additionalProperties:
+            type: string
+          type: object
+      required:
+      - context
+      - connection_id
+      type: object
+    IntegrationRelationships:
+      additionalProperties: false
+      properties:
+        integrations_relationships:
+          items:
+            $ref: '#/components/schemas/IntegrationRelationship'
+          type: array
         jsonapi:
           $ref: '#/components/schemas/JsonApi'
         links:
           $ref: '#/components/schemas/PaginatedLinks'
       required:
-      - data
-      type: object
-    BrokerConnectionIntegrationWithContextResource:
-      additionalProperties: false
-      properties:
-        id:
-          format: uuid
-          readOnly: true
-          type: string
-        relationships:
-          $ref: '#/components/schemas/IntegrationRelationships'
-        type:
-          enum:
-          - broker_context
-          type: string
-      required:
-      - relationships
-      - id
-      - type
-      type: object
-    PaginatedLinks:
-      additionalProperties: false
-      example:
-        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
-        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
-        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
-      properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
+      - integrations_relationships
       type: object
     LinkProperty:
       example: https://example.com/api/resource
@@ -6370,40 +6343,6 @@ components:
         required:
         - href
         type: object
-    AppliedIntegrationRelationship:
-      additionalProperties: false
-      properties:
-        data:
-          properties:
-            id:
-              description: Associated item id
-              type: string
-            org_id:
-              description: Associated org id
-              type: string
-            type:
-              description: Associated item type
-              type: string
-          required:
-          - id
-          - org_id
-          - type
-          type: object
-      required:
-      - data
-      type: object
-    UpdateBrokerConnectionIntegrationWithContextResponse:
-      additionalProperties: false
-      properties:
-        data:
-          $ref: '#/components/schemas/BrokerConnectionIntegrationWithContextResource'
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-      required:
-      - data
-      type: object
     ConnectionRelationships__0:
       additionalProperties: true
       properties:
@@ -6436,21 +6375,78 @@ components:
       required:
       - data
       type: object
-    IntegrationRelationships:
+    ListBrokerContextsResponse:
       additionalProperties: false
       properties:
-        integrations_relationships:
+        data:
           items:
-            $ref: '#/components/schemas/IntegrationRelationship'
+            $ref: '#/components/schemas/BrokerContextResource'
           type: array
         jsonapi:
           $ref: '#/components/schemas/JsonApi'
         links:
           $ref: '#/components/schemas/PaginatedLinks'
       required:
-      - integrations_relationships
+      - data
       type: object
-    ConnectionRelationship:
+    BrokerContextResource:
+      additionalProperties: true
+      properties:
+        attributes:
+          $ref: '#/components/schemas/BrokerContextAttributes'
+        id:
+          format: uuid
+          readOnly: true
+          type: string
+        relationships:
+          allOf:
+          - $ref: '#/components/schemas/ConnectionRelationships__0'
+          - $ref: '#/components/schemas/AppliedIntegrationsRelationships'
+        type:
+          enum:
+          - broker_context
+          type: string
+      required:
+      - attributes
+      - id
+      - type
+      type: object
+    JsonApi:
+      additionalProperties: false
+      example:
+        version: '1.0'
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
+      type: object
+    BrokerContextAttributes:
+      additionalProperties: false
+      properties:
+        context:
+          additionalProperties:
+            type: string
+          type: object
+      required:
+      - context
+      type: object
+    UpdateBrokerConnectionIntegrationWithContextResponse:
+      additionalProperties: false
+      properties:
+        data:
+          $ref: '#/components/schemas/BrokerConnectionIntegrationWithContextResource'
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+      required:
+      - data
+      type: object
+    AppliedIntegrationRelationship:
       additionalProperties: false
       properties:
         data:
@@ -6458,30 +6454,25 @@ components:
             id:
               description: Associated item id
               type: string
+            org_id:
+              description: Associated org id
+              type: string
             type:
               description: Associated item type
               type: string
           required:
           - id
+          - org_id
           - type
           type: object
       required:
       - data
       type: object
-  headers:
-    LocationHeader:
-      description: 'A header providing a URL for the location of a resource
-
-        '
-      example: https://example.com/resource/4
-      schema:
-        format: url
-        type: string
   parameters:
-    DeploymentId:
-      description: Deployment ID
+    ContextId:
+      description: Context ID
       in: path
-      name: deployment_id
+      name: context_id
       required: true
       schema:
         format: uuid
@@ -6494,10 +6485,40 @@ components:
       schema:
         format: uuid
         type: string
+    ConnectionId:
+      description: Connection ID
+      in: path
+      name: connection_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
     InstallId:
       description: Install ID
       in: path
       name: install_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
+        type: string
+    DeploymentId:
+      description: Deployment ID
+      in: path
+      name: deployment_id
       required: true
       schema:
         format: uuid
@@ -6510,35 +6531,14 @@ components:
       schema:
         format: uuid
         type: string
-    ContextId:
-      description: Context ID
-      in: path
-      name: context_id
-      required: true
+  headers:
+    LocationHeader:
+      description: 'A header providing a URL for the location of a resource
+
+        '
+      example: https://example.com/resource/4
       schema:
-        format: uuid
-        type: string
-    EndingBefore:
-      description: Return the page of results immediately before this cursor
-      example: v1.eyJpZCI6IjExMDAifQo=
-      in: query
-      name: ending_before
-      schema:
-        type: string
-    StartingAfter:
-      description: Return the page of results immediately after this cursor
-      example: v1.eyJpZCI6IjEwMDAifQo=
-      in: query
-      name: starting_after
-      schema:
-        type: string
-    ConnectionId:
-      description: Connection ID
-      in: path
-      name: connection_id
-      required: true
-      schema:
-        format: uuid
+        format: url
         type: string
   securitySchemes:
     APIToken:
