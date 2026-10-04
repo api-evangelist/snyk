@@ -1,0 +1,258 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-policy-response-schema.json",
+  "title": "PolicyResponse",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-policies-api-openapi.yml#/components/schemas/PolicyResponse",
+  "additionalProperties": false,
+  "properties": {
+    "attributes": {
+      "$ref": "#/$defs/PolicyResponseAttributes"
+    },
+    "id": {
+      "description": "A unique identifier for this particular occurrence of the policy.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "type": {
+      "enum": [
+        "policy"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "attributes"
+  ],
+  "type": "object",
+  "$defs": {
+    "PolicyActionIgnore": {
+      "additionalProperties": false,
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/PolicyActionIgnoreData"
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "type": "object"
+    },
+    "PolicyActionIgnoreData": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PolicyActionIgnoreDataWontFix"
+        },
+        {
+          "$ref": "#/$defs/PolicyActionIgnoreDataTemporaryIgnore"
+        },
+        {
+          "$ref": "#/$defs/PolicyActionIgnoreDataNotVulnerable"
+        }
+      ],
+      "type": "object"
+    },
+    "PolicyActionIgnoreDataNotVulnerable": {
+      "additionalProperties": false,
+      "properties": {
+        "expires": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "ignore_type": {
+          "enum": [
+            "not-vulnerable"
+          ],
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 10000,
+          "type": "string"
+        }
+      },
+      "required": [
+        "ignore_type"
+      ],
+      "type": "object"
+    },
+    "PolicyActionIgnoreDataTemporaryIgnore": {
+      "additionalProperties": false,
+      "properties": {
+        "expires": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "ignore_type": {
+          "enum": [
+            "temporary-ignore"
+          ],
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 10000,
+          "type": "string"
+        }
+      },
+      "required": [
+        "ignore_type",
+        "expires"
+      ],
+      "type": "object"
+    },
+    "PolicyActionIgnoreDataWontFix": {
+      "additionalProperties": false,
+      "properties": {
+        "expires": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "ignore_type": {
+          "enum": [
+            "wont-fix"
+          ],
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 10000,
+          "type": "string"
+        }
+      },
+      "required": [
+        "ignore_type"
+      ],
+      "type": "object"
+    },
+    "PolicyCondition": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "description": "field refers to the type of identifier used in the condition of the policy.  The available value is versioned and hierarchical:\n- `snyk/asset/finding/v1` : identity of the finding scoped to a Snyk assets (e.g. a repository).\nFor a given issue, `snyk/asset/finding/v1` can be extracted from the `key_asset` field in the [issues API](https://apidocs.snyk.io/?version=2024-10-15#get-/orgs/-org_id-/issues). \nIn addition, finding identities can be extracted from the fingerprints section of the SARIF, which is accessible via the Snyk CLI. More details can be found in the [CLI documentation](https://docs.snyk.io/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-code/view-snyk-code-cli-results#export-test-results).\n",
+          "enum": [
+            "snyk/asset/finding/v1"
+          ],
+          "type": "string"
+        },
+        "operator": {
+          "description": "Operator for the field to value matching. Currently\nonly 'includes' is supported, which does an exact\nstring match on the value.\n",
+          "enum": [
+            "includes"
+          ],
+          "type": "string"
+        },
+        "value": {
+          "description": "The value of the field to match on.\n",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field",
+        "operator",
+        "value"
+      ],
+      "type": "object"
+    },
+    "PolicyConditionsGroup": {
+      "properties": {
+        "conditions": {
+          "items": {
+            "$ref": "#/$defs/PolicyCondition"
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "type": "array"
+        },
+        "logical_operator": {
+          "description": "The logical operator for the policy condition. Currently only 'and' is supported.",
+          "enum": [
+            "and"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "logical_operator",
+        "conditions"
+      ],
+      "type": "object"
+    },
+    "PolicyResponseAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/PolicyActionIgnore"
+        },
+        "action_type": {
+          "enum": [
+            "ignore"
+          ],
+          "type": "string"
+        },
+        "conditions_group": {
+          "$ref": "#/$defs/PolicyConditionsGroup"
+        },
+        "created_at": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "created_by": {
+          "$ref": "#/$defs/Principal"
+        },
+        "name": {
+          "type": "string"
+        },
+        "review": {
+          "$ref": "#/$defs/PolicyReview"
+        },
+        "updated_at": {
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "conditions_group",
+        "action",
+        "action_type",
+        "review",
+        "created_at",
+        "updated_at"
+      ],
+      "type": "object"
+    },
+    "PolicyReview": {
+      "description": "Review status.",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "not-required"
+      ],
+      "type": "string"
+    },
+    "Principal": {
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "id": {
+          "description": "The Snyk ID corresponding to this user or service account that created the policy",
+          "format": "uuid",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the user or service account that created the policy",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ],
+      "type": "object"
+    }
+  }
+}

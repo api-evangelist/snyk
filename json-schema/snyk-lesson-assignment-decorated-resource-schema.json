@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-lesson-assignment-decorated-resource-schema.json",
+  "title": "LessonAssignmentDecoratedResource",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-learn-assignment-api-openapi.yml#/components/schemas/LessonAssignmentDecoratedResource",
+  "properties": {
+    "attributes": {
+      "$ref": "#/$defs/LessonAssignmentDecoratedAttributes"
+    },
+    "id": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "type": {
+      "enum": [
+        "lesson_assignment"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "attributes"
+  ],
+  "type": "object",
+  "$defs": {
+    "LessonAssignmentCreationAttributes": {
+      "properties": {
+        "due_date": {
+          "format": "date",
+          "type": "string"
+        },
+        "lesson_id": {
+          "type": "string"
+        },
+        "user_id": {
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "user_id",
+        "lesson_id"
+      ],
+      "type": "object"
+    },
+    "LessonAssignmentDecoratedAttributes": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/LessonAssignmentRecordAttributes"
+        },
+        {
+          "properties": {
+            "assigning_user_email": {
+              "type": "string"
+            },
+            "is_active": {
+              "type": "boolean"
+            },
+            "learning_path_ids": {
+              "items": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "learning_program_id": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "lesson_created_at": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "lesson_slug": {
+              "type": "string"
+            },
+            "lesson_title": {
+              "type": "string"
+            },
+            "lesson_updated_at": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "user_email": {
+              "format": "email",
+              "type": "string"
+            }
+          },
+          "required": [
+            "user_email",
+            "lesson_title",
+            "lesson_slug",
+            "lesson_created_at",
+            "lesson_updated_at"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "LessonAssignmentRecordAttributes": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/LessonAssignmentCreationAttributes"
+        },
+        {
+          "properties": {
+            "assigning_user_id": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "completed_date": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "created_at": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "updated_at": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          "required": [
+            "created_at",
+            "updated_at",
+            "assigning_user_id"
+          ],
+          "type": "object"
+        }
+      ]
+    }
+  }
+}

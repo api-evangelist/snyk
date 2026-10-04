@@ -9,7 +9,17 @@ description: |
   - User wants to fix a specific CVE, Snyk ID, or vulnerability type (XSS, SQL injection, path traversal, etc.)
   - User wants to upgrade a vulnerable dependency
   - User asks to "fix all" vulnerabilities or "fix all high/critical" issues (batch mode)
-allowed-tools: "mcp_snyk_snyk_code_scan mcp_snyk_snyk_sca_scan mcp_snyk_snyk_breakability_check mcp_snyk_snyk_auth mcp_snyk_snyk_send_feedback Read Write Edit Bash Grep"
+allowed-tools:
+  - mcp_snyk_snyk_code_scan
+  - mcp_snyk_snyk_sca_scan
+  - mcp_snyk_snyk_breakability_check
+  - mcp_snyk_snyk_auth
+  - mcp_snyk_snyk_send_feedback
+  - Read
+  - Write
+  - Edit
+  - Bash
+  - Grep
 license: Apache-2.0
 compatibility: |
   Requires Snyk MCP server connection and authenticated Snyk account.

@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-catalog-progress-response-schema.json",
+  "title": "CatalogProgressResponse",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-learn-progress-api-openapi.yml#/components/schemas/CatalogProgressResponse",
+  "properties": {
+    "data": {
+      "items": {
+        "$ref": "#/$defs/CatalogProgress"
+      },
+      "type": "array"
+    },
+    "jsonapi": {
+      "$ref": "#/$defs/JsonApi"
+    },
+    "links": {
+      "$ref": "#/$defs/PaginatedLinks"
+    },
+    "meta": {
+      "properties": {
+        "total_org_members": {
+          "description": "Total number of organization members for which the progress report is generated",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "total_org_members"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "jsonapi",
+    "links",
+    "data"
+  ],
+  "type": "object",
+  "$defs": {
+    "CatalogProgress": {
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/CatalogProgressAttributes"
+        },
+        "id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "relationships": {
+          "properties": {
+            "catalog": {
+              "$ref": "#/$defs/CatalogRelationship"
+            }
+          },
+          "required": [
+            "catalog"
+          ],
+          "type": "object"
+        },
+        "type": {
+          "enum": [
+            "progress"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes",
+        "relationships"
+      ],
+      "type": "object"
+    },
+    "CatalogProgressAttributes": {
+      "properties": {
+        "completed_count": {
+          "description": "Percentage of users in the organization who have completed the resource.",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        "in_progress_count": {
+          "description": "Percentage of users in the organization who have started progress on the resource.",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        "todo_count": {
+          "description": "Percentage of users in the organization who have not started progress on the resource.",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        "users_completed_count": {
+          "description": "Number of users in the organization who have completed the resource.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "users_in_progress_count": {
+          "description": "Number of users in the organization who are in-progress who have started progress on the resource.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "users_todo_count": {
+          "description": "Number of users in the organization who have not started not started progress on the resource.",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "todo_count",
+        "in_progress_count",
+        "completed_count"
+      ],
+      "type": "object"
+    },
+    "CatalogRelationship": {
+      "properties": {
+        "data": {
+          "properties": {
+            "attributes": {
+              "properties": {
+                "cves": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "cwes": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "slug": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "title",
+                "slug",
+                "cwes",
+                "cves"
+              ],
+              "type": "object"
+            },
+            "id": {
+              "type": "string"
+            },
+            "type": {
+              "enum": [
+                "lesson",
+                "learning_path"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "id",
+            "attributes"
+          ],
+          "type": "object"
+        },
+        "links": {
+          "properties": {
+            "self": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "self"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "links",
+        "data"
+      ],
+      "type": "object"
+    },
+    "JsonApi": {
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "description": "Version of the JSON API specification this server supports.",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version"
+      ],
+      "type": "object"
+    },
+    "LinkProperty": {
+      "oneOf": [
+        {
+          "description": "A string containing the link’s URL.",
+          "type": "string"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "href": {
+              "description": "A string containing the link’s URL.",
+              "type": "string"
+            },
+            "meta": {
+              "additionalProperties": true,
+              "description": "Free-form object that may contain non-standard information.",
+              "type": "object"
+            }
+          },
+          "required": [
+            "href"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "PaginatedLinks": {
+      "additionalProperties": false,
+      "properties": {
+        "first": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "last": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "next": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "prev": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "self": {
+          "$ref": "#/$defs/LinkProperty"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

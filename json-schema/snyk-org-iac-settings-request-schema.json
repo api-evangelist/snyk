@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-org-iac-settings-request-schema.json",
+  "title": "OrgIacSettingsRequest",
+  "description": "The Infrastructure as Code settings for an org.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-iacsettings-api-openapi.yml#/components/schemas/OrgIacSettingsRequest",
+  "properties": {
+    "attributes": {
+      "properties": {
+        "custom_rules": {
+          "additionalProperties": false,
+          "description": "The Infrastructure as Code custom rules settings for an org.",
+          "minProperties": 1,
+          "properties": {
+            "inherit_from_parent": {
+              "$ref": "#/$defs/InheritFromParent"
+            },
+            "is_enabled": {
+              "$ref": "#/$defs/IsEnabled"
+            },
+            "oci_registry_tag": {
+              "$ref": "#/$defs/OciRegistryTag"
+            },
+            "oci_registry_url": {
+              "$ref": "#/$defs/OciRegistryUrl"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "type": {
+      "description": "Content type",
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "attributes"
+  ],
+  "type": "object",
+  "$defs": {
+    "InheritFromParent": {
+      "description": "Which parent to inherit settings from.",
+      "enum": [
+        "group"
+      ],
+      "type": "string"
+    },
+    "IsEnabled": {
+      "description": "Whether the custom rules feature is enabled or not.",
+      "type": "boolean"
+    },
+    "OciRegistryTag": {
+      "description": "The tag for an OCI artifact inside an OCI registry.",
+      "type": "string"
+    },
+    "OciRegistryUrl": {
+      "description": "The URL to an OCI registry.",
+      "type": "string"
+    }
+  }
+}

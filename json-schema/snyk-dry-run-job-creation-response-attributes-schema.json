@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-dry-run-job-creation-response-attributes-schema.json",
+  "title": "DryRunJobCreationResponseAttributes",
+  "description": "Attributes for a dry run job creation response",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-containerregistryimportpolicy-api-openapi.yml#/components/schemas/DryRunJobCreationResponseAttributes",
+  "properties": {
+    "status": {
+      "description": "The current status of the dry run job",
+      "enum": [
+        "pending",
+        "running",
+        "completed",
+        "failed"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "status"
+  ],
+  "type": "object"
+}

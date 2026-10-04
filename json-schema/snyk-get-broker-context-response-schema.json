@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-get-broker-context-response-schema.json",
+  "title": "GetBrokerContextResponse",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-brokercontexts-api-openapi.yml#/components/schemas/GetBrokerContextResponse",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/BrokerContextResource"
+    },
+    "jsonapi": {
+      "$ref": "#/$defs/JsonApi"
+    },
+    "links": {
+      "$ref": "#/$defs/PaginatedLinks"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "type": "object",
+  "$defs": {
+    "AppliedIntegrationRelationship": {
+      "additionalProperties": false,
+      "properties": {
+        "data": {
+          "properties": {
+            "id": {
+              "description": "Associated item id",
+              "type": "string"
+            },
+            "org_id": {
+              "description": "Associated org id",
+              "type": "string"
+            },
+            "type": {
+              "description": "Associated item type",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "org_id",
+            "type"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "type": "object"
+    },
+    "AppliedIntegrationsRelationships": {
+      "additionalProperties": true,
+      "properties": {
+        "applied_integrations": {
+          "items": {
+            "$ref": "#/$defs/AppliedIntegrationRelationship"
+          },
+          "type": "array"
+        },
+        "jsonapi": {
+          "$ref": "#/$defs/JsonApi"
+        },
+        "links": {
+          "$ref": "#/$defs/PaginatedLinks"
+        }
+      },
+      "required": [
+        "applied_integrations"
+      ],
+      "type": "object"
+    },
+    "BrokerContextAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "context": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "context"
+      ],
+      "type": "object"
+    },
+    "BrokerContextResource": {
+      "additionalProperties": true,
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/BrokerContextAttributes"
+        },
+        "id": {
+          "format": "uuid",
+          "readOnly": true,
+          "type": "string"
+        },
+        "relationships": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ConnectionRelationships__0"
+            },
+            {
+              "$ref": "#/$defs/AppliedIntegrationsRelationships"
+            }
+          ]
+        },
+        "type": {
+          "enum": [
+            "broker_context"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "attributes",
+        "id",
+        "type"
+      ],
+      "type": "object"
+    },
+    "ConnectionRelationship": {
+      "additionalProperties": false,
+      "properties": {
+        "data": {
+          "properties": {
+            "id": {
+              "description": "Associated item id",
+              "type": "string"
+            },
+            "type": {
+              "description": "Associated item type",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "type"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "type": "object"
+    },
+    "ConnectionRelationships__0": {
+      "additionalProperties": true,
+      "properties": {
+        "broker_connections": {
+          "items": {
+            "$ref": "#/$defs/ConnectionRelationship"
+          },
+          "type": "array"
+        },
+        "jsonapi": {
+          "$ref": "#/$defs/JsonApi"
+        },
+        "links": {
+          "$ref": "#/$defs/PaginatedLinks"
+        }
+      },
+      "required": [
+        "broker_connections"
+      ],
+      "type": "object"
+    },
+    "JsonApi": {
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "description": "Version of the JSON API specification this server supports.",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version"
+      ],
+      "type": "object"
+    },
+    "LinkProperty": {
+      "oneOf": [
+        {
+          "description": "A string containing the link’s URL.",
+          "type": "string"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "href": {
+              "description": "A string containing the link’s URL.",
+              "type": "string"
+            },
+            "meta": {
+              "additionalProperties": true,
+              "description": "Free-form object that may contain non-standard information.",
+              "type": "object"
+            }
+          },
+          "required": [
+            "href"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "PaginatedLinks": {
+      "additionalProperties": false,
+      "properties": {
+        "first": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "last": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "next": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "prev": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "self": {
+          "$ref": "#/$defs/LinkProperty"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

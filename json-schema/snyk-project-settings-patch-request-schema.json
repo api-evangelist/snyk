@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-project-settings-patch-request-schema.json",
+  "title": "ProjectSettingsPatchRequest",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-slacksettings-api-openapi.yml#/components/schemas/ProjectSettingsPatchRequest",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "attributes": {
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "is_active": {
+              "$ref": "#/$defs/IsActive"
+            },
+            "severity_threshold": {
+              "$ref": "#/$defs/SeverityThreshold"
+            },
+            "target_channel_id": {
+              "$ref": "#/$defs/TargetChannelId"
+            }
+          },
+          "type": "object"
+        },
+        "id": {
+          "$ref": "#/$defs/Uuid"
+        },
+        "type": {
+          "enum": [
+            "slack"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "attributes",
+        "id"
+      ],
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "IsActive": {
+      "description": "Current status of the project settings.",
+      "type": "boolean"
+    },
+    "SeverityThreshold": {
+      "description": "Minimum Snyk issue severity to send a notification for, messages will not be sent for any issue below this value",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "type": "string"
+    },
+    "TargetChannelId": {
+      "format": "uri",
+      "type": "string"
+    },
+    "Uuid": {
+      "format": "uuid",
+      "type": "string"
+    }
+  }
+}

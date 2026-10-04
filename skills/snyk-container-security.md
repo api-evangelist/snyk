@@ -8,7 +8,13 @@ description: |
   - User wants to secure a Dockerfile
   - User asks about base image security
   - Agent is working with Docker, Kubernetes, or container deployments
-allowed-tools: "mcp_snyk_snyk_container_scan Read Write Edit Bash Grep"
+allowed-tools:
+  - mcp_snyk_snyk_container_scan
+  - Read
+  - Write
+  - Edit
+  - Bash
+  - Grep
 license: Apache-2.0
 compatibility: |
   Requires Snyk MCP server connection and authenticated Snyk account.

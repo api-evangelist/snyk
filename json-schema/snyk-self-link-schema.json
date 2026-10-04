@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-self-link-schema.json",
+  "title": "SelfLink",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-containerregistryimportpolicy-api-openapi.yml#/components/schemas/SelfLink",
+  "additionalProperties": false,
+  "properties": {
+    "self": {
+      "$ref": "#/$defs/LinkProperty"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "LinkProperty": {
+      "oneOf": [
+        {
+          "description": "A string containing the link’s URL.",
+          "type": "string"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "href": {
+              "description": "A string containing the link’s URL.",
+              "type": "string"
+            },
+            "meta": {
+              "additionalProperties": true,
+              "description": "Free-form object that may contain non-standard information.",
+              "type": "object"
+            }
+          },
+          "required": [
+            "href"
+          ],
+          "type": "object"
+        }
+      ]
+    }
+  }
+}

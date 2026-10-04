@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-create-group-membership-request-body-schema.json",
+  "title": "CreateGroupMembershipRequestBody",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-groups-api-openapi.yml#/components/schemas/CreateGroupMembershipRequestBody",
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "relationships": {
+          "additionalProperties": false,
+          "properties": {
+            "group": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "properties": {
+                    "id": {
+                      "format": "uuid",
+                      "type": "string"
+                    },
+                    "type": {
+                      "description": "Always \"group\"",
+                      "enum": [
+                        "group"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "role": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "properties": {
+                    "id": {
+                      "format": "uuid",
+                      "type": "string"
+                    },
+                    "type": {
+                      "description": "Always \"group_role\"",
+                      "enum": [
+                        "group_role"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "user": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "properties": {
+                    "id": {
+                      "format": "uuid",
+                      "type": "string"
+                    },
+                    "type": {
+                      "description": "Always \"user\"",
+                      "enum": [
+                        "user"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "required": [
+            "role",
+            "user",
+            "group"
+          ],
+          "type": "object"
+        },
+        "type": {
+          "description": "type of membership according to its entity",
+          "enum": [
+            "group_membership"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

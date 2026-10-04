@@ -8,7 +8,13 @@ description: |
   - User is working with Kubernetes manifests
   - User asks about CloudFormation or ARM template security
   - Agent is generating or modifying infrastructure code
-allowed-tools: "mcp_snyk_snyk_iac_scan Read Write Edit Bash Grep"
+allowed-tools:
+  - mcp_snyk_snyk_iac_scan
+  - Read
+  - Write
+  - Edit
+  - Bash
+  - Grep
 license: Apache-2.0
 compatibility: |
   Requires Snyk MCP server connection and authenticated Snyk account.

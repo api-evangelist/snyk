@@ -886,264 +886,340 @@ paths:
       x-snyk-api-version: 2022-12-21~beta
       x-stability-level: beta
 components:
-  responses:
-    '401':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Unauthorized: the request requires an authentication token.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
-    '404':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Not Found: The resource being operated on could not be found.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
-    '400':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Bad Request: A parameter provided as a part of the request was invalid.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
-    '409':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Conflict: The requested operation conflicts with the current state of the resource in some way.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
-    '500':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
-    '403':
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/ErrorDocument'
-      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
-      headers:
-        deprecation:
-          $ref: '#/components/headers/DeprecationHeader'
-        snyk-request-id:
-          $ref: '#/components/headers/RequestIdResponseHeader'
-        snyk-version-lifecycle-stage:
-          $ref: '#/components/headers/VersionStageResponseHeader'
-        snyk-version-requested:
-          $ref: '#/components/headers/VersionRequestedResponseHeader'
-        snyk-version-served:
-          $ref: '#/components/headers/VersionServedResponseHeader'
-        sunset:
-          $ref: '#/components/headers/SunsetHeader'
-  schemas:
-    ScanCreateAttributes:
-      additionalProperties: false
-      description: Scan create attributes
-      type: object
-    ScanAttributes:
-      description: Scan attributes
-      example:
-        created_at: '2022-05-06T12:25:15-04:00'
-        error: ''
-        finished_at: '2022-05-06T12:25:15-04:00'
-        kind: user_initiated
-        options:
-          role_arn: arn:aws:iam::123456789012:role/SnykCloud1234
-        revision: 1
-        status: success
-        updated_at: '2022-05-06T12:25:15-04:00'
-      properties:
-        created_at:
-          description: When the scan was created
-          example: '2022-05-06T12:25:15-04:00'
-          format: date-time
-          type: string
-        deleted_at:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        environment_id:
-          description: Environment ID
-          example: 052781a7-17f6-494d-0000-25c8b509abcd
-          format: uuid
-          type: string
-        error:
-          description: Error message if the scan failed
-          example: could not start scan
-          type:
-          - string
-          - 'null'
-        finished_at:
-          description: When the scan finished
-          example: '2022-05-06T12:25:15-04:00'
-          format: date-time
-          type:
-          - string
-          - 'null'
-        kind:
-          description: Scan kind
-          enum:
-          - scheduled
-          - user_initiated
-          - event_driven
-          - null
-          example: user_initiated
-          type:
-          - string
-          - 'null'
-        options:
-          example:
-            role_arn: arn:aws:iam::123456789012:role/SnykCloud1234
-          type:
-          - object
-          - 'null'
-        organization_id:
-          description: Organization ID
-          example: 9a46d918-8764-458c-1234-0987abcd6543
-          format: uuid
-          type: string
-        partial_errors:
-          description: Errors that didn't fail the scan
-          type: string
-        revision:
-          description: Increment for each change to a scan
-          example: 1
-          type: number
-        status:
-          description: Scan status
-          enum:
-          - queued
-          - in_progress
-          - success
-          - error
-          - null
-          example: in_progress
-          type:
-          - string
-          - 'null'
-        updated_at:
-          description: When the scan was last updated
-          example: '2022-05-06T12:25:15-04:00'
-          format: date-time
-          type:
-          - string
-          - 'null'
-      required:
-      - created_at
-      - revision
-      - kind
-      - status
-      - error
-      type: object
-    PaginatedLinks:
-      additionalProperties: false
-      example:
-        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
-        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
-        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
-      properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
-    ActualVersion:
-      description: Resolved API version
+  parameters:
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
+        type: string
+    CreatedAfter:
+      description: Return environments created after this date
+      example: '2022-05-06T12:25:15-04:00'
+      in: query
+      name: created_after
+      schema:
+        format: date-time
+        type: string
+    EnvironmentId:
+      description: Unique identifier for an environment
+      example: 052781a7-17f6-494d-0000-25c8b509abcd
+      in: path
+      name: environment_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    ResourceId:
+      description: Filter resources by resource ID (multi-value, comma-separated)
+      example: example-bucket
+      explode: false
+      in: query
+      name: resource_id
+      schema:
+        type: string
+      style: form
+    Kind:
+      description: 'Filter resources by kind (multi-value, comma-separated): cloud'
+      example: cloud
+      explode: false
+      in: query
+      name: kind
+      schema:
+        $ref: '#/components/schemas/ResourceKind'
+      style: form
+    KindInQuery:
+      description: 'Filter environments by kind (multi-value, comma-separated): aws'
+      example: aws
+      in: query
+      name: kind
+      schema:
+        $ref: '#/components/schemas/EnvironmentKind'
+    ScanId:
+      description: Scan ID
+      example: 56465b1d-8764-458c-1234-0987abcd6543
+      in: path
+      name: scan_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    Platform:
+      description: 'Filter resources by platform (multi-value, comma-separated): aws'
+      example: aws
+      explode: false
+      in: query
+      name: platform
+      schema:
+        type: string
+      style: form
+    UpdatedAfter:
+      description: Return environments updated after this date
+      example: '2022-05-06T12:25:15-04:00'
+      in: query
+      name: updated_after
+      schema:
+        format: date-time
+        type: string
+    StatusInQuery:
+      description: Filter environments by latest scan status (multi-value, comma-separated)
+      example: error
+      in: query
+      name: status
+      schema:
+        enum:
+        - queued
+        - in_progress
+        - success
+        - error
+        - 'null'
+        type: string
+    Version:
+      description: The requested version of the endpoint to process the request
       example: '2026-03-25'
-      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
-      type: string
-    ScanCreateRelationships:
-      description: Scan create relationships
+      in: query
+      name: version
+      required: true
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    Location:
+      description: Filter resources by location (multi-value, comma-separated) (AWS region)
+      example: us-west-2
+      explode: false
+      in: query
+      name: location
+      schema:
+        type: string
+      style: form
+    EnvironmentIdQuery:
+      description: Filter resources by environment ID (multi-value, comma-separated)
+      example: 052781a7-17f6-494d-0000-25c8b509abcd
+      explode: false
+      in: query
+      name: environment_id
+      schema:
+        format: uuid
+        type: string
+      style: form
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
+    Limit:
+      description: Number of results to return per page
+      example: 10
+      in: query
+      name: limit
+      schema:
+        default: 10
+        format: int32
+        maximum: 100
+        minimum: 10
+        multipleOf: 10
+        type: integer
+    NameInQuery:
+      description: Filter environments by name (multi-value, comma-separated)
+      example: Demo AWS Environment
+      in: query
+      name: name
+      schema:
+        $ref: '#/components/schemas/EnvironmentName'
+    Id:
+      description: Filter resources by resource UUID (multi-value, comma-separated)
+      example: 4a662442-7445-55c3-adcc-cbbbdd99999
+      explode: false
+      in: query
+      name: id
+      schema:
+        type: string
+      style: form
+    IdInQuery:
+      description: Filter environments by environment ID (multi-value, comma-separated)
+      example: 052781a7-17f6-494d-0000-25c8b509abcd
+      in: query
+      name: id
+      schema:
+        format: uuid
+        type: string
+    Name:
+      description: Filter resources by name (multi-value, comma-separated)
+      example: example-bucket
+      explode: false
+      in: query
+      name: name
+      schema:
+        type: string
+      style: form
+    ResourceType:
+      description: Filter resources by resource type (multi-value, comma-separated)
+      example: aws_s3_bucket
+      explode: false
+      in: query
+      name: resource_type
+      schema:
+        type: string
+      style: form
+    UpdatedBefore:
+      description: Return environments updated before this date
+      example: '2022-05-06T12:25:15-04:00'
+      in: query
+      name: updated_before
+      schema:
+        format: date-time
+        type: string
+    Removed:
+      description: Filter resources by whether they have been removed or not.
+      example: true
+      explode: false
+      in: query
+      name: removed
+      schema:
+        type: boolean
+      style: form
+    CreatedBefore:
+      description: Return environments created before this date
+      example: '2022-05-06T12:25:15-04:00'
+      in: query
+      name: created_before
+      schema:
+        format: date-time
+        type: string
+    NativeId:
+      description: Filter resources by native ID (multi-value, comma-separated) (AWS ARN)
+      example: arn:aws:s3:::example-bucket
+      explode: false
+      in: query
+      name: native_id
+      schema:
+        type: string
+      style: form
+  headers:
+    VersionStageResponseHeader:
+      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
+
+        '
+      schema:
+        enum:
+        - wip
+        - experimental
+        - beta
+        - ga
+        - deprecated
+        - sunset
+        example: ga
+        type: string
+    VersionServedResponseHeader:
+      description: A header containing the version of the endpoint that was served by the API.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/ActualVersion'
+    VersionRequestedResponseHeader:
+      description: A header containing the version of the endpoint requested by the caller.
+      example: '2026-03-25'
+      schema:
+        $ref: '#/components/schemas/QueryVersion'
+    LocationHeader:
+      description: 'A header providing a URL for the location of a resource
+
+        '
+      example: https://example.com/resource/4
+      schema:
+        format: url
+        type: string
+    SunsetHeader:
+      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
+      example: '2021-08-02'
+      schema:
+        format: date
+        type: string
+    DeprecationHeader:
+      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
+
+        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
+
+        '
+      example: '2021-07-01T00:00:00Z'
+      schema:
+        format: date-time
+        type: string
+    RequestIdResponseHeader:
+      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
+
+        '
+      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
+      schema:
+        format: uuid
+        type: string
+  schemas:
+    GoogleOptions:
+      additionalProperties: false
+      description: Options for creating a Google environment
+      example:
+        identity_provider: https://iam.googleapis.com/projects/123/locations/global/workloadIdentityPools/snyk-workload-identity-123/providers/snyk-identity-provider-123
+        project_id: demo-project
+        service_account_email: snyk-demo@demo-project.iam.gserviceaccount.com
       properties:
+        identity_provider:
+          description: The full resource name of the workload identity provider
+          example: https://iam.googleapis.com/projects/123/locations/global/workloadIdentityPools/snyk-workload-identity-123/providers/snyk-identity-provider-123
+          format: uri
+          type: string
+        project_id:
+          description: Google project ID
+          example: demo-project
+          type: string
+        service_account_email:
+          description: Google service account email
+          example: snyk-demo@demo-project.iam.gserviceaccount.com
+          format: email
+          type: string
+      required:
+      - service_account_email
+      - identity_provider
+      type: object
+    ResourceRelationships:
+      additionalProperties: true
+      description: Resource relationships
+      example:
         environment:
-          properties:
-            data:
-              example:
-                id: 12000000-0000-0000-0000-000000000000
-                type: environment
-              properties:
-                id:
-                  type: string
-                type:
-                  type: string
-              required:
-              - type
-              - id
-              type: object
-          type: object
+          data:
+            id: 11000000-0000-0000-0000-000000000000
+            type: environment
+          links:
+            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
+        organization:
+          data:
+            id: 10000000-0000-0000-0000-000000000000
+            type: organization
+          links:
+            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
+        scan:
+          data:
+            id: 12000000-0000-0000-0000-000000000000
+            type: scan
+          links:
+            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
+      type: object
+    ScanRelationships:
+      additionalProperties: true
+      description: Scan relationships
+      example:
+        environment:
+          data:
+            id: 12000000-0000-0000-0000-000000000000
+            type: environment
+          links:
+            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
+        organization:
+          data:
+            id: 10000000-0000-0000-0000-000000000000
+            type: organization
+          links:
+            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
       type: object
     PlatformType:
       enum:
@@ -1151,38 +1227,6 @@ components:
       - azure
       - google
       type: string
-    EnvironmentOptions:
-      oneOf:
-      - $ref: '#/components/schemas/AwsOptions'
-      - $ref: '#/components/schemas/GoogleOptions'
-      - $ref: '#/components/schemas/AzureOptions__0'
-    ScanType:
-      example: scan
-      type: string
-    EnvironmentType:
-      example: environment
-      type: string
-    PermissionType:
-      enum:
-      - cf
-      - tf
-      - bash
-      type: string
-    EnvironmentRelationships:
-      additionalProperties: true
-      description: Environment relationships
-      example:
-        organization:
-          data:
-            id: 00000000-0000-0000-0000-000000000000
-            type: organization
-          links:
-            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
-        project:
-          data:
-            id: 11111111-1111-11111-1111-111111111111
-            type: project
-      type: object
     EnvironmentUpdateAttributes:
       description: Environment update attributes. Only the AWS role ARN can be updated; new ARN must have the same account ID as the old ARN.
       example:
@@ -1196,44 +1240,29 @@ components:
       required:
       - options
       type: object
-    EnvironmentKind:
-      description: 'Environment kind: aws'
-      enum:
-      - aws
-      - google
-      - azure
-      - scm
-      - tfc
-      - cli
+    ScanType:
+      example: scan
       type: string
-    AzureOptions__0:
-      additionalProperties: false
-      description: Options for creating an Azure environment
+    EnvironmentName:
+      description: Environment name
+      example: Demo AWS Environment
+      type: string
+    CreatePermissionsAttributes:
       example:
-        application_id: 1234d000-8dd4-11ed-a1eb-5678ac120002
-        subscription_id: 6884d000-8dd4-11ed-a1eb-0242ac120002
-        tenant_id: 51627f08-8dd4-11ed-a1eb-0242ac120002
+        platform: aws
+        type: cf
       properties:
-        application_id:
-          description: ID of the Azure app registration with permissions to scan
-          example: 1234d000-8dd4-11ed-a1eb-5678ac120002
-          type: string
-        subscription_id:
-          description: ID of the Azure subscription to be scanned
-          example: 6884d000-8dd4-11ed-a1eb-0242ac120002
-          type: string
-        tenant_id:
-          description: Azure Tenant (directory) ID
-          example: 51627f08-8dd4-11ed-a1eb-0242ac120002
-          type: string
+        options:
+          anyOf:
+          - $ref: '#/components/schemas/AzureOptions'
+        platform:
+          $ref: '#/components/schemas/PlatformType'
+        type:
+          $ref: '#/components/schemas/PermissionType'
       required:
-      - tenant_id
-      - subscription_id
+      - type
+      - platform
       type: object
-    ResourceKind:
-      description: 'Kind of resource: cloud'
-      example: cloud - cloud - iac
-      type: string
     ResourceAttributes:
       example:
         created_at: '2022-08-10T17:19:33.14749Z'
@@ -1353,10 +1382,61 @@ components:
       - resource_type
       - resource_id
       type: object
+    EnvironmentKind:
+      description: 'Environment kind: aws'
+      enum:
+      - aws
+      - google
+      - azure
+      - scm
+      - tfc
+      - cli
+      type: string
+    EnvironmentType:
+      example: environment
+      type: string
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
+    PermissionType:
+      enum:
+      - cf
+      - tf
+      - bash
+      type: string
     QueryVersion:
       description: Requested API version
       example: '2026-03-25'
       pattern: ^(wip|work-in-progress|experimental|beta|((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?))$
+      type: string
+    ResourceKind:
+      description: 'Kind of resource: cloud'
+      example: cloud - cloud - iac
       type: string
     ErrorDocument:
       additionalProperties: false
@@ -1525,75 +1605,201 @@ components:
       - name
       - created_at
       type: object
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
-        type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
-    CreatePermissionsAttributes:
-      example:
-        platform: aws
-        type: cf
+    ActualVersion:
+      description: Resolved API version
+      example: '2026-03-25'
+      pattern: ^((([0-9]{4})-([0-1][0-9]))-((3[01])|(0[1-9])|([12][0-9]))(~(wip|work-in-progress|experimental|beta))?)$
+      type: string
+    ScanCreateRelationships:
+      description: Scan create relationships
       properties:
-        options:
-          anyOf:
-          - $ref: '#/components/schemas/AzureOptions'
-        platform:
-          $ref: '#/components/schemas/PlatformType'
-        type:
-          $ref: '#/components/schemas/PermissionType'
-      required:
-      - type
-      - platform
+        environment:
+          properties:
+            data:
+              example:
+                id: 12000000-0000-0000-0000-000000000000
+                type: environment
+              properties:
+                id:
+                  type: string
+                type:
+                  type: string
+              required:
+              - type
+              - id
+              type: object
+          type: object
       type: object
-    GoogleOptions:
+    JsonApi:
       additionalProperties: false
-      description: Options for creating a Google environment
       example:
-        identity_provider: https://iam.googleapis.com/projects/123/locations/global/workloadIdentityPools/snyk-workload-identity-123/providers/snyk-identity-provider-123
-        project_id: demo-project
-        service_account_email: snyk-demo@demo-project.iam.gserviceaccount.com
+        version: '1.0'
       properties:
-        identity_provider:
-          description: The full resource name of the workload identity provider
-          example: https://iam.googleapis.com/projects/123/locations/global/workloadIdentityPools/snyk-workload-identity-123/providers/snyk-identity-provider-123
-          format: uri
-          type: string
-        project_id:
-          description: Google project ID
-          example: demo-project
-          type: string
-        service_account_email:
-          description: Google service account email
-          example: snyk-demo@demo-project.iam.gserviceaccount.com
-          format: email
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
           type: string
       required:
-      - service_account_email
-      - identity_provider
+      - version
+      type: object
+    EnvironmentRelationships:
+      additionalProperties: true
+      description: Environment relationships
+      example:
+        organization:
+          data:
+            id: 00000000-0000-0000-0000-000000000000
+            type: organization
+          links:
+            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
+        project:
+          data:
+            id: 11111111-1111-11111-1111-111111111111
+            type: project
+      type: object
+    PaginatedLinks:
+      additionalProperties: false
+      example:
+        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
+        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
+        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    AwsOptions:
+      additionalProperties: false
+      description: Options for creating an AWS environment
+      example:
+        role_arn: arn:aws:iam::12345678910:role/SnykCloud1234
+      properties:
+        role_arn:
+          description: AWS IAM role ARN for Snyk
+          example: arn:aws:iam::12345678910:role/SnykCloud1234
+          type: string
+      required:
+      - role_arn
+      type: object
+    ScanAttributes:
+      description: Scan attributes
+      example:
+        created_at: '2022-05-06T12:25:15-04:00'
+        error: ''
+        finished_at: '2022-05-06T12:25:15-04:00'
+        kind: user_initiated
+        options:
+          role_arn: arn:aws:iam::123456789012:role/SnykCloud1234
+        revision: 1
+        status: success
+        updated_at: '2022-05-06T12:25:15-04:00'
+      properties:
+        created_at:
+          description: When the scan was created
+          example: '2022-05-06T12:25:15-04:00'
+          format: date-time
+          type: string
+        deleted_at:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        environment_id:
+          description: Environment ID
+          example: 052781a7-17f6-494d-0000-25c8b509abcd
+          format: uuid
+          type: string
+        error:
+          description: Error message if the scan failed
+          example: could not start scan
+          type:
+          - string
+          - 'null'
+        finished_at:
+          description: When the scan finished
+          example: '2022-05-06T12:25:15-04:00'
+          format: date-time
+          type:
+          - string
+          - 'null'
+        kind:
+          description: Scan kind
+          enum:
+          - scheduled
+          - user_initiated
+          - event_driven
+          - null
+          example: user_initiated
+          type:
+          - string
+          - 'null'
+        options:
+          example:
+            role_arn: arn:aws:iam::123456789012:role/SnykCloud1234
+          type:
+          - object
+          - 'null'
+        organization_id:
+          description: Organization ID
+          example: 9a46d918-8764-458c-1234-0987abcd6543
+          format: uuid
+          type: string
+        partial_errors:
+          description: Errors that didn't fail the scan
+          type: string
+        revision:
+          description: Increment for each change to a scan
+          example: 1
+          type: number
+        status:
+          description: Scan status
+          enum:
+          - queued
+          - in_progress
+          - success
+          - error
+          - null
+          example: in_progress
+          type:
+          - string
+          - 'null'
+        updated_at:
+          description: When the scan was last updated
+          example: '2022-05-06T12:25:15-04:00'
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - created_at
+      - revision
+      - kind
+      - status
+      - error
+      type: object
+    EnvironmentCreateAttributes:
+      example:
+        kind: aws
+        options:
+          role_arn: arn:aws:iam::336447867772:role/SnykCloud1234
+      properties:
+        kind:
+          $ref: '#/components/schemas/EnvironmentKind'
+        name:
+          $ref: '#/components/schemas/EnvironmentName'
+        options:
+          $ref: '#/components/schemas/EnvironmentOptions'
+      required:
+      - kind
+      - options
       type: object
     AzureOptions:
       description: Options for generating an Azure environment permissions script
@@ -1613,64 +1819,38 @@ components:
       - tenant_id
       - subscription_id
       type: object
-    EnvironmentCreateAttributes:
-      example:
-        kind: aws
-        options:
-          role_arn: arn:aws:iam::336447867772:role/SnykCloud1234
-      properties:
-        kind:
-          $ref: '#/components/schemas/EnvironmentKind'
-        name:
-          $ref: '#/components/schemas/EnvironmentName'
-        options:
-          $ref: '#/components/schemas/EnvironmentOptions'
-      required:
-      - kind
-      - options
-      type: object
-    ScanRelationships:
-      additionalProperties: true
-      description: Scan relationships
-      example:
-        environment:
-          data:
-            id: 12000000-0000-0000-0000-000000000000
-            type: environment
-          links:
-            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
-        organization:
-          data:
-            id: 10000000-0000-0000-0000-000000000000
-            type: organization
-          links:
-            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
-      type: object
-    JsonApi:
+    EnvironmentOptions:
+      oneOf:
+      - $ref: '#/components/schemas/AwsOptions'
+      - $ref: '#/components/schemas/GoogleOptions'
+      - $ref: '#/components/schemas/AzureOptions__0'
+    ScanCreateAttributes:
       additionalProperties: false
+      description: Scan create attributes
+      type: object
+    AzureOptions__0:
+      additionalProperties: false
+      description: Options for creating an Azure environment
       example:
-        version: '1.0'
+        application_id: 1234d000-8dd4-11ed-a1eb-5678ac120002
+        subscription_id: 6884d000-8dd4-11ed-a1eb-0242ac120002
+        tenant_id: 51627f08-8dd4-11ed-a1eb-0242ac120002
       properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          example: '1.0'
-          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+        application_id:
+          description: ID of the Azure app registration with permissions to scan
+          example: 1234d000-8dd4-11ed-a1eb-5678ac120002
+          type: string
+        subscription_id:
+          description: ID of the Azure subscription to be scanned
+          example: 6884d000-8dd4-11ed-a1eb-0242ac120002
+          type: string
+        tenant_id:
+          description: Azure Tenant (directory) ID
+          example: 51627f08-8dd4-11ed-a1eb-0242ac120002
           type: string
       required:
-      - version
-      type: object
-    AwsOptions:
-      additionalProperties: false
-      description: Options for creating an AWS environment
-      example:
-        role_arn: arn:aws:iam::12345678910:role/SnykCloud1234
-      properties:
-        role_arn:
-          description: AWS IAM role ARN for Snyk
-          example: arn:aws:iam::12345678910:role/SnykCloud1234
-          type: string
-      required:
-      - role_arn
+      - tenant_id
+      - subscription_id
       type: object
     PermissionsAttributes:
       properties:
@@ -1682,301 +1862,121 @@ components:
       - data
       - type
       type: object
-    EnvironmentName:
-      description: Environment name
-      example: Demo AWS Environment
-      type: string
-    ResourceRelationships:
-      additionalProperties: true
-      description: Resource relationships
-      example:
-        environment:
-          data:
-            id: 11000000-0000-0000-0000-000000000000
-            type: environment
-          links:
-            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
-        organization:
-          data:
-            id: 10000000-0000-0000-0000-000000000000
-            type: organization
-          links:
-            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
-        scan:
-          data:
-            id: 12000000-0000-0000-0000-000000000000
-            type: scan
-          links:
-            related: /path/to/<related resource>/<related-id>?version=<resolved version>&...
-      type: object
-  parameters:
-    CreatedBefore:
-      description: Return environments created before this date
-      example: '2022-05-06T12:25:15-04:00'
-      in: query
-      name: created_before
-      schema:
-        format: date-time
-        type: string
-    Version:
-      description: The requested version of the endpoint to process the request
-      example: '2026-03-25'
-      in: query
-      name: version
-      required: true
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
-    UpdatedBefore:
-      description: Return environments updated before this date
-      example: '2022-05-06T12:25:15-04:00'
-      in: query
-      name: updated_before
-      schema:
-        format: date-time
-        type: string
-    Id:
-      description: Filter resources by resource UUID (multi-value, comma-separated)
-      example: 4a662442-7445-55c3-adcc-cbbbdd99999
-      explode: false
-      in: query
-      name: id
-      schema:
-        type: string
-      style: form
-    EnvironmentId:
-      description: Unique identifier for an environment
-      example: 052781a7-17f6-494d-0000-25c8b509abcd
-      in: path
-      name: environment_id
-      required: true
-      schema:
-        format: uuid
-        type: string
-    EndingBefore:
-      description: Return the page of results immediately before this cursor
-      example: v1.eyJpZCI6IjExMDAifQo=
-      in: query
-      name: ending_before
-      schema:
-        type: string
-    StartingAfter:
-      description: Return the page of results immediately after this cursor
-      example: v1.eyJpZCI6IjEwMDAifQo=
-      in: query
-      name: starting_after
-      schema:
-        type: string
-    Name:
-      description: Filter resources by name (multi-value, comma-separated)
-      example: example-bucket
-      explode: false
-      in: query
-      name: name
-      schema:
-        type: string
-      style: form
-    Platform:
-      description: 'Filter resources by platform (multi-value, comma-separated): aws'
-      example: aws
-      explode: false
-      in: query
-      name: platform
-      schema:
-        type: string
-      style: form
-    UpdatedAfter:
-      description: Return environments updated after this date
-      example: '2022-05-06T12:25:15-04:00'
-      in: query
-      name: updated_after
-      schema:
-        format: date-time
-        type: string
-    NativeId:
-      description: Filter resources by native ID (multi-value, comma-separated) (AWS ARN)
-      example: arn:aws:s3:::example-bucket
-      explode: false
-      in: query
-      name: native_id
-      schema:
-        type: string
-      style: form
-    KindInQuery:
-      description: 'Filter environments by kind (multi-value, comma-separated): aws'
-      example: aws
-      in: query
-      name: kind
-      schema:
-        $ref: '#/components/schemas/EnvironmentKind'
-    NameInQuery:
-      description: Filter environments by name (multi-value, comma-separated)
-      example: Demo AWS Environment
-      in: query
-      name: name
-      schema:
-        $ref: '#/components/schemas/EnvironmentName'
-    ScanId:
-      description: Scan ID
-      example: 56465b1d-8764-458c-1234-0987abcd6543
-      in: path
-      name: scan_id
-      required: true
-      schema:
-        format: uuid
-        type: string
-    ResourceId:
-      description: Filter resources by resource ID (multi-value, comma-separated)
-      example: example-bucket
-      explode: false
-      in: query
-      name: resource_id
-      schema:
-        type: string
-      style: form
-    ResourceType:
-      description: Filter resources by resource type (multi-value, comma-separated)
-      example: aws_s3_bucket
-      explode: false
-      in: query
-      name: resource_type
-      schema:
-        type: string
-      style: form
-    EnvironmentIdQuery:
-      description: Filter resources by environment ID (multi-value, comma-separated)
-      example: 052781a7-17f6-494d-0000-25c8b509abcd
-      explode: false
-      in: query
-      name: environment_id
-      schema:
-        format: uuid
-        type: string
-      style: form
-    CreatedAfter:
-      description: Return environments created after this date
-      example: '2022-05-06T12:25:15-04:00'
-      in: query
-      name: created_after
-      schema:
-        format: date-time
-        type: string
-    Location:
-      description: Filter resources by location (multi-value, comma-separated) (AWS region)
-      example: us-west-2
-      explode: false
-      in: query
-      name: location
-      schema:
-        type: string
-      style: form
-    StatusInQuery:
-      description: Filter environments by latest scan status (multi-value, comma-separated)
-      example: error
-      in: query
-      name: status
-      schema:
-        enum:
-        - queued
-        - in_progress
-        - success
-        - error
-        - 'null'
-        type: string
-    Kind:
-      description: 'Filter resources by kind (multi-value, comma-separated): cloud'
-      example: cloud
-      explode: false
-      in: query
-      name: kind
-      schema:
-        $ref: '#/components/schemas/ResourceKind'
-      style: form
-    Removed:
-      description: Filter resources by whether they have been removed or not.
-      example: true
-      explode: false
-      in: query
-      name: removed
-      schema:
-        type: boolean
-      style: form
-    Limit:
-      description: Number of results to return per page
-      example: 10
-      in: query
-      name: limit
-      schema:
-        default: 10
-        format: int32
-        maximum: 100
-        minimum: 10
-        multipleOf: 10
-        type: integer
-    IdInQuery:
-      description: Filter environments by environment ID (multi-value, comma-separated)
-      example: 052781a7-17f6-494d-0000-25c8b509abcd
-      in: query
-      name: id
-      schema:
-        format: uuid
-        type: string
-  headers:
-    VersionServedResponseHeader:
-      description: A header containing the version of the endpoint that was served by the API.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/ActualVersion'
-    SunsetHeader:
-      description: 'A header containing the date of when the underlying endpoint will be removed. This header is only present if the endpoint has been deprecated. For information purposes only. Returned as a date in the format: YYYY-MM-DD'
-      example: '2021-08-02'
-      schema:
-        format: date
-        type: string
-    RequestIdResponseHeader:
-      description: 'A header containing a unique id used for tracking this request. If you are reporting an issue to Snyk it''s very helpful to provide this ID.
-
-        '
-      example: 4b58e274-ec62-4fab-917b-1d2c48d6bdef
-      schema:
-        format: uuid
-        type: string
-    LocationHeader:
-      description: 'A header providing a URL for the location of a resource
-
-        '
-      example: https://example.com/resource/4
-      schema:
-        format: url
-        type: string
-    VersionStageResponseHeader:
-      description: 'A header containing the version stage of the endpoint. This stage describes the guarantees snyk provides surrounding stability of the endpoint.
-
-        '
-      schema:
-        enum:
-        - wip
-        - experimental
-        - beta
-        - ga
-        - deprecated
-        - sunset
-        example: ga
-        type: string
-    DeprecationHeader:
-      description: 'A header containing the deprecation date of the underlying endpoint. For more information, please refer to the deprecation header RFC:
-
-        https://tools.ietf.org/id/draft-dalal-deprecation-header-01.html
-
-        '
-      example: '2021-07-01T00:00:00Z'
-      schema:
-        format: date-time
-        type: string
-    VersionRequestedResponseHeader:
-      description: A header containing the version of the endpoint requested by the caller.
-      example: '2026-03-25'
-      schema:
-        $ref: '#/components/schemas/QueryVersion'
+  responses:
+    '409':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Conflict: The requested operation conflicts with the current state of the resource in some way.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '500':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Internal Server Error: An error was encountered while attempting to process the request.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '403':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Forbidden: the request requires an authentication token with more or different permissions.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '400':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Bad Request: A parameter provided as a part of the request was invalid.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '404':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Not Found: The resource being operated on could not be found.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
+    '401':
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/ErrorDocument'
+      description: 'Unauthorized: the request requires an authentication token.'
+      headers:
+        deprecation:
+          $ref: '#/components/headers/DeprecationHeader'
+        snyk-request-id:
+          $ref: '#/components/headers/RequestIdResponseHeader'
+        snyk-version-lifecycle-stage:
+          $ref: '#/components/headers/VersionStageResponseHeader'
+        snyk-version-requested:
+          $ref: '#/components/headers/VersionRequestedResponseHeader'
+        snyk-version-served:
+          $ref: '#/components/headers/VersionServedResponseHeader'
+        sunset:
+          $ref: '#/components/headers/SunsetHeader'
   securitySchemes:
     APIToken:
       description: API key value must be prefixed with \"Token \".

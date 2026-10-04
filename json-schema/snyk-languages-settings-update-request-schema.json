@@ -1,0 +1,326 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-languages-settings-update-request-schema.json",
+  "title": "LanguagesSettingsUpdateRequest",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-languagessettings-api-openapi.yml#/components/schemas/LanguagesSettingsUpdateRequest",
+  "properties": {
+    "attributes": {
+      "$ref": "#/$defs/LanguageSettings"
+    },
+    "id": {
+      "description": "The organization's public ID.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "type": {
+      "enum": [
+        "language_settings"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "id",
+    "attributes"
+  ],
+  "type": "object",
+  "$defs": {
+    "ComposerSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "include_dev_dependencies": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "include_dev_dependencies"
+      ],
+      "type": "object"
+    },
+    "DotnetSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "nuget": {
+          "$ref": "#/$defs/NugetSettings"
+        }
+      },
+      "type": "object"
+    },
+    "GoSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "gomodules": {
+          "$ref": "#/$defs/GolangModulesSettings"
+        }
+      },
+      "type": "object"
+    },
+    "GolangModulesSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "full_source_code_analysis": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "full_source_code_analysis"
+      ],
+      "type": "object"
+    },
+    "JavaSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "maven": {
+          "$ref": "#/$defs/MavenSettings"
+        }
+      },
+      "type": "object"
+    },
+    "JavascriptSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "npm": {
+          "$ref": "#/$defs/NodeSettings"
+        },
+        "pnpm": {
+          "$ref": "#/$defs/NodeSettings"
+        },
+        "yarn": {
+          "$ref": "#/$defs/NodeSettings"
+        }
+      },
+      "type": "object"
+    },
+    "LanguageSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "package_managers": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/JavascriptSettings"
+            },
+            {
+              "$ref": "#/$defs/PythonSettings"
+            },
+            {
+              "$ref": "#/$defs/DotnetSettings"
+            },
+            {
+              "$ref": "#/$defs/PhpSettings"
+            },
+            {
+              "$ref": "#/$defs/GoSettings"
+            },
+            {
+              "$ref": "#/$defs/JavaSettings"
+            }
+          ]
+        }
+      },
+      "required": [
+        "package_managers"
+      ],
+      "type": "object"
+    },
+    "MavenSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "mirrors": {
+          "items": {
+            "$ref": "#/$defs/MirrorRepository"
+          },
+          "type": "array"
+        },
+        "repositories": {
+          "items": {
+            "$ref": "#/$defs/PackageRepository"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "mirrors",
+        "repositories"
+      ],
+      "type": "object"
+    },
+    "MirrorRepository": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/PackageRepository"
+        },
+        {
+          "properties": {
+            "mirror_of": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "mirror_of"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "NodePackageRegistry": {
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/PackageRepository"
+        },
+        {
+          "properties": {
+            "scope": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "NodeSettings": {
+      "additionalProperties": true,
+      "properties": {
+        "exclude_lockfile_in_pr": {
+          "type": "boolean"
+        },
+        "include_dev_dependencies": {
+          "type": "boolean"
+        },
+        "registries": {
+          "items": {
+            "$ref": "#/$defs/NodePackageRegistry"
+          },
+          "type": "array"
+        },
+        "strict_out_of_sync": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "include_dev_dependencies",
+        "strict_out_of_sync",
+        "exclude_lockfile_in_pr"
+      ],
+      "type": "object"
+    },
+    "NugetSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "include_dev_dependencies": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "include_dev_dependencies"
+      ],
+      "type": "object"
+    },
+    "PackageRepository": {
+      "additionalProperties": true,
+      "properties": {
+        "integration_type": {
+          "enum": [
+            "artifactory",
+            "nexus"
+          ],
+          "type": "string"
+        },
+        "repository": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "direct",
+            "integration"
+          ],
+          "type": "string"
+        },
+        "url": {
+          "description": "used for display purpose only",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "repository"
+      ],
+      "type": "object"
+    },
+    "PhpSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "composer": {
+          "$ref": "#/$defs/ComposerSettings"
+        }
+      },
+      "type": "object"
+    },
+    "PipSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "python_version": {
+          "enum": [
+            "2",
+            "3",
+            "3.8",
+            "3.9",
+            "3.10",
+            "3.11",
+            "3.12",
+            "3.13",
+            "3.14"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "python_version"
+      ],
+      "type": "object"
+    },
+    "PipenvSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "include_dev_dependencies": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "include_dev_dependencies"
+      ],
+      "type": "object"
+    },
+    "PoetrySettings": {
+      "additionalProperties": false,
+      "properties": {
+        "include_dev_dependencies": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "include_dev_dependencies"
+      ],
+      "type": "object"
+    },
+    "PythonSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "pip": {
+          "$ref": "#/$defs/PipSettings"
+        },
+        "pipenv": {
+          "$ref": "#/$defs/PipenvSettings"
+        },
+        "poetry": {
+          "$ref": "#/$defs/PoetrySettings"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

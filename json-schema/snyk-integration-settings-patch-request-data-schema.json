@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-integration-settings-patch-request-data-schema.json",
+  "title": "IntegrationSettingsPatchRequestData",
+  "description": "Request body for updating integration settings",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-integrations-api-openapi.yml#/components/schemas/IntegrationSettingsPatchRequestData",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "attributes": {
+          "additionalProperties": false,
+          "description": "Settings to update. Only include fields you want to modify.",
+          "properties": {
+            "container_app_scan_enabled": {
+              "description": "Whether container application scanning is enabled for this integration",
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "id": {
+          "description": "The integration ID (must match `integration_id` in the path)",
+          "format": "uuid",
+          "type": "string"
+        },
+        "type": {
+          "description": "Resource type (must be 'integration_settings')",
+          "enum": [
+            "integration_settings"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "id",
+        "attributes"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "type": "object"
+}

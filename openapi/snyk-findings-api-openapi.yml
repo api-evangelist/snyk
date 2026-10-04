@@ -152,67 +152,6 @@ paths:
       x-stability-level: beta
 components:
   schemas:
-    PackageLocation:
-      description: 'Package dependency version.
-
-
-        Finding type: SCA'
-      example:
-        package:
-          name: log4j
-          version: 2.4.1
-        type: package
-      properties:
-        package:
-          $ref: '#/components/schemas/Package'
-        type:
-          enum:
-          - package
-          type: string
-      required:
-      - type
-      - package
-      type: object
-    ReachablePath:
-      description: ReachablePath represents the paths to a vulnerable function.
-      properties:
-        call_paths:
-          description: Paths in code bundle that call the vulnerable function.
-          items:
-            type: string
-          type: array
-        function_name:
-          description: Vulnerable function name.
-          type: string
-        location:
-          allOf:
-          - $ref: '#/components/schemas/FileRegion'
-          description: Location in a file where the vulnerability can be found.
-      required:
-      - function_name
-      - call_paths
-      type: object
-    OtherLocation:
-      description: 'Finding locations which this API version is not capable of expressing.
-
-
-        This location may be available in a newer version of this API.'
-      properties:
-        type:
-          enum:
-          - other
-          type: string
-      required:
-      - type
-      type: object
-    ReachabilityType:
-      description: Reachability enum for reachability signal.
-      enum:
-      - none
-      - function
-      - no_info
-      - not_applicable
-      type: string
     UpgradePackageAdvice:
       description: Upgrade a package from one version to another.
       example:
@@ -248,316 +187,48 @@ components:
       - package_name
       - upgrade_paths
       type: object
-    io.snyk.api.common.Error:
+    Suppression:
+      description: 'Details about a finding''s suppression in test results.
+
+
+        Suppressed findings do not contribute to the test outcome, but they are still
+
+        provided in the results.'
       properties:
-        code:
-          description: An application-specific error code, expressed as a string value.
+        created_at:
+          description: When the suppression was first created.
+          format: date-time
           type: string
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
+        expires_at:
+          description: When the suppression will expire.
+          format: date-time
           type: string
-        id:
-          description: A unique identifier for this particular occurrence of the problem.
-          format: uuid
+        justification:
+          description: Reason given for an ignore pending approval.
           type: string
-        links:
-          $ref: '#/components/schemas/io.snyk.api.common.ErrorLink'
-        meta:
-          type: object
-        source:
-          properties:
-            parameter:
-              type: string
-            pointer:
-              type: string
-          type: object
+        path:
+          description: 'Dependency path to the vulnerable package to be suppressed.
+
+
+            If not provided, the suppression will apply to all packages with the given
+
+            vulnerability ID.'
+          items:
+            type: string
+          type: array
+        policy:
+          allOf:
+          - $ref: '#/components/schemas/PolicyRef'
+          description: Policy responsible for the state of suppression represented here, if available.
+        skipIfFixable:
+          description: Skip the suppression if an actual fix is available.
+          type: boolean
         status:
-          description: The HTTP status code applicable to this problem, expressed as a string value.
-          pattern: ^[45]\d\d$
-          type: string
-        title:
-          description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-          type: string
+          allOf:
+          - $ref: '#/components/schemas/SuppressionStatus'
+          description: Status of the suppression.
       required:
       - status
-      - detail
-      type: object
-    Diff:
-      description: 'Fix suggestions in the unified diff format that introduce code changes
-
-        to remediate the vulnerability.'
-      example:
-        format: diff
-        suggestions:
-        - diff: '--- a/auth.ts
-
-            +++ b/auth.ts
-
-            @@ -1,1 +1,1 @@
-
-            -eval(userInput)
-
-            +safeEval(userInput)
-
-            '
-          external_id: 550e8400-e29b-41d4-a716-446655440000
-          rank: 1
-        - diff: '--- a/auth.ts
-
-            +++ b/auth.ts
-
-            @@ -1,1 +1,1 @@
-
-            -password === input
-
-            +bcrypt.compare(input, password)
-
-            '
-          external_id: 550e8400-e29b-41d4-a716-446655440001
-          rank: 2
-      properties:
-        format:
-          enum:
-          - diff
-          type: string
-        suggestions:
-          description: 'Alternative suggestions - choose one to fix the vulnerability.
-
-            The ''rank'' field signals the relative confidence in each one.'
-          items:
-            $ref: '#/components/schemas/DiffSuggestion'
-          type: array
-      required:
-      - format
-      - suggestions
-      type: object
-    ReachabilityEvidence:
-      description: Indicate the reachability signals as additional evidence for the finding.
-      properties:
-        paths:
-          description: 'Paths by which the vulnerable code can be reached.
-
-
-            Includes the name of the function, the path through the
-
-            source code that reaches the function, and the location
-
-            at which the vulnerable function is called.'
-          items:
-            $ref: '#/components/schemas/ReachablePath'
-          minItems: 1
-          type: array
-        reachability:
-          $ref: '#/components/schemas/ReachabilityType'
-        source:
-          enum:
-          - reachability
-          type: string
-      required:
-      - source
-      - reachability
-      type: object
-    SuppressionStatus:
-      description: Status of a suppression on a finding.
-      enum:
-      - ignored
-      - pending_ignore_approval
-      - other
-      type: string
-    UpgradePath:
-      description: Upgrade path model all known dependency paths that will change when applying an upgrade action.
-      properties:
-        dependency_path:
-          items:
-            $ref: '#/components/schemas/Package'
-          maxItems: 100
-          type: array
-        is_drop:
-          description: 'A drop describes an upgrade path, where the vulnerability gets addressed by removing the vulnerable dependency.
-
-            This typically happens when a package somewhere mid-way drops this library in newer versions.
-
-
-            Note: For drops, the length of the upgradePath will be smaller than the length of the original dependencyPath.'
-          type: boolean
-      required:
-      - dependency_path
-      - is_drop
-      type: object
-    PolicyRef:
-      description: Reference to a single policy.
-      oneOf:
-      - enum:
-        - local_policy
-        type: string
-      - $ref: '#/components/schemas/ManagedPolicyRef'
-    Severity:
-      description: Indicate the severity of a finding discovered by a Test.
-      enum:
-      - critical
-      - high
-      - medium
-      - low
-      - none
-      - other
-      type: string
-    OtherEvidence:
-      description: 'Evidence which this API version is not capable of expressing.
-
-
-        More information may be available in a newer version of this API.'
-      properties:
-        source:
-          enum:
-          - other
-          type: string
-      required:
-      - source
-      type: object
-    ExecutionFlowEvidence:
-      description: Indicate a program flow of execution as additional evidence for the finding.
-      properties:
-        flow:
-          description: 'Sequence of locations within this flow of execution.
-
-
-            For example, a sequence of locations connecting the "source" location
-
-            where input data is obtained, to a "sink" location where it is used.'
-          items:
-            $ref: '#/components/schemas/FileRegion'
-          minItems: 1
-          type: array
-        source:
-          enum:
-          - execution_flow
-          type: string
-      required:
-      - source
-      - flow
-      type: object
-    io.snyk.api.common.LinkProperty:
-      oneOf:
-      - $ref: '#/components/schemas/io.snyk.api.common.LinkString'
-      - $ref: '#/components/schemas/io.snyk.api.common.LinkObject'
-    DependencyPathEvidence:
-      description: 'Dependency path to a software component within an SBOM dependency graph.
-
-
-        Finding types: SCA'
-      properties:
-        path:
-          description: 'Series of component identifiers starting from the top-level component tested,
-
-            and ending in the vulnerable software component.
-
-
-            The identifiers are domain-specific and determined by the test subject.'
-          items:
-            $ref: '#/components/schemas/Package'
-          type: array
-        source:
-          enum:
-          - dependency_path
-          type: string
-      required:
-      - source
-      - path
-      type: object
-    Evidence:
-      description: 'Supporting evidence for (rather than representative of) the finding in other
-
-        security domains and systems, lacking a well-known identifier.
-
-
-        More detailed attributes may also be included inline, especially when this
-
-        information is not yet generally available in a well-known public APIs.
-
-
-        Examples include:
-
-        - Detailed enumeration of dependency paths
-
-        - Execution flows leading to a code rule violation'
-      discriminator:
-        mapping:
-          dependency_path: '#/components/schemas/DependencyPathEvidence'
-          execution_flow: '#/components/schemas/ExecutionFlowEvidence'
-          other: '#/components/schemas/OtherEvidence'
-          reachability: '#/components/schemas/ReachabilityEvidence'
-        propertyName: source
-      oneOf:
-      - $ref: '#/components/schemas/DependencyPathEvidence'
-      - $ref: '#/components/schemas/ExecutionFlowEvidence'
-      - $ref: '#/components/schemas/ReachabilityEvidence'
-      - $ref: '#/components/schemas/OtherEvidence'
-    FixAttributes:
-      description: FixAttributes is the main payload modelling a fix
-      properties:
-        action:
-          allOf:
-          - $ref: '#/components/schemas/FixAction'
-          description: 'Applying the steps specified by the action within the fix leads to resolving either completely or partially this finding.
-
-            An action may be a simple upgrade, a code swap, or may model sets of boolean operations.
-
-
-            For now only simple actions are modelled but could be extended to include more complex actions in the future.
-
-            See doc for more info: https://docs.google.com/document/d/151vAXurvX4k8fNOWspSI2Ou9OF1G5fj8LHa-NuKOfgw'
-        outcome:
-          allOf:
-          - $ref: '#/components/schemas/FixAppliedOutcome'
-          description: Indicates whether applying these actions will address the finding or not
-      required:
-      - outcome
-      type: object
-    ManagedPolicyRef:
-      description: Reference to a managed policy.
-      properties:
-        id:
-          $ref: '#/components/schemas/Uuid'
-      required:
-      - id
-      type: object
-    String256:
-      maxLength: 256
-      type: string
-    PinPackageAdvice:
-      description: 'Pin a package at a specific version. Pinning is a capability not supported
-
-        by all ecosystems, which causes a transitive dependency to be pinned at
-
-        a specific version with an override.
-
-
-        For example, the `replace` go.mod directive can override package dependency
-
-        constraints, forcing a specific version to be used in the application.
-
-
-        Pinning could break an application.
-
-
-        Note: In practice pin actions today are solely used in python pip''s packages as pip does not calculate upgrade paths'
-      example:
-        format: pin_package_advice
-        package_name: requests
-        pin_version: 2.25.1
-      properties:
-        format:
-          enum:
-          - pin_package_advice
-          type: string
-        package_name:
-          type: string
-        pin_version:
-          type: string
-      required:
-      - format
-      - package_name
-      - pin_version
       type: object
     FindingType:
       description: Type of Finding which was discovered.
@@ -570,6 +241,68 @@ components:
       - secret
       - secrets
       type: string
+    Severity:
+      description: Indicate the severity of a finding discovered by a Test.
+      enum:
+      - critical
+      - high
+      - medium
+      - low
+      - none
+      - other
+      type: string
+    io.snyk.api.common.ErrorDocument:
+      properties:
+        errors:
+          items:
+            $ref: '#/components/schemas/io.snyk.api.common.Error'
+          minItems: 1
+          type: array
+        jsonapi:
+          $ref: '#/components/schemas/io.snyk.api.common.JsonApi'
+      required:
+      - jsonapi
+      - errors
+      type: object
+    FileRegion:
+      description: FileRegion models a location where vulnerable code is found.
+      properties:
+        file_path:
+          description: File path for the code snippet.
+          type: string
+        from_column:
+          description: Column on which the snippet starts.
+          type: integer
+        from_line:
+          description: Line in the file where the code snippet starts.
+          type: integer
+        to_column:
+          description: Column at which the code snippet ends.
+          type: integer
+        to_line:
+          description: Line on which the code snippet ends.
+          type: integer
+      required:
+      - file_path
+      - from_line
+      type: object
+    Uuid:
+      format: uuid
+      type: string
+    FixAppliedOutcome:
+      description: Indicates the outcome of a fix in terms of resolving the finding at hand
+      enum:
+      - fully_resolved
+      - partially_resolved
+      - unresolved
+      type: string
+    PolicyRef:
+      description: Reference to a single policy.
+      oneOf:
+      - enum:
+        - local_policy
+        type: string
+      - $ref: '#/components/schemas/ManagedPolicyRef'
     FindingAttributes:
       description: FindingAttributes represent the attributes of a Finding resource.
       properties:
@@ -1740,36 +1473,18 @@ components:
         related:
           $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
       type: object
-    FileRegion:
-      description: FileRegion models a location where vulnerable code is found.
+    OtherLocation:
+      description: 'Finding locations which this API version is not capable of expressing.
+
+
+        This location may be available in a newer version of this API.'
       properties:
-        file_path:
-          description: File path for the code snippet.
+        type:
+          enum:
+          - other
           type: string
-        from_column:
-          description: Column on which the snippet starts.
-          type: integer
-        from_line:
-          description: Line in the file where the code snippet starts.
-          type: integer
-        to_column:
-          description: Column at which the code snippet ends.
-          type: integer
-        to_line:
-          description: Line on which the code snippet ends.
-          type: integer
       required:
-      - file_path
-      - from_line
-      type: object
-    io.snyk.api.common.LinkObject:
-      properties:
-        href:
-          $ref: '#/components/schemas/io.snyk.api.common.LinkString'
-        meta:
-          $ref: '#/components/schemas/io.snyk.api.common.Meta'
-      required:
-      - href
+      - type
       type: object
     Rating:
       description: Rating represents qualitative metrics on a finding.
@@ -1781,125 +1496,75 @@ components:
       required:
       - severity
       type: object
-    Suppression:
-      description: 'Details about a finding''s suppression in test results.
+    SuppressionStatus:
+      description: Status of a suppression on a finding.
+      enum:
+      - ignored
+      - pending_ignore_approval
+      - other
+      type: string
+    PinPackageAdvice:
+      description: 'Pin a package at a specific version. Pinning is a capability not supported
+
+        by all ecosystems, which causes a transitive dependency to be pinned at
+
+        a specific version with an override.
 
 
-        Suppressed findings do not contribute to the test outcome, but they are still
+        For example, the `replace` go.mod directive can override package dependency
 
-        provided in the results.'
+        constraints, forcing a specific version to be used in the application.
+
+
+        Pinning could break an application.
+
+
+        Note: In practice pin actions today are solely used in python pip''s packages as pip does not calculate upgrade paths'
+      example:
+        format: pin_package_advice
+        package_name: requests
+        pin_version: 2.25.1
       properties:
-        created_at:
-          description: When the suppression was first created.
-          format: date-time
+        format:
+          enum:
+          - pin_package_advice
           type: string
-        expires_at:
-          description: When the suppression will expire.
-          format: date-time
+        package_name:
           type: string
-        justification:
-          description: Reason given for an ignore pending approval.
+        pin_version:
           type: string
-        path:
-          description: 'Dependency path to the vulnerable package to be suppressed.
-
-
-            If not provided, the suppression will apply to all packages with the given
-
-            vulnerability ID.'
+      required:
+      - format
+      - package_name
+      - pin_version
+      type: object
+    ReachablePath:
+      description: ReachablePath represents the paths to a vulnerable function.
+      properties:
+        call_paths:
+          description: Paths in code bundle that call the vulnerable function.
           items:
             type: string
           type: array
-        policy:
-          allOf:
-          - $ref: '#/components/schemas/PolicyRef'
-          description: Policy responsible for the state of suppression represented here, if available.
-        skipIfFixable:
-          description: Skip the suppression if an actual fix is available.
-          type: boolean
-        status:
-          allOf:
-          - $ref: '#/components/schemas/SuppressionStatus'
-          description: Status of the suppression.
-      required:
-      - status
-      type: object
-    io.snyk.api.common.JsonApi:
-      properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          enum:
-          - '1.0'
+        function_name:
+          description: Vulnerable function name.
           type: string
+        location:
+          allOf:
+          - $ref: '#/components/schemas/FileRegion'
+          description: Location in a file where the vulnerability can be found.
       required:
-      - version
-      type: object
-    io.snyk.api.common.PaginatedLinks:
-      properties:
-        first:
-          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
-        last:
-          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
-        next:
-          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
-        prev:
-          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
-        self:
-          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+      - function_name
+      - call_paths
       type: object
     io.snyk.api.common.Meta:
       additionalProperties: {}
       description: Free-form object that may contain non-standard information.
       type: object
-    FindingLocation:
-      description: Location within an Subject's contents where the finding was discovered.
-      discriminator:
-        mapping:
-          other: '#/components/schemas/OtherLocation'
-          package: '#/components/schemas/PackageLocation'
-        propertyName: type
+    io.snyk.api.common.LinkProperty:
       oneOf:
-      - $ref: '#/components/schemas/PackageLocation'
-      - description: 'Source file location.
-
-
-          Finding types: SCA, SAST'
-        example:
-          file_path: package.json
-          from_column: 12
-          from_line: 24
-          to_column: 36
-          to_line: 24
-          type: source
-        properties:
-          file_path:
-            description: File path for the code snippet.
-            type: string
-          from_column:
-            description: Column on which the snippet starts.
-            type: integer
-          from_line:
-            description: Line in the file where the code snippet starts.
-            type: integer
-          to_column:
-            description: Column at which the code snippet ends.
-            type: integer
-          to_line:
-            description: Line on which the code snippet ends.
-            type: integer
-          type:
-            enum:
-            - source
-            type: string
-        required:
-        - type
-        - file_path
-        - from_line
-        type: object
-      - $ref: '#/components/schemas/OtherLocation'
-    io.snyk.api.common.LinkString:
-      format: uri
-      type: string
+      - $ref: '#/components/schemas/io.snyk.api.common.LinkString'
+      - $ref: '#/components/schemas/io.snyk.api.common.LinkObject'
     FixAction:
       description: 'Different fix formats in which the fix action is represented. We distinguish between advice and diff formats.
 
@@ -1924,21 +1589,158 @@ components:
       - $ref: '#/components/schemas/UpgradePackageAdvice'
       - $ref: '#/components/schemas/PinPackageAdvice'
       - $ref: '#/components/schemas/Diff'
-    Package:
-      description: Dependency models a package dependency.
+    UpgradePath:
+      description: Upgrade path model all known dependency paths that will change when applying an upgrade action.
       properties:
-        name:
-          description: Name is the name of the package.
-          example: lodash
-          type: string
-        version:
-          description: Version is the version of the named package.
-          example: 1.2.3
+        dependency_path:
+          items:
+            $ref: '#/components/schemas/Package'
+          maxItems: 100
+          type: array
+        is_drop:
+          description: 'A drop describes an upgrade path, where the vulnerability gets addressed by removing the vulnerable dependency.
+
+            This typically happens when a package somewhere mid-way drops this library in newer versions.
+
+
+            Note: For drops, the length of the upgradePath will be smaller than the length of the original dependencyPath.'
+          type: boolean
+      required:
+      - dependency_path
+      - is_drop
+      type: object
+    ManagedPolicyRef:
+      description: Reference to a managed policy.
+      properties:
+        id:
+          $ref: '#/components/schemas/Uuid'
+      required:
+      - id
+      type: object
+    ReachabilityEvidence:
+      description: Indicate the reachability signals as additional evidence for the finding.
+      properties:
+        paths:
+          description: 'Paths by which the vulnerable code can be reached.
+
+
+            Includes the name of the function, the path through the
+
+            source code that reaches the function, and the location
+
+            at which the vulnerable function is called.'
+          items:
+            $ref: '#/components/schemas/ReachablePath'
+          minItems: 1
+          type: array
+        reachability:
+          $ref: '#/components/schemas/ReachabilityType'
+        source:
+          enum:
+          - reachability
           type: string
       required:
-      - name
+      - source
+      - reachability
+      type: object
+    ReachabilityType:
+      description: Reachability enum for reachability signal.
+      enum:
+      - none
+      - function
+      - no_info
+      - not_applicable
+      type: string
+    ExecutionFlowEvidence:
+      description: Indicate a program flow of execution as additional evidence for the finding.
+      properties:
+        flow:
+          description: 'Sequence of locations within this flow of execution.
+
+
+            For example, a sequence of locations connecting the "source" location
+
+            where input data is obtained, to a "sink" location where it is used.'
+          items:
+            $ref: '#/components/schemas/FileRegion'
+          minItems: 1
+          type: array
+        source:
+          enum:
+          - execution_flow
+          type: string
+      required:
+      - source
+      - flow
+      type: object
+    Evidence:
+      description: 'Supporting evidence for (rather than representative of) the finding in other
+
+        security domains and systems, lacking a well-known identifier.
+
+
+        More detailed attributes may also be included inline, especially when this
+
+        information is not yet generally available in a well-known public APIs.
+
+
+        Examples include:
+
+        - Detailed enumeration of dependency paths
+
+        - Execution flows leading to a code rule violation'
+      discriminator:
+        mapping:
+          dependency_path: '#/components/schemas/DependencyPathEvidence'
+          execution_flow: '#/components/schemas/ExecutionFlowEvidence'
+          other: '#/components/schemas/OtherEvidence'
+          reachability: '#/components/schemas/ReachabilityEvidence'
+        propertyName: source
+      oneOf:
+      - $ref: '#/components/schemas/DependencyPathEvidence'
+      - $ref: '#/components/schemas/ExecutionFlowEvidence'
+      - $ref: '#/components/schemas/ReachabilityEvidence'
+      - $ref: '#/components/schemas/OtherEvidence'
+    io.snyk.api.common.JsonApi:
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          enum:
+          - '1.0'
+          type: string
+      required:
       - version
       type: object
+    DependencyPathEvidence:
+      description: 'Dependency path to a software component within an SBOM dependency graph.
+
+
+        Finding types: SCA'
+      properties:
+        path:
+          description: 'Series of component identifiers starting from the top-level component tested,
+
+            and ending in the vulnerable software component.
+
+
+            The identifiers are domain-specific and determined by the test subject.'
+          items:
+            $ref: '#/components/schemas/Package'
+          type: array
+        source:
+          enum:
+          - dependency_path
+          type: string
+      required:
+      - source
+      - path
+      type: object
+    io.snyk.api.common.LinkString:
+      format: uri
+      type: string
+    String256:
+      maxLength: 256
+      type: string
     DiffSuggestion:
       description: A suggestion in unified diff format representing the code changes to fix the vulnerability.
       properties:
@@ -1958,42 +1760,117 @@ components:
       required:
       - diff
       type: object
-    PolicyModification:
-      description: Prior attribute values and the reason they were modified.
+    io.snyk.api.common.ErrorLink:
+      additionalProperties:
+        $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+      description: A link that leads to further details about this particular occurrance of the problem.
       properties:
-        pointer:
-          description: 'A JSON Pointer (RFC 6901) reference to the modified value, relative to
-
-            the top-level attributes of the same Finding.'
-          example: /rating/severity
-          type: string
-        policy:
-          allOf:
-          - $ref: '#/components/schemas/PolicyRef'
-          description: Policy which modified the finding, if available.
-        prior:
-          description: The prior value at the referenced pointer.
-          example: low
-        reason:
-          description: A human-readable explanation for why the value was modified.
-          example: CWE-123 poses an elevated risk to workloads exposed to the public internet
-          type: string
-      required:
-      - pointer
-      - reason
+        about:
+          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
       type: object
-    io.snyk.api.common.ErrorDocument:
+    OtherEvidence:
+      description: 'Evidence which this API version is not capable of expressing.
+
+
+        More information may be available in a newer version of this API.'
       properties:
-        errors:
-          items:
-            $ref: '#/components/schemas/io.snyk.api.common.Error'
-          minItems: 1
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/io.snyk.api.common.JsonApi'
+        source:
+          enum:
+          - other
+          type: string
       required:
-      - jsonapi
-      - errors
+      - source
+      type: object
+    PackageLocation:
+      description: 'Package dependency version.
+
+
+        Finding type: SCA'
+      example:
+        package:
+          name: log4j
+          version: 2.4.1
+        type: package
+      properties:
+        package:
+          $ref: '#/components/schemas/Package'
+        type:
+          enum:
+          - package
+          type: string
+      required:
+      - type
+      - package
+      type: object
+    Diff:
+      description: 'Fix suggestions in the unified diff format that introduce code changes
+
+        to remediate the vulnerability.'
+      example:
+        format: diff
+        suggestions:
+        - diff: '--- a/auth.ts
+
+            +++ b/auth.ts
+
+            @@ -1,1 +1,1 @@
+
+            -eval(userInput)
+
+            +safeEval(userInput)
+
+            '
+          external_id: 550e8400-e29b-41d4-a716-446655440000
+          rank: 1
+        - diff: '--- a/auth.ts
+
+            +++ b/auth.ts
+
+            @@ -1,1 +1,1 @@
+
+            -password === input
+
+            +bcrypt.compare(input, password)
+
+            '
+          external_id: 550e8400-e29b-41d4-a716-446655440001
+          rank: 2
+      properties:
+        format:
+          enum:
+          - diff
+          type: string
+        suggestions:
+          description: 'Alternative suggestions - choose one to fix the vulnerability.
+
+            The ''rank'' field signals the relative confidence in each one.'
+          items:
+            $ref: '#/components/schemas/DiffSuggestion'
+          type: array
+      required:
+      - format
+      - suggestions
+      type: object
+    FixAttributes:
+      description: FixAttributes is the main payload modelling a fix
+      properties:
+        action:
+          allOf:
+          - $ref: '#/components/schemas/FixAction'
+          description: 'Applying the steps specified by the action within the fix leads to resolving either completely or partially this finding.
+
+            An action may be a simple upgrade, a code swap, or may model sets of boolean operations.
+
+
+            For now only simple actions are modelled but could be extended to include more complex actions in the future.
+
+            See doc for more info: https://docs.google.com/document/d/151vAXurvX4k8fNOWspSI2Ou9OF1G5fj8LHa-NuKOfgw'
+        outcome:
+          allOf:
+          - $ref: '#/components/schemas/FixAppliedOutcome'
+          description: Indicates whether applying these actions will address the finding or not
+      required:
+      - outcome
       type: object
     FindingData:
       description: FindingData represents a Finding resource object.
@@ -2390,52 +2267,165 @@ components:
       - type
       - attributes
       type: object
-    Uuid:
-      format: uuid
-      type: string
-    FixAppliedOutcome:
-      description: Indicates the outcome of a fix in terms of resolving the finding at hand
-      enum:
-      - fully_resolved
-      - partially_resolved
-      - unresolved
-      type: string
-    io.snyk.api.common.ErrorLink:
-      additionalProperties:
-        $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
-      description: A link that leads to further details about this particular occurrance of the problem.
+    FindingLocation:
+      description: Location within an Subject's contents where the finding was discovered.
+      discriminator:
+        mapping:
+          other: '#/components/schemas/OtherLocation'
+          package: '#/components/schemas/PackageLocation'
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/PackageLocation'
+      - description: 'Source file location.
+
+
+          Finding types: SCA, SAST'
+        example:
+          file_path: package.json
+          from_column: 12
+          from_line: 24
+          to_column: 36
+          to_line: 24
+          type: source
+        properties:
+          file_path:
+            description: File path for the code snippet.
+            type: string
+          from_column:
+            description: Column on which the snippet starts.
+            type: integer
+          from_line:
+            description: Line in the file where the code snippet starts.
+            type: integer
+          to_column:
+            description: Column at which the code snippet ends.
+            type: integer
+          to_line:
+            description: Line on which the code snippet ends.
+            type: integer
+          type:
+            enum:
+            - source
+            type: string
+        required:
+        - type
+        - file_path
+        - from_line
+        type: object
+      - $ref: '#/components/schemas/OtherLocation'
+    PolicyModification:
+      description: Prior attribute values and the reason they were modified.
       properties:
-        about:
+        pointer:
+          description: 'A JSON Pointer (RFC 6901) reference to the modified value, relative to
+
+            the top-level attributes of the same Finding.'
+          example: /rating/severity
+          type: string
+        policy:
+          allOf:
+          - $ref: '#/components/schemas/PolicyRef'
+          description: Policy which modified the finding, if available.
+        prior:
+          description: The prior value at the referenced pointer.
+          example: low
+        reason:
+          description: A human-readable explanation for why the value was modified.
+          example: CWE-123 poses an elevated risk to workloads exposed to the public internet
+          type: string
+      required:
+      - pointer
+      - reason
+      type: object
+    io.snyk.api.common.Error:
+      properties:
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          format: uuid
+          type: string
+        links:
+          $ref: '#/components/schemas/io.snyk.api.common.ErrorLink'
+        meta:
+          type: object
+        source:
+          properties:
+            parameter:
+              type: string
+            pointer:
+              type: string
+          type: object
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          pattern: ^[45]\d\d$
+          type: string
+        title:
+          description: A short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+      required:
+      - status
+      - detail
+      type: object
+    Package:
+      description: Dependency models a package dependency.
+      properties:
+        name:
+          description: Name is the name of the package.
+          example: lodash
+          type: string
+        version:
+          description: Version is the version of the named package.
+          example: 1.2.3
+          type: string
+      required:
+      - name
+      - version
+      type: object
+    io.snyk.api.common.PaginatedLinks:
+      properties:
+        first:
+          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+        last:
+          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+        next:
+          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+        prev:
+          $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
+        self:
           $ref: '#/components/schemas/io.snyk.api.common.LinkProperty'
       type: object
+    io.snyk.api.common.LinkObject:
+      properties:
+        href:
+          $ref: '#/components/schemas/io.snyk.api.common.LinkString'
+        meta:
+          $ref: '#/components/schemas/io.snyk.api.common.Meta'
+      required:
+      - href
+      type: object
   parameters:
-    io.snyk.api.request.SnykApiRequest.interaction_id:
-      description: 'Identifies the Snyk client interaction in which this API request occurs.
+    io.snyk.api.request.SnykApiRequest.request_id:
+      description: 'A unique ID assigned to each API request, for tracing and troubleshooting.
 
 
-        The identifier is an opaque string. though at the time of writing it may either be a
-
-        uuid or a urn containing a uuid and some metadata.'
+        Snyk clients can optionally provide this ID.'
       in: header
-      name: snyk-interaction-id
+      name: snyk-request-id
       schema:
-        maxLength: 128
-        minLength: 36
+        format: uuid
         type: string
-    io.snyk.api.request.PaginatedRequest.ending_before:
-      description: Opaque pagination cursor for reverse traversal.
-      explode: false
-      in: query
-      name: ending_before
-      schema:
-        type: string
-    io.snyk.api.request.SnykApiRequest.version:
-      description: The API version requested.
-      explode: false
-      in: query
-      name: version
+    TestIdParam:
+      description: Test ID returned from the Test API to query.
+      in: path
+      name: test_id
       required: true
       schema:
+        format: uuid
         type: string
     io.snyk.api.request.PaginatedRequest.limit:
       description: The number of items to return.
@@ -2455,23 +2445,33 @@ components:
       name: starting_after
       schema:
         type: string
-    io.snyk.api.request.SnykApiRequest.request_id:
-      description: 'A unique ID assigned to each API request, for tracing and troubleshooting.
-
-
-        Snyk clients can optionally provide this ID.'
-      in: header
-      name: snyk-request-id
-      schema:
-        format: uuid
-        type: string
-    TestIdParam:
-      description: Test ID returned from the Test API to query.
-      in: path
-      name: test_id
+    io.snyk.api.request.SnykApiRequest.version:
+      description: The API version requested.
+      explode: false
+      in: query
+      name: version
       required: true
       schema:
-        format: uuid
+        type: string
+    io.snyk.api.request.SnykApiRequest.interaction_id:
+      description: 'Identifies the Snyk client interaction in which this API request occurs.
+
+
+        The identifier is an opaque string. though at the time of writing it may either be a
+
+        uuid or a urn containing a uuid and some metadata.'
+      in: header
+      name: snyk-interaction-id
+      schema:
+        maxLength: 128
+        minLength: 36
+        type: string
+    io.snyk.api.request.PaginatedRequest.ending_before:
+      description: Opaque pagination cursor for reverse traversal.
+      explode: false
+      in: query
+      name: ending_before
+      schema:
         type: string
   securitySchemes:
     APIToken:

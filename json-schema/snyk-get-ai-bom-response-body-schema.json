@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-get-ai-bom-response-body-schema.json",
+  "title": "GetAiBomResponseBody",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-aibom-api-openapi.yml#/components/schemas/GetAiBomResponseBody",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/GetAiBomResponseData"
+    },
+    "jsonapi": {
+      "$ref": "#/$defs/JsonApi"
+    },
+    "links": {
+      "$ref": "#/$defs/PaginatedLinks"
+    }
+  },
+  "required": [
+    "data",
+    "jsonapi",
+    "links"
+  ],
+  "type": "object",
+  "$defs": {
+    "AiBomAttributes": {
+      "additionalProperties": true,
+      "description": "The AI-Bom document",
+      "type": "object"
+    },
+    "GetAiBomResponseData": {
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/AiBomAttributes"
+        },
+        "id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "ai_bom"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "attributes",
+        "type"
+      ],
+      "type": "object"
+    },
+    "JsonApi": {
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "description": "Version of the JSON API specification this server supports.",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version"
+      ],
+      "type": "object"
+    },
+    "LinkProperty": {
+      "oneOf": [
+        {
+          "description": "A string containing the link’s URL.",
+          "type": "string"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "href": {
+              "description": "A string containing the link’s URL.",
+              "type": "string"
+            },
+            "meta": {
+              "additionalProperties": true,
+              "description": "Free-form object that may contain non-standard information.",
+              "type": "object"
+            }
+          },
+          "required": [
+            "href"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "PaginatedLinks": {
+      "additionalProperties": false,
+      "properties": {
+        "first": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "last": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "next": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "prev": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "self": {
+          "$ref": "#/$defs/LinkProperty"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

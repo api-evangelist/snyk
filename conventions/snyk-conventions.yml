@@ -89,6 +89,8 @@ rate_limit_signalling:
   missing: [RateLimit-Limit, RateLimit-Remaining, RateLimit-Reset]
   see: rate-limits/snyk-rate-limits.yml
 idempotency:
+  coverage: none
+  scope: []
   supported: false
   key_header: null
   scope: null

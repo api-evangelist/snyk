@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-asset-project-response-data-schema.json",
+  "title": "AssetProjectResponseData",
+  "description": "asset project resource object",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-asset-api-openapi.yml#/components/schemas/AssetProjectResponseData",
+  "properties": {
+    "attributes": {
+      "$ref": "#/$defs/AssetProjectAttributes"
+    },
+    "id": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "type": {
+      "enum": [
+        "project"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "type"
+  ],
+  "type": "object",
+  "$defs": {
+    "AssetProjectAttributes": {
+      "properties": {
+        "issues_counts": {
+          "properties": {
+            "critical": {
+              "type": "number"
+            },
+            "high": {
+              "type": "number"
+            },
+            "low": {
+              "type": "number"
+            },
+            "medium": {
+              "type": "number"
+            }
+          },
+          "type": "object"
+        },
+        "last_scan": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "organization_id": {
+          "type": "string"
+        },
+        "organization_name": {
+          "type": "string"
+        },
+        "project_type": {
+          "type": "string"
+        },
+        "target_file": {
+          "type": "string"
+        },
+        "target_id": {
+          "type": "string"
+        },
+        "target_reference": {
+          "type": "string"
+        },
+        "test_surface": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-group-values-response-schema.json",
+  "title": "GroupValuesResponse",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-inventory-assets-api-openapi.yml#/components/schemas/GroupValuesResponse",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "description": "List of group values with their aggregated metadata",
+      "items": {
+        "$ref": "#/$defs/GroupValueData"
+      },
+      "type": "array"
+    },
+    "links": {
+      "description": "Self-referencing link",
+      "properties": {
+        "self": {
+          "description": "Link to the current resource",
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "self"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "data",
+    "links"
+  ],
+  "type": "object",
+  "$defs": {
+    "GroupValueAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "The grouped value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "type": "object"
+    },
+    "GroupValueData": {
+      "additionalProperties": false,
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/GroupValueAttributes"
+        },
+        "id": {
+          "description": "UUID identifier for the group value",
+          "format": "uuid",
+          "type": "string"
+        },
+        "meta": {
+          "$ref": "#/$defs/GroupValueMeta"
+        },
+        "type": {
+          "description": "The JSON:API resource type",
+          "enum": [
+            "group_values"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "id",
+        "attributes"
+      ],
+      "type": "object"
+    },
+    "GroupValueIssuesAggregation": {
+      "additionalProperties": false,
+      "description": "Aggregated issue counts from discovery sources across all assets in this group.\nCounts are summed from all project-type discovery sources.\n",
+      "properties": {
+        "critical": {
+          "description": "Total count of critical severity issues",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "high": {
+          "description": "Total count of high severity issues",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "low": {
+          "description": "Total count of low severity issues",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "medium": {
+          "description": "Total count of medium severity issues",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "total": {
+          "description": "Sum of all issue counts (critical + high + medium + low)",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GroupValueMeta": {
+      "additionalProperties": false,
+      "description": "Computed aggregations across all assets within this group value.\nFields are only present when explicitly requested via the `meta_fields` query parameter.\nIf `meta_fields` is not specified, the meta object is omitted from the response.\n",
+      "properties": {
+        "built_at": {
+          "description": "Aggregated container image build timestamp across all assets in this group.\nThe aggregation function is controlled by the `aggregate[built_at]` parameter (default: last).\nNull if no assets have a built_at value.\n",
+          "format": "date-time",
+          "type": "string"
+        },
+        "count": {
+          "description": "Number of assets with this value.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "issues": {
+          "$ref": "#/$defs/GroupValueIssuesAggregation"
+        },
+        "labels": {
+          "description": "Unique labels across all assets in this group.\nLimited to the first 1000 unique labels (alphabetically sorted).\nEmpty array if no assets have labels.\n",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "type": "array"
+        },
+        "last_seen_at": {
+          "description": "Aggregated last_seen_at timestamp across all assets in this group.\nThe aggregation function is controlled by the `aggregate[last_seen_at]` parameter (default: last).\nNull if no assets have a last_seen_at value.\n",
+          "format": "date-time",
+          "type": "string"
+        },
+        "risk_score": {
+          "description": "Aggregated risk_score from discovery sources across all assets in this group.\nThe aggregation function is controlled by the `aggregate[risk_score]` parameter (default: last).\nDerived from project-type discovery sources. Null if no assets have\ndiscovery sources with risk scores.\n",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "tags": {
+          "description": "Unique tags across all assets in this group.\nLimited to the first 1000 unique tags (alphabetically sorted).\nEmpty array if no assets have tags.\n",
+          "items": {
+            "properties": {
+              "key": {
+                "description": "The tag key",
+                "type": "string"
+              },
+              "value": {
+                "description": "The tag value",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "maxItems": 1000,
+          "type": "array"
+        },
+        "updated_at": {
+          "description": "Aggregated updated_at timestamp across all assets in this group.\nThe aggregation function is controlled by the `aggregate[updated_at]` parameter (default: last).\n",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

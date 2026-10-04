@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-update-broker-connection-integration-with-context-schema.json",
+  "title": "UpdateBrokerConnectionIntegrationWithContext",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-brokercontexts-api-openapi.yml#/components/schemas/UpdateBrokerConnectionIntegrationWithContext",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "properties": {
+        "attributes": {
+          "properties": {
+            "org_id": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          "required": [
+            "org_id"
+          ],
+          "type": "object"
+        },
+        "id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "broker_integration"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "attributes",
+        "type",
+        "id"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "type": "object"
+}

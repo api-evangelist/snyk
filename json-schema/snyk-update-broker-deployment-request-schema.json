@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-update-broker-deployment-request-schema.json",
+  "title": "UpdateBrokerDeploymentRequest",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-brokerdeployments-api-openapi.yml#/components/schemas/UpdateBrokerDeploymentRequest",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/BrokerDeploymentUpdateResource"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "type": "object",
+  "$defs": {
+    "BrokerDeploymentUpdateAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "broker_app_installed_in_org_id": {
+          "description": "Org Id in which the Broker App is installed",
+          "format": "uuid",
+          "type": "string"
+        },
+        "install_id": {
+          "description": "Associated Install ID",
+          "format": "uuid",
+          "type": "string"
+        },
+        "metadata": {
+          "description": "Metadata information such user/org id or metrics",
+          "type": "object"
+        }
+      },
+      "required": [
+        "broker_app_installed_in_org_id",
+        "install_id"
+      ],
+      "type": "object"
+    },
+    "BrokerDeploymentUpdateResource": {
+      "additionalProperties": false,
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/BrokerDeploymentUpdateAttributes"
+        },
+        "id": {
+          "format": "uuid",
+          "readOnly": true,
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "broker_deployment"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "attributes",
+        "id",
+        "type"
+      ],
+      "type": "object"
+    }
+  }
+}

@@ -7,7 +7,7 @@
 - [Glossary](https://docs.snyk.io/glossary.md): Definitions of Snyk platform terms and security concepts used throughout the Snyk documentation
 - [Snyk release process](https://docs.snyk.io/snyk-release-process.md): How Snyk releases features through stages from alpha to general availability, and what each stage means for access and documentation.
 - [What's new?](https://docs.snyk.io/whats-new.md): Recent updates to Snyk products and documentation, including new features, changes, and knowledge base improvements
-- [Snyk 2.0 platform improvements](https://docs.snyk.io/snyk-2.0-platform-improvements.md): Snyk 2.0 platform improvements rolling out through 2026 to address navigation, asset visibility, and issue triage
+- [Navigate the Snyk Web UI](https://docs.snyk.io/navigate-the-snyk-web-ui.md): Where to find features in the new Snyk interface, with a mapping from the classic navigation.
 - [Supported languages, package managers, and frameworks](https://docs.snyk.io/supported-languages/supported-languages-package-managers-and-frameworks.md): Language, package manager, and framework support across Snyk Open Source and Snyk Code, with pointers to Snyk Container coverage
 - [Technical specifications and guidance](https://docs.snyk.io/supported-languages/technical-specifications-and-guidance.md): Technical requirements for Snyk Code and Snyk Open Source, including file encoding and how Snyk builds the dependency tree
 - [Supported languages list](https://docs.snyk.io/supported-languages/supported-languages-list.md): Index of the programming languages Snyk supports, with per-language product coverage and integration details
@@ -40,8 +40,8 @@
 - [Swift and Objective-C](https://docs.snyk.io/supported-languages/supported-languages-list/swift-and-objective-c.md): Snyk support for Swift and Objective-C with Snyk Code and Snyk Open Source, including Early Access Objective-C code analysis on Enterprise plans
 - [TypeScript](https://docs.snyk.io/supported-languages/supported-languages-list/typescript.md): Snyk support for TypeScript with Snyk Open Source and Snyk Code, including SCM import, CLI and IDE testing, and JavaScript frameworks
 - [Getting started](https://docs.snyk.io/getting-started-guides/getting-started.md): How to start using Snyk, including supported browsers, prerequisites, and your first scanning and remediation tasks
-- [Structure your account for high application performance](https://docs.snyk.io/getting-started-guides/structure-your-account-for-high-application-performance.md): Guidelines for structuring Snyk accounts, Groups, Organizations, and Projects to maintain high performance at scale
 - [Start scanning](https://docs.snyk.io/getting-started-guides/start-scanning.md): How to scan your code with Snyk manually and automatically using the Snyk CLI, web UI, API, and PR Checks
+- [Structure your account for high application performance](https://docs.snyk.io/getting-started-guides/structure-your-account-for-high-application-performance.md): Guidelines for structuring Snyk accounts, Groups, Organizations, and Projects to maintain high performance at scale
 - [Getting started with the REST API](https://docs.snyk.io/getting-started-guides/getting-started-with-the-rest-api.md): How to make your first Snyk REST API call with curl, including finding your Organization ID and authentication token
 - [Overview](https://docs.snyk.io/implementation-guides/implement-snyk.md): Overview of implementing Snyk across your organization, from development through deployment, to fix vulnerabilities and build a security culture
 - [Auto-provisioning guide](https://docs.snyk.io/implementation-guides/auto-provisioning-guide.md): How Snyk auto-provisions accounts for Pilot and Enterprise plans, including the setup questions you answer first
@@ -156,6 +156,7 @@
 - [Example: setting up custom mapping for Google Workspace](https://docs.snyk.io/platform-administration/user-management/single-sign-on-sso-for-authentication-to-snyk/custom-mapping/examples-setting-up-custom-mapping-for-idps/example-setting-up-custom-mapping-for-google-workspace.md): Example of mapping Snyk roles for a Google Workspace custom SAML connection
 - [Example: setting up custom mapping for an Okta OIDC app](https://docs.snyk.io/platform-administration/user-management/single-sign-on-sso-for-authentication-to-snyk/custom-mapping/examples-setting-up-custom-mapping-for-idps/example-setting-up-custom-mapping-for-an-okta-oidc-app.md): Example of setting up a Snyk custom mapping integration for an Okta OIDC application
 - [Example: setting up custom mapping for OneLogin](https://docs.snyk.io/platform-administration/user-management/single-sign-on-sso-for-authentication-to-snyk/custom-mapping/examples-setting-up-custom-mapping-for-idps/example-setting-up-custom-mapping-for-onelogin.md): Example of configuring Snyk user roles after setting up OneLogin SSO
+- [Migrating from legacy to v2 custom mapping](https://docs.snyk.io/platform-administration/user-management/single-sign-on-sso-for-authentication-to-snyk/custom-mapping/migrating-from-legacy-to-v2-custom-mapping.md): How to migrate Snyk SSO custom role mapping from the legacy format to v2 colon-delimited syntax
 - [Identity Provider (IdP) migration](https://docs.snyk.io/platform-administration/user-management/single-sign-on-sso-for-authentication-to-snyk/identity-provider-idp-migration.md): How to migrate Snyk SSO from a legacy identity provider to a new one by submitting new IdP metadata
 - [Service accounts](https://docs.snyk.io/platform-administration/service-accounts/service-accounts.md): Snyk service accounts for non-interactive API access, available on Enterprise plans
 - [Choose a service account type to use with Snyk APIs](https://docs.snyk.io/platform-administration/service-accounts/choose-a-service-account-type-to-use-with-snyk-apis.md): How to choose a Snyk service account type and level, based on the permissions your API automation needs
@@ -498,153 +499,158 @@
 - [Ignore unmanaged resources](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-iac/detect-manually-created-resources/ignore-unmanaged-resources.md): How to ignore unmanaged resources in Snyk IaC drift detection
 - [IAC sources usage](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-iac/detect-manually-created-resources/iac-sources-usage.md): How to use IaC sources with Snyk drift detection
 - [Snyk Essentials](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-essentials.md): How Snyk Essentials gives visibility into your application assets and their risk
-- [Snyk API & Web](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web.md): How Snyk API and Web performs dynamic application security testing (DAST)
-- [Getting started with Snyk API & Web](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/getting-started-with-snyk-api-web.md): How to get started with Snyk API and Web dynamic application security testing
-- [Best practices for deploying DAST](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/getting-started-with-snyk-api-web/best-practices-for-deploying-dast.md): Best practices for deploying Snyk API and Web DAST scanning
-- [Can I scan a production site?](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/getting-started-with-snyk-api-web/can-i-scan-a-production-site.md): Whether you can scan a production site with Snyk API and Web
-- [Configure targets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets.md): How to configure targets for Snyk API and Web scanning
-- [What is a target?](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/what-is-a-target.md): What a target is in Snyk API and Web scanning
-- [Add a target](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/add-a-target.md): How to add a target for Snyk API and Web scanning
-- [Import targets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/import-targets.md): How to import targets for Snyk API and Web scanning
-- [Test target configuration](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/test-target-configuration.md): How to test a target configuration in Snyk API and Web
-- [Use seeds and reject lists](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/use-seeds-and-reject-lists.md): How to use seeds and reject lists to control Snyk API and Web crawling
+- [Snyk API & Web](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web.md): How Snyk API & Web performs dynamic application security testing (DAST)
+- [Getting started with Snyk API & Web](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/getting-started-with-snyk-api-web.md): How to get started with Snyk API & Web dynamic application security testing
+- [Best practices for deploying DAST](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/getting-started-with-snyk-api-web/best-practices-for-deploying-dast.md): Best practices for deploying Snyk API & Web DAST scanning
+- [Can I scan a production site?](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/getting-started-with-snyk-api-web/can-i-scan-a-production-site.md): Whether you can scan a production site with Snyk API & Web
+- [Configure targets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets.md): How to configure targets for Snyk API & Web scanning
+- [What is a target?](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/what-is-a-target.md): What a target is in Snyk API & Web scanning
+- [Add a target](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/add-a-target.md): How to add a target for Snyk API & Web scanning
+- [Import targets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/import-targets.md): How to import targets for Snyk API & Web scanning
+- [Test target configuration](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/test-target-configuration.md): How to test a target configuration in Snyk API & Web
+- [Use seeds and reject lists](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/use-seeds-and-reject-lists.md): How to use seeds and reject lists to control Snyk API & Web crawling
 - [API targets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-api-targets.md): How to configure API targets for Snyk API and Web scanning
-- [Configure Postman Collection targets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-api-targets/configure-postman-collection-targets.md): How to configure Postman Collection targets for Snyk API and Web
-- [Configure RAML targets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-api-targets/configure-raml-targets.md): How to configure RAML API targets for Snyk API and Web
-- [Configure signed requests](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-api-targets/configure-signed-requests.md): How to configure signed requests for Snyk API and Web targets
-- [Configure message level encryption](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-api-targets/configure-message-level-encryption.md): How to configure message-level encryption for Snyk API and Web targets
+- [Configure Postman Collection targets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-api-targets/configure-postman-collection-targets.md): How to configure Postman Collection targets for Snyk API & Web
+- [Configure RAML targets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-api-targets/configure-raml-targets.md): How to configure RAML API targets for Snyk API & Web
+- [Configure signed requests](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-api-targets/configure-signed-requests.md): How to configure signed requests for Snyk API & Web targets
+- [Configure message level encryption](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-api-targets/configure-message-level-encryption.md): How to configure message-level encryption for Snyk API & Web targets
 - [Configure an API target with a Bruno Collection](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-api-targets/configure-an-api-target-with-a-bruno-collection.md): How to configure a Snyk API and Web target using a Bruno Collection in OpenCollection format
-- [Web targets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-web-targets.md): How to configure web targets for Snyk API and Web scanning
-- [Use navigation sequences](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-web-targets/use-navigation-sequences.md): How to use navigation sequences for Snyk API and Web web targets
-- [Use sequence recorder](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-web-targets/use-sequence-recorder.md): How to use the sequence recorder for Snyk API and Web web targets
-- [Configure extra hosts](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-web-targets/configure-extra-hosts.md): How to configure extra hosts for Snyk API and Web web targets
-- [Authentication](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication.md): How to configure authentication for Snyk API and Web targets
-- [Basic authentication](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-basic-authentication.md): How to configure basic authentication for Snyk API and Web targets
-- [Login form](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-login-form.md): How to configure login form authentication for Snyk API and Web targets
-- [Login sequence](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-login-sequence.md): How to configure a login sequence for Snyk API and Web targets
-- [Two-factor authentication](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-two-factor-authentication.md): How to configure two-factor authentication for Snyk API and Web targets
-- [OpenAPI authentication](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-openapi-authentication.md): How to configure OpenAPI authentication for Snyk API and Web targets
+- [Configure an API target without a schema file](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-api-targets/configure-an-api-target-without-a-schema-file.md): Add an OpenAPI target directly from a source code repository, without providing a schema file, using Snyk API & Web.
+- [Web targets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-web-targets.md): How to configure web targets for Snyk API & Web scanning
+- [Use navigation sequences](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-web-targets/use-navigation-sequences.md): How to use navigation sequences for Snyk API & Web web targets
+- [Use sequence recorder](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-web-targets/use-sequence-recorder.md): How to use the sequence recorder for Snyk API & Web web targets
+- [Configure extra hosts](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-web-targets/configure-extra-hosts.md): How to configure extra hosts for Snyk API & Web web targets
+- [Authentication](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication.md): How to configure authentication for Snyk API & Web targets
+- [Basic authentication](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-basic-authentication.md): How to configure basic authentication for Snyk API & Web targets
+- [Login form](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-login-form.md): How to configure login form authentication for Snyk API & Web targets
+- [Login sequence](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-login-sequence.md): How to configure a login sequence for Snyk API & Web targets
+- [Two-factor authentication](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-two-factor-authentication.md): How to configure two-factor authentication for Snyk API & Web targets
+- [OpenAPI authentication](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-openapi-authentication.md): How to configure OpenAPI authentication for Snyk API & Web targets
 - [Postman authentication](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-postman-authentication.md): How to configure Postman authentication for Snyk API and Web targets
-- [GraphQL authentication](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-graphql-authentication.md): How to configure GraphQL authentication for Snyk API and Web targets
-- [Mutual TLS](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-mutual-tls.md): How to configure mutual TLS for Snyk API and Web targets
+- [GraphQL authentication](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-graphql-authentication.md): How to configure GraphQL authentication for Snyk API & Web targets
+- [Mutual TLS](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-mutual-tls.md): How to configure mutual TLS for Snyk API & Web targets
 - [NTLM](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/ntlm.md): Configure NTLM to scan targets protected by NTLM v2 authentication.
-- [Logout detection](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-logout-detection.md): How to configure logout detection for Snyk API and Web targets
-- [Manage credentials](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/manage-credentials.md): How to manage credentials for Snyk API and Web targets
-- [Automate OTP extraction](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/automate-otp-extraction.md): How to automate OTP extraction for Snyk API and Web authentication
+- [Logout detection](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-logout-detection.md): How to configure logout detection for Snyk API & Web targets
+- [Manage credentials](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/manage-credentials.md): How to manage credentials for Snyk API & Web targets
+- [Automate OTP extraction](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/automate-otp-extraction.md): How to automate OTP extraction for Snyk API & Web authentication
 - [Configure Bruno Collection Authentication](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/configure-bruno-collection-authentication.md): How to configure authentication for a Snyk API and Web scan that uses a Bruno Collection, including dynamic token generation
 - [Automate authentication configuration](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/automate-authentication-configuration.md): Configure authentication for web targets using AI-driven setup.
-- [Verify domain ownership](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/verify-domain-ownership.md): How to verify domain ownership for Snyk API and Web targets
-- [Verify with TXT file](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/verify-domain-ownership/verify-with-txt-file.md): How to verify domain ownership with a TXT file for Snyk API and Web
-- [Verify with DNS TXT record](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/verify-domain-ownership/verify-with-dns-txt.md): How to verify domain ownership with a DNS TXT record for Snyk API and Web
-- [Verify with DNS CNAME record](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/verify-domain-ownership/verify-with-dns-cname.md): How to verify domain ownership with a DNS CNAME record for Snyk API and Web
-- [Verify with meta tag](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/verify-domain-ownership/verify-with-meta-tag.md): How to verify domain ownership with a meta tag for Snyk API and Web
-- [Start scanning](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning.md): How to start scanning targets with Snyk API and Web
-- [What happens during a scan](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/what-happens-during-a-scan.md): What happens during a Snyk API and Web scan
-- [Scan settings](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-settings.md): How to configure scan settings for Snyk API and Web
-- [Built-in scan profiles](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-settings/built-in-scan-profiles.md): The built-in Snyk API and Web scan profiles and their differences
-- [Customize a scan profile](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-settings/customize-scan-profile.md): How to customize a Snyk API and Web scan profile
-- [Switch the scan profile](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-settings/switch-scan-profile.md): How to switch the Snyk API and Web scan profile
-- [Custom headers](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-settings/custom-headers.md): How to configure custom headers for Snyk API and Web scans
-- [Configure risk acceptance workflow](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-settings/configure-risk-acceptance-workflow.md): How to configure the risk acceptance workflow for Snyk API and Web
-- [Test BOLA vulnerabilities](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-settings/test-bola-vulnerabilities.md): How to test for BOLA vulnerabilities with Snyk API and Web
-- [Scanning agent](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scanning-agent.md): How the Snyk API and Web scanning agent works
-- [Install a scanning agent](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scanning-agent/install-scanning-agent.md): How to install a Snyk API and Web scanning agent
-- [Scan internal applications](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scanning-agent/scan-internal-applications.md): How to scan internal applications with a Snyk API and Web scanning agent
-- [Scan management](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-management.md): How to manage Snyk API and Web scans
-- [Actions on scans](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-management/actions-on-scans.md): The actions you can take on Snyk API and Web scans
-- [Scan targets in bulk](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-management/scan-targets-in-bulk.md): How to scan Snyk API and Web targets in bulk
-- [Schedule a scan](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-management/schedule-scan.md): How to schedule a Snyk API and Web scan
-- [Scan duration](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-management/scan-duration.md): How scan duration works for Snyk API and Web scans
-- [Pause scans](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-management/pause-scans.md): How to pause Snyk API and Web scans
-- [Fail on authentication failure](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-management/fail-on-auth-failure.md): How to fail a Snyk API and Web scan on authentication failure
-- [Run partial scans](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-management/partial-scans-overview.md): How to run partial Snyk API and Web scans
-- [Scan access and connectivity](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-access-and-connectivity.md): How to manage scan access and connectivity for Snyk API and Web
-- [Scanner IP address](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-access-and-connectivity/scanner-ip-address.md): The scanner IP addresses used by Snyk API and Web
-- [Configure IPs in WAFs](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-access-and-connectivity/configure-ips-in-wafs.md): How to allow Snyk API and Web scanner IPs in your WAF
-- [Identify scanner requests](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-access-and-connectivity/identify-scanner-requests.md): How to identify Snyk API and Web scanner requests
-- [CAPTCHAs impact](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-access-and-connectivity/captchas-impact.md): How CAPTCHAs affect Snyk API and Web scans
-- [Review and fix](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix.md): How to review and fix findings from Snyk API and Web scans
-- [Interpret target scan results](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/interpret-target-scan-results.md): How to interpret target scan results in Snyk API and Web
-- [HTTP status codes in target scans](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/http-status-codes-in-target-scans.md): How HTTP status codes appear in Snyk API and Web target scans
-- [Severity levels in findings](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/severity-levels-in-findings.md): The severity levels of Snyk API and Web findings
-- [Finding states](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/finding-states.md): The states a Snyk API and Web finding can have
-- [Manage findings](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/manage-findings.md): How to manage Snyk API and Web findings
-- [Invalid findings and false positives](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/invalid-findings-and-false-positives.md): How to handle invalid findings and false positives in Snyk API and Web
-- [Assign vulnerabilities to team member](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/assign-vulnerabilities-to-team-member.md): How to assign Snyk API and Web vulnerabilities to a team member
-- [Review scan login attempts](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/review-scan-login-attempts.md): How to review scan login attempts in Snyk API and Web
-- [Reports](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports.md): Overview of Snyk API and Web reports
-- [Report types](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports/report-types.md): The report types available in Snyk API and Web
-- [Generate a scan report](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports/generate-scan-report.md): How to generate a Snyk API and Web scan report
-- [Change report type](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports/change-report-type.md): How to change the report type in Snyk API and Web
-- [Switch report format](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports/switch-report-format.md): How to switch the report format in Snyk API and Web
-- [Coverage report](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports/coverage-report.md): The Snyk API and Web coverage report
-- [Generate CSV coverage report](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports/generate-csv-coverage-report.md): How to generate a CSV coverage report in Snyk API and Web
-- [Export table data to CSV](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports/export-table-data-to-csv.md): How to export table data to CSV in Snyk API and Web
-- [Saved reports](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports/saved-reports.md): How to use saved reports in Snyk API and Web
-- [Discover new targets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/discover-new-targets.md): How to discover new targets with Snyk API and Web
-- [Overview of asset discovery](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/discover-new-targets/overview-asset-discovery.md): Overview of asset discovery in Snyk API and Web
-- [Scan a domain for asset discovery](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/discover-new-targets/scan-domain-asset-discovery.md): How to scan a domain for asset discovery in Snyk API and Web
-- [Scan a Cloudflare connection for asset discovery](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/discover-new-targets/scan-cloudflare-connection-asset-discovery.md): How to scan a Cloudflare connection for asset discovery in Snyk API and Web
-- [Scan an AWS connection for asset discovery](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/discover-new-targets/scan-aws-connection-asset-discovery.md): How to scan an AWS connection for asset discovery in Snyk API and Web
-- [Scan an Akamai connection for asset discovery](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/discover-new-targets/scan-akamai-connection-asset-discovery.md): How to scan an Akamai connection for asset discovery in Snyk API and Web
-- [Configure automatic asset archiving](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/discover-new-targets/configure-automatic-asset-archiving.md): How to configure automatic asset archiving in Snyk API and Web
-- [Resynchronize with connected sources](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/discover-new-targets/resynchronize-connected-sources.md): How to resynchronize connected sources in Snyk API and Web
-- [Vulnerabilities detected](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/vulnerabilities-detected.md): The vulnerabilities Snyk API and Web detects
-- [Vulnerability types detected](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/vulnerabilities-detected/vulnerability-types-detected.md): The vulnerability types Snyk API and Web detects
-- [Vulnerability updates](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/vulnerabilities-detected/vulnerability-updates.md): How Snyk API and Web updates its detected vulnerabilities
-- [OWASP Top 10 scanning](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/vulnerabilities-detected/owasp-top-10-scanning.md): How Snyk API and Web scans for the OWASP Top 10
-- [Integrations](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations.md): How Snyk API and Web integrates with other tools
-- [CLI key features](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/cli-key-features.md): The key CLI features for Snyk API and Web
-- [Generate API key](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/generate-api-key.md): How to generate an API key for Snyk API and Web
-- [Snyk SAST/DAST integration](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/snyk-sast-dast-integration.md): How to integrate Snyk SAST and Snyk API and Web DAST findings
-- [Integrate with DefectDojo](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/integrate-with-defectdojo.md): How to integrate Snyk API and Web with DefectDojo
-- [CI/CD integrations](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/overview-cicd-integrations.md): Overview of Snyk API and Web CI/CD integrations
-- [Integrate with GitHub Actions](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/overview-cicd-integrations/integrate-snyk-api-web-with-github-actions.md): How to integrate Snyk API and Web with GitHub Actions
-- [Integrate with Jenkins](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/overview-cicd-integrations/integrate-snyk-api-web-with-jenkins.md): How to integrate Snyk API and Web with Jenkins
-- [Integrate with GitLab CI/CD](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/overview-cicd-integrations/integrate-snyk-api-web-with-gitlab-cicd.md): How to integrate Snyk API and Web with GitLab CI/CD
-- [Integrate with Bitbucket Pipelines](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/overview-cicd-integrations/integrate-snyk-api-web-with-bitbucket-pipelines.md): How to integrate Snyk API and Web with Bitbucket Pipelines
-- [CI/CD integrations FAQ](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/overview-cicd-integrations/cicd-integrations-faq.md): Frequently asked questions about Snyk API and Web CI/CD integrations
-- [Issue tracking](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/issue-tracking.md): How Snyk API and Web integrates with issue tracking tools
-- [Integrate with Jira Cloud](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/issue-tracking/integrate-with-jira-cloud.md): How to integrate Snyk API and Web with Jira Cloud
-- [Integrate with Jira Server](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/issue-tracking/integrate-with-jira-server.md): How to integrate Snyk API and Web with Jira Server
-- [Configure Jira synchronization settings](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/issue-tracking/configure-jira-synchronization-settings.md): How to configure Jira synchronization settings for Snyk API and Web
-- [Integrate with Azure DevOps Boards](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/issue-tracking/integrate-with-azure-devops-boards.md): How to integrate Snyk API and Web with Azure DevOps Boards
-- [Integrate with ServiceNow](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/issue-tracking/integrate-with-servicenow.md): How to integrate Snyk API and Web with ServiceNow
-- [Integrate with Shortcut](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/issue-tracking/integrate-with-shortcut.md): How to integrate Snyk API and Web with Shortcut
-- [Collaborate](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/collaborate.md): How to collaborate on findings in Snyk API and Web
-- [Integrate with Slack](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/collaborate/integrate-with-slack.md): How to integrate Snyk API and Web with Slack
-- [Troubleshooting](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting.md): How to troubleshoot Snyk API and Web
-- [Network timeout errors](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/network-timeout-errors.md): How to resolve network timeout errors in Snyk API and Web
-- [Domain verification](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/domain-verification.md): How to troubleshoot domain verification in Snyk API and Web
-- [Troubleshoot domain verification with TXT file](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/domain-verification/troubleshooting-verify-domain-txt-file.md): How to troubleshoot domain verification with a TXT file in Snyk API and Web
-- [Troubleshoot domain verification with meta tag](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/domain-verification/troubleshooting-verify-domain-meta-tag.md): How to troubleshoot domain verification with a meta tag in Snyk API and Web
-- [Troubleshoot domain verification with DNS](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/domain-verification/troubleshooting-verify-domain-dns.md): How to troubleshoot domain verification with DNS in Snyk API and Web
-- [Scan results](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/scan-results.md): How to troubleshoot Snyk API and Web scan results
-- [Troubleshoot low coverage in a scan](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/scan-results/troubleshooting-low-coverage-in-a-scan.md): How to troubleshoot low coverage in a Snyk API and Web scan
-- [Authentication](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/authentication.md): How to troubleshoot authentication in Snyk API and Web
-- [Troubleshoot login failed with login form](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/authentication/troubleshooting-login-failed-with-login-form.md): How to troubleshoot a failed login with a login form in Snyk API and Web
-- [Troubleshoot login failed with login sequence](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/authentication/troubleshooting-login-failed-with-login-sequence.md): How to troubleshoot a failed login with a login sequence in Snyk API and Web
-- [Managing account](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account.md): How to manage your Snyk API and Web account
-- [Log in to Snyk API & Web](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/log-in-to-snyk-api-web.md): How to log in to Snyk API and Web
-- [Add users](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/add-users.md): How to add users to Snyk API and Web
-- [Get started with teams](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/get-started-with-teams.md): How to get started with teams in Snyk API and Web
-- [Roles and permissions](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/roles-and-permissions.md): The roles and permissions in Snyk API and Web
-- [Understanding permissions](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/understanding-permissions.md): How permissions work in Snyk API and Web
-- [Roles and scopes by plan](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/roles-and-scopes-by-plan.md): The Snyk API and Web roles and scopes by plan
-- [Set up two-factor authentication](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/set-up-2fa.md): How to set up two-factor authentication in Snyk API and Web
-- [Enforce 2FA for all users](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/enforce-2fa-for-all-users.md): How to enforce two-factor authentication for all Snyk API and Web users
-- [Set up single sign-on (SSO)](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/set-up-single-sign-on-sso-in-snyk-api-web.md): How to set up single sign-on (SSO) in Snyk API and Web
-- [Generate and use audit log reports](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/generate-and-use-audit-log-reports.md): How to generate and use audit log reports in Snyk API and Web
-- [Enhancing your security with AI](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/enhancing-your-security-with-ai.md): How Snyk API and Web uses AI and machine learning to enhance security scanning
-- [Snyk Secrets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-secrets.md)
-- [Custom RegEx for Secrets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-secrets/custom-regex-for-secrets.md)
+- [Browser login for APIs](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/configure-authentication/browser-login-for-apis.md): Record a login sequence once and map the session credential so Snyk API & Web can authenticate API targets at scan time without manual token refresh.
+- [Verify domain ownership](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/verify-domain-ownership.md): How to verify domain ownership for Snyk API & Web targets
+- [Verify with TXT file](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/verify-domain-ownership/verify-with-txt-file.md): How to verify domain ownership with a TXT file for Snyk API & Web
+- [Verify with DNS TXT record](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/verify-domain-ownership/verify-with-dns-txt.md): How to verify domain ownership for a Snyk API & Web target with a DNS TXT record
+- [Verify with DNS CNAME record](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/verify-domain-ownership/verify-with-dns-cname.md): How to verify domain ownership with a DNS CNAME record for Snyk API & Web
+- [Verify with meta tag](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/configure-targets/verify-domain-ownership/verify-with-meta-tag.md): How to verify domain ownership with a meta tag for Snyk API & Web
+- [Start scanning](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning.md): How to start scanning targets with Snyk API & Web
+- [What happens during a scan](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/what-happens-during-a-scan.md): What happens during a Snyk API & Web scan
+- [Scan settings](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-settings.md): How to configure scan settings for Snyk API & Web
+- [Built-in scan profiles](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-settings/built-in-scan-profiles.md): The built-in Snyk API & Web scan profiles and their differences
+- [Customize a scan profile](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-settings/customize-scan-profile.md): How to customize a Snyk API & Web scan profile
+- [Switch the scan profile](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-settings/switch-scan-profile.md): How to switch the Snyk API & Web scan profile
+- [Custom headers](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-settings/custom-headers.md): How to configure custom headers for Snyk API & Web scans
+- [Configure risk acceptance workflow](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-settings/configure-risk-acceptance-workflow.md): How to configure the risk acceptance workflow for Snyk API & Web
+- [Test BOLA vulnerabilities](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-settings/test-bola-vulnerabilities.md): How to test for BOLA vulnerabilities with Snyk API & Web
+- [Scanning agent](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scanning-agent.md): How the Snyk API & Web scanning agent works
+- [Install a scanning agent](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scanning-agent/install-scanning-agent.md): How to install a Snyk API & Web scanning agent
+- [Scan internal applications](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scanning-agent/scan-internal-applications.md): How to scan internal applications with a Snyk API & Web Scanning Agent
+- [Scan management](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-management.md): How to manage Snyk API & Web scans
+- [Actions on scans](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-management/actions-on-scans.md): The actions you can take on Snyk API & Web scans
+- [Scan targets in bulk](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-management/scan-targets-in-bulk.md): How to scan Snyk API & Web targets in bulk
+- [Schedule a scan](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-management/schedule-scan.md): How to schedule a Snyk API & Web scan
+- [Scan duration](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-management/scan-duration.md): How scan duration works for Snyk API & Web scans
+- [Pause scans](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-management/pause-scans.md): How to pause Snyk API & Web scans
+- [Fail on authentication failure](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-management/fail-on-auth-failure.md): How to fail a Snyk API & Web scan on authentication failure
+- [Run partial scans](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-management/partial-scans-overview.md): How to run partial Snyk API & Web scans
+- [Scan access and connectivity](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-access-and-connectivity.md): How to manage scan access and connectivity for Snyk API & Web
+- [Scanner IP address](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-access-and-connectivity/scanner-ip-address.md): The scanner IP addresses used by Snyk API & Web
+- [Configure IPs in WAFs](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-access-and-connectivity/configure-ips-in-wafs.md): How to allow Snyk API & Web scanner IPs in your WAF
+- [Identify scanner requests](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-access-and-connectivity/identify-scanner-requests.md): How to identify Snyk API & Web scanner requests
+- [CAPTCHAs impact](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/start-scanning/overview-scan-access-and-connectivity/captchas-impact.md): How CAPTCHAs affect Snyk API & Web scans
+- [Review and fix](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix.md): How to review and fix findings from Snyk API & Web scans
+- [Interpret target scan results](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/interpret-target-scan-results.md): How to interpret target scan results in Snyk API & Web
+- [Interpret coverage results](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/interpret-coverage-results.md): How to interpret coverage results in Snyk API & Web
+- [HTTP status codes in target scans](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/http-status-codes-in-target-scans.md): How HTTP status codes appear in Snyk API & Web target scans
+- [Severity levels in findings](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/severity-levels-in-findings.md): The severity levels of Snyk API & Web findings
+- [Finding states](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/finding-states.md): The states a Snyk API & Web finding can have
+- [Manage findings](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/manage-findings.md): How to manage Snyk API & Web findings
+- [Invalid findings and false positives](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/invalid-findings-and-false-positives.md): How to handle invalid findings and false positives in Snyk API & Web
+- [Assign vulnerabilities to team member](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/assign-vulnerabilities-to-team-member.md): How to assign Snyk API & Web vulnerabilities to a team member
+- [Review scan login attempts](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/review-scan-login-attempts.md): How to review scan login attempts in Snyk API & Web
+- [Reports](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports.md): Overview of Snyk API & Web reports
+- [Report types](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports/report-types.md): The report types available in Snyk API & Web
+- [Generate a scan report](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports/generate-scan-report.md): How to generate a Snyk API & Web scan report
+- [Change report type](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports/change-report-type.md): How to change the report type in Snyk API & Web
+- [Switch report format](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports/switch-report-format.md): How to switch the report format in Snyk API & Web
+- [Coverage report](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports/coverage-report.md): The Snyk API & Web coverage report
+- [Generate CSV coverage report](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports/generate-csv-coverage-report.md): How to generate a CSV coverage report in Snyk API & Web
+- [Export table data to CSV](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports/export-table-data-to-csv.md): How to export table data to CSV in Snyk API & Web
+- [Saved reports](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/review-and-fix/overview-reports/saved-reports.md): How to use saved reports in Snyk API & Web
+- [Discover new targets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/discover-new-targets.md): How to discover new targets with Snyk API & Web
+- [Overview of asset discovery](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/discover-new-targets/overview-asset-discovery.md): Overview of asset discovery in Snyk API & Web
+- [Scan a domain for asset discovery](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/discover-new-targets/scan-domain-asset-discovery.md): How to scan a domain for asset discovery in Snyk API & Web
+- [Scan a Cloudflare connection for asset discovery](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/discover-new-targets/scan-cloudflare-connection-asset-discovery.md): How to scan a Cloudflare connection for asset discovery in Snyk API & Web
+- [Scan an AWS connection for asset discovery](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/discover-new-targets/scan-aws-connection-asset-discovery.md): How to scan an AWS connection for asset discovery in Snyk API & Web
+- [Scan an Akamai connection for asset discovery](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/discover-new-targets/scan-akamai-connection-asset-discovery.md): How to scan an Akamai connection for asset discovery in Snyk API & Web
+- [Configure automatic asset archiving](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/discover-new-targets/configure-automatic-asset-archiving.md): How to configure automatic asset archiving in Snyk API & Web
+- [Resynchronize with connected sources](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/discover-new-targets/resynchronize-connected-sources.md): How to resynchronize connected sources in Snyk API & Web
+- [Vulnerabilities detected](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/vulnerabilities-detected.md): The vulnerabilities Snyk API & Web detects
+- [Vulnerability types detected](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/vulnerabilities-detected/vulnerability-types-detected.md): The vulnerability types Snyk API & Web detects
+- [Vulnerability updates](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/vulnerabilities-detected/vulnerability-updates.md): How Snyk API & Web updates its detected vulnerabilities
+- [OWASP Top 10 scanning](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/vulnerabilities-detected/owasp-top-10-scanning.md): How Snyk API & Web scans for the OWASP Top 10
+- [Integrations](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations.md): How Snyk API & Web integrates with other tools
+- [CLI key features](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/cli-key-features.md): The key CLI features for Snyk API & Web
+- [Generate API key](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/generate-api-key.md): How to generate an API key for Snyk API & Web
+- [Snyk SAST/DAST integration](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/snyk-sast-dast-integration.md): How to integrate Snyk SAST and Snyk API & Web DAST findings
+- [Integrate with DefectDojo](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/integrate-with-defectdojo.md): How to integrate Snyk API & Web with DefectDojo
+- [CI/CD integrations](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/overview-cicd-integrations.md): Overview of Snyk API & Web CI/CD integrations
+- [Integrate with GitHub Actions](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/overview-cicd-integrations/integrate-snyk-api-web-with-github-actions.md): How to integrate Snyk API & Web with GitHub Actions
+- [Integrate with Jenkins](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/overview-cicd-integrations/integrate-snyk-api-web-with-jenkins.md): How to integrate Snyk API & Web with Jenkins
+- [Integrate with GitLab CI/CD](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/overview-cicd-integrations/integrate-snyk-api-web-with-gitlab-cicd.md): How to integrate Snyk API & Web with GitLab CI/CD
+- [Integrate with Bitbucket Pipelines](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/overview-cicd-integrations/integrate-snyk-api-web-with-bitbucket-pipelines.md): How to integrate Snyk API & Web with Bitbucket Pipelines
+- [CI/CD integrations FAQ](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/overview-cicd-integrations/cicd-integrations-faq.md): Frequently asked questions about Snyk API & Web CI/CD integrations
+- [Issue tracking](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/issue-tracking.md): How Snyk API & Web integrates with issue tracking tools
+- [Integrate with Jira Cloud](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/issue-tracking/integrate-with-jira-cloud.md): How to integrate Snyk API & Web with Jira Cloud
+- [Integrate with Jira Server](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/issue-tracking/integrate-with-jira-server.md): How to integrate Snyk API & Web with Jira Server
+- [Configure Jira synchronization settings](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/issue-tracking/configure-jira-synchronization-settings.md): How to configure Jira synchronization settings for Snyk API & Web
+- [Integrate with Azure DevOps Boards](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/issue-tracking/integrate-with-azure-devops-boards.md): How to integrate Snyk API & Web with Azure DevOps Boards
+- [Integrate with ServiceNow](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/issue-tracking/integrate-with-servicenow.md): How to integrate Snyk API & Web with ServiceNow
+- [Integrate with Shortcut](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/issue-tracking/integrate-with-shortcut.md): How to integrate Snyk API & Web with Shortcut
+- [Collaborate](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/collaborate.md): How to collaborate on findings in Snyk API & Web
+- [Integrate with Slack](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/integrations/collaborate/integrate-with-slack.md): How to integrate Snyk API & Web with Slack
+- [Troubleshooting](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting.md): How to troubleshoot Snyk API & Web
+- [Network timeout errors](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/network-timeout-errors.md): How to resolve network timeout errors in Snyk API & Web
+- [Domain verification](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/domain-verification.md): How to troubleshoot domain verification in Snyk API & Web
+- [Troubleshoot domain verification with TXT file](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/domain-verification/troubleshooting-verify-domain-txt-file.md): How to troubleshoot domain verification with a TXT file in Snyk API & Web
+- [Troubleshoot domain verification with meta tag](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/domain-verification/troubleshooting-verify-domain-meta-tag.md): How to troubleshoot domain verification with a meta tag in Snyk API & Web
+- [Troubleshoot domain verification with DNS](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/domain-verification/troubleshooting-verify-domain-dns.md): How to troubleshoot domain verification with DNS in Snyk API & Web
+- [Scan results](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/scan-results.md): How to troubleshoot Snyk API & Web scan results
+- [Troubleshoot low coverage in a scan](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/scan-results/troubleshooting-low-coverage-in-a-scan.md): How to troubleshoot low coverage in a Snyk API & Web scan
+- [Authentication](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/authentication.md): How to troubleshoot authentication in Snyk API & Web
+- [Troubleshoot login failed with login form](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/authentication/troubleshooting-login-failed-with-login-form.md): How to troubleshoot a failed login with a login form in Snyk API & Web
+- [Troubleshoot login failed with login sequence](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/authentication/troubleshooting-login-failed-with-login-sequence.md): How to troubleshoot a failed login with a login sequence in Snyk API & Web
+- [Troubleshoot API schema retrieval and generation](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/troubleshooting/troubleshoot-api-schema-retrieval-and-generation.md): Resolve common issues when retrieving or generating API schemas from repositories using Snyk API & Web.
+- [Managing account](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account.md): How to manage your Snyk API & Web account
+- [Log in to Snyk API & Web](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/log-in-to-snyk-api-web.md): How to log in to Snyk API & Web
+- [Add users](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/add-users.md): How to add users to Snyk API & Web
+- [Get started with teams](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/get-started-with-teams.md): How to get started with teams in Snyk API & Web
+- [Roles and permissions](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/roles-and-permissions.md): The roles and permissions in Snyk API & Web
+- [Understanding permissions](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/understanding-permissions.md): How permissions work in Snyk API & Web
+- [Roles and scopes by plan](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/roles-and-scopes-by-plan.md): The Snyk API & Web roles and scopes by plan
+- [Set up two-factor authentication](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/set-up-2fa.md): How to set up two-factor authentication in Snyk API & Web
+- [Enforce 2FA for all users](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/enforce-2fa-for-all-users.md): How to enforce two-factor authentication for all Snyk API & Web users
+- [Set up single sign-on (SSO)](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/set-up-single-sign-on-sso-in-snyk-api-web.md): How to set up single sign-on (SSO) in Snyk API & Web
+- [Generate and use audit log reports](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/generate-and-use-audit-log-reports.md): How to generate and use audit log reports in Snyk API & Web
+- [Enhancing your security with AI](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/enhancing-your-security-with-ai.md): How Snyk API & Web uses AI and machine learning to enhance security scanning
+- [Add a custom CA certificate](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-api-web/managing-account/add-a-custom-ca-certificate.md): How to configure a custom CA certificate
+- [Snyk Secrets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-secrets.md): How Snyk Secrets scans repositories for hard-coded secrets and helps prevent leaks
+- [Custom RegEx for Secrets](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-secrets/custom-regex-for-secrets.md): How to create custom regex rules that detect secrets specific to your Organization
 - [Secrets scanning in the IDE](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-secrets/secrets-scanning-in-the-ide.md): Scan for exposed secrets in Visual Studio Code and JetBrains IDEs.
 - [Secrets scanning in the Snyk CLI](https://docs.snyk.io/scan-fix-and-prevent/scan-with-snyk/snyk-secrets/secrets-scanning-in-the-snyk-cli.md): Scan codebases for exposed secrets with the Snyk CLI.
-- [AppRisk asset inventory](https://docs.snyk.io/scan-fix-and-prevent/fix/manage-assets.md): How Snyk manages application assets and their security risk
-- [Assets inventory tabs](https://docs.snyk.io/scan-fix-and-prevent/fix/manage-assets/assets-inventory-layouts.md): The tabs in the Snyk assets inventory
-- [Assets inventory components](https://docs.snyk.io/scan-fix-and-prevent/fix/manage-assets/assets-inventory-components.md): The components of each Snyk assets inventory layout
-- [Assets inventory filters](https://docs.snyk.io/scan-fix-and-prevent/fix/manage-assets/assets-inventory-filters.md): How to filter the Snyk assets inventory
-- [Container image inventory](https://docs.snyk.io/scan-fix-and-prevent/fix/container-image-inventory.md)
+- [Manage asset inventory](https://docs.snyk.io/scan-fix-and-prevent/fix/manage-asset-inventory.md): How Snyk manages application assets and their security risk
+- [Assets inventory tabs](https://docs.snyk.io/scan-fix-and-prevent/fix/manage-asset-inventory/assets-inventory-layouts.md): The tabs in the Snyk assets inventory
+- [Assets inventory components](https://docs.snyk.io/scan-fix-and-prevent/fix/manage-asset-inventory/assets-inventory-components.md): The components of each Snyk assets inventory layout
+- [Assets inventory filters](https://docs.snyk.io/scan-fix-and-prevent/fix/manage-asset-inventory/assets-inventory-filters.md): How to filter the Snyk assets inventory
+- [Container image inventory](https://docs.snyk.io/scan-fix-and-prevent/fix/container-image-inventory.md): How the Container image inventory consolidates your container images into one list
 - [Configure repository monitoring](https://docs.snyk.io/scan-fix-and-prevent/fix/configure-repository-monitoring.md): How to configure repository monitoring in Snyk
 - [Prioritize issues for fixing](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing.md): How to prioritize issues for fixing in Snyk
 - [Priority Score vs Risk Score](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/priority-score-vs-risk-score.md): How the Snyk Priority Score and Risk Score differ
@@ -654,7 +660,7 @@
 - [Ignore issues](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/ignore-issues.md): How to ignore vulnerabilities and license issues in Snyk
 - [How ignores work for Projects imported using an SCM and the CLI](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/ignore-issues/how-ignores-work-for-projects-imported-using-an-scm-and-the-cli.md): How ignores work for Projects imported through an SCM and the CLI
 - [Exclude files and ignore issues FAQs](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/ignore-issues/exclude-files-and-ignore-issues-faqs.md): Frequently asked questions about excluding files and ignoring issues in Snyk
-- [Ignore Approval Workflow](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/ignore-issues/ignore-approval-workflow.md)
+- [Ignore Approval Workflow](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/ignore-issues/ignore-approval-workflow.md): How the Ignore Approval Workflow adds governance around risk acceptance in Snyk Code
 - [Consistent Ignores for Snyk Code](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/ignore-issues/consistent-ignores-for-snyk-code.md): How Consistent Ignores work for Snyk Code
 - [Convert Project-scoped ignores to asset-scoped ignores](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/ignore-issues/consistent-ignores-for-snyk-code/convert-project-scoped-ignores-to-asset-scoped-ignores.md): How to convert Project-scoped ignores to asset-scoped ignores for Snyk Code
 - [Consistent Ignores for Snyk Code API](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/ignore-issues/consistent-ignores-for-snyk-code/api.md): How to manage Consistent Ignores for Snyk Code with the API
@@ -666,7 +672,7 @@
 - [Risk factor: deployed](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/assets-and-risk-factors/risk-factor-deployed.md): How the deployed risk factor affects Snyk issue prioritization
 - [Risk factor: OS condition](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/assets-and-risk-factors/risk-factor-os-condition.md): How the OS condition risk factor affects Snyk issue prioritization
 - [Risk factor: public facing](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/assets-and-risk-factors/risk-factor-public-facing.md): How the public-facing risk factor affects Snyk issue prioritization
-- [Using the Issues UI](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/using-the-issues-ui.md): How to use the Issues UI with Snyk AppRisk
+- [Using the Issues UI](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/using-the-issues-ui.md): How to use the Issues UI with Snyk Essentials
 - [Filter your issues](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/using-the-issues-ui/filter-your-issues.md): How to filter your issues in the Snyk Issues UI
 - [Understand your issues](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/using-the-issues-ui/understand-your-issues.md): How to understand your issues in the Snyk Issues UI
 - [Evidence graph](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/using-the-issues-ui/evidence-graph.md): How the evidence graph visualizes the context of a Snyk issue
@@ -682,7 +688,7 @@
 - [Reachability analysis](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/reachability-analysis.md): How Snyk reachability analysis prioritizes vulnerabilities in called code, in Early Access
 - [Vulnerabilities with Social Trends](https://docs.snyk.io/scan-fix-and-prevent/fix/prioritize-issues-for-fixing/vulnerabilities-with-social-trends.md): How Snyk Social Trends surface vulnerabilities gaining attention
 - [Pull Requests](https://docs.snyk.io/scan-fix-and-prevent/fix/pull-requests.md): How Snyk uses pull requests to fix and prevent vulnerabilities
-- [Remediation Agent](https://docs.snyk.io/scan-fix-and-prevent/fix/remediation-agent.md)
+- [Remediation Agent](https://docs.snyk.io/scan-fix-and-prevent/fix/remediation-agent.md): How the Remediation Agent generates, applies, and verifies vulnerability fixes in your Projects
 - [Snyk Pull or Merge Requests](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests.md): How Snyk pull and merge requests fix and upgrade dependencies
 - [Enable automatic Fix PRs](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/enable-automatic-fix-prs.md): How to enable automatic Snyk Fix PRs
 - [Enable automatic backlog PRs for previously known vulnerabilities](https://docs.snyk.io/scan-fix-and-prevent/fix/snyk-pull-or-merge-requests/enable-automatic-backlog-prs-for-previously-known-vulnerabilities.md): How to enable automatic backlog PRs for previously known vulnerabilities
@@ -746,7 +752,7 @@
 
 - [Overview](https://docs.snyk.io/developer-tools/overview.md): Run Snyk locally, in repositories, and in pipelines, and choose the developer tool integration that matches your workflow
 - [Authentication for third-party tools](https://docs.snyk.io/developer-tools/authentication-for-third-party-tools.md): How to authenticate to Snyk from third-party developer tools using an API token from a personal or service account
-- [Overview](https://docs.snyk.io/developer-tools/integrations/integrate-with-snyk.md): Overview of Snyk integrations across agentic workflows, SCMs, IDEs, CI/CD pipelines, and more
+- [AI and agent access](https://docs.snyk.io/developer-tools/ai-and-agent-access.md): How AI assistants and agents read Snyk documentation, including the MCP server, llms.txt, Markdown page URLs, and content negotiation
 - [SCMs](https://docs.snyk.io/developer-tools/integrations/scm-integrations.md): How Snyk SCM integrations add security at each stage: importing a Project, writing code, and building
 - [Deployment recommendations](https://docs.snyk.io/developer-tools/integrations/scm-integrations/deployment-recommendations.md): Recommendations for rolling out Snyk SCM integration features gradually to avoid developer friction
 - [Workspaces](https://docs.snyk.io/developer-tools/integrations/scm-integrations/workspaces.md): How Snyk Workspaces improve the accuracy and reliability of SCM integration results in large enterprises
@@ -770,7 +776,7 @@
 - [Application context for SCM integrations](https://docs.snyk.io/developer-tools/integrations/scm-integrations/application-context-for-scm-integrations.md): How application context enriches Snyk SCM integrations with interconnected asset information
 - [Backstage file in Asset Inventory - use case](https://docs.snyk.io/developer-tools/integrations/scm-integrations/application-context-for-scm-integrations/backstage-file-in-asset-inventory-use-case.md): How a Backstage catalog file enriches repository assets in Snyk Essentials Asset Inventory
 - [SCM integrations and Snyk Broker](https://docs.snyk.io/developer-tools/integrations/scm-integrations/scm-integrations-and-snyk-broker.md): How to use Snyk Broker with SCM integrations when your SCM instance is not publicly accessible
-- [Secrets scanning in the SCM](https://docs.snyk.io/developer-tools/integrations/scm-integrations/secrets-scanning-in-the-scm.md)
+- [Secrets scanning in the SCM](https://docs.snyk.io/developer-tools/integrations/scm-integrations/secrets-scanning-in-the-scm.md): How Snyk Secrets detects hard-coded secrets in your SCM repositories and pull requests
 - [Snyk IDE plugins and extensions](https://docs.snyk.io/developer-tools/integrations/snyk-ide-plugins-and-extensions.md): Snyk IDE plugins and extensions for scanning as you develop, including custom endpoint configuration
 - [Eclipse plugin](https://docs.snyk.io/developer-tools/integrations/snyk-ide-plugins-and-extensions/eclipse-plugin.md): The Snyk Eclipse plugin for scanning and fixing vulnerabilities as you develop
 - [Download the CLI with the Eclipse plugin](https://docs.snyk.io/developer-tools/integrations/snyk-ide-plugins-and-extensions/eclipse-plugin/download-the-cli-with-the-eclipse-plugin.md): How the Eclipse plugin automatically downloads the Snyk CLI it uses to scan
@@ -825,7 +831,7 @@
 - [Net new issues (delta) scan troubleshooting](https://docs.snyk.io/developer-tools/integrations/snyk-ide-plugins-and-extensions/troubleshooting-ides/net-new-issues-delta-scan-troubleshooting.md): How to troubleshoot Snyk net new issues delta scans that fail on npm reference scans
 - [IDE plugin scan fails on Windows systems with .exe download blocking](https://docs.snyk.io/developer-tools/integrations/snyk-ide-plugins-and-extensions/troubleshooting-ides/ide-plugin-fails-with-scan-failed-on-windows-systems-with-.exe-download-blocking.md): How to resolve Snyk IDE plugin scan failures from .exe download blocking on Windows
 - [IDE Plugin Compatibility Matrix](https://docs.snyk.io/developer-tools/integrations/snyk-ide-plugins-and-extensions/compatibility-matrix.md)
-- [Unified IDE Configuration Dialog](https://docs.snyk.io/developer-tools/integrations/snyk-ide-plugins-and-extensions/unified-ide-configuration-dialog.md)
+- [Unified IDE Configuration Dialog](https://docs.snyk.io/developer-tools/integrations/snyk-ide-plugins-and-extensions/unified-ide-configuration-dialog.md): How to configure all your Snyk IDE plugins from a single configuration dialog
 - [Snyk CI/CDs](https://docs.snyk.io/developer-tools/integrations/snyk-ci-cd-integrations.md): How to integrate Snyk into CI/CD pipelines, with the Snyk CLI recommended for flexibility
 - [Snyk Code in the CI/CD pipeline](https://docs.snyk.io/developer-tools/integrations/snyk-ci-cd-integrations/use-snyk-code-in-the-ci-cd-pipeline.md): How to run Snyk Code in a CI/CD pipeline to catch vulnerabilities in code changes
 - [Snyk CI/CD Integration deployment and strategies](https://docs.snyk.io/developer-tools/integrations/snyk-ci-cd-integrations/snyk-ci-cd-integration-deployment-and-strategies.md): Deployment approaches and strategies for adopting Snyk CI/CD integrations
@@ -889,6 +895,7 @@
 - [Snyk Docker action](https://docs.snyk.io/developer-tools/integrations/snyk-ci-cd-integrations/github-actions-for-snyk-setup-and-checking-for-vulnerabilities/snyk-docker-action.md): Examples of using the Snyk GitHub Action for Docker container images
 - [Snyk Infrastructure as Code action](https://docs.snyk.io/developer-tools/integrations/snyk-ci-cd-integrations/github-actions-for-snyk-setup-and-checking-for-vulnerabilities/snyk-infrastructure-as-code-action.md): Examples of using the Snyk GitHub Action for infrastructure as code (IaC)
 - [Snyk Setup action](https://docs.snyk.io/developer-tools/integrations/snyk-ci-cd-integrations/github-actions-for-snyk-setup-and-checking-for-vulnerabilities/snyk-setup-action.md): The Snyk Setup GitHub Action for installing the Snyk CLI to check for vulnerabilities
+- [Regional API endpoints](https://docs.snyk.io/developer-tools/integrations/snyk-ci-cd-integrations/github-actions-for-snyk-setup-and-checking-for-vulnerabilities/regional-api-endpoints.md): How to configure Snyk GitHub Actions to use a regional Snyk API endpoint, and troubleshoot related authentication errors
 - [Jenkins plugin integration with Snyk](https://docs.snyk.io/developer-tools/integrations/snyk-ci-cd-integrations/jenkins-plugin-integration-with-snyk.md): How to use the native Snyk Jenkins plugin, based on the Snyk CLI, to test and monitor Projects
 - [Maven plugin integration with Snyk](https://docs.snyk.io/developer-tools/integrations/snyk-ci-cd-integrations/maven-plugin-integration-with-snyk.md): How to use the Snyk Maven plugin, based on the Snyk CLI, to scan and monitor your Projects
 - [TeamCity (JetBrains) integration using the Snyk security plugin](https://docs.snyk.io/developer-tools/integrations/snyk-ci-cd-integrations/teamcity-jetbrains-integration-using-the-snyk-security-plugin.md): How to integrate Snyk with TeamCity using the Snyk Security plugin
@@ -901,6 +908,7 @@
 - [Set up the Terraform Cloud integration for IaC](https://docs.snyk.io/developer-tools/integrations/snyk-ci-cd-integrations/terraform-cloud-integration-for-snyk-iac-using-run-tasks/set-up-the-terraform-cloud-integration-for-iac.md): How to set up the Terraform Cloud run task integration for Snyk IaC
 - [How to use the Terraform Cloud integration for IaC](https://docs.snyk.io/developer-tools/integrations/snyk-ci-cd-integrations/terraform-cloud-integration-for-snyk-iac-using-run-tasks/how-to-use-the-terraform-cloud-integration-for-iac.md): How Snyk scans Terraform plans on each run through the Terraform Cloud integration
 - [Terraform Enterprise integration for Snyk IaC](https://docs.snyk.io/developer-tools/integrations/snyk-ci-cd-integrations/terraform-enterprise-integration-for-snyk-iac.md): How to integrate Snyk IaC with HashiCorp Terraform Enterprise
+- [Snyk Essentials integrations reference](https://docs.snyk.io/developer-tools/integrations/snyk-essentials-integrations-reference.md): Reference for Snyk Essentials integration availability, sync times, connection statuses, and Snyk Broker setup
 - [Partner integrations](https://docs.snyk.io/developer-tools/integrations/partner-integrations.md): Explore Snyk Partner integration solutions across 17 categories
 - [Jira and Slack integrations](https://docs.snyk.io/developer-tools/integrations/jira-and-slack-integrations.md): Snyk integrations for Jira and Slack
 - [Snyk Security in Jira Cloud integration](https://docs.snyk.io/developer-tools/integrations/jira-and-slack-integrations/snyk-security-in-jira-cloud-integration.md): How the Snyk Security app for Jira Cloud surfaces vulnerabilities in your Jira projects
@@ -924,61 +932,66 @@
 - [Changelog](https://docs.snyk.io/developer-tools/snyk-api/changelog.md)
 - [OAuth2 API](https://docs.snyk.io/developer-tools/snyk-api/oauth2-api.md): The Snyk OAuth2 API for Snyk Apps, compliant with RFC 6749
 - [Reference](https://docs.snyk.io/developer-tools/snyk-api/reference.md): Snyk API reference, including the V1 and REST OpenAPI specifications
-- [AccessRequests](https://docs.snyk.io/developer-tools/snyk-api/reference/accessrequests.md)
-- [AIBOM](https://docs.snyk.io/developer-tools/snyk-api/reference/aibom.md)
-- [Apps](https://docs.snyk.io/developer-tools/snyk-api/reference/apps.md)
-- [Asset](https://docs.snyk.io/developer-tools/snyk-api/reference/asset.md)
-- [Audit Logs](https://docs.snyk.io/developer-tools/snyk-api/reference/audit-logs.md)
-- [Cloud](https://docs.snyk.io/developer-tools/snyk-api/reference/cloud.md)
-- [Collection](https://docs.snyk.io/developer-tools/snyk-api/reference/collection.md)
-- [ContainerImage](https://docs.snyk.io/developer-tools/snyk-api/reference/containerimage.md)
-- [ContainerRegistryImportPolicy](https://docs.snyk.io/developer-tools/snyk-api/reference/containerregistryimportpolicy.md)
-- [Custom Base Images](https://docs.snyk.io/developer-tools/snyk-api/reference/custom-base-images.md)
-- [Dependencies (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/dependencies-v1.md)
-- [Entitlements (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/entitlements-v1.md)
-- [Export](https://docs.snyk.io/developer-tools/snyk-api/reference/export.md)
-- [Findings](https://docs.snyk.io/developer-tools/snyk-api/reference/findings.md)
-- [Group](https://docs.snyk.io/developer-tools/snyk-api/reference/group.md)
-- [Groups (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/groups-v1.md)
-- [Groups](https://docs.snyk.io/developer-tools/snyk-api/reference/groups.md)
-- [IacSettings](https://docs.snyk.io/developer-tools/snyk-api/reference/iacsettings.md)
-- [Ignores (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/ignores-v1.md)
-- [Import Projects (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/import-projects-v1.md)
-- [Integrations (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/integrations-v1.md)
-- [Inventory Assets](https://docs.snyk.io/developer-tools/snyk-api/reference/inventory-assets.md)
-- [Invites](https://docs.snyk.io/developer-tools/snyk-api/reference/invites.md)
-- [Issues](https://docs.snyk.io/developer-tools/snyk-api/reference/issues.md)
-- [Jira (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/jira-v1.md)
-- [LanguagesSettings](https://docs.snyk.io/developer-tools/snyk-api/reference/languagessettings.md)
-- [Learn](https://docs.snyk.io/developer-tools/snyk-api/reference/learn.md)
-- [Licenses (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/licenses-v1.md)
-- [Monitor (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/monitor-v1.md)
-- [OpenSourceSettings](https://docs.snyk.io/developer-tools/snyk-api/reference/opensourcesettings.md)
-- [Organizations (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/organizations-v1.md)
-- [Orgs](https://docs.snyk.io/developer-tools/snyk-api/reference/orgs.md)
-- [Package Version](https://docs.snyk.io/developer-tools/snyk-api/reference/package-version.md)
-- [Package](https://docs.snyk.io/developer-tools/snyk-api/reference/package.md)
-- [PersonalAccessToken](https://docs.snyk.io/developer-tools/snyk-api/reference/personalaccesstoken.md)
-- [Policies](https://docs.snyk.io/developer-tools/snyk-api/reference/policies.md)
-- [Projects (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/projects-v1.md)
-- [Projects](https://docs.snyk.io/developer-tools/snyk-api/reference/projects.md)
-- [Pull Request Templates](https://docs.snyk.io/developer-tools/snyk-api/reference/pull-request-templates.md)
-- [Reporting API (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/reporting-api-v1.md)
-- [SBOM](https://docs.snyk.io/developer-tools/snyk-api/reference/sbom.md)
-- [SastSettings](https://docs.snyk.io/developer-tools/snyk-api/reference/sastsettings.md)
-- [ServiceAccounts](https://docs.snyk.io/developer-tools/snyk-api/reference/serviceaccounts.md)
-- [SlackSettings](https://docs.snyk.io/developer-tools/snyk-api/reference/slacksettings.md)
-- [Slack](https://docs.snyk.io/developer-tools/snyk-api/reference/slack.md)
-- [Snapshots (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/snapshots-v1.md)
-- [Targets](https://docs.snyk.io/developer-tools/snyk-api/reference/targets.md)
-- [TenantRole](https://docs.snyk.io/developer-tools/snyk-api/reference/tenantrole.md)
-- [Tenants](https://docs.snyk.io/developer-tools/snyk-api/reference/tenants.md)
-- [Test (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/test-v1.md)
-- [Tests](https://docs.snyk.io/developer-tools/snyk-api/reference/tests.md)
-- [Universal Broker](https://docs.snyk.io/developer-tools/snyk-api/reference/universal-broker.md)
-- [Users (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/users-v1.md)
-- [Users](https://docs.snyk.io/developer-tools/snyk-api/reference/users.md)
-- [Webhooks (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/webhooks-v1.md)
+- [AccessRequests](https://docs.snyk.io/developer-tools/snyk-api/reference/accessrequests.md): Snyk API reference for the AccessRequests endpoints, including request parameters and response schemas
+- [AIBOM](https://docs.snyk.io/developer-tools/snyk-api/reference/aibom.md): Snyk API reference for the AiBom endpoints, including request parameters and response schemas
+- [Apps](https://docs.snyk.io/developer-tools/snyk-api/reference/apps.md): Snyk API reference for the Apps endpoints, including request parameters and response schemas
+- [Asset](https://docs.snyk.io/developer-tools/snyk-api/reference/asset.md): Snyk API reference for the Asset endpoints, including request parameters and response schemas
+- [Assignments](https://docs.snyk.io/developer-tools/snyk-api/reference/assignments.md): Snyk API reference for the Assignments endpoints, including request parameters and response schemas
+- [Audit Logs](https://docs.snyk.io/developer-tools/snyk-api/reference/audit-logs.md): Snyk API reference for the Audit Logs endpoints, including request parameters and response schemas
+- [Cloud](https://docs.snyk.io/developer-tools/snyk-api/reference/cloud.md): Snyk API reference for the Cloud endpoints, including request parameters and response schemas
+- [Collection](https://docs.snyk.io/developer-tools/snyk-api/reference/collection.md): Snyk API reference for the Collection endpoints, including request parameters and response schemas
+- [ContainerImage](https://docs.snyk.io/developer-tools/snyk-api/reference/containerimage.md): Snyk API reference for the ContainerImage endpoints, including request parameters and response schemas
+- [ContainerRegistryImportPolicy](https://docs.snyk.io/developer-tools/snyk-api/reference/containerregistryimportpolicy.md): Snyk API reference for the ContainerRegistryImportPolicy endpoints, including request parameters and response schemas
+- [Custom Base Images](https://docs.snyk.io/developer-tools/snyk-api/reference/custom-base-images.md): Snyk API reference for the Custom Base Images endpoints, including request parameters and response schemas
+- [Dependencies (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/dependencies-v1.md): Snyk API reference for the Dependencies (v1) endpoints, including request parameters and response schemas
+- [Entitlements (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/entitlements-v1.md): Snyk API reference for the Entitlements (v1) endpoints, including request parameters and response schemas
+- [Export](https://docs.snyk.io/developer-tools/snyk-api/reference/export.md): Snyk API reference for the Export endpoints, including request parameters and response schemas
+- [Findings](https://docs.snyk.io/developer-tools/snyk-api/reference/findings.md): Snyk API reference for the Findings endpoints, including request parameters and response schemas
+- [Group](https://docs.snyk.io/developer-tools/snyk-api/reference/group.md): Snyk API reference for the Group endpoints, including request parameters and response schemas
+- [Groups (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/groups-v1.md): Snyk API reference for the Groups (v1) endpoints, including request parameters and response schemas
+- [Groups](https://docs.snyk.io/developer-tools/snyk-api/reference/groups.md): Snyk API reference for the Groups endpoints, including request parameters and response schemas
+- [IacSettings](https://docs.snyk.io/developer-tools/snyk-api/reference/iacsettings.md): Snyk API reference for the IacSettings endpoints, including request parameters and response schemas
+- [Ignores (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/ignores-v1.md): Snyk API reference for the Ignores (v1) endpoints, including request parameters and response schemas
+- [Import Projects (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/import-projects-v1.md): Snyk API reference for the Import Projects (v1) endpoints, including request parameters and response schemas
+- [Integrations (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/integrations-v1.md): Snyk API reference for the Integrations (v1) endpoints, including request parameters and response schemas
+- [Inventory Assets](https://docs.snyk.io/developer-tools/snyk-api/reference/inventory-assets.md): Snyk API reference for the Inventory Assets endpoints, including request parameters and response schemas
+- [Invites](https://docs.snyk.io/developer-tools/snyk-api/reference/invites.md): Snyk API reference for the Invites endpoints, including request parameters and response schemas
+- [Issues](https://docs.snyk.io/developer-tools/snyk-api/reference/issues.md): Snyk API reference for the Issues endpoints, including request parameters and response schemas
+- [Jira (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/jira-v1.md): Snyk API reference for the Jira (v1) endpoints, including request parameters and response schemas
+- [LanguagesSettings](https://docs.snyk.io/developer-tools/snyk-api/reference/languagessettings.md): Snyk API reference for the LanguagesSettings endpoints, including request parameters and response schemas
+- [Learn](https://docs.snyk.io/developer-tools/snyk-api/reference/learn.md): Snyk API reference for the learn endpoints, including request parameters and response schemas
+- [Licenses (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/licenses-v1.md): Snyk API reference for the Licenses (v1) endpoints, including request parameters and response schemas
+- [Model](https://docs.snyk.io/developer-tools/snyk-api/reference/model.md): Snyk API reference for the Model endpoints, including request parameters and response schemas
+- [Monitor (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/monitor-v1.md): Snyk API reference for the Monitor (v1) endpoints, including request parameters and response schemas
+- [OpenSourceSettings](https://docs.snyk.io/developer-tools/snyk-api/reference/opensourcesettings.md): Snyk API reference for the OpensourceSettings endpoints, including request parameters and response schemas
+- [Organizations (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/organizations-v1.md): Snyk API reference for the Organizations (v1) endpoints, including request parameters and response schemas
+- [Orgs](https://docs.snyk.io/developer-tools/snyk-api/reference/orgs.md): Snyk API reference for the Orgs endpoints, including request parameters and response schemas
+- [Package Version](https://docs.snyk.io/developer-tools/snyk-api/reference/package-version.md): Snyk API reference for the Package Version endpoints, including request parameters and response schemas
+- [Package](https://docs.snyk.io/developer-tools/snyk-api/reference/package.md): Snyk API reference for the Package endpoints, including request parameters and response schemas
+- [PersonalAccessToken](https://docs.snyk.io/developer-tools/snyk-api/reference/personalaccesstoken.md): Snyk API reference for the PersonalAccessToken endpoints, including request parameters and response schemas
+- [Policies](https://docs.snyk.io/developer-tools/snyk-api/reference/policies.md): Snyk API reference for the Policies endpoints, including request parameters and response schemas
+- [Projects (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/projects-v1.md): Snyk API reference for the Projects (v1) endpoints, including request parameters and response schemas
+- [Projects](https://docs.snyk.io/developer-tools/snyk-api/reference/projects.md): Snyk API reference for the Projects endpoints, including request parameters and response schemas
+- [Pull Request Templates](https://docs.snyk.io/developer-tools/snyk-api/reference/pull-request-templates.md): Snyk API reference for the Pull Request Templates endpoints, including request parameters and response schemas
+- [Reporting API (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/reporting-api-v1.md): Snyk API reference for the Reporting API (v1) endpoints, including request parameters and response schemas
+- [SBOM](https://docs.snyk.io/developer-tools/snyk-api/reference/sbom.md): Snyk API reference for the SBOM endpoints, including request parameters and response schemas
+- [SastRuleExtensions](https://docs.snyk.io/developer-tools/snyk-api/reference/sastruleextensions.md): Snyk API reference for the SastRuleExtensions endpoints, including request parameters and response schemas
+- [SastSettings](https://docs.snyk.io/developer-tools/snyk-api/reference/sastsettings.md): Snyk API reference for the SastSettings endpoints, including request parameters and response schemas
+- [SecretsRuleExtensions](https://docs.snyk.io/developer-tools/snyk-api/reference/secretsruleextensions.md): Snyk API reference for the SecretsRuleExtensions endpoints, including request parameters and response schemas
+- [SecretsSettings](https://docs.snyk.io/developer-tools/snyk-api/reference/secretssettings.md): Snyk API reference for the SecretsSettings endpoints, including request parameters and response schemas
+- [ServiceAccounts](https://docs.snyk.io/developer-tools/snyk-api/reference/serviceaccounts.md): Snyk API reference for the ServiceAccounts endpoints, including request parameters and response schemas
+- [SlackSettings](https://docs.snyk.io/developer-tools/snyk-api/reference/slacksettings.md): Snyk API reference for the SlackSettings endpoints, including request parameters and response schemas
+- [Slack](https://docs.snyk.io/developer-tools/snyk-api/reference/slack.md): Snyk API reference for the Slack endpoints, including request parameters and response schemas
+- [Snapshots (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/snapshots-v1.md): Snyk API reference for the Snapshots (v1) endpoints, including request parameters and response schemas
+- [Targets](https://docs.snyk.io/developer-tools/snyk-api/reference/targets.md): Snyk API reference for the Targets endpoints, including request parameters and response schemas
+- [TenantRole](https://docs.snyk.io/developer-tools/snyk-api/reference/tenantrole.md): Snyk API reference for the TenantRole endpoints, including request parameters and response schemas
+- [Tenants](https://docs.snyk.io/developer-tools/snyk-api/reference/tenants.md): Snyk API reference for the Tenants endpoints, including request parameters and response schemas
+- [Test (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/test-v1.md): Snyk API reference for the Test (v1) endpoints, including request parameters and response schemas
+- [Tests](https://docs.snyk.io/developer-tools/snyk-api/reference/tests.md): Snyk API reference for the Tests endpoints, including request parameters and response schemas
+- [Universal Broker](https://docs.snyk.io/developer-tools/snyk-api/reference/universal-broker.md): Snyk API reference for the Universal Broker endpoints, including request parameters and response schemas
+- [Users (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/users-v1.md): Snyk API reference for the Users (v1) endpoints, including request parameters and response schemas
+- [Users](https://docs.snyk.io/developer-tools/snyk-api/reference/users.md): Snyk API reference for the Users endpoints, including request parameters and response schemas
+- [Webhooks (v1)](https://docs.snyk.io/developer-tools/snyk-api/reference/webhooks-v1.md): Snyk API reference for the Webhooks (v1) endpoints, including request parameters and response schemas
 - [API endpoints index and tips](https://docs.snyk.io/developer-tools/snyk-api/api-endpoints-index-and-tips.md): Index of Snyk API endpoints with tips, including how to find your Organization ID
 - [Solutions for specific use cases](https://docs.snyk.io/developer-tools/snyk-api/api-endpoints-index-and-tips/solutions-for-specific-use-cases.md): Snyk-maintained scripts and solutions for specific Snyk API use cases
 - [Scenarios for using the Snyk API](https://docs.snyk.io/developer-tools/snyk-api/api-endpoints-index-and-tips/scenarios-for-using-the-snyk-api.md): Common scenarios and processes for using the Snyk API
@@ -991,7 +1004,7 @@
 - [Export API: Specifications, columns, and filters](https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/export-api-specifications-columns-and-filters.md): The Snyk Export API specifications, columns, and filters
 - [Issues: List issues for a package](https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/issues-list-issues-for-a-package.md): How to use the Snyk REST API endpoint to list issues for a package
 - [SBOM APIs](https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/sbom-apis.md): How to use the Snyk SBOM API endpoints
-- [Get a Project’s SBOM document](https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/sbom-apis/rest-api-get-a-projects-sbom-document.md): How to get the SBOM document for a Project with the Snyk REST API
+- [Get a Project's SBOM document](https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/sbom-apis/rest-api-get-a-projects-sbom-document.md): How to get the SBOM document for a Project with the Snyk REST API
 - [Test an SBOM document for vulnerabilities](https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/sbom-apis/rest-api-endpoint-test-an-sbom-document-for-vulnerabilities.md): How to test an SBOM document for vulnerabilities with the Snyk REST API
 - [Snyk Apps APIs](https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/snyk-apps-apis.md): How to use the Snyk Apps APIs to build integrations
 - [About Snyk Apps](https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/snyk-apps-apis/about-snyk-apps.md): What Snyk Apps are and how they extend Snyk functionality through integrations
@@ -1046,132 +1059,148 @@
 - [V1 Issues APIs to REST Issues API migration guide](https://docs.snyk.io/developer-tools/snyk-api/api-end-of-life-eol-process-and-migration-guides/guides-to-migration/v1-reporting-issues-and-v1-aggregated-issues-apis-to-rest-issues-api-migration-guide.md): Migration guide from the V1 Issues APIs to the REST Issues API
 - [V1 Reporting APIs to Export API migration guide](https://docs.snyk.io/developer-tools/snyk-api/api-end-of-life-eol-process-and-migration-guides/guides-to-migration/v1-reporting-apis-to-export-api-migration-guide.md): Migration guide from the V1 Reporting APIs to the Export API
 - [Candidates for upcoming API end-of-life cadences](https://docs.snyk.io/developer-tools/snyk-api/api-end-of-life-eol-process-and-migration-guides/candidates-for-upcoming-api-end-of-life-cadences.md): Snyk API endpoints that are candidates for upcoming end-of-life cadences
-- [Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli.md): The Snyk CLI for scanning and monitoring your Projects from the command line
-- [Getting started with the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/getting-started-with-the-snyk-cli.md): How to get started with the Snyk CLI, from installation to your first scan
-- [Install the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/install-the-snyk-cli.md): How to install the Snyk CLI across major operating systems
-- [Verifying CLI standalone binaries](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/install-the-snyk-cli/verifying-cli-standalone-binaries.md): How to verify the shasum and signature of Snyk CLI standalone binaries
-- [Install or upgrade to version of Node.js required for Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/install-the-snyk-cli/install-or-upgrade-to-version-of-node.js-required-for-snyk-cli.md): How to install or upgrade to the Node.js version required for the Snyk CLI
-- [Prerequisites for CLI and Jenkins plugin on Alpine Linux operating system](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/install-the-snyk-cli/prerequisites-for-cli-and-jenkins-plugin-on-alpine-linux-operating-system.md): Prerequisites for the Snyk CLI and Jenkins plugin on Alpine Linux
-- [Using CLI releases before version 1.1230.0 on an Apple M1 or M2 machine](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/install-the-snyk-cli/using-cli-releases-before-version-1.1230.0-on-an-apple-m1-or-m2-machine.md): How to run Snyk CLI releases before 1.1230.0 on Apple M1 or M2 machines
-- [Authenticate to use the CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/authenticate-to-use-the-cli.md): How to authenticate the Snyk CLI after installation
-- [Upgrade the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/upgrade-the-snyk-cli.md): How to upgrade the Snyk CLI to stay secure and current
-- [Configure the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/configure-the-snyk-cli.md): How to configure the Snyk CLI using environment variables
-- [Environment variables for Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/configure-the-snyk-cli/environment-variables-for-snyk-cli.md): The environment variables you can use to configure the Snyk CLI
-- [Configure Snyk CLI to connect to Snyk API](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/configure-the-snyk-cli/configure-snyk-cli-to-connect-to-snyk-api.md): How to configure how the Snyk CLI connects to the Snyk API, including the platform URL and region
-- [Proxy configuration for Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/configure-the-snyk-cli/proxy-configuration-for-snyk-cli.md): How to configure a proxy for the Snyk CLI
-- [Debugging the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/debugging-the-snyk-cli.md): How to debug the Snyk CLI when working with your Projects
-- [CLI help](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands.md): Help reference for the Snyk CLI commands
-- [AI-BOM](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/aibom.md): The snyk aibom command that generates an AI bill of materials
-- [AI-BOM test](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/aibom-test.md): The snyk aibom test command that tests an AI bill of materials
-- [Auth](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/auth.md): The snyk auth command that authenticates the CLI with your Snyk account
-- [Code](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/code.md): The snyk code command for finding security issues with Snyk Code
-- [Code test](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/code-test.md): The snyk code test command that runs a Snyk Code static analysis test
-- [Config](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/config.md): The snyk config command that manages Snyk CLI configuration
-- [Config environment](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/config-environment.md): The snyk config environment command for setting the Snyk API environment
-- [Container](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/container.md): The snyk container commands that test and monitor container images
-- [Container monitor](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/container-monitor.md): The snyk container monitor command that monitors a container image
-- [Container SBOM](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/container-sbom.md): The snyk container sbom command that generates an SBOM for a container image
-- [Container test](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/container-test.md): The snyk container test command that tests a container image for vulnerabilities
-- [Fix](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/fix.md)
-- [IaC](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/iac.md): The snyk iac commands that test infrastructure as code files
-- [IaC test](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/iac-test.md): The snyk iac test command that tests infrastructure as code files for misconfigurations
-- [IaC describe](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/iac-describe.md): The snyk iac describe command that detects drift in infrastructure as code
-- [IaC update-exclude-policy](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/iac-update-exclude-policy.md): The snyk iac update-exclude-policy command for managing IaC exclusions
-- [Ignore](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/ignore.md): The snyk ignore command that ignores a specified issue
-- [Log4shell](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/log4shell.md): The snyk log4shell command that scans for the Log4Shell vulnerability
-- [Monitor](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/monitor.md): The snyk monitor command that snapshots and monitors a Project
-- [Policy](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/policy.md): The snyk policy command that displays the .snyk policy for a Project
-- [SBOM](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/sbom.md): The snyk sbom command that generates an SBOM for a Project
-- [SBOM test](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/sbom-test.md): The snyk sbom test command that tests an SBOM for vulnerabilities
-- [Secrets test](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/secrets-test.md)
-- [Test](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/commands/test.md): The snyk test command that tests a Project for vulnerabilities
-- [CLI commands and options summary](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/cli-commands-and-options-summary.md): A summary of Snyk CLI commands and options
-- [Snyk CLI analytics](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/snyk-cli-analytics.md): How Snyk CLI analytics work and how to control them
-- [Releases and channels for the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/releases-and-channels-for-the-snyk-cli.md): The Snyk CLI release channels and versioning
-- [Security concept of operations for Snyk](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/security-concept-of-operations-for-snyk.md): The security concept of operations for the Snyk CLI and applications
-- [Access requirements](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/security-concept-of-operations-for-snyk/access-requirements.md): The access requirements for using Snyk applications such as the CLI
-- [Securing data at rest](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/security-concept-of-operations-for-snyk/securing-data-at-rest.md): How the Snyk CLI secures its configuration data at rest
-- [Using FIPS-validated cryptography](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/security-concept-of-operations-for-snyk/using-fips-validated-cryptography.md): How to use FIPS-validated cryptography with the Snyk CLI
-- [Code execution warning for Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/code-execution-warning-for-snyk-cli.md): Why the Snyk CLI may execute code from your Project during analysis
-- [Scan and maintain Projects using the CLI (examples)](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli.md): How to scan and maintain Projects with the Snyk CLI
-- [CLI tools](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools.md): CLI tools that extend the Snyk CLI with additional capabilities
-- [snyk-delta](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-delta.md): The snyk-delta tool that finds the difference in issues between two tests
-- [snyk-filter](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-filter.md): The snyk-filter tool for custom filtering of Snyk CLI results
-- [snyk-to-html](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-to-html.md): The snyk-to-html tool that converts Snyk CLI output to HTML
-- [snyk-scm-contributors-count](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count.md): The snyk-scm-contributors-count tool that counts contributing developers in your SCM
-- [Flowchart](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/flowchart.md): Flowchart of the SCM-Contributors-Count tool
-- [Usage](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/usage.md): Modes and levels for the scm-contributors-count tool
-- [Output](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/output.md): The output result of running the SCM-Contributors-Count tool
-- [Flags](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/flags.md): The flags for each SCM script
-- [Scripts for SCM contributors count](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count.md): A detailed guide to the specific SCM-Contributor-Count scripts
-- [Azure DevOps](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/azure-devops.md): Flow, technology, and examples for the Azure DevOps scm-contributors-count script
-- [Azure - Flow and Tech](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/azure-devops/azure-flow-and-tech.md): How the scm-contributors-count tool counts Azure DevOps contributors
-- [Azure - Examples](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/azure-devops/azure-examples.md): The list of options and some examples for Azure
-- [Bitbucket Cloud](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/bitbucket-cloud.md): Flow, technology, and examples for the Bitbucket Cloud scm-contributors-count script
-- [Bitbucket Cloud - Flow and Tech](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/bitbucket-cloud/bitbucket-cloud-flow-and-tech.md): How the scm-contributors-count tool counts Bitbucket Cloud contributors
-- [Bitbucket Cloud - Examples](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/bitbucket-cloud/bitbucket-cloud-examples.md): The list of options and some examples for Bitbucket Cloud
-- [Bitbucket Server](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/bitbucket-server.md): Flow, technology, and examples for the Bitbucket Server scm-contributors-count script
-- [Bitbucket Server - Flow and Tech](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/bitbucket-server/bitbucket-server-flow-and-tech.md): How the scm-contributors-count tool counts Bitbucket Server contributors
-- [Bitbucket Server - Examples](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/bitbucket-server/bitbucket-server-examples.md): The list of options and some examples for Bitbucket Server
-- [GitHub](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/github.md): Flow, technology, and examples for the GitHub scm-contributors-count script
-- [GitHub - Flow and Tech](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/github/github-flow-and-tech.md): How the scm-contributors-count tool counts GitHub contributors
-- [GitHub - Examples](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/github/github-examples.md): The list of options and some examples for GitHub
-- [GitHub Enterprise](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/github-enterprise.md): Flow, technology, and examples for the GitHub Enterprise scm-contributors-count script
-- [GitHub Enterprise - Flow and Tech](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/github-enterprise/github-enterprise-flow-and-tech.md): How the scm-contributors-count tool counts GitHub Enterprise contributors
-- [Github Enterprise - Examples](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/github-enterprise/github-enterprise-examples.md): The list of options and examples for GitHub Enterprise
-- [GitLab and GitLab Server](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/gitlab-and-gitlab-server.md): Flow and tech for GitLab and GitLab Server
-- [GitLab - Flow and Tech](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/gitlab-and-gitlab-server/gitlab-flow-and-tech.md): How the scm-contributors-count tool counts GitLab contributors
-- [GitLab - Examples](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/gitlab-and-gitlab-server/gitlab-examples.md): The list of options and some examples for GitLab
-- [Consolidate results](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/consolidate-results.md): How to use the consolidateResults command
-- [Creating and using the import file](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/creating-and-using-the-import-file.md): How to generate the import file and use it with the snyk-api-import tool
-- [API rate limit control for scm-contributors-count](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/api-rate-limit-control-for-scm-contributors-count.md): How to control API rate limits for the scm-contributors-count tool
-- [Snyk CLI for Open Source](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-open-source.md): How to use the Snyk CLI for Snyk Open Source to scan manifests
-- [Open Source Projects that must be built before testing with the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-open-source/open-source-projects-that-must-be-built-before-testing-with-the-snyk-cli.md): Open Source Projects that must be built before testing with the Snyk CLI
-- [Use options to customize the snyk test command](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-open-source/use-options-to-customize-the-snyk-test-command.md): How to customize the snyk test command with options for Snyk Open Source
-- [Review the Snyk Open Source CLI results](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-open-source/review-the-snyk-open-source-cli-results.md): How to review Snyk Open Source results from the CLI
-- [Integrate Snyk into your workflow using the CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-open-source/integrate-snyk-into-your-workflow-using-the-cli.md): How to integrate Snyk Open Source into your workflow using the CLI
-- [Snyk CLI for Snyk Code](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-code.md): How to use the Snyk CLI for Snyk Code static analysis
-- [Set the Snyk Organization for CLI tests](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-code/set-the-snyk-organization-for-the-cli-tests.md): How to set the Snyk Organization used for Snyk Code CLI tests
-- [Scan source code with Snyk Code using the CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-code/scan-source-code-with-snyk-code-using-the-cli.md): How to scan source code with Snyk Code using the CLI
-- [Exclude directories and files from Snyk Code CLI tests](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-code/exclude-directories-and-files-from-snyk-code-cli-tests.md): How to exclude directories and files from Snyk Code CLI tests
-- [View Snyk Code CLI results](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-code/view-snyk-code-cli-results.md): How to view Snyk Code results from the CLI
-- [Snyk CLI for Snyk Container](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-container.md): How to use the Snyk CLI for Snyk Container image scanning
-- [Scan and monitor images](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-container/scan-and-monitor-images.md): How to scan and monitor container images with the Snyk CLI
-- [Understand Snyk Container CLI results](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-container/understand-snyk-container-cli-results.md): How to understand Snyk Container results from the CLI
-- [Advanced use of Snyk Container CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-container/advanced-use-of-snyk-container-cli.md): Advanced Snyk Container CLI usage, including scanning archives
-- [Snyk CLI for IaC](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac.md): How to use the Snyk CLI for Snyk IaC scanning
-- [Test your IaC files](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files.md): How to test infrastructure as code files with the Snyk CLI
-- [Terraform files](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/terraform-files.md): How to test Terraform files with Snyk IaC using the CLI
-- [CloudFormation files](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/cloudformation-files.md): How to test AWS CloudFormation files with Snyk IaC using the CLI
-- [AWS CDK files](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/aws-cdk-files.md): How to test AWS CDK files with Snyk IaC using the CLI
-- [Kubernetes files](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/kubernetes-files.md): How to test Kubernetes files with Snyk IaC using the CLI
-- [ARM files](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/arm-files.md): How to test Azure ARM files with Snyk IaC using the CLI
-- [Kustomize files](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/kustomize-files.md): How to test Kustomize files with Snyk IaC using the CLI
-- [Helm charts](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/helm-charts.md): How to test Helm charts with Snyk IaC using the CLI
-- [Serverless files](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/serverless-files.md): How to test serverless files with Snyk IaC using the CLI
-- [Share CLI results with the Snyk Web UI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/share-cli-results-with-the-snyk-web-ui.md): How to share Snyk IaC CLI results with the Snyk Web UI
-- [IaC ignores using the .snyk policy file](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/iac-ignores-using-the-.snyk-policy-file.md): How to ignore Snyk IaC issues using the .snyk policy file
-- [IaC exclusions using the command line](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/iac-exclusions-using-the-command-line.md): How to exclude Snyk IaC issues using the command line
-- [Understand the IaC CLI test results](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/understand-the-iac-cli-test-results.md): How to understand Snyk IaC CLI test results
-- [Snyk IaC CLI test results (v. 1.938.0 and earlier)](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/understand-the-iac-cli-test-results/snyk-iac-cli-test-results-v.-1.938.0-and-earlier.md): How to read Snyk IaC CLI test results in version 1.938.0 and earlier
-- [Snyk IaC CLI test results (v. 1.939.0 and later)](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/understand-the-iac-cli-test-results/snyk-iac-cli-test-results-v.-1.939.0-and-later.md): How to read Snyk IaC CLI test results in version 1.939.0 and later
-- [Snyk CLI for Snyk Secrets](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-secrets.md): How to use the Snyk CLI to scan your source code for hardcoded secrets
-- [Secrets scanning in the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-secrets/secrets-scanning-in-the-snyk-cli.md)
-- [A .snyk policy file in a different directory from the manifest file](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/a-.snyk-policy-file-in-a-different-directory-from-the-manifest-file.md): How to use a .snyk policy file in a different directory from the manifest file
-- [Failing of builds in Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/failing-of-builds-in-snyk-cli.md): How the snyk test command fails builds based on vulnerabilities found
-- [Ignore vulnerabilities using the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/ignore-vulnerabilities-using-the-snyk-cli.md): How to ignore vulnerabilities using the Snyk CLI
-- [Invalid string length error when scanning projects](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/invalid-string-length-error-when-scanning-projects.md): How to resolve the invalid string length error when scanning Projects with the CLI
-- [Scan all unmanaged JAR files](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/scan-all-unmanaged-jar-files.md): How to scan all unmanaged JAR files with the Snyk CLI
-- [Log4shell command use](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/log4shell-command-use.md): How to use the snyk log4shell command to scan for the Log4Shell vulnerability
-- [Monitor your Projects at regular intervals](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/monitor-your-projects-at-regular-intervals.md): How to monitor your Projects at regular intervals with the Snyk CLI
-- [How to select the Organization to use in the CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/how-to-select-the-organization-to-use-in-the-cli.md): How to select the Snyk Organization to use in the CLI
-- [Group Projects by branch or version for monitoring](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/group-projects-by-branch-or-version-for-monitoring.md): How to group Projects by branch or version when monitoring with the CLI
-- [Setup.py file failing to scan or finding zero dependencies](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/setup.py-file-failing-to-scan-or-finding-zero-dependencies.md): How to resolve a setup.py file failing to scan or finding zero dependencies
-- [Severity thresholds for CLI tests](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/set-severity-thresholds-for-cli-tests.md): How to set severity thresholds for Snyk CLI tests
-- [@snyk/protect package](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-protect-package.md): The @snyk/protect package for applying patches to vulnerabilities
-- [Test public npm packages before use](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/test-public-npm-packages-before-use.md): How to test public npm packages with the Snyk CLI before using them
-- [CLI test results](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-test-results.md): How to read Snyk CLI test results after running snyk test
-- [Fix vulnerabilities using the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli/scan-and-maintain-projects-using-the-cli/fix-vulnerabilities-using-the-snyk-cli.md): How to fix vulnerabilities using the Snyk CLI
+- [Overview](https://docs.snyk.io/developer-tools/snyk-cli/overview.md): The Snyk CLI for scanning and monitoring your Projects from the command line
+- [Getting started with the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/getting-started-with-the-snyk-cli.md): How to get started with the Snyk CLI, from installation to your first scan
+- [Install the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/install-the-snyk-cli.md): How to install the Snyk CLI across major operating systems
+- [Verifying CLI standalone binaries](https://docs.snyk.io/developer-tools/snyk-cli/install-the-snyk-cli/verifying-cli-standalone-binaries.md): How to verify the shasum and signature of Snyk CLI standalone binaries
+- [Install or upgrade to version of Node.js required for Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/install-the-snyk-cli/install-or-upgrade-to-version-of-node.js-required-for-snyk-cli.md): How to install or upgrade to the Node.js version required for the Snyk CLI
+- [Prerequisites for CLI and Jenkins plugin on Alpine Linux operating system](https://docs.snyk.io/developer-tools/snyk-cli/install-the-snyk-cli/prerequisites-for-cli-and-jenkins-plugin-on-alpine-linux-operating-system.md): Prerequisites for the Snyk CLI and Jenkins plugin on Alpine Linux
+- [Using CLI releases before version 1.1230.0 on an Apple M1 or M2 machine](https://docs.snyk.io/developer-tools/snyk-cli/install-the-snyk-cli/using-cli-releases-before-version-1.1230.0-on-an-apple-m1-or-m2-machine.md): How to run Snyk CLI releases before 1.1230.0 on Apple M1 or M2 machines
+- [Authenticate to use the CLI](https://docs.snyk.io/developer-tools/snyk-cli/authenticate-to-use-the-cli.md): How to authenticate the Snyk CLI after installation
+- [Upgrade the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/upgrade-the-snyk-cli.md): How to upgrade the Snyk CLI to stay secure and current
+- [Configure the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/configure-the-snyk-cli.md): How to configure the Snyk CLI using environment variables
+- [Environment variables for Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/configure-the-snyk-cli/environment-variables-for-snyk-cli.md): The environment variables you can use to configure the Snyk CLI
+- [Configure Snyk CLI to connect to Snyk API](https://docs.snyk.io/developer-tools/snyk-cli/configure-the-snyk-cli/configure-snyk-cli-to-connect-to-snyk-api.md): How to configure how the Snyk CLI connects to the Snyk API, including the platform URL and region
+- [Proxy configuration for Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/configure-the-snyk-cli/proxy-configuration-for-snyk-cli.md): How to configure a proxy for the Snyk CLI
+- [Debugging the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/debugging-the-snyk-cli.md): How to debug the Snyk CLI when working with your Projects
+- [CLI help](https://docs.snyk.io/developer-tools/snyk-cli/commands.md): Help reference for the Snyk CLI commands
+- [AI-BOM](https://docs.snyk.io/developer-tools/snyk-cli/commands/aibom.md): The snyk aibom command that generates an AI bill of materials
+- [AI-BOM test](https://docs.snyk.io/developer-tools/snyk-cli/commands/aibom-test.md): The snyk aibom test command that tests an AI bill of materials
+- [Auth](https://docs.snyk.io/developer-tools/snyk-cli/commands/auth.md): The snyk auth command that authenticates the CLI with your Snyk account
+- [Code](https://docs.snyk.io/developer-tools/snyk-cli/commands/code.md): The snyk code command for finding security issues with Snyk Code
+- [Code test](https://docs.snyk.io/developer-tools/snyk-cli/commands/code-test.md): The snyk code test command that runs a Snyk Code static analysis test
+- [Config](https://docs.snyk.io/developer-tools/snyk-cli/commands/config.md): The snyk config command that manages Snyk CLI configuration
+- [Config environment](https://docs.snyk.io/developer-tools/snyk-cli/commands/config-environment.md): The snyk config environment command for setting the Snyk API environment
+- [Container](https://docs.snyk.io/developer-tools/snyk-cli/commands/container.md): The snyk container commands that test and monitor container images
+- [Container monitor](https://docs.snyk.io/developer-tools/snyk-cli/commands/container-monitor.md): The snyk container monitor command that monitors a container image
+- [Container SBOM](https://docs.snyk.io/developer-tools/snyk-cli/commands/container-sbom.md): The snyk container sbom command that generates an SBOM for a container image
+- [Container test](https://docs.snyk.io/developer-tools/snyk-cli/commands/container-test.md): The snyk container test command that tests a container image for vulnerabilities
+- [Fix](https://docs.snyk.io/developer-tools/snyk-cli/commands/fix.md): The snyk fix --agentic command, which applies and verifies vulnerability fixes
+- [IaC](https://docs.snyk.io/developer-tools/snyk-cli/commands/iac.md): The snyk iac commands that test infrastructure as code files
+- [IaC test](https://docs.snyk.io/developer-tools/snyk-cli/commands/iac-test.md): The snyk iac test command that tests infrastructure as code files for misconfigurations
+- [IaC describe](https://docs.snyk.io/developer-tools/snyk-cli/commands/iac-describe.md): The snyk iac describe command that detects drift in infrastructure as code
+- [IaC update-exclude-policy](https://docs.snyk.io/developer-tools/snyk-cli/commands/iac-update-exclude-policy.md): The snyk iac update-exclude-policy command for managing IaC exclusions
+- [Ignore](https://docs.snyk.io/developer-tools/snyk-cli/commands/ignore.md): The snyk ignore command that ignores a specified issue
+- [Log4shell](https://docs.snyk.io/developer-tools/snyk-cli/commands/log4shell.md): The snyk log4shell command that scans for the Log4Shell vulnerability
+- [Monitor](https://docs.snyk.io/developer-tools/snyk-cli/commands/monitor.md): The snyk monitor command that snapshots and monitors a Project
+- [Policy](https://docs.snyk.io/developer-tools/snyk-cli/commands/policy.md): The snyk policy command that displays the .snyk policy for a Project
+- [SBOM](https://docs.snyk.io/developer-tools/snyk-cli/commands/sbom.md): The snyk sbom command that generates an SBOM for a Project
+- [SBOM test](https://docs.snyk.io/developer-tools/snyk-cli/commands/sbom-test.md): The snyk sbom test command that tests an SBOM for vulnerabilities
+- [Secrets test](https://docs.snyk.io/developer-tools/snyk-cli/commands/secrets-test.md): The snyk secrets test command, which scans for hard-coded secrets and credentials
+- [Test](https://docs.snyk.io/developer-tools/snyk-cli/commands/test.md): The snyk test command that tests a Project for vulnerabilities
+- [COS](https://docs.snyk.io/developer-tools/snyk-cli/commands/cos.md): The snyk cos commands for finding security vulnerabilities with Snyk Continuous Offensive Security (COS).
+- [COS target](https://docs.snyk.io/developer-tools/snyk-cli/commands/cos-target.md): The snyk cos target commands for creating, inspecting, and exporting targets.
+- [COS target add](https://docs.snyk.io/developer-tools/snyk-cli/commands/cos-target-add.md): The snyk cos target add command that creates a target from a configuration file.
+- [COS target list](https://docs.snyk.io/developer-tools/snyk-cli/commands/cos-target-list.md): The snyk cos target list command that lists all targets.
+- [COS target show](https://docs.snyk.io/developer-tools/snyk-cli/commands/cos-target-show.md): The snyk cos target show command that shows the details of a target.
+- [COS target dump](https://docs.snyk.io/developer-tools/snyk-cli/commands/cos-target-dump.md): The snyk cos target dump command that exports a target as YAML.
+- [COS target template](https://docs.snyk.io/developer-tools/snyk-cli/commands/cos-target-template.md): A sample target configuration file for the snyk cos target add command.
+- [COS scan](https://docs.snyk.io/developer-tools/snyk-cli/commands/cos-scan.md): The snyk cos scan commands for scanning applications for security issues.
+- [COS scan start](https://docs.snyk.io/developer-tools/snyk-cli/commands/cos-scan-start.md): The snyk cos scan start command that starts a new scan on a target.
+- [COS scan status](https://docs.snyk.io/developer-tools/snyk-cli/commands/cos-scan-status.md): The snyk cos scan status command that shows the current status of a scan.
+- [COS scan report](https://docs.snyk.io/developer-tools/snyk-cli/commands/cos-scan-report.md): The snyk cos scan report command that returns the report for a completed scan.
+- [COS scan list](https://docs.snyk.io/developer-tools/snyk-cli/commands/cos-scan-list.md): The snyk cos scan list command that lists scans and their statuses.
+- [COS scan cancel](https://docs.snyk.io/developer-tools/snyk-cli/commands/cos-scan-cancel.md): The snyk cos scan cancel command that cancels a running scan.
+- [COS finding](https://docs.snyk.io/developer-tools/snyk-cli/commands/cos-finding.md): The snyk cos finding commands for listing and inspecting findings.
+- [COS finding list](https://docs.snyk.io/developer-tools/snyk-cli/commands/cos-finding-list.md): The snyk cos finding list command that lists the findings for a target or scan.
+- [COS finding show](https://docs.snyk.io/developer-tools/snyk-cli/commands/cos-finding-show.md): The snyk cos finding show command that shows the details of a finding.
+- [CLI commands and options summary](https://docs.snyk.io/developer-tools/snyk-cli/cli-commands-and-options-summary.md): A summary of Snyk CLI commands and options
+- [Snyk CLI analytics](https://docs.snyk.io/developer-tools/snyk-cli/snyk-cli-analytics.md): How Snyk CLI analytics work and how to control them
+- [Releases and channels for the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/releases-and-channels-for-the-snyk-cli.md): The Snyk CLI release channels and versioning
+- [Security concept of operations for Snyk](https://docs.snyk.io/developer-tools/snyk-cli/security-concept-of-operations-for-snyk.md): The security concept of operations for the Snyk CLI and applications
+- [Access requirements](https://docs.snyk.io/developer-tools/snyk-cli/security-concept-of-operations-for-snyk/access-requirements.md): The access requirements for using Snyk applications such as the CLI
+- [Securing data at rest](https://docs.snyk.io/developer-tools/snyk-cli/security-concept-of-operations-for-snyk/securing-data-at-rest.md): How the Snyk CLI secures its configuration data at rest
+- [Using FIPS-validated cryptography](https://docs.snyk.io/developer-tools/snyk-cli/security-concept-of-operations-for-snyk/using-fips-validated-cryptography.md): How to use FIPS-validated cryptography with the Snyk CLI
+- [Code execution warning for Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/code-execution-warning-for-snyk-cli.md): Why the Snyk CLI may execute code from your Project during analysis
+- [Scan and maintain Projects using the CLI (examples)](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli.md): How to scan and maintain Projects with the Snyk CLI
+- [CLI tools](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools.md): CLI tools that extend the Snyk CLI with additional capabilities
+- [snyk-delta](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-delta.md): The snyk-delta tool that finds the difference in issues between two tests
+- [snyk-filter](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-filter.md): The snyk-filter tool for custom filtering of Snyk CLI results
+- [snyk-to-html](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-to-html.md): The snyk-to-html tool that converts Snyk CLI output to HTML
+- [snyk-scm-contributors-count](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count.md): The snyk-scm-contributors-count tool that counts contributing developers in your SCM
+- [Flowchart](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/flowchart.md): Flowchart of the SCM-Contributors-Count tool
+- [Usage](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/usage.md): Modes and levels for the scm-contributors-count tool
+- [Output](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/output.md): The output result of running the SCM-Contributors-Count tool
+- [Flags](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/flags.md): The flags for each SCM script
+- [Scripts for SCM contributors count](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count.md): A detailed guide to the specific SCM-Contributor-Count scripts
+- [Azure DevOps](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/azure-devops.md): Flow, technology, and examples for the Azure DevOps scm-contributors-count script
+- [Azure - Flow and Tech](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/azure-devops/azure-flow-and-tech.md): How the scm-contributors-count tool counts Azure DevOps contributors
+- [Azure - Examples](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/azure-devops/azure-examples.md): The list of options and some examples for Azure
+- [Bitbucket Cloud](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/bitbucket-cloud.md): Flow, technology, and examples for the Bitbucket Cloud scm-contributors-count script
+- [Bitbucket Cloud - Flow and Tech](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/bitbucket-cloud/bitbucket-cloud-flow-and-tech.md): How the scm-contributors-count tool counts Bitbucket Cloud contributors
+- [Bitbucket Cloud - Examples](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/bitbucket-cloud/bitbucket-cloud-examples.md): The list of options and some examples for Bitbucket Cloud
+- [Bitbucket Server](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/bitbucket-server.md): Flow, technology, and examples for the Bitbucket Server scm-contributors-count script
+- [Bitbucket Server - Flow and Tech](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/bitbucket-server/bitbucket-server-flow-and-tech.md): How the scm-contributors-count tool counts Bitbucket Server contributors
+- [Bitbucket Server - Examples](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/bitbucket-server/bitbucket-server-examples.md): The list of options and some examples for Bitbucket Server
+- [GitHub](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/github.md): Flow, technology, and examples for the GitHub scm-contributors-count script
+- [GitHub - Flow and Tech](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/github/github-flow-and-tech.md): How the scm-contributors-count tool counts GitHub contributors
+- [GitHub - Examples](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/github/github-examples.md): The list of options and some examples for GitHub
+- [GitHub Enterprise](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/github-enterprise.md): Flow, technology, and examples for the GitHub Enterprise scm-contributors-count script
+- [GitHub Enterprise - Flow and Tech](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/github-enterprise/github-enterprise-flow-and-tech.md): How the scm-contributors-count tool counts GitHub Enterprise contributors
+- [Github Enterprise - Examples](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/github-enterprise/github-enterprise-examples.md): The list of options and examples for GitHub Enterprise
+- [GitLab and GitLab Server](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/gitlab-and-gitlab-server.md): Flow and tech for GitLab and GitLab Server
+- [GitLab - Flow and Tech](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/gitlab-and-gitlab-server/gitlab-flow-and-tech.md): How the scm-contributors-count tool counts GitLab contributors
+- [GitLab - Examples](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/scripts-for-scm-contributors-count/gitlab-and-gitlab-server/gitlab-examples.md): The list of options and some examples for GitLab
+- [Consolidate results](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/consolidate-results.md): How to use the consolidateResults command
+- [Creating and using the import file](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/creating-and-using-the-import-file.md): How to generate the import file and use it with the snyk-api-import tool
+- [API rate limit control for scm-contributors-count](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-tools/snyk-scm-contributors-count/api-rate-limit-control-for-scm-contributors-count.md): How to control API rate limits for the scm-contributors-count tool
+- [Snyk CLI for Open Source](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-open-source.md): How to use the Snyk CLI for Snyk Open Source to scan manifests
+- [Open Source Projects that must be built before testing with the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-open-source/open-source-projects-that-must-be-built-before-testing-with-the-snyk-cli.md): Open Source Projects that must be built before testing with the Snyk CLI
+- [Use options to customize the snyk test command](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-open-source/use-options-to-customize-the-snyk-test-command.md): How to customize the snyk test command with options for Snyk Open Source
+- [Review the Snyk Open Source CLI results](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-open-source/review-the-snyk-open-source-cli-results.md): How to review Snyk Open Source results from the CLI
+- [Integrate Snyk into your workflow using the CLI](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-open-source/integrate-snyk-into-your-workflow-using-the-cli.md): How to integrate Snyk Open Source into your workflow using the CLI
+- [Snyk CLI for Snyk Code](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-code.md): How to use the Snyk CLI for Snyk Code static analysis
+- [Set the Snyk Organization for CLI tests](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-code/set-the-snyk-organization-for-the-cli-tests.md): How to set the Snyk Organization used for Snyk Code CLI tests
+- [Scan source code with Snyk Code using the CLI](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-code/scan-source-code-with-snyk-code-using-the-cli.md): How to scan source code with Snyk Code using the CLI
+- [Exclude directories and files from Snyk Code CLI tests](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-code/exclude-directories-and-files-from-snyk-code-cli-tests.md): How to exclude directories and files from Snyk Code CLI tests
+- [View Snyk Code CLI results](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-code/view-snyk-code-cli-results.md): How to view Snyk Code results from the CLI
+- [Snyk CLI for Snyk Container](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-container.md): How to use the Snyk CLI for Snyk Container image scanning
+- [Scan and monitor images](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-container/scan-and-monitor-images.md): How to scan and monitor container images with the Snyk CLI
+- [Understand Snyk Container CLI results](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-container/understand-snyk-container-cli-results.md): How to understand Snyk Container results from the CLI
+- [Advanced use of Snyk Container CLI](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-container/advanced-use-of-snyk-container-cli.md): Advanced Snyk Container CLI usage, including scanning archives
+- [Snyk CLI for IaC](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac.md): How to use the Snyk CLI for Snyk IaC scanning
+- [Test your IaC files](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files.md): How to test infrastructure as code files with the Snyk CLI
+- [Terraform files](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/terraform-files.md): How to test Terraform files with Snyk IaC using the CLI
+- [CloudFormation files](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/cloudformation-files.md): How to test AWS CloudFormation files with Snyk IaC using the CLI
+- [AWS CDK files](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/aws-cdk-files.md): How to test AWS CDK files with Snyk IaC using the CLI
+- [Kubernetes files](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/kubernetes-files.md): How to test Kubernetes files with Snyk IaC using the CLI
+- [ARM files](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/arm-files.md): How to test Azure ARM files with Snyk IaC using the CLI
+- [Kustomize files](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/kustomize-files.md): How to test Kustomize files with Snyk IaC using the CLI
+- [Helm charts](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/helm-charts.md): How to test Helm charts with Snyk IaC using the CLI
+- [Serverless files](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/serverless-files.md): How to test serverless files with Snyk IaC using the CLI
+- [Share CLI results with the Snyk Web UI](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/share-cli-results-with-the-snyk-web-ui.md): How to share Snyk IaC CLI results with the Snyk Web UI
+- [IaC ignores using the .snyk policy file](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/iac-ignores-using-the-.snyk-policy-file.md): How to ignore Snyk IaC issues using the .snyk policy file
+- [IaC exclusions using the command line](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/iac-exclusions-using-the-command-line.md): How to exclude Snyk IaC issues using the command line
+- [Understand the IaC CLI test results](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/understand-the-iac-cli-test-results.md): How to understand Snyk IaC CLI test results
+- [Snyk IaC CLI test results (v. 1.938.0 and earlier)](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/understand-the-iac-cli-test-results/snyk-iac-cli-test-results-v.-1.938.0-and-earlier.md): How to read Snyk IaC CLI test results in version 1.938.0 and earlier
+- [Snyk IaC CLI test results (v. 1.939.0 and later)](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/understand-the-iac-cli-test-results/snyk-iac-cli-test-results-v.-1.939.0-and-later.md): How to read Snyk IaC CLI test results in version 1.939.0 and later
+- [Snyk CLI for Snyk Secrets](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-secrets.md): How to use the Snyk CLI to scan your source code for hardcoded secrets
+- [Secrets scanning in the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-secrets/secrets-scanning-in-the-snyk-cli.md): How to scan for hard-coded secrets with the Snyk CLI, including pre-commit hooks
+- [A .snyk policy file in a different directory from the manifest file](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/a-.snyk-policy-file-in-a-different-directory-from-the-manifest-file.md): How to use a .snyk policy file in a different directory from the manifest file
+- [Failing of builds in Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/failing-of-builds-in-snyk-cli.md): How the snyk test command fails builds based on vulnerabilities found
+- [Ignore vulnerabilities using the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/ignore-vulnerabilities-using-the-snyk-cli.md): How to ignore vulnerabilities using the Snyk CLI
+- [Invalid string length error when scanning projects](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/invalid-string-length-error-when-scanning-projects.md): How to resolve the invalid string length error when scanning Projects with the CLI
+- [Scan all unmanaged JAR files](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/scan-all-unmanaged-jar-files.md): How to scan all unmanaged JAR files with the Snyk CLI
+- [Log4shell command use](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/log4shell-command-use.md): How to use the snyk log4shell command to scan for the Log4Shell vulnerability
+- [Monitor your Projects at regular intervals](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/monitor-your-projects-at-regular-intervals.md): How to monitor your Projects at regular intervals with the Snyk CLI
+- [How to select the Organization to use in the CLI](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/how-to-select-the-organization-to-use-in-the-cli.md): How to select the Snyk Organization to use in the CLI
+- [Group Projects by branch or version for monitoring](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/group-projects-by-branch-or-version-for-monitoring.md): How to group Projects by branch or version when monitoring with the CLI
+- [Setup.py file failing to scan or finding zero dependencies](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/setup.py-file-failing-to-scan-or-finding-zero-dependencies.md): How to resolve a setup.py file failing to scan or finding zero dependencies
+- [Severity thresholds for CLI tests](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/set-severity-thresholds-for-cli-tests.md): How to set severity thresholds for Snyk CLI tests
+- [@snyk/protect package](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-protect-package.md): The @snyk/protect package for applying patches to vulnerabilities
+- [Test public npm packages before use](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/test-public-npm-packages-before-use.md): How to test public npm packages with the Snyk CLI before using them
+- [CLI test results](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/cli-test-results.md): How to read Snyk CLI test results after running snyk test
+- [Fix vulnerabilities using the Snyk CLI](https://docs.snyk.io/developer-tools/snyk-cli/scan-and-maintain-projects-using-the-cli/fix-vulnerabilities-using-the-snyk-cli.md): How to fix vulnerabilities using the Snyk CLI
 - [Snyk Tools](https://docs.snyk.io/developer-tools/snyk-apps/snyk-tools.md): Snyk Tools that address specific needs beyond core product functionality, across the Web UI, CLI, and API
 - [Tool: snyk-api-import](https://docs.snyk.io/developer-tools/snyk-apps/tool-snyk-api-import.md): The snyk-api-import tool for importing Projects and monitoring dependencies at scale, in CI and ad hoc
 - [Creating Organizations in Snyk](https://docs.snyk.io/developer-tools/snyk-apps/tool-snyk-api-import/creating-organizations-in-snyk.md): How to use snyk-api-import to generate data and create Snyk Organizations from GitHub, GitLab, and Bitbucket
@@ -1187,69 +1216,77 @@
 
 ## Agent security
 
-- [Overview](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/readme.md)
-- [Getting started with Snyk Studio](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/getting-started-with-snyk-studio.md)
-- [Directives](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/directives.md)
-- [Distribution at scale](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/distribution-at-scale.md)
-- [Quickstart guides](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides.md)
-- [Amazon Q guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/amazon-q-guide.md)
-- [Antigravity guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/antigravity-guide.md)
-- [Augment Code guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/augment-code-guide.md)
-- [Claude Code guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/claude-code-guide.md)
-- [Cline guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/cline-guide.md)
-- [Codex CLI guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/codex-cli-guide.md)
-- [Continue guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/continue-guide.md)
-- [Cursor guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/cursor-guide.md)
-- [Devin guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/devin-guide.md)
-- [Factory guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/factory-guide.md)
-- [Factory Terminal/IDE guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/factory-terminal-ide-guide.md)
-- [Gemini CLI guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/gemini-cli-guide.md)
-- [Gemini Code Assist guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/gemini-code-assist-guide.md)
-- [GitHub Copilot guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/github-copilot-guide.md)
-- [Goose CLI guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/goose-cli-guide.md)
-- [JetBrains AI assistant](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/jetbrains-ai-assistant.md)
-- [JetBrains Junie](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/jetbrains-junie.md)
-- [Kiro guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/kiro-guide.md)
-- [Qodo guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/qodo-guide.md)
-- [Windsurf guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/windsurf-guide.md)
-- [Troubleshooting](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/troubleshooting.md)
-- [Usage analytics](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/usage-analytics.md)
-- [Overview](https://docs.snyk.io/agent-security/cloud-ai-platforms/overview.md)
-- [Anthropic's Claude Enterprise](https://docs.snyk.io/agent-security/cloud-ai-platforms/anthropics-claude-enterprise.md)
-- [Overview](https://docs.snyk.io/agent-security/evo-by-snyk/overview.md)
-- [Access and authentication](https://docs.snyk.io/agent-security/evo-by-snyk/access-and-authentication.md)
+- [Overview](https://docs.snyk.io/agent-security/readme.md): Secure AI-assisted development and the AI systems your Organization runs, across coding assistants, cloud AI platforms, and organization-wide AI risk
+- [Overview](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/agentic-security-with-snyk-studio.md): How Snyk Studio embeds security directives into AI-assisted development workflows
+- [Getting started with Snyk Studio](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/getting-started-with-snyk-studio.md): How to install and configure Snyk Studio, with and without agentic environment hooks support
+- [Directives](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/directives.md): How directives govern the way AI coding assistants follow your security policy and standards
+- [Distribution at scale](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/distribution-at-scale.md): How to distribute Snyk Studio as a managed utility across your development teams
+- [Quickstart guides](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides.md): Quickstart guides for setting up Snyk Studio with common AI coding assistants
+- [Amazon Q guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/amazon-q-guide.md): How to set up Snyk Studio and the Snyk MCP server in Amazon Q
+- [Antigravity guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/antigravity-guide.md): How to set up Snyk Studio and the Snyk MCP server in Google Antigravity
+- [Augment Code guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/augment-code-guide.md): How to set up Snyk Studio and the Snyk MCP server in Augment Code
+- [Claude Code guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/claude-code-guide.md): How to install Snyk Studio in Claude Code using the hooks-based or rules-based approach
+- [Cline guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/cline-guide.md): How to set up Snyk Studio and the Snyk MCP server in Cline
+- [Codex CLI guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/codex-cli-guide.md): How to install Snyk Studio in Codex CLI using the hooks-based or rules-based approach
+- [Continue guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/continue-guide.md): How to set up Snyk Studio and the Snyk MCP server in Continue
+- [Cursor guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/cursor-guide.md): How to install Snyk Studio in Cursor using the hooks-based or rules-based approach
+- [Devin guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/devin-guide.md): How to set up Snyk Studio and the Snyk MCP server in Devin
+- [Factory guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/factory-guide.md): How to set up Snyk Studio and the Snyk MCP server in Factory
+- [Factory Terminal/IDE guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/factory-terminal-ide-guide.md): How to set up Snyk Studio and the Snyk MCP server in Factory Terminal and IDE
+- [Gemini CLI guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/gemini-cli-guide.md): How to install Snyk Studio in Gemini CLI using the hooks-based or rules-based approach
+- [Gemini Code Assist guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/gemini-code-assist-guide.md): How to set up Snyk Studio and the Snyk MCP server in Gemini Code Assist
+- [GitHub Copilot guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/github-copilot-guide.md): How to access Snyk Studio in GitHub Copilot with the Snyk Security plugin or a direct install
+- [Goose CLI guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/goose-cli-guide.md): How to set up Snyk Studio and the Snyk MCP server in Goose CLI
+- [JetBrains AI assistant](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/jetbrains-ai-assistant.md): How to set up Snyk Studio and the Snyk MCP server in JetBrains AI Assistant
+- [JetBrains Junie](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/jetbrains-junie.md): How to set up Snyk Studio and the Snyk MCP server in JetBrains Junie
+- [Kiro guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/kiro-guide.md): How to set up Snyk Studio and the Snyk MCP server in Kiro
+- [Qodo guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/qodo-guide.md): How to set up Snyk Studio and the Snyk MCP server in Qodo
+- [Windsurf guide](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/quickstart-guides/windsurf-guide.md): How to access Snyk Studio in Windsurf with the Snyk Security plugin or a direct install
+- [Troubleshooting](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/troubleshooting.md): How to diagnose Snyk Studio and Snyk MCP server problems, including CLI version and authentication issues
+- [Usage analytics](https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/usage-analytics.md): Report types that show how your teams use Snyk Studio
+- [Overview](https://docs.snyk.io/agent-security/cloud-ai-platforms/overview.md): How Snyk Evo integrates with cloud AI platforms to find AI assets deployed outside your code
+- [Anthropic's Claude Enterprise](https://docs.snyk.io/agent-security/cloud-ai-platforms/anthropics-claude-enterprise.md): How to integrate Snyk Evo with Anthropic's Claude Enterprise to inventory AI assets
+- [Overview](https://docs.snyk.io/agent-security/evo-by-snyk/overview.md): How the Evo platform presents discovered AI assets, manages policy, and reports on your security posture
+- [Access and authentication](https://docs.snyk.io/agent-security/evo-by-snyk/access-and-authentication.md): How to enable Snyk Evo for your Tenant, add members, and assign roles
 - [Platform surfaces](https://docs.snyk.io/agent-security/evo-by-snyk/platform-surfaces.md)
-- [Inventory](https://docs.snyk.io/agent-security/evo-by-snyk/platform-surfaces/inventory.md)
-- [Policies & issues](https://docs.snyk.io/agent-security/evo-by-snyk/platform-surfaces/policies-and-issues.md)
-- [Reports](https://docs.snyk.io/agent-security/evo-by-snyk/platform-surfaces/reports.md)
-- [Evo chat](https://docs.snyk.io/agent-security/evo-by-snyk/platform-surfaces/evo-chat.md)
-- [AI-SPM](https://docs.snyk.io/agent-security/evo-by-snyk/ai-spm.md)
-- [AI asset visibility](https://docs.snyk.io/agent-security/evo-by-snyk/ai-spm/ai-asset-visibility.md)
-- [Risk intelligence](https://docs.snyk.io/agent-security/evo-by-snyk/ai-spm/risk-intelligence.md)
-- [Framework mappings](https://docs.snyk.io/agent-security/evo-by-snyk/ai-spm/risk-intelligence/framework-mappings.md)
-- [Agentic Development Security (ADS)](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads.md)
-- [Activation and deployment](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/activation-and-deployment.md)
-- [Agent Supply Chain Security](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/agent-supply-chain-security.md)
-- [Agent Behavior Governance](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/agent-behavior-governance.md)
-- [Trusted Output Assurance](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/trusted-output-assurance.md)
-- [Continuous Offensive Security (COS)](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos.md)
-- [Targets](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/targets.md)
-- [Before you begin](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/targets/before-you-begin.md)
-- [Define the Target Scope](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/targets/define-the-target-scope.md)
-- [Configure authentication](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/targets/configure-authentication.md)
-- [Manage Targets](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/targets/manage-targets.md)
-- [Scans](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/scans.md)
-- [Scanner IP addresses](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/scans/scanner-ip-addresses.md)
-- [Monitor and Manage Scans](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/scans/monitor-and-manage-scans.md)
-- [Findings and Reports](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/findings-and-reports.md)
-- [Interpret Scan Results](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/findings-and-reports/interpret-scan-results.md)
-- [Understand finding details](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/findings-and-reports/understand-finding-details.md)
-- [Severity and Scoring](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/findings-and-reports/severity-and-scoring.md)
-- [Reports](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/findings-and-reports/reports.md)
+- [Evo MCP server](https://docs.snyk.io/agent-security/evo-by-snyk/platform-surfaces/evo-mcp-server.md): How to connect AI assistants to Evo through the hosted Evo MCP server, and which tools, permissions, and limits apply
+- [Common use cases](https://docs.snyk.io/agent-security/evo-by-snyk/platform-surfaces/evo-mcp-server/common-use-cases.md): Example multi-step workflows that combine the Evo MCP server with other MCP servers to build dashboards, raise tickets, and create policies
+- [Inventory](https://docs.snyk.io/agent-security/evo-by-snyk/platform-surfaces/inventory.md): How Inventory presents the AI assets discovered across your environment with their assessed risk
+- [Policies & issues](https://docs.snyk.io/agent-security/evo-by-snyk/platform-surfaces/policies-and-issues.md): How Evo policies govern AI use and raise issues when an asset violates them
+- [Reports](https://docs.snyk.io/agent-security/evo-by-snyk/platform-surfaces/reports.md): How to save Evo chat views as reports that update automatically as your data changes
+- [Evo chat](https://docs.snyk.io/agent-security/evo-by-snyk/platform-surfaces/evo-chat.md): How to use Evo chat to explore your inventory, manage policies, and generate reports in natural language
+- [AI-SPM](https://docs.snyk.io/agent-security/evo-by-snyk/ai-spm.md): How AI Security Posture Management gives you visibility and governance over the AI assets in your code
+- [AI asset visibility](https://docs.snyk.io/agent-security/evo-by-snyk/ai-spm/ai-asset-visibility.md): How the Discovery agent maps the AI assets in your code with an AI-BOM scan
+- [Risk intelligence](https://docs.snyk.io/agent-security/evo-by-snyk/ai-spm/risk-intelligence.md): How the Risk intelligence agent scores AI models using adversarial testing
+- [Framework mappings](https://docs.snyk.io/agent-security/evo-by-snyk/ai-spm/risk-intelligence/framework-mappings.md): How Snyk maps attacker goals to four industry governance frameworks
+- [Agentic Development Security (ADS)](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads.md): How Agentic Development Security secures the AI agents that build your software
+- [Activation and deployment](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/activation-and-deployment.md): How to configure Agentic Development Security and install it on one machine or across your company
+- [Install on a single machine](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/activation-and-deployment/install-on-a-single-machine.md): How to install Agentic Development Security on one machine, without a device management tool
+- [Deploy with Jamf Pro](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/activation-and-deployment/deploy-with-jamf-pro.md): How to deploy Agentic Development Security to macOS devices with Jamf Pro
+- [Deploy with Microsoft Intune](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/activation-and-deployment/deploy-with-microsoft-intune.md): How to deploy Agentic Development Security to Windows devices with Microsoft Intune
+- [Verify an installation](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/activation-and-deployment/verify-an-installation.md): How to confirm ADS installed on a machine, and what to check when the results are not what you expect
+- [Troubleshooting](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/activation-and-deployment/troubleshooting.md): Errors you can encounter when installing or removing ADS, and how to resolve them
+- [Agent Supply Chain Security](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/agent-supply-chain-security.md): How Agent Supply Chain Security assesses the MCP servers, skills, and tools your agents use
+- [Agent Behavior Governance](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/agent-behavior-governance.md): How Agent Behavior Governance secures what AI agents do inside their execution loop
+- [MCP Governance](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/agent-behavior-governance/mcp-governance.md): Establishing an MCP server policy in Evo, evaluating real usage against your environment, and safely enabling runtime enforcement.
+- [Trusted Output Assurance](https://docs.snyk.io/agent-security/evo-by-snyk/agentic-development-security-ads/trusted-output-assurance.md): How Trusted Output Assurance secures AI-assisted development before insecure code reaches production
+- [Continuous Offensive Security (COS)](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos.md): How Snyk Continuous Offensive Security continuously tests web applications and validates real vulnerabilities
+- [Targets](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/targets.md): How to configure the applications that Snyk Continuous Offensive Security tests
+- [Before you begin](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/targets/before-you-begin.md): How to add a Continuous Offensive Security target, including authorization requirements
+- [Define the Target Scope](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/targets/define-the-target-scope.md): How the target scope bounds where Continuous Offensive Security agents can send requests
+- [Configure authentication](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/targets/configure-authentication.md): How to give Continuous Offensive Security agents the credentials they need to test behind a login
+- [Manage Targets](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/targets/manage-targets.md): How to view, edit, and delete your Continuous Offensive Security targets
+- [Scans](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/scans.md): How to start and monitor AI pentesting scans against your Continuous Offensive Security targets
+- [Scanner IP addresses](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/scans/scanner-ip-addresses.md): The IP addresses Continuous Offensive Security scans run from, by region, and where to allow them
+- [Monitor and Manage Scans](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/scans/monitor-and-manage-scans.md): How to monitor scan progress and manage scan activity across your Continuous Offensive Security targets
+- [Findings and Reports](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/findings-and-reports.md): How to review and act on validated vulnerabilities from completed Continuous Offensive Security scans
+- [Interpret Scan Results](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/findings-and-reports/interpret-scan-results.md): How to read the target summary, findings list, and scan history for a Continuous Offensive Security target
+- [Understand finding details](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/findings-and-reports/understand-finding-details.md): How to triage, reproduce, and hand off a Continuous Offensive Security finding
+- [Severity and Scoring](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/findings-and-reports/severity-and-scoring.md): How severity levels and CVSS scores work in Continuous Offensive Security, and how to prioritize findings
+- [Reports](https://docs.snyk.io/agent-security/evo-by-snyk/continuous-offensive-security-cos/findings-and-reports/reports.md): How to generate and use PDF reports from completed Continuous Offensive Security scans
 
 ## Snyk data and governance
 
-- [Overview](https://docs.snyk.io/snyk-data-and-governance/overview.md): Overview of Snyk data handling and governance resources, including data security, hosting, AI, and support and services terms
 - [Working with Snyk](https://docs.snyk.io/snyk-data-and-governance/working-with-snyk.md): How Snyk handles user data responsibly, covering privacy, compliance, hosting, and vulnerability data
 - [How Snyk handles your data](https://docs.snyk.io/snyk-data-and-governance/how-snyk-handles-your-data.md): How Snyk accesses, transfers, and stores your data as a developer security platform
 - [How Snyk incorporates generative AI into the platform](https://docs.snyk.io/snyk-data-and-governance/how-snyk-incorporates-generative-ai-into-the-platform.md): How Snyk uses generative AI across its platform, including the third-party models that power its AI features
@@ -1262,12 +1299,12 @@
 - [Snyk Jumpstart Standard Services Description](https://docs.snyk.io/snyk-data-and-governance/snyk-terms-of-support-and-services-glossary/snyk-jumpstart-services-description.md): Service description for Snyk Jumpstart Standard, consultant-led assisted account configuration
 - [Snyk Jumpstart Customer Prerequisites](https://docs.snyk.io/snyk-data-and-governance/snyk-terms-of-support-and-services-glossary/snyk-jumpstart-customer-prerequisites.md): Customer prerequisites for a Snyk Jumpstart consultant-led implementation engagement
 - [Snyk Declining Balance of Hours Service Description](https://docs.snyk.io/snyk-data-and-governance/snyk-terms-of-support-and-services-glossary/declining-balance.md): Service description for Snyk Declining Balance of Hours, flexible expert-led consulting hours
-- [Snyk API & Web Managed Scans Service Description](https://docs.snyk.io/snyk-data-and-governance/snyk-terms-of-support-and-services-glossary/snyk-api-and-web-managed-scans-service-description.md): Service description for Snyk API and Web Managed Scans, an add-on for expert-run dynamic application security testing
+- [Snyk API & Web Managed Scans Service Description](https://docs.snyk.io/snyk-data-and-governance/snyk-terms-of-support-and-services-glossary/snyk-api-and-web-managed-scans-service-description.md): Service description for Snyk API & Web Managed Scans, an add-on for expert-run dynamic application security testing
 - [Snyk Penetration Testing Service Description](https://docs.snyk.io/snyk-data-and-governance/snyk-terms-of-support-and-services-glossary/snyk-penetration-testing-service-description.md): Service description for Snyk Penetration Testing, an expert-driven security evaluation of your web applications
 - [Legacy Success Offerings](https://docs.snyk.io/snyk-data-and-governance/snyk-terms-of-support-and-services-glossary/legacy-success-offerings.md): Terms for legacy Snyk support and success offerings that have reached end-of-sale
 - [How Snyk counts assets](https://docs.snyk.io/snyk-data-and-governance/how-does-snyk-count-assets.md): How Snyk counts billable assets managed through Snyk Essentials
 - [What counts as a test?](https://docs.snyk.io/snyk-data-and-governance/what-counts-as-a-test.md): How Snyk counts tests against your plan limits, and what does not apply under credit-based licenses
-- [Snyk Platform credits](https://docs.snyk.io/snyk-data-and-governance/snyk-platform-access-credits.md): How the Snyk Credits plan consolidates capabilities into flexible, usage-based credits
+- [Snyk Platform credits](https://docs.snyk.io/snyk-data-and-governance/snyk-platform-access-credits.md): How the Snyk Platform Subscription plan consolidates capabilities into flexible, usage-based credits
 - [Snyk for Government (US)](https://docs.snyk.io/snyk-data-and-governance/snyk-for-government-us.md): Snyk for Government (US), which helps US federal agencies develop securely within their existing workflows
 
 

@@ -1,0 +1,604 @@
+{
+  "@context": {
+    "@vocab": "https://snyk.io/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "snyk": "https://snyk.io/schema#",
+    "ErrorDocument": "snyk:ErrorDocument",
+    "errors": {
+      "@id": "snyk:errors",
+      "@container": "@list"
+    },
+    "jsonapi": {
+      "@id": "snyk:jsonapi"
+    },
+    "Links": "snyk:Links",
+    "first": {
+      "@id": "snyk:first",
+      "@type": "@id"
+    },
+    "last": {
+      "@id": "snyk:last",
+      "@type": "@id"
+    },
+    "next": {
+      "@id": "snyk:next",
+      "@type": "@id"
+    },
+    "prev": {
+      "@id": "snyk:prev",
+      "@type": "@id"
+    },
+    "related": {
+      "@id": "snyk:related",
+      "@type": "@id"
+    },
+    "self": {
+      "@id": "snyk:self",
+      "@type": "@id"
+    },
+    "AccessRequest": "snyk:AccessRequest",
+    "attributes": {
+      "@id": "snyk:attributes",
+      "@type": "@id"
+    },
+    "id": {
+      "@id": "snyk:id",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "snyk:type",
+      "@type": "@id"
+    },
+    "JsonApi": "snyk:JsonApi",
+    "version": {
+      "@id": "snyk:version",
+      "@type": "xsd:string"
+    },
+    "AccessRequestAttributes": "snyk:AccessRequestAttributes",
+    "status": {
+      "@id": "snyk:status",
+      "@type": "xsd:string"
+    },
+    "CreateAndUploadAiBomFileUploadAttributes": "snyk:CreateAndUploadAiBomFileUploadAttributes",
+    "repo_name": {
+      "@id": "snyk:repo_name",
+      "@type": "xsd:string"
+    },
+    "upload_revision_id": {
+      "@id": "snyk:upload_revision_id",
+      "@type": "xsd:string"
+    },
+    "PaginatedLinks": "snyk:PaginatedLinks",
+    "CreateAiBomResponseBody": "snyk:CreateAiBomResponseBody",
+    "data": {
+      "@id": "snyk:data",
+      "@type": "@id"
+    },
+    "links": {
+      "@id": "snyk:links",
+      "@type": "@id"
+    },
+    "CreateAndUploadAiBomRequestBody": "snyk:CreateAndUploadAiBomRequestBody",
+    "RelationshipObjectToOne": "snyk:RelationshipObjectToOne",
+    "FileBundleStoreAttributes": "snyk:FileBundleStoreAttributes",
+    "bundle_id": {
+      "@id": "snyk:bundle_id",
+      "@type": "xsd:string"
+    },
+    "GetAiBomResponseBody": "snyk:GetAiBomResponseBody",
+    "JobAttributes": "snyk:JobAttributes",
+    "FileUploadApiData": "snyk:FileUploadApiData",
+    "FileBundleStoreData": "snyk:FileBundleStoreData",
+    "CreateAndUploadAiBomFileBundleData": "snyk:CreateAndUploadAiBomFileBundleData",
+    "GetAiBomResponseData": "snyk:GetAiBomResponseData",
+    "JobState": "snyk:JobState",
+    "CreateAiBomRequestBody": "snyk:CreateAiBomRequestBody",
+    "JobDataRelationships": "snyk:JobDataRelationships",
+    "ai_bom": {
+      "@id": "snyk:ai_bom",
+      "@type": "@id"
+    },
+    "CreateAndUploadAiBomFileUploadData": "snyk:CreateAndUploadAiBomFileUploadData",
+    "RelationshipObjectToOneData": "snyk:RelationshipObjectToOneData",
+    "ScmBundleStoreAttributes": "snyk:ScmBundleStoreAttributes",
+    "target_id": {
+      "@id": "snyk:target_id",
+      "@type": "xsd:string"
+    },
+    "target_version": {
+      "@id": "snyk:target_version",
+      "@type": "xsd:string"
+    },
+    "CreateAndUploadAiBomFileBundleAttributes": "snyk:CreateAndUploadAiBomFileBundleAttributes",
+    "FileUploadApiAttributes": "snyk:FileUploadApiAttributes",
+    "JobData": "snyk:JobData",
+    "relationships": {
+      "@id": "snyk:relationships",
+      "@type": "@id"
+    },
+    "ScmBundleStoreData": "snyk:ScmBundleStoreData",
+    "GetAiBomResponseJobBody": "snyk:GetAiBomResponseJobBody",
+    "SelfLink": "snyk:SelfLink",
+    "SessionData": "snyk:SessionData",
+    "Error__0": "snyk:Error__0",
+    "code": {
+      "@id": "snyk:code",
+      "@type": "xsd:string"
+    },
+    "detail": {
+      "@id": "snyk:detail",
+      "@type": "xsd:string"
+    },
+    "meta": {
+      "@id": "snyk:meta"
+    },
+    "source": {
+      "@id": "snyk:source"
+    },
+    "title": {
+      "@id": "snyk:title",
+      "@type": "xsd:string"
+    },
+    "AppBot": "snyk:AppBot",
+    "Context": "snyk:Context",
+    "AppPostRequest": "snyk:AppPostRequest",
+    "AppPostResponse": "snyk:AppPostResponse",
+    "SessionAttributes": "snyk:SessionAttributes",
+    "created_at": {
+      "@id": "snyk:created_at",
+      "@type": "xsd:dateTime"
+    },
+    "AppResourceAttributesWithSecret": "snyk:AppResourceAttributesWithSecret",
+    "access_token_ttl_seconds": {
+      "@id": "snyk:access_token_ttl_seconds",
+      "@type": "@id"
+    },
+    "client_id": {
+      "@id": "snyk:client_id",
+      "@type": "@id"
+    },
+    "client_secret": {
+      "@id": "snyk:client_secret",
+      "@type": "@id"
+    },
+    "context": {
+      "@id": "snyk:context",
+      "@type": "@id"
+    },
+    "grant_type": {
+      "@id": "snyk:grant_type",
+      "@type": "@id"
+    },
+    "is_confidential": {
+      "@id": "snyk:is_confidential",
+      "@type": "@id"
+    },
+    "is_public": {
+      "@id": "snyk:is_public",
+      "@type": "@id"
+    },
+    "name": {
+      "@id": "snyk:name",
+      "@type": "@id"
+    },
+    "org_public_id": {
+      "@id": "snyk:org_public_id",
+      "@type": "@id"
+    },
+    "redirect_uris": {
+      "@id": "snyk:redirect_uris",
+      "@type": "@id"
+    },
+    "scopes": {
+      "@id": "snyk:scopes",
+      "@type": "@id"
+    },
+    "AppPatchRequest20220311": "snyk:AppPatchRequest20220311",
+    "ErrorDocument__0": "snyk:ErrorDocument__0",
+    "AppPostResponse20220311": "snyk:AppPostResponse20220311",
+    "GrantType": "snyk:GrantType",
+    "AppPostRequest20220311": "snyk:AppPostRequest20220311",
+    "AppDataWithSecret": "snyk:AppDataWithSecret",
+    "AppResourceAttributes20220311": "snyk:AppResourceAttributes20220311",
+    "AppInstallData": "snyk:AppInstallData",
+    "AppData": "snyk:AppData",
+    "AppDataWithSecret20220311": "snyk:AppDataWithSecret20220311",
+    "AppInstallDataWithSecret": "snyk:AppInstallDataWithSecret",
+    "AppInstallWithClient": "snyk:AppInstallWithClient",
+    "AppPatchRequest": "snyk:AppPatchRequest",
+    "ErrorLink": "snyk:ErrorLink",
+    "about": {
+      "@id": "snyk:about"
+    },
+    "GrantType20220311": "snyk:GrantType20220311",
+    "PublicAppAttributes": "snyk:PublicAppAttributes",
+    "AppResourceAttributes": "snyk:AppResourceAttributes",
+    "Context__0": "snyk:Context__0",
+    "PublicApp": "snyk:PublicApp",
+    "PublicAppAttributes__0": "snyk:PublicAppAttributes__0",
+    "PublicAppData": "snyk:PublicAppData",
+    "AppResourceAttributesWithSecret20220311": "snyk:AppResourceAttributesWithSecret20220311",
+    "AppData20220311": "snyk:AppData20220311",
+    "IssuesCountAttributes": "snyk:IssuesCountAttributes",
+    "critical": {
+      "@id": "snyk:critical",
+      "@type": "xsd:integer"
+    },
+    "high": {
+      "@id": "snyk:high",
+      "@type": "xsd:integer"
+    },
+    "low": {
+      "@id": "snyk:low",
+      "@type": "xsd:integer"
+    },
+    "medium": {
+      "@id": "snyk:medium",
+      "@type": "xsd:integer"
+    },
+    "DeveloperAttributes": "snyk:DeveloperAttributes",
+    "discovered_by": {
+      "@id": "snyk:discovered_by",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "snyk:email",
+      "@type": "xsd:string"
+    },
+    "url": {
+      "@id": "snyk:url",
+      "@type": "@id"
+    },
+    "username": {
+      "@id": "snyk:username",
+      "@type": "xsd:string"
+    },
+    "SearchObject": "snyk:SearchObject",
+    "query": {
+      "@id": "snyk:query"
+    },
+    "UpdateAssetRequestData": "snyk:UpdateAssetRequestData",
+    "AssetTagsUpdate": "snyk:AssetTagsUpdate",
+    "add": {
+      "@id": "snyk:add"
+    },
+    "remove": {
+      "@id": "snyk:remove",
+      "@container": "@list"
+    },
+    "AddRepositoryAliasAttributes": "snyk:AddRepositoryAliasAttributes",
+    "new_url": {
+      "@id": "snyk:new_url",
+      "@type": "xsd:string"
+    },
+    "RemoveRepositoryAliasAttributes": "snyk:RemoveRepositoryAliasAttributes",
+    "AssetClassAttributes": "snyk:AssetClassAttributes",
+    "display_name": {
+      "@id": "snyk:display_name",
+      "@type": "xsd:string"
+    },
+    "locked": {
+      "@id": "snyk:locked",
+      "@type": "xsd:boolean"
+    },
+    "rank": {
+      "@id": "snyk:rank",
+      "@type": "xsd:integer"
+    },
+    "CoverageControlAttributes": "snyk:CoverageControlAttributes",
+    "category": {
+      "@id": "snyk:category",
+      "@type": "xsd:string"
+    },
+    "gap": {
+      "@id": "snyk:gap",
+      "@type": "xsd:boolean"
+    },
+    "issues_count": {
+      "@id": "snyk:issues_count",
+      "@type": "@id"
+    },
+    "last_scan": {
+      "@id": "snyk:last_scan",
+      "@type": "xsd:dateTime"
+    },
+    "AssetProjectResponseData": "snyk:AssetProjectResponseData",
+    "AddRepositoryAliasRequestData": "snyk:AddRepositoryAliasRequestData",
+    "AssetAttributes": "snyk:AssetAttributes",
+    "app_context": {
+      "@id": "snyk:app_context"
+    },
+    "archived": {
+      "@id": "snyk:archived",
+      "@type": "xsd:boolean"
+    },
+    "base_image": {
+      "@id": "snyk:base_image",
+      "@type": "xsd:string"
+    },
+    "browse_url": {
+      "@id": "snyk:browse_url",
+      "@type": "@id"
+    },
+    "class": {
+      "@id": "snyk:class",
+      "@type": "@id"
+    },
+    "coverage_controls": {
+      "@id": "snyk:coverage_controls",
+      "@container": "@list"
+    },
+    "default_branch_name": {
+      "@id": "snyk:default_branch_name",
+      "@type": "xsd:string"
+    },
+    "developers": {
+      "@id": "snyk:developers",
+      "@container": "@list"
+    },
+    "file_path": {
+      "@id": "snyk:file_path",
+      "@type": "xsd:string"
+    },
+    "image_digests": {
+      "@id": "snyk:image_digests",
+      "@container": "@list"
+    },
+    "image_id": {
+      "@id": "snyk:image_id",
+      "@type": "xsd:string"
+    },
+    "image_registries": {
+      "@id": "snyk:image_registries",
+      "@container": "@list"
+    },
+    "image_repositories": {
+      "@id": "snyk:image_repositories",
+      "@container": "@list"
+    },
+    "image_tags": {
+      "@id": "snyk:image_tags",
+      "@container": "@list"
+    },
+    "labels": {
+      "@id": "snyk:labels",
+      "@container": "@list"
+    },
+    "languages": {
+      "@id": "snyk:languages"
+    },
+    "removed_reasons": {
+      "@id": "snyk:removed_reasons",
+      "@container": "@list"
+    },
+    "repository_freshness": {
+      "@id": "snyk:repository_freshness",
+      "@type": "xsd:string"
+    },
+    "repository_url": {
+      "@id": "snyk:repository_url",
+      "@type": "xsd:string"
+    },
+    "risk_factors": {
+      "@id": "snyk:risk_factors",
+      "@container": "@list"
+    },
+    "sources": {
+      "@id": "snyk:sources",
+      "@container": "@list"
+    },
+    "tags": {
+      "@id": "snyk:tags"
+    },
+    "updated_at": {
+      "@id": "snyk:updated_at",
+      "@type": "xsd:dateTime"
+    },
+    "PaginationLinks": "snyk:PaginationLinks",
+    "RemoveRepositoryAliasRequestData": "snyk:RemoveRepositoryAliasRequestData",
+    "AssetLabelsUpdate": "snyk:AssetLabelsUpdate",
+    "SearchAttributesObject": "snyk:SearchAttributesObject",
+    "attribute": {
+      "@id": "snyk:attribute"
+    },
+    "operator": {
+      "@id": "snyk:operator",
+      "@type": "xsd:string"
+    },
+    "values": {
+      "@id": "snyk:values",
+      "@container": "@list"
+    },
+    "RepositoryAliasItemAttributes": "snyk:RepositoryAliasItemAttributes",
+    "AssetResponseData": "snyk:AssetResponseData",
+    "removed": {
+      "@id": "snyk:removed",
+      "@type": "xsd:boolean"
+    },
+    "UpdateAssetAttributes": "snyk:UpdateAssetAttributes",
+    "RepositoryAliasesData": "snyk:RepositoryAliasesData",
+    "AssetProjectAttributes": "snyk:AssetProjectAttributes",
+    "issues_counts": {
+      "@id": "snyk:issues_counts"
+    },
+    "organization_id": {
+      "@id": "snyk:organization_id",
+      "@type": "xsd:string"
+    },
+    "organization_name": {
+      "@id": "snyk:organization_name",
+      "@type": "xsd:string"
+    },
+    "project_type": {
+      "@id": "snyk:project_type",
+      "@type": "xsd:string"
+    },
+    "target_file": {
+      "@id": "snyk:target_file",
+      "@type": "xsd:string"
+    },
+    "target_reference": {
+      "@id": "snyk:target_reference",
+      "@type": "xsd:string"
+    },
+    "test_surface": {
+      "@id": "snyk:test_surface",
+      "@type": "xsd:string"
+    },
+    "ListRepositoryAliasesResponse": "snyk:ListRepositoryAliasesResponse",
+    "AssetRelationships": "snyk:AssetRelationships",
+    "assets": {
+      "@id": "snyk:assets"
+    },
+    "organizations": {
+      "@id": "snyk:organizations"
+    },
+    "projects": {
+      "@id": "snyk:projects"
+    },
+    "AssetClass": "snyk:AssetClass",
+    "AuditLogSearch": "snyk:AuditLogSearch",
+    "items": {
+      "@id": "snyk:items",
+      "@container": "@list"
+    },
+    "GenericConfigurationAttributes": "snyk:GenericConfigurationAttributes",
+    "configuration": {
+      "@id": "snyk:configuration"
+    },
+    "ConfigurationAttributes": "snyk:ConfigurationAttributes",
+    "ConnectionRelationship": "snyk:ConnectionRelationship",
+    "AcrAttributes": "snyk:AcrAttributes",
+    "required": {
+      "@id": "snyk:required"
+    },
+    "validations": {
+      "@id": "snyk:validations",
+      "@container": "@list"
+    },
+    "ListBrokerConnectionsSummaryResponse": "snyk:ListBrokerConnectionsSummaryResponse",
+    "CreateBulkMigrationRequest": "snyk:CreateBulkMigrationRequest",
+    "ConnectionSummaryAttributes": "snyk:ConnectionSummaryAttributes",
+    "connection_type": {
+      "@id": "snyk:connection_type",
+      "@type": "xsd:string"
+    },
+    "deployment_id": {
+      "@id": "snyk:deployment_id",
+      "@type": "xsd:string"
+    },
+    "GoogleArtifactCrAttributes": "snyk:GoogleArtifactCrAttributes",
+    "GitHubServerAppAttributes": "snyk:GitHubServerAppAttributes",
+    "QuayCrAttributes": "snyk:QuayCrAttributes",
+    "ArtifactoryAttributes": "snyk:ArtifactoryAttributes",
+    "GithubCrAttributes": "snyk:GithubCrAttributes",
+    "AppliedIntegrationsRelationships": "snyk:AppliedIntegrationsRelationships",
+    "applied_integrations": {
+      "@id": "snyk:applied_integrations",
+      "@container": "@list"
+    },
+    "ListBrokerConnectionsResponse": "snyk:ListBrokerConnectionsResponse",
+    "BrokerConnectionSummaryResponseResource": "snyk:BrokerConnectionSummaryResponseResource",
+    "Jira": "snyk:Jira",
+    "jira_hostname": {
+      "@id": "snyk:jira_hostname",
+      "@type": "xsd:string"
+    },
+    "jira_password": {
+      "@id": "snyk:jira_password",
+      "@type": "xsd:string"
+    },
+    "jira_username": {
+      "@id": "snyk:jira_username",
+      "@type": "xsd:string"
+    },
+    "CheckmarxAttributes": "snyk:CheckmarxAttributes",
+    "checkmarx": {
+      "@id": "snyk:checkmarx",
+      "@type": "xsd:string"
+    },
+    "checkmarx_password": {
+      "@id": "snyk:checkmarx_password",
+      "@type": "xsd:string"
+    },
+    "checkmarx_username": {
+      "@id": "snyk:checkmarx_username",
+      "@type": "xsd:string"
+    },
+    "IntegrationResource": "snyk:IntegrationResource",
+    "integration_id": {
+      "@id": "snyk:integration_id",
+      "@type": "xsd:string"
+    },
+    "GetBrokerConnectionIntegrationsResponse": "snyk:GetBrokerConnectionIntegrationsResponse",
+    "BitbucketServerAttributes": "snyk:BitbucketServerAttributes",
+    "BitbucketServer": "snyk:BitbucketServer",
+    "bitbucket": {
+      "@id": "snyk:bitbucket",
+      "@type": "xsd:string"
+    },
+    "bitbucket_password": {
+      "@id": "snyk:bitbucket_password",
+      "@type": "xsd:string"
+    },
+    "bitbucket_username": {
+      "@id": "snyk:bitbucket_username",
+      "@type": "xsd:string"
+    },
+    "broker_client_url": {
+      "@id": "snyk:broker_client_url",
+      "@type": "xsd:string"
+    },
+    "NexusAttributes": "snyk:NexusAttributes",
+    "SonarqubeAttributes": "snyk:SonarqubeAttributes",
+    "sonarqube_api_token": {
+      "@id": "snyk:sonarqube_api_token",
+      "@type": "xsd:string"
+    },
+    "sonarqube_host_url": {
+      "@id": "snyk:sonarqube_host_url",
+      "@type": "xsd:string"
+    },
+    "GitHubEnterpriseAttributes": "snyk:GitHubEnterpriseAttributes",
+    "ArtifactoryCrAttributes": "snyk:ArtifactoryCrAttributes",
+    "DigitalOceanCrAttributes": "snyk:DigitalOceanCrAttributes",
+    "AzureReposAttributes": "snyk:AzureReposAttributes",
+    "NexusCrAttributes": "snyk:NexusCrAttributes",
+    "CreateBrokerConnectionIntegration": "snyk:CreateBrokerConnectionIntegration",
+    "SecretAttributes": "snyk:SecretAttributes",
+    "encrypted": {
+      "@id": "snyk:encrypted",
+      "@type": "xsd:string"
+    },
+    "expires_at": {
+      "@id": "snyk:expires_at",
+      "@type": "xsd:dateTime"
+    },
+    "nonce": {
+      "@id": "snyk:nonce",
+      "@type": "xsd:string"
+    },
+    "UpdateBrokerConnectionRequest": "snyk:UpdateBrokerConnectionRequest",
+    "ConnectionRelationships__0": "snyk:ConnectionRelationships__0",
+    "broker_connections": {
+      "@id": "snyk:broker_connections",
+      "@container": "@list"
+    },
+    "AppRiskAttributes": "snyk:AppRiskAttributes",
+    "CreateBrokerConnectionRequest": "snyk:CreateBrokerConnectionRequest",
+    "GetBrokerConnectionIntegrationResponse": "snyk:GetBrokerConnectionIntegrationResponse"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Snyk API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Snyk's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-04) from openapi/snyk-access-requests-api-openapi.yml, openapi/snyk-aibom-api-openapi.yml, openapi/snyk-apps-api-openapi.yml.",
+  "dcterms:created": "2026-10-04",
+  "dcterms:source": [
+    "openapi/snyk-access-requests-api-openapi.yml",
+    "openapi/snyk-aibom-api-openapi.yml",
+    "openapi/snyk-apps-api-openapi.yml",
+    "openapi/snyk-asset-api-openapi.yml",
+    "openapi/snyk-audit-logs-api-openapi.yml"
+  ]
+}

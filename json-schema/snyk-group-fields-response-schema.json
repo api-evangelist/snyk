@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-group-fields-response-schema.json",
+  "title": "GroupFieldsResponse",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-inventory-assets-api-openapi.yml#/components/schemas/GroupFieldsResponse",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "description": "List of available group fields",
+      "items": {
+        "$ref": "#/$defs/GroupFieldData"
+      },
+      "type": "array"
+    },
+    "links": {
+      "description": "Self-referencing link",
+      "properties": {
+        "self": {
+          "description": "Link to the current resource",
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "self"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "data",
+    "links"
+  ],
+  "type": "object",
+  "$defs": {
+    "GroupFieldAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_types": {
+          "description": "List of asset types this field applies to",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "The field name used for grouping (e.g., \"class\", \"registry\")",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "asset_types"
+      ],
+      "type": "object"
+    },
+    "GroupFieldData": {
+      "additionalProperties": false,
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/GroupFieldAttributes"
+        },
+        "id": {
+          "description": "UUID identifier for the group field",
+          "format": "uuid",
+          "type": "string"
+        },
+        "relationships": {
+          "description": "Relationships for this group field",
+          "properties": {
+            "values": {
+              "properties": {
+                "links": {
+                  "properties": {
+                    "related": {
+                      "description": "Relative path to get aggregated values for this group field",
+                      "format": "uri-reference",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "related"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "type": {
+          "description": "The JSON:API resource type",
+          "enum": [
+            "group_fields"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ],
+      "type": "object"
+    }
+  }
+}

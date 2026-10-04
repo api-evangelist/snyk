@@ -1,0 +1,342 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-project-attributes-schema.json",
+  "title": "ProjectAttributes",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-projects-api-openapi.yml#/components/schemas/ProjectAttributes",
+  "additionalProperties": false,
+  "properties": {
+    "build_args": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/YarnBuildArgs"
+        },
+        {
+          "$ref": "#/$defs/ContainerBuildArgs"
+        },
+        {
+          "$ref": "#/$defs/NugetBuildArgs"
+        }
+      ]
+    },
+    "business_criticality": {
+      "items": {
+        "enum": [
+          "critical",
+          "high",
+          "medium",
+          "low"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "created": {
+      "description": "The date that the project was created on",
+      "format": "date-time",
+      "type": "string"
+    },
+    "environment": {
+      "items": {
+        "enum": [
+          "frontend",
+          "backend",
+          "internal",
+          "external",
+          "mobile",
+          "saas",
+          "onprem",
+          "hosted",
+          "distributed"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "lifecycle": {
+      "items": {
+        "enum": [
+          "production",
+          "development",
+          "sandbox"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "name": {
+      "description": "Project name.",
+      "type": "string"
+    },
+    "origin": {
+      "description": "The origin the project was added from.",
+      "type": "string"
+    },
+    "read_only": {
+      "description": "Whether the project is read-only",
+      "type": "boolean"
+    },
+    "settings": {
+      "$ref": "#/$defs/ProjectSettings20240531"
+    },
+    "status": {
+      "description": "Describes if a project is currently monitored or it is de-activated.",
+      "enum": [
+        "active",
+        "inactive"
+      ],
+      "type": "string"
+    },
+    "tags": {
+      "items": {
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "target_file": {
+      "description": "Path within the target to identify a specific file/directory/image etc. when scanning just part  of the target, and not the entity.",
+      "type": "string"
+    },
+    "target_reference": {
+      "description": "The additional information required to resolve which revision of the resource should be scanned.",
+      "type": "string"
+    },
+    "target_runtime": {
+      "description": "Dotnet Target, for relevant projects",
+      "type": "string"
+    },
+    "type": {
+      "description": "The package manager of the project.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "type",
+    "target_file",
+    "target_reference",
+    "origin",
+    "created",
+    "status",
+    "read_only",
+    "settings"
+  ],
+  "type": "object",
+  "$defs": {
+    "AutoDependencyUpgradeSettings20240531": {
+      "additionalProperties": false,
+      "description": "Automatically create pull requests on recurring tests for dependencies as upgrades become available. If not specified, settings will be inherited from the Organization's integration.",
+      "properties": {
+        "ignored_dependencies": {
+          "description": "Dependencies which should NOT be included in an automatic upgrade operation.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "is_enabled": {
+          "description": "Automatically raise pull requests to update out-of-date dependencies.",
+          "type": "boolean"
+        },
+        "is_inherited": {
+          "description": "Apply the auto dependency integration settings of the Organization to this project.",
+          "type": "boolean"
+        },
+        "is_major_upgrade_enabled": {
+          "description": "Include major version in dependency upgrade recommendation.",
+          "type": "boolean"
+        },
+        "limit": {
+          "description": "Limit of dependency upgrade PRs which can be opened simultaneously. When the limit is reached, no new upgrade PRs are created. If specified, must be between 1 and 10.",
+          "maximum": 10,
+          "minimum": 1,
+          "type": "number"
+        },
+        "minimum_age": {
+          "description": "Minimum dependency maturity period in days. If specified, must be between 1 and 365.",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "AutoRemediationPRsSettings20240531": {
+      "additionalProperties": false,
+      "description": "Automatically raise pull requests on recurring tests to fix new and existing vulnerabilities. If not specified, settings will be inherited from the Organization's integration.",
+      "properties": {
+        "is_backlog_prs_enabled": {
+          "description": "Automatically create pull requests on scheduled tests for known (backlog) vulnerabilities.",
+          "type": "boolean"
+        },
+        "is_fresh_prs_enabled": {
+          "description": "Automatically create pull requests on scheduled tests for new vulnerabilities.",
+          "type": "boolean"
+        },
+        "is_patch_remediation_enabled": {
+          "description": "Include vulnerability patches in automatic pull requests.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "ContainerBuildArgs": {
+      "additionalProperties": false,
+      "properties": {
+        "platform": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "platform"
+      ],
+      "type": "object"
+    },
+    "ManualRemediationPRsSettings20240531": {
+      "additionalProperties": false,
+      "description": "Manually raise pull requests to fix new and existing vulnerabilities. If not specified, settings will be inherited from the Organization's integration.",
+      "properties": {
+        "is_patch_remediation_enabled": {
+          "description": "Include vulnerability patches in manual pull requests.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "NugetBuildArgs": {
+      "additionalProperties": false,
+      "properties": {
+        "target_framework": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_framework"
+      ],
+      "type": "object"
+    },
+    "ProjectSettings20240531": {
+      "additionalProperties": false,
+      "properties": {
+        "auto_dependency_upgrade": {
+          "$ref": "#/$defs/AutoDependencyUpgradeSettings20240531"
+        },
+        "auto_remediation_prs": {
+          "$ref": "#/$defs/AutoRemediationPRsSettings20240531"
+        },
+        "manual_remediation_prs": {
+          "$ref": "#/$defs/ManualRemediationPRsSettings20240531"
+        },
+        "pull_request_assignment": {
+          "$ref": "#/$defs/PullRequestAssignmentSettings20240531"
+        },
+        "pull_requests": {
+          "$ref": "#/$defs/PullRequestsSettings20240531"
+        },
+        "recurring_tests": {
+          "$ref": "#/$defs/RecurringTestsSettings"
+        }
+      },
+      "required": [
+        "recurring_tests",
+        "pull_requests"
+      ],
+      "type": "object"
+    },
+    "PullRequestAssignmentSettings20240531": {
+      "additionalProperties": false,
+      "description": "Automatically assign pull requests created by Snyk (limited to private repos). If not specified, settings will be inherited from the Organization's integration.",
+      "properties": {
+        "assignees": {
+          "description": "Manually specify users to assign (and all will be assigned).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "is_enabled": {
+          "description": "Automatically assign pull requests created by Snyk.",
+          "type": "boolean"
+        },
+        "type": {
+          "description": "Automatically assign the last user to change the manifest file (\"auto\"), or manually specify a list of users (\"manual\").",
+          "enum": [
+            "auto",
+            "manual"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PullRequestsSettings20240531": {
+      "additionalProperties": false,
+      "description": "Settings which describe how pull requests for a project are tested.",
+      "properties": {
+        "fail_only_for_issues_with_fix": {
+          "description": "Only fail when the issues found have a fix available.",
+          "type": "boolean"
+        },
+        "is_enabled": {
+          "description": "Test pull requests for vulnerabilities. If this value is unset, the setting is inherited from the org default.",
+          "type": "boolean"
+        },
+        "policy": {
+          "description": "Fail if the project has any issues (\"all\"), or fail if a PR is introducing a new dependency with issues (\"only_new\"). If this value is unset, the setting is inherited from the org default.",
+          "enum": [
+            "all",
+            "only_new"
+          ],
+          "type": "string"
+        },
+        "severity_threshold": {
+          "description": "Only fail for issues greater than or equal to the specified severity. If this value is unset, the setting is inherited from the org default.",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RecurringTestsSettings": {
+      "additionalProperties": false,
+      "description": "Settings which describe how recurring tests are run for a project.",
+      "properties": {
+        "frequency": {
+          "description": "Test frequency of a project. Also controls when automated PRs may be created.",
+          "enum": [
+            "daily",
+            "weekly",
+            "never"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "YarnBuildArgs": {
+      "additionalProperties": false,
+      "properties": {
+        "root_workspace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "root_workspace"
+      ],
+      "type": "object"
+    }
+  }
+}

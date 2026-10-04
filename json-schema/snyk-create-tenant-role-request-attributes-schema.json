@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-create-tenant-role-request-attributes-schema.json",
+  "title": "CreateTenantRoleRequestAttributes",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-tenantrole-api-openapi.yml#/components/schemas/CreateTenantRoleRequestAttributes",
+  "additionalProperties": false,
+  "properties": {
+    "description": {
+      "description": "The description of the tenant role.",
+      "maxLength": 160,
+      "minLength": 1,
+      "type": "string"
+    },
+    "name": {
+      "description": "The name of the tenant role.",
+      "maxLength": 60,
+      "minLength": 1,
+      "type": "string"
+    },
+    "permissions": {
+      "description": "Requested permissions of the tenant role. Must be the entire set of permissions.",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "permissions"
+  ],
+  "type": "object"
+}

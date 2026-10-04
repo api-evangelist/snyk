@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-principal20240422-schema.json",
+  "title": "Principal20240422",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-users-api-openapi.yml#/components/schemas/Principal20240422",
+  "additionalProperties": false,
+  "properties": {
+    "attributes": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/User20240422"
+        },
+        {
+          "$ref": "#/$defs/ServiceAccount20240422"
+        },
+        {
+          "$ref": "#/$defs/AppInstance"
+        }
+      ]
+    },
+    "id": {
+      "description": "The Snyk ID corresponding to this user, service account or app",
+      "format": "uuid",
+      "type": "string"
+    },
+    "type": {
+      "description": "Content type.",
+      "enum": [
+        "user",
+        "service_account",
+        "app_instance"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "id",
+    "attributes"
+  ],
+  "type": "object",
+  "$defs": {
+    "AppInstance": {
+      "additionalProperties": false,
+      "properties": {
+        "default_org_context": {
+          "description": "ID of the default org for the service account.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the service account.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "ServiceAccount20240422": {
+      "additionalProperties": false,
+      "properties": {
+        "default_org_context": {
+          "description": "ID of the default org for the service account.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the service account.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "User20240422": {
+      "additionalProperties": false,
+      "properties": {
+        "avatar_url": {
+          "description": "The avatar url of the user.",
+          "format": "uri",
+          "type": "string"
+        },
+        "default_org_context": {
+          "description": "ID of the default org for the user.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "email": {
+          "description": "The email of the user.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the user.",
+          "type": "string"
+        },
+        "username": {
+          "description": "The username of the user.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "email",
+        "avatar_url"
+      ],
+      "type": "object"
+    }
+  }
+}

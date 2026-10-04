@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-org-attributes-schema.json",
+  "title": "OrgAttributes",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-orgs-api-openapi.yml#/components/schemas/OrgAttributes",
+  "additionalProperties": false,
+  "properties": {
+    "access_requests_enabled": {
+      "description": "Whether the organization permits access requests from users who are not members of the organization.",
+      "type": "boolean"
+    },
+    "created_at": {
+      "description": "The time the organization was created.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "group_id": {
+      "description": "The Snyk ID of the group to which the organization belongs.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "is_personal": {
+      "description": "Whether the organization is independent (that is, not part of a group).",
+      "type": "boolean"
+    },
+    "name": {
+      "description": "The display name of the organization.",
+      "type": "string"
+    },
+    "slug": {
+      "description": "The canonical (unique and URL-friendly) name of the organization.",
+      "type": "string"
+    },
+    "updated_at": {
+      "description": "The time the organization was last modified.",
+      "format": "date-time",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "slug",
+    "is_personal"
+  ],
+  "type": "object"
+}

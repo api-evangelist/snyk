@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-group-response-schema.json",
+  "title": "GroupResponse",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-group-api-openapi.yml#/components/schemas/GroupResponse",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/GroupAttributes"
+        },
+        "id": {
+          "$ref": "#/$defs/GroupId"
+        },
+        "relationships": {
+          "$ref": "#/$defs/GroupRelationships"
+        },
+        "type": {
+          "$ref": "#/$defs/GroupType"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ],
+      "type": "object"
+    },
+    "jsonapi": {
+      "$ref": "#/$defs/JsonApi"
+    },
+    "links": {
+      "$ref": "#/$defs/SelfLink"
+    }
+  },
+  "required": [
+    "data",
+    "jsonapi",
+    "links"
+  ],
+  "type": "object",
+  "$defs": {
+    "GroupAttributes": {
+      "properties": {
+        "avatar_url": {
+          "description": "The URL of an image to use as the group's avatar.",
+          "format": "uri",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "The time the group was created.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "logo_url": {
+          "description": "The URL of an image to use as the group's logo.",
+          "format": "uri",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the group.",
+          "type": "string"
+        },
+        "slug": {
+          "description": "A slug uniquely identifying the group",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "The time the group was created.",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "created_at",
+        "updated_at"
+      ],
+      "type": "object"
+    },
+    "GroupId": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "GroupRelationships": {
+      "properties": {
+        "tenant": {
+          "properties": {
+            "data": {
+              "properties": {
+                "id": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GroupType": {
+      "description": "The type of the resource for group operations",
+      "enum": [
+        "group"
+      ],
+      "type": "string"
+    },
+    "JsonApi": {
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "description": "Version of the JSON API specification this server supports.",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version"
+      ],
+      "type": "object"
+    },
+    "LinkProperty": {
+      "oneOf": [
+        {
+          "description": "A string containing the link’s URL.",
+          "type": "string"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "href": {
+              "description": "A string containing the link’s URL.",
+              "type": "string"
+            },
+            "meta": {
+              "additionalProperties": true,
+              "description": "Free-form object that may contain non-standard information.",
+              "type": "object"
+            }
+          },
+          "required": [
+            "href"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "SelfLink": {
+      "additionalProperties": false,
+      "properties": {
+        "self": {
+          "$ref": "#/$defs/LinkProperty"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

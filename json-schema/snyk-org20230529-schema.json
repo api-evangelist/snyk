@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-org20230529-schema.json",
+  "title": "Org20230529",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-orgs-api-openapi.yml#/components/schemas/Org20230529",
+  "additionalProperties": false,
+  "properties": {
+    "attributes": {
+      "$ref": "#/$defs/OrgAttributes20230529"
+    },
+    "id": {
+      "description": "The Snyk ID of the organization.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "relationships": {
+      "properties": {
+        "tenant": {
+          "properties": {
+            "data": {
+              "properties": {
+                "id": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "type": {
+                  "description": "The type of the resource for tenant operations",
+                  "enum": [
+                    "tenant"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "type": {
+      "$ref": "#/$defs/Types"
+    }
+  },
+  "required": [
+    "type",
+    "id",
+    "attributes"
+  ],
+  "type": "object",
+  "$defs": {
+    "OrgAttributes20230529": {
+      "additionalProperties": false,
+      "properties": {
+        "created_at": {
+          "description": "The time the organization was created.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "group_id": {
+          "description": "The Snyk ID of the group to which the organization belongs.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "is_personal": {
+          "description": "Whether the organization is independent (that is, not part of a group).",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "The display name of the organization.",
+          "type": "string"
+        },
+        "slug": {
+          "description": "The canonical (unique and URL-friendly) name of the organization.",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "The time the organization was last modified.",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "slug",
+        "is_personal"
+      ],
+      "type": "object"
+    },
+    "Types": {
+      "pattern": "^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$",
+      "type": "string"
+    }
+  }
+}

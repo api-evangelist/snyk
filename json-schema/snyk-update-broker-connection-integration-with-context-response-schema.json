@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-update-broker-connection-integration-with-context-response-schema.json",
+  "title": "UpdateBrokerConnectionIntegrationWithContextResponse",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-brokercontexts-api-openapi.yml#/components/schemas/UpdateBrokerConnectionIntegrationWithContextResponse",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/BrokerConnectionIntegrationWithContextResource"
+    },
+    "jsonapi": {
+      "$ref": "#/$defs/JsonApi"
+    },
+    "links": {
+      "$ref": "#/$defs/PaginatedLinks"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "type": "object",
+  "$defs": {
+    "BrokerConnectionIntegrationWithContextResource": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "readOnly": true,
+          "type": "string"
+        },
+        "relationships": {
+          "$ref": "#/$defs/IntegrationRelationships"
+        },
+        "type": {
+          "enum": [
+            "broker_context"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "relationships",
+        "id",
+        "type"
+      ],
+      "type": "object"
+    },
+    "IntegrationRelationship": {
+      "additionalProperties": false,
+      "properties": {
+        "data": {
+          "properties": {
+            "id": {
+              "description": "Associated integration id",
+              "type": "string"
+            },
+            "integration_type": {
+              "description": "Associated connection type",
+              "type": "string"
+            },
+            "org_id": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "type"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "type": "object"
+    },
+    "IntegrationRelationships": {
+      "additionalProperties": false,
+      "properties": {
+        "integrations_relationships": {
+          "items": {
+            "$ref": "#/$defs/IntegrationRelationship"
+          },
+          "type": "array"
+        },
+        "jsonapi": {
+          "$ref": "#/$defs/JsonApi"
+        },
+        "links": {
+          "$ref": "#/$defs/PaginatedLinks"
+        }
+      },
+      "required": [
+        "integrations_relationships"
+      ],
+      "type": "object"
+    },
+    "JsonApi": {
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "description": "Version of the JSON API specification this server supports.",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version"
+      ],
+      "type": "object"
+    },
+    "LinkProperty": {
+      "oneOf": [
+        {
+          "description": "A string containing the link’s URL.",
+          "type": "string"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "href": {
+              "description": "A string containing the link’s URL.",
+              "type": "string"
+            },
+            "meta": {
+              "additionalProperties": true,
+              "description": "Free-form object that may contain non-standard information.",
+              "type": "object"
+            }
+          },
+          "required": [
+            "href"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "PaginatedLinks": {
+      "additionalProperties": false,
+      "properties": {
+        "first": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "last": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "next": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "prev": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "self": {
+          "$ref": "#/$defs/LinkProperty"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

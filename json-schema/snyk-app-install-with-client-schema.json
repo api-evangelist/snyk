@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-app-install-with-client-schema.json",
+  "title": "AppInstallWithClient",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-apps-api-openapi.yml#/components/schemas/AppInstallWithClient",
+  "additionalProperties": false,
+  "properties": {
+    "attributes": {
+      "properties": {
+        "client_id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "client_secret": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "client_id",
+        "client_secret"
+      ],
+      "type": "object"
+    },
+    "id": {
+      "$ref": "#/$defs/Uuid"
+    },
+    "links": {
+      "$ref": "#/$defs/Links"
+    },
+    "relationships": {
+      "properties": {
+        "app": {
+          "properties": {
+            "data": {
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "$ref": "#/$defs/Uuid"
+                },
+                "type": {
+                  "$ref": "#/$defs/Type"
+                }
+              },
+              "required": [
+                "type",
+                "id"
+              ],
+              "type": "object"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "type": {
+      "$ref": "#/$defs/Type"
+    }
+  },
+  "required": [
+    "type",
+    "id",
+    "attributes",
+    "relationships"
+  ],
+  "type": "object",
+  "$defs": {
+    "LinkProperty": {
+      "oneOf": [
+        {
+          "description": "A string containing the link’s URL.",
+          "type": "string"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "href": {
+              "description": "A string containing the link’s URL.",
+              "type": "string"
+            },
+            "meta": {
+              "additionalProperties": true,
+              "description": "Free-form object that may contain non-standard information.",
+              "type": "object"
+            }
+          },
+          "required": [
+            "href"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "Links": {
+      "additionalProperties": false,
+      "properties": {
+        "first": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "last": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "next": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "prev": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "related": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "self": {
+          "$ref": "#/$defs/LinkProperty"
+        }
+      },
+      "type": "object"
+    },
+    "Type": {
+      "type": "string"
+    },
+    "Uuid": {
+      "format": "uuid",
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-access-request-schema.json",
+  "title": "AccessRequest",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-access-requests-api-openapi.yml#/components/schemas/AccessRequest",
+  "additionalProperties": false,
+  "properties": {
+    "attributes": {
+      "$ref": "#/$defs/AccessRequestAttributes"
+    },
+    "id": {
+      "description": "The Snyk ID of the access request.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/$defs/Types"
+    }
+  },
+  "required": [
+    "type",
+    "id",
+    "attributes"
+  ],
+  "type": "object",
+  "$defs": {
+    "AccessRequestAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "pending",
+            "expired"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "type": "object"
+    },
+    "Types": {
+      "pattern": "^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$",
+      "type": "string"
+    }
+  }
+}

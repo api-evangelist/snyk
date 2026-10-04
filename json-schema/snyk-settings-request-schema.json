@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-settings-request-schema.json",
+  "title": "SettingsRequest",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-slacksettings-api-openapi.yml#/components/schemas/SettingsRequest",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/SettingsAttributes"
+        },
+        "type": {
+          "enum": [
+            "slack"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "attributes"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "type": "object",
+  "$defs": {
+    "SettingsAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "severity_threshold": {
+          "$ref": "#/$defs/SeverityThreshold"
+        },
+        "target_channel_id": {
+          "$ref": "#/$defs/TargetChannelId"
+        }
+      },
+      "required": [
+        "target_channel_id",
+        "severity_threshold"
+      ],
+      "type": "object"
+    },
+    "SeverityThreshold": {
+      "description": "Minimum Snyk issue severity to send a notification for, messages will not be sent for any issue below this value",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "type": "string"
+    },
+    "TargetChannelId": {
+      "format": "uri",
+      "type": "string"
+    }
+  }
+}

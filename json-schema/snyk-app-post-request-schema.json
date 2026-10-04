@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-app-post-request-schema.json",
+  "title": "AppPostRequest",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-apps-api-openapi.yml#/components/schemas/AppPostRequest",
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "attributes": {
+          "additionalProperties": false,
+          "properties": {
+            "access_token_ttl_seconds": {
+              "$ref": "#/$defs/AccessTokenTtlSeconds"
+            },
+            "context": {
+              "$ref": "#/$defs/Context__0"
+            },
+            "name": {
+              "$ref": "#/$defs/AppName"
+            },
+            "redirect_uris": {
+              "$ref": "#/$defs/RedirectUris"
+            },
+            "scopes": {
+              "$ref": "#/$defs/Scopes"
+            }
+          },
+          "required": [
+            "name",
+            "redirect_uris",
+            "scopes",
+            "context"
+          ],
+          "type": "object"
+        },
+        "type": {
+          "enum": [
+            "app"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "attributes",
+        "type"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "type": "object",
+  "$defs": {
+    "AccessTokenTtlSeconds": {
+      "description": "The access token time to live for your app, in seconds. It only affects the newly generated access tokens, existing access token will  continue to have their previous time to live as expiration.",
+      "maximum": 86400,
+      "minimum": 3600,
+      "type": "number"
+    },
+    "AppName": {
+      "description": "New name of the app to display to users during authorization flow.",
+      "minLength": 1,
+      "type": "string"
+    },
+    "Context__0": {
+      "description": "Allow installing the app to at  org/group level or user level. Defaults to tenant.",
+      "enum": [
+        "tenant",
+        "user"
+      ],
+      "type": "string"
+    },
+    "RedirectUris": {
+      "description": "List of allowed redirect URIs (OAuth callbacks) where Snyk will redirect users after authorization.\n\nThese are URLs controlled by your application that Snyk will send the user to after they authorize your app. \nThe redirect URI used in your authorization request must exactly match one of the URIs registered here.\n\n**Important:** The redirect URI in your OAuth authorization request must be an exact match (including protocol, domain, path, and query parameters) to one of the URIs specified in this list.\n\n**Example valid redirect URI:** `https://example.com/callback` or `https://myapp.example.com/auth/snyk/callback`\n\nFor more information on the complete OAuth workflow, see the [Snyk Apps API tutorial](https://docs.snyk.io/snyk-api/using-specific-snyk-apis/snyk-apps-apis/tutorial-create-a-snyk-app).\n",
+      "items": {
+        "format": "uri",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "Scopes": {
+      "description": "The scopes this app is allowed to request during authorization.",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  }
+}

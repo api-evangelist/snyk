@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-container-registry-import-policy-attributes-schema.json",
+  "title": "ContainerRegistryImportPolicyAttributes",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-containerregistryimportpolicy-api-openapi.yml#/components/schemas/ContainerRegistryImportPolicyAttributes",
+  "additionalProperties": false,
+  "properties": {
+    "policy": {
+      "$ref": "#/$defs/ContainerRegistryPolicy"
+    }
+  },
+  "required": [
+    "policy"
+  ],
+  "type": "object",
+  "$defs": {
+    "ContainerRegistryPolicy": {
+      "description": "A policy",
+      "properties": {
+        "delete_images": {
+          "description": "Delete images no longer matching the policy. False by default.",
+          "type": "boolean"
+        },
+        "import_policy": {
+          "$ref": "#/$defs/PolicyComponent"
+        },
+        "name": {
+          "type": "string"
+        },
+        "schedule_frequency_hours": {
+          "description": "The frequency of the import policy in hours.",
+          "minimum": 2,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "import_policy"
+      ],
+      "type": "object"
+    },
+    "PolicyComponent": {
+      "description": "A component policy, an overall policy is made up of one or more component policies combined in various ways.",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "policy": {
+          "type": "object"
+        },
+        "sub_policies": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object"
+    }
+  }
+}

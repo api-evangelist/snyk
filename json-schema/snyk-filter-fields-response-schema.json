@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-filter-fields-response-schema.json",
+  "title": "FilterFieldsResponse",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-inventory-assets-api-openapi.yml#/components/schemas/FilterFieldsResponse",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "description": "List of available filter fields",
+      "items": {
+        "$ref": "#/$defs/FilterFieldData"
+      },
+      "type": "array"
+    },
+    "links": {
+      "description": "Self-referencing link",
+      "properties": {
+        "self": {
+          "description": "Link to the current resource",
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "self"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "data",
+    "links"
+  ],
+  "type": "object",
+  "$defs": {
+    "FilterFieldAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_types": {
+          "description": "List of asset types this field applies to",
+          "items": {
+            "enum": [
+              "container_images"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "The field name used in RSQL filters (e.g., \"class\", \"registry\")",
+          "type": "string"
+        },
+        "type": {
+          "description": "Data type of the field (string, boolean, datetime, array, object)",
+          "enum": [
+            "string",
+            "boolean",
+            "datetime",
+            "array",
+            "object"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "asset_types"
+      ],
+      "type": "object"
+    },
+    "FilterFieldData": {
+      "additionalProperties": false,
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/FilterFieldAttributes"
+        },
+        "id": {
+          "description": "UUID identifier for the filter field",
+          "format": "uuid",
+          "type": "string"
+        },
+        "relationships": {
+          "description": "Relationships for this filter field (only present for fields supporting autocomplete)",
+          "properties": {
+            "values": {
+              "properties": {
+                "links": {
+                  "properties": {
+                    "related": {
+                      "description": "Relative path to get autocomplete values for this filter field",
+                      "format": "uri-reference",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "related"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "type": {
+          "description": "The JSON:API resource type",
+          "enum": [
+            "filter_fields"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ],
+      "type": "object"
+    }
+  }
+}

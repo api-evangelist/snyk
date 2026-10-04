@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-get-project-settings-collection-schema.json",
+  "title": "GetProjectSettingsCollection",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-slacksettings-api-openapi.yml#/components/schemas/GetProjectSettingsCollection",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "items": {
+        "$ref": "#/$defs/ProjectSettingsData"
+      },
+      "type": "array"
+    },
+    "jsonapi": {
+      "$ref": "#/$defs/JsonApi"
+    },
+    "links": {
+      "$ref": "#/$defs/PaginatedLinks"
+    }
+  },
+  "required": [
+    "data",
+    "jsonapi",
+    "links"
+  ],
+  "type": "object",
+  "$defs": {
+    "IsActive": {
+      "description": "Current status of the project settings.",
+      "type": "boolean"
+    },
+    "JsonApi": {
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "description": "Version of the JSON API specification this server supports.",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version"
+      ],
+      "type": "object"
+    },
+    "LinkProperty": {
+      "oneOf": [
+        {
+          "description": "A string containing the link’s URL.",
+          "type": "string"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "href": {
+              "description": "A string containing the link’s URL.",
+              "type": "string"
+            },
+            "meta": {
+              "additionalProperties": true,
+              "description": "Free-form object that may contain non-standard information.",
+              "type": "object"
+            }
+          },
+          "required": [
+            "href"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "PaginatedLinks": {
+      "additionalProperties": false,
+      "properties": {
+        "first": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "last": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "next": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "prev": {
+          "$ref": "#/$defs/LinkProperty"
+        },
+        "self": {
+          "$ref": "#/$defs/LinkProperty"
+        }
+      },
+      "type": "object"
+    },
+    "ProjectSettingsData": {
+      "properties": {
+        "attributes": {
+          "additionalProperties": false,
+          "properties": {
+            "is_active": {
+              "$ref": "#/$defs/IsActive"
+            },
+            "severity_threshold": {
+              "$ref": "#/$defs/SeverityThreshold"
+            },
+            "target_channel_id": {
+              "$ref": "#/$defs/TargetChannelId"
+            },
+            "target_channel_name": {
+              "$ref": "#/$defs/TargetChannelName"
+            },
+            "target_project_name": {
+              "description": "The target file name for the project.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "target_channel_id",
+            "target_channel_name",
+            "severity_threshold",
+            "target_project_name",
+            "is_active"
+          ],
+          "type": "object"
+        },
+        "id": {
+          "$ref": "#/$defs/Uuid"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SeverityThreshold": {
+      "description": "Minimum Snyk issue severity to send a notification for, messages will not be sent for any issue below this value",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "type": "string"
+    },
+    "TargetChannelId": {
+      "format": "uri",
+      "type": "string"
+    },
+    "TargetChannelName": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "Uuid": {
+      "format": "uuid",
+      "type": "string"
+    }
+  }
+}

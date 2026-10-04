@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-membership-patch-request-body-schema.json",
+  "title": "MembershipPatchRequestBody",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-groups-api-openapi.yml#/components/schemas/MembershipPatchRequestBody",
+  "properties": {
+    "attributes": {
+      "type": "object"
+    },
+    "id": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "relationships": {
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "additionalProperties": false,
+          "properties": {
+            "data": {
+              "properties": {
+                "id": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "type": {
+                  "description": "Always \"group_role\"",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "role"
+      ],
+      "type": "object"
+    },
+    "type": {
+      "description": "type of membership according to its entity",
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

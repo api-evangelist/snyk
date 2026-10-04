@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-resource-attributes-schema.json",
+  "title": "ResourceAttributes",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-cloud-api-openapi.yml#/components/schemas/ResourceAttributes",
+  "properties": {
+    "created_at": {
+      "description": "When the resource was first recorded",
+      "format": "date-time",
+      "type": "string"
+    },
+    "deleted_at": {
+      "format": "date-time",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "hash": {
+      "description": "Computed hash value for the resource based on its attributes",
+      "type": "string"
+    },
+    "is_managed": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "kind": {
+      "$ref": "#/$defs/ResourceKind"
+    },
+    "location": {
+      "description": "Physical location (AWS region)",
+      "type": "string"
+    },
+    "name": {
+      "description": "Human friendly resource name",
+      "type": "string"
+    },
+    "namespace": {
+      "description": "Resource namespace (AWS region)",
+      "type": "string"
+    },
+    "native_id": {
+      "description": "ID of the physical resource from the cloud provider (AWS ARN, if available)",
+      "type": "string"
+    },
+    "platform": {
+      "description": "Resource platform: aws",
+      "type": "string"
+    },
+    "relationships": {
+      "additionalProperties": true,
+      "type": "object"
+    },
+    "removed_at": {
+      "format": "date-time",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "resource_id": {
+      "description": "Unique ID for the resource",
+      "type": "string"
+    },
+    "resource_type": {
+      "description": "Terraform resource type",
+      "type": "string"
+    },
+    "revision": {
+      "description": "Increment for each change to a resource",
+      "type": "integer"
+    },
+    "schema_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_location": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "state": {
+      "additionalProperties": true,
+      "description": "Terraform state attributes",
+      "type": "object"
+    },
+    "tags": {
+      "additionalProperties": true,
+      "description": "Resource tags from the cloud provider",
+      "type": "object"
+    },
+    "updated_at": {
+      "description": "When the resource was last updated",
+      "format": "date-time",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "created_at",
+    "updated_at",
+    "revision",
+    "kind",
+    "hash",
+    "platform",
+    "resource_type",
+    "resource_id"
+  ],
+  "type": "object",
+  "$defs": {
+    "ResourceKind": {
+      "description": "Kind of resource: cloud",
+      "type": "string"
+    }
+  }
+}

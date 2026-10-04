@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-public-target-schema.json",
+  "title": "PublicTarget",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-targets-api-openapi.yml#/components/schemas/PublicTarget",
+  "additionalProperties": false,
+  "properties": {
+    "attributes": {
+      "additionalProperties": false,
+      "properties": {
+        "created_at": {
+          "description": "The creation date of the target",
+          "format": "date-time",
+          "type": "string"
+        },
+        "display_name": {
+          "description": "The human readable name that represents this target. These are generated based on the provided properties, and the source.\n",
+          "type": "string"
+        },
+        "is_private": {
+          "description": "If the target is private, or publicly accessible",
+          "type": "boolean"
+        },
+        "url": {
+          "description": "The URL for the resource.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "display_name",
+        "url",
+        "is_private"
+      ],
+      "type": "object"
+    },
+    "id": {
+      "description": "The id of this target",
+      "format": "uuid",
+      "type": "string"
+    },
+    "relationships": {
+      "additionalProperties": false,
+      "properties": {
+        "integration": {
+          "additionalProperties": false,
+          "description": "The configured integration which this target relates to",
+          "properties": {
+            "data": {
+              "additionalProperties": false,
+              "properties": {
+                "attributes": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "integration_type": {
+                      "description": "The human readable name for this type of integration",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "integration_type"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "format": "uuid",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "type": {
+                  "description": "Content type.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "type",
+                "attributes"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "data"
+          ],
+          "type": "object"
+        },
+        "organization": {
+          "additionalProperties": false,
+          "description": "The organization which owns this target",
+          "properties": {
+            "data": {
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "type": {
+                  "description": "Content type.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "id"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "data"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "organization",
+        "integration"
+      ],
+      "type": "object"
+    },
+    "type": {
+      "description": "Content type.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "id",
+    "attributes"
+  ],
+  "type": "object"
+}

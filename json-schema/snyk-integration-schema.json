@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-integration-schema.json",
+  "title": "Integration",
+  "description": "Integration resource returned in API responses",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-integrations-api-openapi.yml#/components/schemas/Integration",
+  "additionalProperties": false,
+  "properties": {
+    "attributes": {
+      "additionalProperties": false,
+      "properties": {
+        "created_at": {
+          "description": "When the integration was created",
+          "format": "date-time",
+          "type": "string"
+        },
+        "has_broker": {
+          "description": "Whether this integration uses Snyk Broker",
+          "type": "boolean"
+        },
+        "integration_type": {
+          "$ref": "#/$defs/IntegrationType"
+        },
+        "profile_name": {
+          "description": "User-defined name for the integration. Null for integrations created via V1 API.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "updated_at": {
+          "description": "When the integration was last updated",
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "integration_type",
+        "profile_name",
+        "created_at"
+      ],
+      "type": "object"
+    },
+    "id": {
+      "description": "The unique identifier for the integration",
+      "format": "uuid",
+      "type": "string"
+    },
+    "relationships": {
+      "additionalProperties": false,
+      "properties": {
+        "org": {
+          "additionalProperties": false,
+          "properties": {
+            "data": {
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "type": {
+                  "enum": [
+                    "org"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "id"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "data"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "type": {
+      "description": "Resource type",
+      "enum": [
+        "integration"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "id",
+    "attributes"
+  ],
+  "type": "object",
+  "$defs": {
+    "IntegrationType": {
+      "description": "Integration type identifier.\n\nContainer registry types (V3 CREATE/UPDATE supported):\n- acr (Azure Container Registry)\n- artifactory-cr (Artifactory Container Registry)\n- digitalocean-cr (DigitalOcean Container Registry)\n- docker-hub (Docker Hub)\n- ecr (AWS Elastic Container Registry)\n- gcr (Google Container Registry)\n- github-cr (GitHub Container Registry)\n- gitlab-cr (GitLab Container Registry)\n- google-artifact-cr (Google Artifact Registry)\n- harbor-cr (Harbor)\n- nexus-cr (Nexus Container Registry)\n- quay-cr (Quay Container Registry)\n\nSCM (Source Control Management) types (V3 GET/LIST only, create via V1):\n- azure-repos (Azure Repos)\n- bitbucket-cloud (Bitbucket Cloud)\n- bitbucket-connect-app (Bitbucket Connect App)\n- bitbucket-server (Bitbucket Server/Data Center)\n- github (GitHub.com)\n- github-cloud-app (GitHub Cloud App)\n- github-enterprise (GitHub Enterprise Server)\n- github-server-app (GitHub Server App)\n- gitlab (GitLab)\n\nOther integration types (V3 GET/LIST only, create via V1):\n- kubernetes (Kubernetes)\n- terraform-cloud (Terraform Cloud)\n",
+      "enum": [
+        "acr",
+        "artifactory-cr",
+        "digitalocean-cr",
+        "docker-hub",
+        "ecr",
+        "gcr",
+        "github-cr",
+        "gitlab-cr",
+        "google-artifact-cr",
+        "harbor-cr",
+        "nexus-cr",
+        "quay-cr",
+        "azure-repos",
+        "bitbucket-cloud",
+        "bitbucket-connect-app",
+        "bitbucket-server",
+        "github",
+        "github-cloud-app",
+        "github-enterprise",
+        "github-server-app",
+        "gitlab",
+        "kubernetes",
+        "terraform-cloud"
+      ],
+      "type": "string"
+    }
+  }
+}

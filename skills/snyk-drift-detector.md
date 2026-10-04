@@ -8,7 +8,11 @@ description: |
   - User mentions "drift detection" or "Terraform drift"
   - User asks to compare cloud state to IaC
   - User wants to audit infrastructure changes
-allowed-tools: "Bash Read Write Grep"
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Grep
 license: Apache-2.0
 compatibility: |
   Requires Snyk CLI installed and authenticated. Uses `snyk iac describe` CLI command

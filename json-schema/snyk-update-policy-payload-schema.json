@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-update-policy-payload-schema.json",
+  "title": "UpdatePolicyPayload",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-policies-api-openapi.yml#/components/schemas/UpdatePolicyPayload",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/UpdatePolicyAttributes"
+        },
+        "id": {
+          "description": "the UUID of the policy to update.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        },
+        "type": {
+          "enum": [
+            "policy"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "attributes"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "type": "object",
+  "$defs": {
+    "Meta": {
+      "additionalProperties": true,
+      "description": "Free-form object that may contain non-standard information.",
+      "type": "object"
+    },
+    "PolicyActionIgnore": {
+      "additionalProperties": false,
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/PolicyActionIgnoreData"
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "type": "object"
+    },
+    "PolicyActionIgnoreData": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PolicyActionIgnoreDataWontFix"
+        },
+        {
+          "$ref": "#/$defs/PolicyActionIgnoreDataTemporaryIgnore"
+        },
+        {
+          "$ref": "#/$defs/PolicyActionIgnoreDataNotVulnerable"
+        }
+      ],
+      "type": "object"
+    },
+    "PolicyActionIgnoreDataNotVulnerable": {
+      "additionalProperties": false,
+      "properties": {
+        "expires": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "ignore_type": {
+          "enum": [
+            "not-vulnerable"
+          ],
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 10000,
+          "type": "string"
+        }
+      },
+      "required": [
+        "ignore_type"
+      ],
+      "type": "object"
+    },
+    "PolicyActionIgnoreDataTemporaryIgnore": {
+      "additionalProperties": false,
+      "properties": {
+        "expires": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "ignore_type": {
+          "enum": [
+            "temporary-ignore"
+          ],
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 10000,
+          "type": "string"
+        }
+      },
+      "required": [
+        "ignore_type",
+        "expires"
+      ],
+      "type": "object"
+    },
+    "PolicyActionIgnoreDataWontFix": {
+      "additionalProperties": false,
+      "properties": {
+        "expires": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "ignore_type": {
+          "enum": [
+            "wont-fix"
+          ],
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 10000,
+          "type": "string"
+        }
+      },
+      "required": [
+        "ignore_type"
+      ],
+      "type": "object"
+    },
+    "PolicyCondition": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "description": "field refers to the type of identifier used in the condition of the policy.  The available value is versioned and hierarchical:\n- `snyk/asset/finding/v1` : identity of the finding scoped to a Snyk assets (e.g. a repository).\nFor a given issue, `snyk/asset/finding/v1` can be extracted from the `key_asset` field in the [issues API](https://apidocs.snyk.io/?version=2024-10-15#get-/orgs/-org_id-/issues). \nIn addition, finding identities can be extracted from the fingerprints section of the SARIF, which is accessible via the Snyk CLI. More details can be found in the [CLI documentation](https://docs.snyk.io/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-snyk-code/view-snyk-code-cli-results#export-test-results).\n",
+          "enum": [
+            "snyk/asset/finding/v1"
+          ],
+          "type": "string"
+        },
+        "operator": {
+          "description": "Operator for the field to value matching. Currently\nonly 'includes' is supported, which does an exact\nstring match on the value.\n",
+          "enum": [
+            "includes"
+          ],
+          "type": "string"
+        },
+        "value": {
+          "description": "The value of the field to match on.\n",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field",
+        "operator",
+        "value"
+      ],
+      "type": "object"
+    },
+    "PolicyConditionsGroup": {
+      "properties": {
+        "conditions": {
+          "items": {
+            "$ref": "#/$defs/PolicyCondition"
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "type": "array"
+        },
+        "logical_operator": {
+          "description": "The logical operator for the policy condition. Currently only 'and' is supported.",
+          "enum": [
+            "and"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "logical_operator",
+        "conditions"
+      ],
+      "type": "object"
+    },
+    "UpdatePolicyAttributes": {
+      "additionalProperties": false,
+      "description": "Attributes of a policy that can be updated.\nAt least one of 'name', 'conditions_group', 'action', or 'review' must be provided.\n\nIn order to update the review field, the caller will need to have the\n\"Review Ignore Request\" permission.\n",
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/PolicyActionIgnore"
+        },
+        "conditions_group": {
+          "$ref": "#/$defs/PolicyConditionsGroup"
+        },
+        "name": {
+          "maxLength": 255,
+          "type": "string"
+        },
+        "review": {
+          "$ref": "#/$defs/UpdatePolicyReview"
+        }
+      },
+      "type": "object"
+    },
+    "UpdatePolicyReview": {
+      "description": "Review update.\n\nTo provide an optional message relating to the review state change, add a string 'message' property to the 'meta' object.\n",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "type": "string"
+    }
+  }
+}

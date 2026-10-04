@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-tenant-response-data-schema.json",
+  "title": "TenantResponseData",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-tenants-api-openapi.yml#/components/schemas/TenantResponseData",
+  "additionalProperties": false,
+  "properties": {
+    "attributes": {
+      "$ref": "#/$defs/TenantAttributes"
+    },
+    "id": {
+      "description": "The Snyk ID of the tenant.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "relationships": {
+      "$ref": "#/$defs/TenantRelationships"
+    },
+    "type": {
+      "$ref": "#/$defs/Types"
+    }
+  },
+  "required": [
+    "type",
+    "id",
+    "attributes"
+  ],
+  "type": "object",
+  "$defs": {
+    "TenantAttributes": {
+      "properties": {
+        "created_at": {
+          "description": "The time the tenant was created.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "name": {
+          "description": "The display name of the tenant.",
+          "type": "string"
+        },
+        "slug": {
+          "description": "The canonical (unique and URL-friendly) name of the tenant.",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "The time the tenant was last modified.",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "slug",
+        "created_at",
+        "updated_at"
+      ],
+      "type": "object"
+    },
+    "TenantRelationships": {
+      "properties": {
+        "owner": {
+          "properties": {
+            "data": {
+              "properties": {
+                "id": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "type": {
+                  "description": "The type of the resource. Always 'user'.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "type"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "data"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "Types": {
+      "pattern": "^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$",
+      "type": "string"
+    }
+  }
+}

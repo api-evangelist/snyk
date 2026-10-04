@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-broker-settings-schema.json",
+  "title": "BrokerSettings",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-opensourcesettings-api-openapi.yml#/components/schemas/BrokerSettings",
+  "additionalProperties": false,
+  "properties": {
+    "integrations": {
+      "items": {
+        "$ref": "#/$defs/BrokerIntegration"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "integrations"
+  ],
+  "type": "object",
+  "$defs": {
+    "BrokerIntegration": {
+      "additionalProperties": false,
+      "properties": {
+        "created_at": {
+          "description": "When this integration was created",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        },
+        "id": {
+          "description": "The unique identifier for the ecosystem integration",
+          "format": "uuid",
+          "readOnly": true,
+          "type": "string"
+        },
+        "integration_type": {
+          "description": "The type of integration (e.g., 'artifactory', 'nexus-private-repo')",
+          "enum": [
+            "artifactory",
+            "nexus-private-repo"
+          ],
+          "type": "string"
+        },
+        "urls": {
+          "description": "Array of URLs associated with this integration. Set this field to undefined, an empty array, or omit it to delete the integration.",
+          "items": {
+            "format": "uri",
+            "maxLength": 2048,
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "integration_type"
+      ],
+      "type": "object"
+    }
+  }
+}

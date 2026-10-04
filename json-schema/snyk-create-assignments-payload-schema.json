@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-create-assignments-payload-schema.json",
+  "title": "CreateAssignmentsPayload",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-learn-assignment-api-openapi.yml#/components/schemas/CreateAssignmentsPayload",
+  "properties": {
+    "contact_email": {
+      "description": "Custom contact email to display in email templates when customized_contact_details is true",
+      "format": "email",
+      "type": "string"
+    },
+    "contact_name": {
+      "description": "Custom contact name to display in email templates when customized_contact_details is true",
+      "type": "string"
+    },
+    "customized_contact_details": {
+      "default": false,
+      "description": "Flag to indicate if custom contact details should be used in email templates",
+      "type": "boolean"
+    },
+    "data": {
+      "description": "Array of assignment creation objects. Must contain at least one assignment.",
+      "items": {
+        "$ref": "#/$defs/AssignmentCreationResource"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "due_date": {
+      "format": "date",
+      "type": "string"
+    },
+    "email_custom_message": {
+      "description": "Custom message given by assignment creator for email notification.",
+      "type": "string"
+    },
+    "email_notification": {
+      "description": "Email notification is enabled or not for new assignment creation",
+      "type": "boolean"
+    },
+    "email_receive_copy": {
+      "description": "Assigner will receive a copy of the email",
+      "type": "boolean"
+    },
+    "reset_learning_progress": {
+      "description": "Global flag to reset progress for all lesson assignments in the request",
+      "type": "boolean"
+    },
+    "reset_progress_before": {
+      "description": "Reset progress for all lesson assignments before this date (exclusive)",
+      "format": "date",
+      "type": "string"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "type": "object",
+  "$defs": {
+    "AssignmentCreationAttributes": {
+      "properties": {
+        "learning_path_ids": {
+          "description": "Optional array of learning path IDs for tracking and metadata purposes only.\n\n**Important:** This field does NOT automatically expand learning paths into lessons. \nYou must explicitly provide all lesson IDs in the **lesson_ids** field.\n\nUse this field to record which learning paths these lessons belong to for reporting \nand analytics purposes.\n",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "lesson_ids": {
+          "description": "Array of lesson IDs to assign. Must contain at least one lesson ID.\n\n**To assign all lessons from a learning path:**\n1. Call [List Snyk Learn's resources](#operation/listLearnCatalog) (GET /rest/learn/catalog)\n2. Find the learning path in the response data array\n3. Extract the **lesson_ids** array from the learning path's **attributes**\n4. Pass those lesson IDs to this field\n",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "user_ids": {
+          "description": "Array of user IDs (UUIDs) to assign lessons to. Must contain at least one user ID.",
+          "items": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "user_ids",
+        "lesson_ids"
+      ],
+      "type": "object"
+    },
+    "AssignmentCreationResource": {
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/AssignmentCreationAttributes"
+        },
+        "type": {
+          "enum": [
+            "lesson_assignment"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "attributes"
+      ],
+      "type": "object"
+    }
+  }
+}

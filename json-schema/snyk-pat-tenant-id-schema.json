@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-pat-tenant-id-schema.json",
+  "title": "PatTenantId",
+  "description": "Identifier of the tenant to which the Personal Access Token is scoped.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-personal-access-token-api-openapi.yml#/components/schemas/PatTenantId",
+  "format": "uuid",
+  "type": [
+    "string",
+    "null"
+  ]
+}

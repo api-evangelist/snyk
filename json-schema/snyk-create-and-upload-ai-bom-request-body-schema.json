@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-create-and-upload-ai-bom-request-body-schema.json",
+  "title": "CreateAndUploadAiBomRequestBody",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-aibom-api-openapi.yml#/components/schemas/CreateAndUploadAiBomRequestBody",
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/CreateAndUploadAiBomRequestData"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "type": "object",
+  "$defs": {
+    "CreateAndUploadAiBomFileBundleAttributes": {
+      "properties": {
+        "bundle_id": {
+          "description": "The id of the bundle that has been uploaded by the user, sha256 hash",
+          "pattern": "^[0-9a-fA-F]{64}$",
+          "type": "string"
+        },
+        "repo_name": {
+          "description": "The name of the repository",
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "bundle_id",
+        "repo_name"
+      ],
+      "type": "object"
+    },
+    "CreateAndUploadAiBomFileBundleData": {
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/CreateAndUploadAiBomFileBundleAttributes"
+        },
+        "type": {
+          "enum": [
+            "ai_bom_file_bundle"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "attributes"
+      ],
+      "type": "object"
+    },
+    "CreateAndUploadAiBomFileUploadAttributes": {
+      "properties": {
+        "repo_name": {
+          "description": "The name of the repository",
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        },
+        "upload_revision_id": {
+          "description": "The id of the upload revision the has been created by the user",
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "upload_revision_id",
+        "repo_name"
+      ],
+      "type": "object"
+    },
+    "CreateAndUploadAiBomFileUploadData": {
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/CreateAndUploadAiBomFileUploadAttributes"
+        },
+        "type": {
+          "enum": [
+            "ai_bom_file_upload"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "attributes"
+      ],
+      "type": "object"
+    },
+    "CreateAndUploadAiBomRequestData": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CreateAndUploadAiBomFileBundleData"
+        },
+        {
+          "$ref": "#/$defs/CreateAndUploadAiBomFileUploadData"
+        }
+      ]
+    }
+  }
+}

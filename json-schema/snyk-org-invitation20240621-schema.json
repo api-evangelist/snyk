@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-org-invitation20240621-schema.json",
+  "title": "OrgInvitation20240621",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-invites-api-openapi.yml#/components/schemas/OrgInvitation20240621",
+  "additionalProperties": false,
+  "properties": {
+    "attributes": {
+      "$ref": "#/$defs/OrgInvitationAttributes20230828"
+    },
+    "id": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "relationships": {
+      "properties": {
+        "org": {
+          "$ref": "#/$defs/Relationship"
+        }
+      },
+      "type": "object"
+    },
+    "type": {
+      "enum": [
+        "org_invitation"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "id",
+    "attributes"
+  ],
+  "type": "object",
+  "$defs": {
+    "LinkProperty": {
+      "oneOf": [
+        {
+          "description": "A string containing the link’s URL.",
+          "type": "string"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "href": {
+              "description": "A string containing the link’s URL.",
+              "type": "string"
+            },
+            "meta": {
+              "additionalProperties": true,
+              "description": "Free-form object that may contain non-standard information.",
+              "type": "object"
+            }
+          },
+          "required": [
+            "href"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "Meta": {
+      "additionalProperties": true,
+      "description": "Free-form object that may contain non-standard information.",
+      "type": "object"
+    },
+    "OrgInvitationAttributes20230828": {
+      "additionalProperties": false,
+      "properties": {
+        "email": {
+          "description": "The email address of the invitee.",
+          "type": "string"
+        },
+        "is_active": {
+          "description": "The active status of the invitation. is_active of true indicates that the invitation is still waiting to be accepted. Invitations are considered inactive when accepted or revoked.\n",
+          "type": "boolean"
+        },
+        "role": {
+          "description": "The role public ID that will be granted to to invitee on acceptance.",
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "email",
+        "is_active",
+        "role"
+      ],
+      "type": "object"
+    },
+    "RelatedLink": {
+      "additionalProperties": false,
+      "properties": {
+        "related": {
+          "$ref": "#/$defs/LinkProperty"
+        }
+      },
+      "type": "object"
+    },
+    "Relationship": {
+      "properties": {
+        "data": {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "type": {
+              "description": "Type of the related resource",
+              "pattern": "^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "id"
+          ],
+          "type": "object"
+        },
+        "links": {
+          "$ref": "#/$defs/RelatedLink"
+        },
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        }
+      },
+      "required": [
+        "data",
+        "links"
+      ],
+      "type": "object"
+    }
+  }
+}

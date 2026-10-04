@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-org-invitation-post-data-schema.json",
+  "title": "OrgInvitationPostData",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-invites-api-openapi.yml#/components/schemas/OrgInvitationPostData",
+  "additionalProperties": false,
+  "properties": {
+    "attributes": {
+      "$ref": "#/$defs/OrgInvitationPostAttributes"
+    },
+    "type": {
+      "enum": [
+        "org_invitation"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "attributes"
+  ],
+  "type": "object",
+  "$defs": {
+    "OrgInvitationPostAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "email": {
+          "description": "The email address of the invitee.",
+          "type": "string"
+        },
+        "role": {
+          "description": "The role public ID that will be granted to to invitee on acceptance.",
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "email",
+        "role"
+      ],
+      "type": "object"
+    }
+  }
+}

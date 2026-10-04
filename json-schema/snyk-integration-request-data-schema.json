@@ -1,0 +1,319 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-integration-request-data-schema.json",
+  "title": "IntegrationRequestData",
+  "description": "Request body for creating an integration",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-integrations-api-openapi.yml#/components/schemas/IntegrationRequestData",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "description": "The integration data",
+      "properties": {
+        "attributes": {
+          "description": "Integration attributes including type, profile name, and credentials.\nThe credentials structure varies by integration_type:\n- ECR: role_arn + region\n- Docker Hub: username + password\n- Generic (ACR, Artifactory, Harbor, etc.): username + password + registry_base\n- DigitalOcean: token\n- GCR/GAR: password (JSON key) + registry_base\n",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/EcrAttributes"
+            },
+            {
+              "$ref": "#/$defs/DockerHubAttributes"
+            },
+            {
+              "$ref": "#/$defs/GenericAttributes"
+            },
+            {
+              "$ref": "#/$defs/GcrAttributes"
+            },
+            {
+              "$ref": "#/$defs/DigitalOceanAttributes"
+            }
+          ]
+        },
+        "type": {
+          "description": "Resource type (must be 'integration')",
+          "enum": [
+            "integration"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "attributes"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "type": "object",
+  "$defs": {
+    "DigitalOceanAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "credentials": {
+          "$ref": "#/$defs/DigitalOceanCredentials"
+        },
+        "integration_type": {
+          "enum": [
+            "digitalocean-cr"
+          ],
+          "type": "string"
+        },
+        "profile_name": {
+          "description": "User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.",
+          "maxLength": 255,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "integration_type",
+        "profile_name",
+        "credentials"
+      ],
+      "type": "object"
+    },
+    "DigitalOceanCredentials": {
+      "additionalProperties": false,
+      "description": "Credentials for DigitalOcean Container Registry",
+      "properties": {
+        "token": {
+          "description": "DigitalOcean API token with read/write access to container registry",
+          "maxLength": 500,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_-]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "token"
+      ],
+      "type": "object"
+    },
+    "DockerHubAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "credentials": {
+          "$ref": "#/$defs/DockerHubCredentials"
+        },
+        "integration_type": {
+          "enum": [
+            "docker-hub"
+          ],
+          "type": "string"
+        },
+        "profile_name": {
+          "description": "User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.",
+          "maxLength": 255,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "integration_type",
+        "profile_name",
+        "credentials"
+      ],
+      "type": "object"
+    },
+    "DockerHubCredentials": {
+      "additionalProperties": false,
+      "description": "Credentials for Docker Hub container registry",
+      "properties": {
+        "password": {
+          "description": "Docker Hub password or access token",
+          "format": "password",
+          "minLength": 1,
+          "type": "string"
+        },
+        "username": {
+          "description": "Docker Hub username",
+          "maxLength": 255,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "username",
+        "password"
+      ],
+      "type": "object"
+    },
+    "EcrAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "credentials": {
+          "$ref": "#/$defs/EcrCredentials"
+        },
+        "integration_type": {
+          "enum": [
+            "ecr"
+          ],
+          "type": "string"
+        },
+        "profile_name": {
+          "description": "User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.",
+          "maxLength": 255,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "integration_type",
+        "profile_name",
+        "credentials"
+      ],
+      "type": "object"
+    },
+    "EcrCredentials": {
+      "additionalProperties": false,
+      "description": "Credentials for AWS Elastic Container Registry (ECR) integration",
+      "properties": {
+        "region": {
+          "description": "AWS region where the ECR registry is located",
+          "pattern": "^[a-z]{2}-[a-z]+-\\d{1}$",
+          "type": "string"
+        },
+        "role_arn": {
+          "description": "AWS IAM role ARN for cross-account access to ECR",
+          "maxLength": 2048,
+          "minLength": 20,
+          "pattern": "^arn:aws:iam::\\d{12}:role/.+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "region",
+        "role_arn"
+      ],
+      "type": "object"
+    },
+    "GcrAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "credentials": {
+          "$ref": "#/$defs/GcrCredentials"
+        },
+        "integration_type": {
+          "enum": [
+            "gcr",
+            "google-artifact-cr"
+          ],
+          "type": "string"
+        },
+        "profile_name": {
+          "description": "User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.",
+          "maxLength": 255,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "integration_type",
+        "profile_name",
+        "credentials"
+      ],
+      "type": "object"
+    },
+    "GcrCredentials": {
+      "additionalProperties": false,
+      "description": "Credentials for Google Container Registry (GCR) and Google Artifact Registry (GAR)",
+      "properties": {
+        "password": {
+          "description": "JSON key file content for Google Cloud service account (as a string)",
+          "format": "password",
+          "minLength": 1,
+          "type": "string"
+        },
+        "registry_base": {
+          "description": "Registry base URL for GCR or GAR (e.g., gcr.io, us.gcr.io, eu.gcr.io, asia.gcr.io, us-docker.pkg.dev, europe-docker.pkg.dev)",
+          "format": "hostname",
+          "maxLength": 255,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?(\\.[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?)*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "password",
+        "registry_base"
+      ],
+      "type": "object"
+    },
+    "GenericAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "credentials": {
+          "$ref": "#/$defs/GenericContainerRegistryCredentials"
+        },
+        "integration_type": {
+          "enum": [
+            "acr",
+            "artifactory-cr",
+            "github-cr",
+            "gitlab-cr",
+            "harbor-cr",
+            "nexus-cr",
+            "quay-cr"
+          ],
+          "type": "string"
+        },
+        "profile_name": {
+          "description": "User-defined name to identify this integration. Allows alphanumeric characters, spaces, hyphens, underscores, and dots.",
+          "maxLength": 255,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9 _.-]*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "integration_type",
+        "profile_name",
+        "credentials"
+      ],
+      "type": "object"
+    },
+    "GenericContainerRegistryCredentials": {
+      "additionalProperties": false,
+      "description": "Credentials for generic container registries (ACR, Artifactory, Harbor, Quay, etc.)",
+      "properties": {
+        "password": {
+          "description": "Registry password or access token",
+          "format": "password",
+          "minLength": 1,
+          "type": "string"
+        },
+        "registry_base": {
+          "description": "Registry base URL - hostname only, no protocol (e.g., myregistry.azurecr.io, artifactory.company.com, harbor.example.com, quay.io)",
+          "format": "hostname",
+          "maxLength": 255,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?(\\.[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?)*$",
+          "type": "string"
+        },
+        "username": {
+          "description": "Registry username",
+          "maxLength": 255,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "username",
+        "password",
+        "registry_base"
+      ],
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-scan-attributes-schema.json",
+  "title": "ScanAttributes",
+  "description": "Scan attributes",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-cloud-api-openapi.yml#/components/schemas/ScanAttributes",
+  "properties": {
+    "created_at": {
+      "description": "When the scan was created",
+      "format": "date-time",
+      "type": "string"
+    },
+    "deleted_at": {
+      "format": "date-time",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "environment_id": {
+      "description": "Environment ID",
+      "format": "uuid",
+      "type": "string"
+    },
+    "error": {
+      "description": "Error message if the scan failed",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "finished_at": {
+      "description": "When the scan finished",
+      "format": "date-time",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kind": {
+      "description": "Scan kind",
+      "enum": [
+        "scheduled",
+        "user_initiated",
+        "event_driven",
+        null
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "options": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "organization_id": {
+      "description": "Organization ID",
+      "format": "uuid",
+      "type": "string"
+    },
+    "partial_errors": {
+      "description": "Errors that didn't fail the scan",
+      "type": "string"
+    },
+    "revision": {
+      "description": "Increment for each change to a scan",
+      "type": "number"
+    },
+    "status": {
+      "description": "Scan status",
+      "enum": [
+        "queued",
+        "in_progress",
+        "success",
+        "error",
+        null
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "updated_at": {
+      "description": "When the scan was last updated",
+      "format": "date-time",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "created_at",
+    "revision",
+    "kind",
+    "status",
+    "error"
+  ],
+  "type": "object"
+}

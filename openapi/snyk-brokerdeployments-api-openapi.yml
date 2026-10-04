@@ -4057,71 +4057,102 @@ paths:
         category: Universal Broker
       x-stability-level: stable
 components:
-  schemas:
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
+  parameters:
+    StartingAfter:
+      description: Return the page of results immediately after this cursor
+      example: v1.eyJpZCI6IjEwMDAifQo=
+      in: query
+      name: starting_after
+      schema:
         type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
-    CreateBrokerDeploymentRequest:
+    DeploymentId:
+      description: Deployment ID
+      in: path
+      name: deployment_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    TenantId:
+      description: Tenant ID
+      in: path
+      name: tenant_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    InstallId:
+      description: Install ID
+      in: path
+      name: install_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
+  schemas:
+    ListBrokerDeploymentsResponse:
       additionalProperties: false
       properties:
         data:
-          properties:
-            attributes:
-              allOf:
-              - $ref: '#/components/schemas/BrokerDeploymentAttributes'
-            type:
-              enum:
-              - broker_deployment
-              type: string
-          required:
-          - attributes
-          - type
-          type: object
+          items:
+            $ref: '#/components/schemas/BrokerDeploymentResource'
+          type: array
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
       required:
       - data
       type: object
-    PaginatedLinks:
+    BrokerDeploymentUpdateResource:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/BrokerDeploymentUpdateAttributes'
+        id:
+          format: uuid
+          readOnly: true
+          type: string
+        type:
+          enum:
+          - broker_deployment
+          type: string
+      required:
+      - attributes
+      - id
+      - type
+      type: object
+    GetBrokerDeploymentResponse:
+      additionalProperties: false
+      properties:
+        data:
+          $ref: '#/components/schemas/BrokerDeploymentResource'
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+      required:
+      - data
+      type: object
+    JsonApi:
       additionalProperties: false
       example:
-        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
-        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
-        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+        version: '1.0'
       properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
       type: object
     BrokerDeploymentAttributes:
       additionalProperties: false
@@ -4160,60 +4191,48 @@ components:
       - id
       - type
       type: object
-    GetBrokerDeploymentResponse:
+    PaginatedLinks:
+      additionalProperties: false
+      example:
+        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
+        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
+        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    UpdateBrokerDeploymentRequest:
       additionalProperties: false
       properties:
         data:
-          $ref: '#/components/schemas/BrokerDeploymentResource'
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
+          $ref: '#/components/schemas/BrokerDeploymentUpdateResource'
       required:
       - data
       type: object
-    BrokerDeploymentUpdateResource:
-      additionalProperties: false
-      properties:
-        attributes:
-          $ref: '#/components/schemas/BrokerDeploymentUpdateAttributes'
-        id:
-          format: uuid
-          readOnly: true
-          type: string
-        type:
-          enum:
-          - broker_deployment
-          type: string
-      required:
-      - attributes
-      - id
-      - type
-      type: object
-    JsonApi:
-      additionalProperties: false
-      example:
-        version: '1.0'
-      properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          example: '1.0'
-          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
-          type: string
-      required:
-      - version
-      type: object
-    ListBrokerDeploymentsResponse:
+    CreateBrokerDeploymentRequest:
       additionalProperties: false
       properties:
         data:
-          items:
-            $ref: '#/components/schemas/BrokerDeploymentResource'
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
+          properties:
+            attributes:
+              allOf:
+              - $ref: '#/components/schemas/BrokerDeploymentAttributes'
+            type:
+              enum:
+              - broker_deployment
+              type: string
+          required:
+          - attributes
+          - type
+          type: object
       required:
       - data
       type: object
@@ -4235,14 +4254,34 @@ components:
       - broker_app_installed_in_org_id
       - install_id
       type: object
-    UpdateBrokerDeploymentRequest:
-      additionalProperties: false
-      properties:
-        data:
-          $ref: '#/components/schemas/BrokerDeploymentUpdateResource'
-      required:
-      - data
-      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
   headers:
     LocationHeader:
       description: 'A header providing a URL for the location of a resource
@@ -4251,45 +4290,6 @@ components:
       example: https://example.com/resource/4
       schema:
         format: url
-        type: string
-  parameters:
-    InstallId:
-      description: Install ID
-      in: path
-      name: install_id
-      required: true
-      schema:
-        format: uuid
-        type: string
-    StartingAfter:
-      description: Return the page of results immediately after this cursor
-      example: v1.eyJpZCI6IjEwMDAifQo=
-      in: query
-      name: starting_after
-      schema:
-        type: string
-    DeploymentId:
-      description: Deployment ID
-      in: path
-      name: deployment_id
-      required: true
-      schema:
-        format: uuid
-        type: string
-    TenantId:
-      description: Tenant ID
-      in: path
-      name: tenant_id
-      required: true
-      schema:
-        format: uuid
-        type: string
-    EndingBefore:
-      description: Return the page of results immediately before this cursor
-      example: v1.eyJpZCI6IjExMDAifQo=
-      in: query
-      name: ending_before
-      schema:
         type: string
   securitySchemes:
     APIToken:

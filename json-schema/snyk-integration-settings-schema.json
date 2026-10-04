@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-integration-settings-schema.json",
+  "title": "IntegrationSettings",
+  "description": "Integration settings resource",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-integrations-api-openapi.yml#/components/schemas/IntegrationSettings",
+  "additionalProperties": false,
+  "properties": {
+    "attributes": {
+      "additionalProperties": false,
+      "description": "For container registry integrations, includes `container_app_scan_enabled` (defaults to true when unset in storage). For other integration types the object is empty because this setting does not apply.\n",
+      "properties": {
+        "container_app_scan_enabled": {
+          "description": "Whether container application scanning is enabled. Only present for container registry integrations; defaults to true when unset in storage.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "id": {
+      "description": "The integration ID this settings resource belongs to",
+      "format": "uuid",
+      "type": "string"
+    },
+    "type": {
+      "description": "Resource type",
+      "enum": [
+        "integration_settings"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "id",
+    "attributes"
+  ],
+  "type": "object"
+}

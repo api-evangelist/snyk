@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-group-iac-settings-response-schema.json",
+  "title": "GroupIacSettingsResponse",
+  "description": "The Infrastructure as Code settings for a group.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-iacsettings-api-openapi.yml#/components/schemas/GroupIacSettingsResponse",
+  "properties": {
+    "attributes": {
+      "properties": {
+        "custom_rules": {
+          "description": "The Infrastructure as Code custom rules settings for a group.",
+          "properties": {
+            "is_enabled": {
+              "$ref": "#/$defs/IsEnabled"
+            },
+            "oci_registry_tag": {
+              "$ref": "#/$defs/OciRegistryTag"
+            },
+            "oci_registry_url": {
+              "$ref": "#/$defs/OciRegistryUrl"
+            }
+          },
+          "type": "object"
+        },
+        "updated": {
+          "$ref": "#/$defs/Updated"
+        }
+      },
+      "type": "object"
+    },
+    "id": {
+      "description": "ID",
+      "format": "uuid",
+      "type": "string"
+    },
+    "type": {
+      "description": "Content type",
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "IsEnabled": {
+      "description": "Whether the custom rules feature is enabled or not.",
+      "type": "boolean"
+    },
+    "OciRegistryTag": {
+      "description": "The tag for an OCI artifact inside an OCI registry.",
+      "type": "string"
+    },
+    "OciRegistryUrl": {
+      "description": "The URL to an OCI registry.",
+      "type": "string"
+    },
+    "Updated": {
+      "description": "The last time the settings were updated.",
+      "format": "date-time",
+      "type": "string"
+    }
+  }
+}

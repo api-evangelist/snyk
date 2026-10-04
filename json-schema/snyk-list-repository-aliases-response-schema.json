@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-list-repository-aliases-response-schema.json",
+  "title": "ListRepositoryAliasesResponse",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-asset-api-openapi.yml#/components/schemas/ListRepositoryAliasesResponse",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "items": {
+        "$ref": "#/$defs/RepositoryAliasesData"
+      },
+      "type": "array"
+    },
+    "jsonapi": {
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "links": {
+      "$ref": "#/$defs/PaginationLinks"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "PaginationLinks": {
+      "description": "Cursor-based pagination links",
+      "properties": {
+        "first": {
+          "description": "Link to the first page",
+          "format": "uri",
+          "type": "string"
+        },
+        "next": {
+          "description": "Link to the next page (if available)",
+          "format": "uri",
+          "type": "string"
+        },
+        "prev": {
+          "description": "Link to the previous page (if available)",
+          "format": "uri",
+          "type": "string"
+        },
+        "self": {
+          "description": "Link to the current page",
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RepositoryAliasItemAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "new_url": {
+          "description": "The alias URL on the canonical document",
+          "type": "string"
+        },
+        "url": {
+          "description": "The primary URL of the canonical document",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url",
+        "new_url"
+      ],
+      "type": "object"
+    },
+    "RepositoryAliasesData": {
+      "additionalProperties": false,
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/RepositoryAliasItemAttributes"
+        },
+        "id": {
+          "description": "The _id of the canonical reference document in the asset-reference collection",
+          "format": "uuid",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "asset_aliases"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ],
+      "type": "object"
+    }
+  }
+}

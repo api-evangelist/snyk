@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-patch-project-request-schema.json",
+  "title": "PatchProjectRequest",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-projects-api-openapi.yml#/components/schemas/PatchProjectRequest",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "attributes": {
+          "properties": {
+            "business_criticality": {
+              "items": {
+                "enum": [
+                  "critical",
+                  "high",
+                  "medium",
+                  "low"
+                ],
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "environment": {
+              "items": {
+                "enum": [
+                  "frontend",
+                  "backend",
+                  "internal",
+                  "external",
+                  "mobile",
+                  "saas",
+                  "onprem",
+                  "hosted",
+                  "distributed"
+                ],
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "lifecycle": {
+              "items": {
+                "enum": [
+                  "production",
+                  "development",
+                  "sandbox"
+                ],
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "tags": {
+              "items": {
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "test_frequency": {
+              "description": "Test frequency of a project. Also controls when automated PRs may be created.",
+              "enum": [
+                "daily",
+                "weekly",
+                "never"
+              ],
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "id": {
+          "description": "The Resource ID.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "relationships": {
+          "properties": {
+            "owner": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "id": {
+                      "description": "The public ID of the user that owns the project",
+                      "format": "uuid",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "type": {
+                      "enum": [
+                        "user"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "id"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "type": {
+          "description": "The Resource type.",
+          "enum": [
+            "project"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "id",
+        "attributes",
+        "relationships"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "type": "object"
+}

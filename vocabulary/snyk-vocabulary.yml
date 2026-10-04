@@ -1,0 +1,429 @@
+generated: '2026-10-04'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/snyk-access-requests-api-openapi.yml
+- openapi/snyk-aibom-api-openapi.yml
+- openapi/snyk-apps-api-openapi.yml
+- openapi/snyk-asset-api-openapi.yml
+- openapi/snyk-audit-logs-api-openapi.yml
+vocabulary:
+  name: Snyk Domain Vocabulary
+  description: 'Terms declared by Snyk''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions. Derived,
+    not authored.'
+  version: '2026-10-04'
+  terms:
+  - term: OAuth2
+    definition: oauth2
+    tags:
+    - Resource Group
+    source: openapi/snyk-oauth2-api-openapi.yml
+  - term: Open API
+    definition: The OpenAPI specification for this service.
+    tags:
+    - Resource Group
+    source: openapi/snyk-open-api-api-openapi.yml
+  - term: ActualVersion
+    definition: Resolved API version
+    tags:
+    - Object
+    source: openapi/snyk-access-requests-api-openapi.yml#/components/schemas/ActualVersion
+  - term: ErrorDocument
+    definition: 'Object declared by the contract with fields: errors, jsonapi.'
+    tags:
+    - Object
+    source: openapi/snyk-access-requests-api-openapi.yml#/components/schemas/ErrorDocument
+  - term: QueryVersion
+    definition: Requested API version
+    tags:
+    - Object
+    source: openapi/snyk-access-requests-api-openapi.yml#/components/schemas/QueryVersion
+  - term: Links
+    definition: 'Object declared by the contract with fields: first, last, next, prev, related, self.'
+    tags:
+    - Object
+    source: openapi/snyk-access-requests-api-openapi.yml#/components/schemas/Links
+  - term: AccessRequest
+    definition: 'Object declared by the contract with fields: attributes, id, type.'
+    tags:
+    - Object
+    source: openapi/snyk-access-requests-api-openapi.yml#/components/schemas/AccessRequest
+  - term: JsonApi
+    definition: 'Object declared by the contract with fields: version.'
+    tags:
+    - Object
+    source: openapi/snyk-access-requests-api-openapi.yml#/components/schemas/JsonApi
+  - term: AccessRequestAttributes
+    definition: 'Object declared by the contract with fields: status.'
+    tags:
+    - Object
+    source: openapi/snyk-access-requests-api-openapi.yml#/components/schemas/AccessRequestAttributes
+  - term: CreateAndUploadAiBomFileUploadAttributes
+    definition: 'Object declared by the contract with fields: repo_name, upload_revision_id.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/CreateAndUploadAiBomFileUploadAttributes
+  - term: PaginatedLinks
+    definition: 'Object declared by the contract with fields: first, last, next, prev, self.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/PaginatedLinks
+  - term: CreateAiBomResponseBody
+    definition: 'Object declared by the contract with fields: data, jsonapi, links.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/CreateAiBomResponseBody
+  - term: CreateAndUploadAiBomRequestBody
+    definition: 'Object declared by the contract with fields: data.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/CreateAndUploadAiBomRequestBody
+  - term: RelationshipObjectToOne
+    definition: 'Object declared by the contract with fields: data.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/RelationshipObjectToOne
+  - term: FileBundleStoreAttributes
+    definition: 'Object declared by the contract with fields: bundle_id.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/FileBundleStoreAttributes
+  - term: GetAiBomResponseBody
+    definition: 'Object declared by the contract with fields: data, jsonapi, links.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/GetAiBomResponseBody
+  - term: JobAttributes
+    definition: JobAttributes represents the attributes of a Job resource
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/JobAttributes
+  - term: AiBomAttributes
+    definition: The AI-Bom document
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/AiBomAttributes
+  - term: FileUploadApiData
+    definition: 'Object declared by the contract with fields: attributes, type.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/FileUploadApiData
+  - term: FileBundleStoreData
+    definition: 'Object declared by the contract with fields: attributes, type.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/FileBundleStoreData
+  - term: CreateAndUploadAiBomFileBundleData
+    definition: 'Object declared by the contract with fields: attributes, type.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/CreateAndUploadAiBomFileBundleData
+  - term: GetAiBomResponseData
+    definition: 'Object declared by the contract with fields: attributes, id, type.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/GetAiBomResponseData
+  - term: JobState
+    definition: State of the job.
+    tags:
+    - Enumeration
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/JobState
+  - term: CreateAiBomRequestBody
+    definition: 'Object declared by the contract with fields: data.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/CreateAiBomRequestBody
+  - term: JobDataRelationships
+    definition: 'Object declared by the contract with fields: ai_bom.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/JobDataRelationships
+  - term: CreateAndUploadAiBomFileUploadData
+    definition: 'Object declared by the contract with fields: attributes, type.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/CreateAndUploadAiBomFileUploadData
+  - term: RelationshipObjectToOneData
+    definition: 'Object declared by the contract with fields: id, type.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/RelationshipObjectToOneData
+  - term: ScmBundleStoreAttributes
+    definition: 'Object declared by the contract with fields: target_id, target_version.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/ScmBundleStoreAttributes
+  - term: CreateAndUploadAiBomFileBundleAttributes
+    definition: 'Object declared by the contract with fields: bundle_id, repo_name.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/CreateAndUploadAiBomFileBundleAttributes
+  - term: FileUploadApiAttributes
+    definition: 'Object declared by the contract with fields: upload_revision_id.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/FileUploadApiAttributes
+  - term: JobData
+    definition: 'Object declared by the contract with fields: attributes, id, relationships, type.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/JobData
+  - term: ScmBundleStoreData
+    definition: 'Object declared by the contract with fields: attributes, type.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/ScmBundleStoreData
+  - term: GetAiBomResponseJobBody
+    definition: 'Object declared by the contract with fields: data, jsonapi, links.'
+    tags:
+    - Object
+    source: openapi/snyk-aibom-api-openapi.yml#/components/schemas/GetAiBomResponseJobBody
+  - term: SelfLink
+    definition: 'Object declared by the contract with fields: self.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/SelfLink
+  - term: SessionData
+    definition: 'Object declared by the contract with fields: attributes, id, type.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/SessionData
+  - term: ClientSecret20240523
+    definition: The OAuth2 client secret for the app. This is the only time this secret will be returned, store it securely and don’t lose it.
+      Only provided for installations of non-interactive Snyk Apps.
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/ClientSecret20240523
+  - term: Error__0
+    definition: 'Object declared by the contract with fields: code, detail, id, links, meta, source, status, title.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/Error__0
+  - term: AppBot
+    definition: 'Object declared by the contract with fields: attributes, id, links, relationships, type.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppBot
+  - term: Context
+    definition: Allow installing the app to a org/group or to a user, default tenant.
+    tags:
+    - Enumeration
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/Context
+  - term: IsPublic
+    definition: A boolean to indicate if an app is publicly available or not.
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/IsPublic
+  - term: AppPostRequest
+    definition: 'Object declared by the contract with fields: data.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppPostRequest
+  - term: AppPostResponse
+    definition: 'Object declared by the contract with fields: data, jsonapi, links.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppPostResponse
+  - term: SessionAttributes
+    definition: 'Object declared by the contract with fields: created_at.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/SessionAttributes
+  - term: AppResourceAttributesWithSecret
+    definition: 'Object declared by the contract with fields: access_token_ttl_seconds, client_id, client_secret, context, grant_type, is_confidential,
+      is_public, name, org_public_id, redirect_uris, scopes.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppResourceAttributesWithSecret
+  - term: AppPatchRequest20220311
+    definition: 'Object declared by the contract with fields: access_token_ttl_seconds, name, redirect_uris.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppPatchRequest20220311
+  - term: ErrorDocument__0
+    definition: 'Object declared by the contract with fields: errors, jsonapi.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/ErrorDocument__0
+  - term: ClientId__0
+    definition: The oauth2 client id for the app.
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/ClientId__0
+  - term: AppPostResponse20220311
+    definition: 'Object declared by the contract with fields: data, jsonapi, links.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppPostResponse20220311
+  - term: GrantType
+    definition: An authorization grant is a credential representing the resource owner's authorization (to access its protected resources) used
+      by the client to obtain an access token. The grant type represents the way your app will get the access token.
+    tags:
+    - Enumeration
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/GrantType
+  - term: AppPostRequest20220311
+    definition: 'Object declared by the contract with fields: access_token_ttl_seconds, context, name, redirect_uris, scopes.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppPostRequest20220311
+  - term: AppDataWithSecret
+    definition: 'Object declared by the contract with fields: attributes, id, type.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppDataWithSecret
+  - term: AppResourceAttributes20220311
+    definition: 'Object declared by the contract with fields: access_token_ttl_seconds, client_id, context, grant_type, is_confidential, is_public,
+      name, org_public_id, redirect_uris, scopes.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppResourceAttributes20220311
+  - term: AppInstallData
+    definition: 'Object declared by the contract with fields: attributes, id, links, relationships, type.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppInstallData
+  - term: RedirectUrisNoMin
+    definition: List of allowed redirect URIs (OAuth callbacks) where Snyk will redirect users after authorization. These are URLs controlled
+      by your application that Snyk will send the user to after they authorize your app. The redirect URI used in your authorization request must
+      exactly match one of the URIs registered here. **Important:** The redirect URI in your OAuth authorization request must be an exact ma
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/RedirectUrisNoMin
+  - term: AppData
+    definition: 'Object declared by the contract with fields: attributes, id, type.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppData
+  - term: ClientId
+    definition: The OAuth2 client id for the app installation. Only provided for installations of non-interactive Snyk Apps.
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/ClientId
+  - term: InstalledAt
+    definition: Timestamp at which this app was first installed at.
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/InstalledAt
+  - term: AppName
+    definition: New name of the app to display to users during authorization flow.
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppName
+  - term: RedirectUris
+    definition: List of allowed redirect URIs (OAuth callbacks) where Snyk will redirect users after authorization. These are URLs controlled
+      by your application that Snyk will send the user to after they authorize your app. The redirect URI used in your authorization request must
+      exactly match one of the URIs registered here. **Important:** The redirect URI in your OAuth authorization request must be an exact ma
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/RedirectUris
+  - term: AccessTokenTtlSeconds
+    definition: The access token time to live for your app, in seconds. It only affects the newly generated access tokens, existing access token
+      will continue to have their previous time to live as expiration.
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AccessTokenTtlSeconds
+  - term: ClientSecret
+    definition: The oauth2 client secret for the app. This is the only time this secret will be returned, store it securely and don’t lose it.
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/ClientSecret
+  - term: AppDataWithSecret20220311
+    definition: 'Object declared by the contract with fields: attributes, id, type.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppDataWithSecret20220311
+  - term: AppInstallDataWithSecret
+    definition: 'Object declared by the contract with fields: attributes, id, links, relationships, type.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppInstallDataWithSecret
+  - term: AppInstallWithClient
+    definition: 'Object declared by the contract with fields: attributes, id, links, relationships, type.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppInstallWithClient
+  - term: IsConfidential
+    definition: A boolean to indicate if an app is confidential or not as per the OAuth2 RFC. Confidential apps can securely store secrets. Examples
+      of non-confidential apps are full web-based or CLIs.
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/IsConfidential
+  - term: Scopes
+    definition: The scopes this app is allowed to request during authorization.
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/Scopes
+  - term: AppPatchRequest
+    definition: 'Object declared by the contract with fields: data.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppPatchRequest
+  - term: ErrorLink
+    definition: A link that leads to further details about this particular occurrance of the problem.
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/ErrorLink
+  - term: GrantType20220311
+    definition: An authorization grant is a credential representing the resource owner's authorization (to access its protected resources) used
+      by the client to obtain an access token.
+    tags:
+    - Enumeration
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/GrantType20220311
+  - term: PublicAppAttributes
+    definition: 'Object declared by the contract with fields: client_id, context, name, scopes.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/PublicAppAttributes
+  - term: AppResourceAttributes
+    definition: 'Object declared by the contract with fields: access_token_ttl_seconds, client_id, context, grant_type, is_confidential, is_public,
+      name, org_public_id, redirect_uris, scopes.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppResourceAttributes
+  - term: Context__0
+    definition: Allow installing the app to at org/group level or user level. Defaults to tenant.
+    tags:
+    - Enumeration
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/Context__0
+  - term: PublicApp
+    definition: 'Object declared by the contract with fields: attributes, id, links, type.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/PublicApp
+  - term: PublicAppAttributes__0
+    definition: 'Object declared by the contract with fields: client_id, context, name, scopes.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/PublicAppAttributes__0
+  - term: PublicAppData
+    definition: 'Object declared by the contract with fields: attributes, id, links, type.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/PublicAppData
+  - term: AppResourceAttributesWithSecret20220311
+    definition: 'Object declared by the contract with fields: access_token_ttl_seconds, client_id, client_secret, context, grant_type, is_confidential,
+      is_public, name, org_public_id, redirect_uris, scopes.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppResourceAttributesWithSecret20220311
+  - term: AppData20220311
+    definition: 'Object declared by the contract with fields: attributes, id, type.'
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/AppData20220311
+  - term: ClientId__1
+    definition: The OAuth2 client id for the app when available. If an app can have multiple OAuth2 clients then this field with return all zeros.
+      This field is not present for such apps in future versions of this api.
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/ClientId__1
+  - term: IsConfidential20220311
+    definition: A boolean to indicate if an app is confidential or not as per the OAuth2 RFC.
+    tags:
+    - Object
+    source: openapi/snyk-apps-api-openapi.yml#/components/schemas/IsConfidential20220311
+  - term: IssuesCountAttributes
+    definition: 'Object declared by the contract with fields: critical, high, low, medium.'
+    tags:
+    - Object
+    source: openapi/snyk-asset-api-openapi.yml#/components/schemas/IssuesCountAttributes

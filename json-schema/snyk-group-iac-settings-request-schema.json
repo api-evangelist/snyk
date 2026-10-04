@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-group-iac-settings-request-schema.json",
+  "title": "GroupIacSettingsRequest",
+  "description": "The Infrastructure as Code settings for a group.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-iacsettings-api-openapi.yml#/components/schemas/GroupIacSettingsRequest",
+  "properties": {
+    "attributes": {
+      "properties": {
+        "custom_rules": {
+          "additionalProperties": false,
+          "description": "The Infrastructure as Code custom rules settings for a group.",
+          "minProperties": 1,
+          "properties": {
+            "is_enabled": {
+              "$ref": "#/$defs/IsEnabled"
+            },
+            "oci_registry_tag": {
+              "$ref": "#/$defs/OciRegistryTag"
+            },
+            "oci_registry_url": {
+              "$ref": "#/$defs/OciRegistryUrl"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "type": {
+      "description": "Content type",
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "attributes"
+  ],
+  "type": "object",
+  "$defs": {
+    "IsEnabled": {
+      "description": "Whether the custom rules feature is enabled or not.",
+      "type": "boolean"
+    },
+    "OciRegistryTag": {
+      "description": "The tag for an OCI artifact inside an OCI registry.",
+      "type": "string"
+    },
+    "OciRegistryUrl": {
+      "description": "The URL to an OCI registry.",
+      "type": "string"
+    }
+  }
+}

@@ -207,7 +207,42 @@ paths:
     - url: https://api.snyk.io/oauth2
       description: Snyk OAuth2 API
 components:
+  responses:
+    InvalidRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthError'
+    ServerError:
+      description: An unexpected server error.
   schemas:
+    OAuthError:
+      type: object
+      properties:
+        error:
+          description: 'An error ID. The full list of possible values can be found in the OAuth Extensions Error Registry maintained by IANA: https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml'
+          type: string
+          example: invalid_request
+        error_description:
+          description: Human readable description about what happened.
+          type: string
+          example: The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Request parameter 'grant_type' is missing
+      required:
+      - error
+      - error_description
     ClientCredentialsSecret:
       allOf:
       - $ref: '#/components/schemas/ClientCredentialsBase'
@@ -224,6 +259,17 @@ components:
         required:
         - client_id
         - client_secret
+    ClientCredentialsBase:
+      type: object
+      properties:
+        grant_type:
+          description: The type of grant used in the request. Use `client_credentials` to exchange credentials for an access token, typically used with Service Accounts. Supports either client_secret or private_key_jwt auth.
+          type: string
+          enum:
+          - client_credentials
+          example: client_credentials
+      required:
+      - grant_type
     AuthCode:
       type: object
       properties:
@@ -255,31 +301,27 @@ components:
       - client_id
       - client_secret
       - code_verifier
-    OAuthError:
-      type: object
-      properties:
-        error:
-          description: 'An error ID. The full list of possible values can be found in the OAuth Extensions Error Registry maintained by IANA: https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml'
-          type: string
-          example: invalid_request
-        error_description:
-          description: Human readable description about what happened.
-          type: string
-          example: The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Request parameter 'grant_type' is missing
-      required:
-      - error
-      - error_description
-    ClientCredentialsBase:
+    RefreshToken:
       type: object
       properties:
         grant_type:
-          description: The type of grant used in the request. Use `client_credentials` to exchange credentials for an access token, typically used with Service Accounts. Supports either client_secret or private_key_jwt auth.
+          description: The type of grant used in the request. Use `refresh_token` to exchange a refresh token for a new access token and refresh token pair.
           type: string
           enum:
-          - client_credentials
-          example: client_credentials
+          - refresh_token
+          example: refresh_token
+        client_secret:
+          description: The client secret of the client application.
+          type: string
+          example: super_secret_client_secret
+        refresh_token:
+          description: A previously issued refresh token. This token will be consumed when it is used here so cannot be reused.
+          type: string
+          example: some_opaque_refresh_token_string
       required:
       - grant_type
+      - client_secret
+      - refresh_token
     ClientCredentialsJWT:
       allOf:
       - $ref: '#/components/schemas/ClientCredentialsBase'
@@ -322,54 +364,12 @@ components:
         required:
         - client_assertion
         - client_assertion_type
-    RefreshToken:
-      type: object
-      properties:
-        grant_type:
-          description: The type of grant used in the request. Use `refresh_token` to exchange a refresh token for a new access token and refresh token pair.
-          type: string
-          enum:
-          - refresh_token
-          example: refresh_token
-        client_secret:
-          description: The client secret of the client application.
-          type: string
-          example: super_secret_client_secret
-        refresh_token:
-          description: A previously issued refresh token. This token will be consumed when it is used here so cannot be reused.
-          type: string
-          example: some_opaque_refresh_token_string
-      required:
-      - grant_type
-      - client_secret
-      - refresh_token
     ClientCredentials:
       oneOf:
       - $ref: '#/components/schemas/ClientCredentialsSecret'
       - $ref: '#/components/schemas/ClientCredentialsJWT'
       discriminator:
         propertyName: client_assertion_type
-  responses:
-    Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuthError'
-    InvalidRequest:
-      description: Invalid request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuthError'
-    ServerError:
-      description: An unexpected server error.
-    Forbidden:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuthError'
 x-refined-from:
 - snyk-oauth2-app-openapi.yml
 - snyk-oauth2-token-openapi.yml

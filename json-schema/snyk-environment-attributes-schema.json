@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-environment-attributes-schema.json",
+  "title": "EnvironmentAttributes",
+  "description": "Environment attributes",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-cloud-api-openapi.yml#/components/schemas/EnvironmentAttributes",
+  "properties": {
+    "created_at": {
+      "description": "When the environment was created",
+      "format": "date-time",
+      "type": "string"
+    },
+    "deleted_at": {
+      "format": "date-time",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kind": {
+      "$ref": "#/$defs/EnvironmentKind"
+    },
+    "name": {
+      "$ref": "#/$defs/EnvironmentName"
+    },
+    "options": {
+      "type": "object"
+    },
+    "properties": {
+      "type": "object"
+    },
+    "revision": {
+      "description": "Increment for each change to an environment",
+      "type": "integer"
+    },
+    "updated_at": {
+      "description": "When the environment was last updated",
+      "format": "date-time",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "kind",
+    "name",
+    "created_at"
+  ],
+  "type": "object",
+  "$defs": {
+    "EnvironmentKind": {
+      "description": "Environment kind: aws",
+      "enum": [
+        "aws",
+        "google",
+        "azure",
+        "scm",
+        "tfc",
+        "cli"
+      ],
+      "type": "string"
+    },
+    "EnvironmentName": {
+      "description": "Environment name",
+      "type": "string"
+    }
+  }
+}

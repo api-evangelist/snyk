@@ -9209,26 +9209,571 @@ paths:
       x-stability-level: stable
 components:
   schemas:
-    GenericConfigurationAttributes:
+    AzureReposAttributes:
       properties:
-        configuration:
+        required:
           properties:
-            required:
-              additionalProperties:
-                type: string
-              type: object
-            type:
+            azure_repos_host:
+              example: my-azure-repos-host/tfs
               type: string
-            validations:
-              items:
-                type: object
-              type: array
+            azure_repos_org:
+              example: <username>:<password>@<yourdomain.artifactory.com>/artifactory
+              type: string
+            azure_repos_token:
+              format: uuid
+              type: string
+            broker_client_url:
+              example: https://<broker.client.hostname>:<port>
+              type: string
+          required:
+          - azure_repos_host
+          - azure_repos_org
+          - azure_repos_token
+          - broker_client_url
+          type: object
+        type:
+          enum:
+          - azure-repos
+          type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
+      type: object
+    CreateBulkMigrationRequest:
+      additionalProperties: false
+      properties:
+        data:
+          properties:
+            type:
+              enum:
+              - broker_migration
+              type: string
           required:
           - type
-          - required
           type: object
       required:
-      - configuration
+      - data
+      type: object
+    GitHubAttributes:
+      properties:
+        required:
+          properties:
+            broker_client_url:
+              example: https://<broker.client.hostname>:<port>
+              type: string
+            github_token:
+              format: uuid
+              type: string
+          required:
+          - broker_client_url
+          - github_token
+          type: object
+        type:
+          enum:
+          - github
+          type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
+      type: object
+    ConnectionAttributes:
+      properties:
+        deployment_id:
+          description: Associated Deployment ID
+          format: uuid
+          type: string
+        identifier:
+          description: Broker identifier
+          format: uuid
+          type: string
+        name:
+          description: Associated name
+          type: string
+        secrets:
+          properties:
+            primary:
+              $ref: '#/components/schemas/SecretAttributes'
+            secondary:
+              $ref: '#/components/schemas/SecretAttributes'
+          required:
+          - primary
+          - secondary
+          type: object
+      required:
+      - deployment_id
+      - name
+      type: object
+    AcrAttributes:
+      properties:
+        required:
+          properties:
+            broker_client_url:
+              example: https://<broker.client.hostname>:<port>
+              type: string
+            cr_agent_url:
+              example: https://<agent-host>:<agent-port>
+              type: string
+            cr_base:
+              type: string
+            cr_password:
+              format: uuid
+              type: string
+            cr_username:
+              type: string
+          required:
+          - cr_base
+          - cr_username
+          - cr_password
+          - broker_client_url
+          - cr_agent_url
+          type: object
+        type:
+          enum:
+          - acr
+          type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
+      type: object
+    AppRiskAttributes:
+      properties:
+        required:
+          oneOf:
+          - $ref: '#/components/schemas/CheckmarxAttributes'
+          - $ref: '#/components/schemas/SonarqubeAttributes'
+          - $ref: '#/components/schemas/AllAppRiskAttributes'
+          type: object
+        type:
+          enum:
+          - apprisk
+          type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
+      type: object
+    OrgIntegrationResource:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          type: string
+        integration_type:
+          type: string
+        org_id:
+          format: uuid
+          type: string
+        type:
+          type: string
+      type: object
+    BitbucketServerAttributes:
+      properties:
+        required:
+          oneOf:
+          - $ref: '#/components/schemas/BitbucketServer'
+          - $ref: '#/components/schemas/BitbucketServerBearerAuth'
+        type:
+          enum:
+          - bitbucket-server
+          type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
+      type: object
+    AppliedIntegrationRelationship:
+      additionalProperties: false
+      properties:
+        data:
+          properties:
+            id:
+              description: Associated item id
+              type: string
+            org_id:
+              description: Associated org id
+              type: string
+            type:
+              description: Associated item type
+              type: string
+          required:
+          - id
+          - org_id
+          - type
+          type: object
+      required:
+      - data
+      type: object
+    ArtifactoryAttributes:
+      properties:
+        required:
+          properties:
+            artifactory_url:
+              format: uuid
+              type: string
+          required:
+          - artifactory_url
+          type: object
+        type:
+          enum:
+          - artifactory
+          type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
+      type: object
+    GetBrokerOrganizationsForBulkMigrationResponse:
+      additionalProperties: false
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/OrganizationResource'
+          type: array
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+      required:
+      - data
+      type: object
+    CreateBrokerConnectionIntegration:
+      additionalProperties: false
+      properties:
+        data:
+          $ref: '#/components/schemas/IntegrationResource'
+      required:
+      - data
+      type: object
+    GitLabAttributes:
+      properties:
+        required:
+          properties:
+            broker_client_url:
+              example: https://<broker.client.hostname>:<port>
+              type: string
+            gitlab:
+              example: gitlab.yourdomain.com
+              type: string
+            gitlab_token:
+              format: uuid
+              type: string
+          required:
+          - broker_client_url
+          - gitlab
+          - gitlab_token
+          type: object
+        type:
+          enum:
+          - gitlab
+          type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
+      type: object
+    ConfigurationResponseAttributes:
+      allOf:
+      - $ref: '#/components/schemas/GenericConfigurationAttributes'
+    ConnectionRelationships__0:
+      additionalProperties: true
+      properties:
+        broker_connections:
+          items:
+            $ref: '#/components/schemas/ConnectionRelationship'
+          type: array
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+      required:
+      - broker_connections
+      type: object
+    BitbucketServerBearerAuth:
+      properties:
+        bitbucket:
+          example: bitbucket.yourdomain.com
+          type: string
+        bitbucket_pat:
+          format: uuid
+          type: string
+        broker_client_url:
+          example: https://<broker.client.hostname>:<port>
+          type: string
+      required:
+      - bitbucket
+      - bitbucket_pat
+      - broker_client_url
+      type: object
+    BrokerConnectionSummaryResponseResource:
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/ConnectionSummaryAttributes'
+        id:
+          format: uuid
+          readOnly: true
+          type: string
+        type:
+          enum:
+          - broker_connection
+          type: string
+      required:
+      - attributes
+      - id
+      - type
+      type: object
+    GetBrokerConnectionIntegrationsResponse:
+      additionalProperties: false
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/OrgIntegrationResource'
+          type: array
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+      required:
+      - data
+      type: object
+    JiraBearerAuth:
+      properties:
+        jira_hostname:
+          example: jira.yourdomain.com
+          type: string
+        jira_pat:
+          format: uuid
+          type: string
+      required:
+      - jira_hostname
+      - jira_pat
+      type: object
+    DigitalOceanCrAttributes:
+      properties:
+        required:
+          properties:
+            broker_client_url:
+              example: https://<broker.client.hostname>:<port>
+              type: string
+            cr_agent_url:
+              example: https://<agent-host>:<agent-port>
+              type: string
+            cr_base:
+              type: string
+            cr_token:
+              format: uuid
+              type: string
+          required:
+          - broker_client_url
+          - cr_agent_url
+          - cr_base
+          - cr_token
+          type: object
+        type:
+          enum:
+          - digitalocean-cr
+          type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
+      type: object
+    WorkloadAttributes:
+      properties:
+        required:
+          properties:
+            workload_internal_uri:
+              type: string
+            workload_type_id:
+              format: uuid
+              type: string
+          required:
+          - workload_type_id
+          - workload_internal_uri
+          type: object
+        type:
+          enum:
+          - workload
+          type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
+      type: object
+    OrganizationResource:
+      additionalProperties: false
+      properties:
+        id:
+          description: The organization ID associated with the bulk migration.
+          format: uuid
+          type: string
+        type:
+          enum:
+          - broker_organization
+          type: string
+      type: object
+    LinkProperty:
+      example: https://example.com/api/resource
+      oneOf:
+      - description: A string containing the link’s URL.
+        example: https://example.com/api/resource
+        type: string
+      - additionalProperties: false
+        example:
+          href: https://example.com/api/resource
+        properties:
+          href:
+            description: A string containing the link’s URL.
+            example: https://example.com/api/resource
+            type: string
+          meta:
+            additionalProperties: true
+            description: Free-form object that may contain non-standard information.
+            example:
+              key1: value1
+              key2:
+                sub_key: sub_value
+              key3:
+              - array_value1
+              - array_value2
+            type: object
+        required:
+        - href
+        type: object
+    GithubCrAttributes:
+      properties:
+        required:
+          properties:
+            broker_client_url:
+              example: https://<broker.client.hostname>:<port>
+              type: string
+            cr_agent_url:
+              example: https://<agent-host>:<agent-port>
+              type: string
+            cr_base:
+              type: string
+            cr_password:
+              format: uuid
+              type: string
+            cr_username:
+              type: string
+          required:
+          - cr_base
+          - cr_username
+          - cr_password
+          - broker_client_url
+          - cr_agent_url
+          type: object
+        type:
+          enum:
+          - github-cr
+          type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
+      type: object
+    UpdateBrokerConnectionRequest:
+      additionalProperties: false
+      properties:
+        data:
+          additionalProperties: false
+          properties:
+            attributes:
+              $ref: '#/components/schemas/CommonConnectionAttributes'
+            id:
+              format: uuid
+              readOnly: true
+              type: string
+            type:
+              enum:
+              - broker_connection
+              type: string
+          required:
+          - attributes
+          - id
+          - type
+          type: object
+      required:
+      - data
+      type: object
+    CreateBrokerConnectionRequest:
+      additionalProperties: false
+      properties:
+        data:
+          properties:
+            attributes:
+              $ref: '#/components/schemas/CommonConnectionAttributes'
+            type:
+              enum:
+              - broker_connection
+              type: string
+          required:
+          - attributes
+          - type
+          type: object
+      required:
+      - data
+      type: object
+    SecretAttributes:
+      additionalProperties: false
+      properties:
+        encrypted:
+          type: string
+        expires_at:
+          format: date-time
+          type: string
+        nonce:
+          type: string
+      required:
+      - nonce
+      - encrypted
+      - expires_at
+      type: object
+    SonarqubeAttributes:
+      properties:
+        sonarqube_api_token:
+          format: uuid
+          type: string
+        sonarqube_host_url:
+          example: sonarqube.customer.com
+          type: string
+      required:
+      - sonarqube_host_url
+      - sonarqube_api_token
       type: object
     ConfigurationAttributes:
       properties:
@@ -9389,168 +9934,6 @@ components:
       required:
       - configuration
       type: object
-    PaginatedLinks:
-      additionalProperties: false
-      example:
-        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
-        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
-        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
-      properties:
-        first:
-          $ref: '#/components/schemas/LinkProperty'
-        last:
-          $ref: '#/components/schemas/LinkProperty'
-        next:
-          $ref: '#/components/schemas/LinkProperty'
-        prev:
-          $ref: '#/components/schemas/LinkProperty'
-        self:
-          $ref: '#/components/schemas/LinkProperty'
-      type: object
-    AllAppRiskAttributes:
-      allOf:
-      - $ref: '#/components/schemas/CheckmarxAttributes'
-      - $ref: '#/components/schemas/SonarqubeAttributes'
-    ConnectionRelationship:
-      additionalProperties: false
-      properties:
-        data:
-          properties:
-            id:
-              description: Associated item id
-              type: string
-            type:
-              description: Associated item type
-              type: string
-          required:
-          - id
-          - type
-          type: object
-      required:
-      - data
-      type: object
-    AcrAttributes:
-      properties:
-        required:
-          properties:
-            broker_client_url:
-              example: https://<broker.client.hostname>:<port>
-              type: string
-            cr_agent_url:
-              example: https://<agent-host>:<agent-port>
-              type: string
-            cr_base:
-              type: string
-            cr_password:
-              format: uuid
-              type: string
-            cr_username:
-              type: string
-          required:
-          - cr_base
-          - cr_username
-          - cr_password
-          - broker_client_url
-          - cr_agent_url
-          type: object
-        type:
-          enum:
-          - acr
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
-    ListBrokerConnectionsSummaryResponse:
-      additionalProperties: false
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/BrokerConnectionSummaryResponseResource'
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-      required:
-      - data
-      type: object
-    CreateBulkMigrationRequest:
-      additionalProperties: false
-      properties:
-        data:
-          properties:
-            type:
-              enum:
-              - broker_migration
-              type: string
-          required:
-          - type
-          type: object
-      required:
-      - data
-      type: object
-    ConnectionSummaryAttributes:
-      properties:
-        connection_type:
-          description: Connection type
-          type: string
-        context:
-          description: Broker Context
-          format: uuid
-          type: string
-        deployment_id:
-          description: Associated Deployment ID
-          format: uuid
-          type: string
-        name:
-          description: Associated name
-          type: string
-      required:
-      - deployment_id
-      - name
-      - connection_type
-      type: object
-    GoogleArtifactCrAttributes:
-      properties:
-        required:
-          properties:
-            broker_client_url:
-              example: https://<broker.client.hostname>:<port>
-              type: string
-            cr_agent_url:
-              example: https://<agent-host>:<agent-port>
-              type: string
-            cr_base:
-              type: string
-            cr_password:
-              format: uuid
-              type: string
-            cr_username:
-              type: string
-          required:
-          - cr_base
-          - cr_username
-          - cr_password
-          - broker_client_url
-          - cr_agent_url
-          type: object
-        type:
-          enum:
-          - google-artifact-cr
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
     GitHubServerAppAttributes:
       properties:
         required:
@@ -9597,725 +9980,34 @@ components:
       - type
       - required
       type: object
-    QuayCrAttributes:
-      properties:
-        required:
-          properties:
-            broker_client_url:
-              example: https://<broker.client.hostname>:<port>
-              type: string
-            cr_agent_url:
-              example: https://<agent-host>:<agent-port>
-              type: string
-            cr_base:
-              type: string
-            cr_password:
-              format: uuid
-              type: string
-            cr_username:
-              type: string
-          required:
-          - cr_base
-          - cr_username
-          - cr_password
-          - broker_client_url
-          - cr_agent_url
-          type: object
-        type:
-          enum:
-          - quay-cr
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
-    ArtifactoryAttributes:
-      properties:
-        required:
-          properties:
-            artifactory_url:
-              format: uuid
-              type: string
-          required:
-          - artifactory_url
-          type: object
-        type:
-          enum:
-          - artifactory
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
-    GithubCrAttributes:
-      properties:
-        required:
-          properties:
-            broker_client_url:
-              example: https://<broker.client.hostname>:<port>
-              type: string
-            cr_agent_url:
-              example: https://<agent-host>:<agent-port>
-              type: string
-            cr_base:
-              type: string
-            cr_password:
-              format: uuid
-              type: string
-            cr_username:
-              type: string
-          required:
-          - cr_base
-          - cr_username
-          - cr_password
-          - broker_client_url
-          - cr_agent_url
-          type: object
-        type:
-          enum:
-          - github-cr
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
-    AppliedIntegrationsRelationships:
-      additionalProperties: true
-      properties:
-        applied_integrations:
-          items:
-            $ref: '#/components/schemas/AppliedIntegrationRelationship'
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-      required:
-      - applied_integrations
-      type: object
-    ListBrokerConnectionsResponse:
+    BulkMigrationCreateResponse:
       additionalProperties: false
       properties:
         data:
-          items:
-            $ref: '#/components/schemas/BrokerConnectionResponseResource'
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-      required:
-      - data
-      type: object
-    BrokerConnectionSummaryResponseResource:
-      additionalProperties: false
-      properties:
-        attributes:
-          $ref: '#/components/schemas/ConnectionSummaryAttributes'
-        id:
-          format: uuid
-          readOnly: true
-          type: string
-        type:
-          enum:
-          - broker_connection
-          type: string
-      required:
-      - attributes
-      - id
-      - type
-      type: object
-    ConfigurationResponseAttributes:
-      allOf:
-      - $ref: '#/components/schemas/GenericConfigurationAttributes'
-    Jira:
-      properties:
-        jira_hostname:
-          example: jira.yourdomain.com
-          type: string
-        jira_password:
-          format: uuid
-          type: string
-        jira_username:
-          example: <jira-username>
-          type: string
-      required:
-      - jira_hostname
-      - jira_password
-      - jira_username
-      type: object
-    CheckmarxAttributes:
-      properties:
-        checkmarx:
-          example: checkmarx.customer.com
-          type: string
-        checkmarx_password:
-          format: uuid
-          type: string
-        checkmarx_username:
-          example: <username>
-          type: string
-      required:
-      - checkmarx
-      - checkmarx_password
-      - checkmarx_username
-      type: object
-    IntegrationResource:
-      additionalProperties: false
-      properties:
-        integration_id:
-          format: uuid
-          type: string
-        type:
-          description: Connection type
-          example: github
-          type: string
-      required:
-      - type
-      type: object
-    GetBrokerConnectionIntegrationsResponse:
-      additionalProperties: false
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/OrgIntegrationResource'
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-      required:
-      - data
-      type: object
-    BitbucketServerAttributes:
-      properties:
-        required:
-          oneOf:
-          - $ref: '#/components/schemas/BitbucketServer'
-          - $ref: '#/components/schemas/BitbucketServerBearerAuth'
-        type:
-          enum:
-          - bitbucket-server
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
-    BitbucketServer:
-      properties:
-        bitbucket:
-          example: bitbucket.yourdomain.com
-          type: string
-        bitbucket_password:
-          format: uuid
-          type: string
-        bitbucket_username:
-          example: <username>
-          type: string
-        broker_client_url:
-          example: https://<broker.client.hostname>:<port>
-          type: string
-      required:
-      - bitbucket
-      - bitbucket_password
-      - bitbucket_username
-      - broker_client_url
-      type: object
-    NexusAttributes:
-      properties:
-        required:
-          properties:
-            base_nexus_url:
-              format: uuid
-              type: string
-          required:
-          - base_nexus_url
-          type: object
-        type:
-          enum:
-          - nexus
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
-    SonarqubeAttributes:
-      properties:
-        sonarqube_api_token:
-          format: uuid
-          type: string
-        sonarqube_host_url:
-          example: sonarqube.customer.com
-          type: string
-      required:
-      - sonarqube_host_url
-      - sonarqube_api_token
-      type: object
-    GitHubEnterpriseAttributes:
-      properties:
-        required:
-          properties:
-            broker_client_url:
-              example: https://<broker.client.hostname>:<port>
-              type: string
-            github:
-              example: ghe.yourdomain.com
-              type: string
-            github_token:
-              format: uuid
-              type: string
-          required:
-          - broker_client_url
-          - github
-          - github_token
-          type: object
-        type:
-          enum:
-          - github-enterprise
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
-    ArtifactoryCrAttributes:
-      properties:
-        required:
-          properties:
-            broker_client_url:
-              example: https://<broker.client.hostname>:<port>
-              type: string
-            cr_agent_url:
-              example: https://<agent-host>:<agent-port>
-              type: string
-            cr_base:
-              type: string
-            cr_password:
-              format: uuid
-              type: string
-            cr_username:
-              type: string
-          required:
-          - cr_base
-          - cr_username
-          - cr_password
-          - broker_client_url
-          - cr_agent_url
-          type: object
-        type:
-          enum:
-          - artifactory-cr
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
-    DigitalOceanCrAttributes:
-      properties:
-        required:
-          properties:
-            broker_client_url:
-              example: https://<broker.client.hostname>:<port>
-              type: string
-            cr_agent_url:
-              example: https://<agent-host>:<agent-port>
-              type: string
-            cr_base:
-              type: string
-            cr_token:
-              format: uuid
-              type: string
-          required:
-          - broker_client_url
-          - cr_agent_url
-          - cr_base
-          - cr_token
-          type: object
-        type:
-          enum:
-          - digitalocean-cr
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
-    AzureReposAttributes:
-      properties:
-        required:
-          properties:
-            azure_repos_host:
-              example: my-azure-repos-host/tfs
-              type: string
-            azure_repos_org:
-              example: <username>:<password>@<yourdomain.artifactory.com>/artifactory
-              type: string
-            azure_repos_token:
-              format: uuid
-              type: string
-            broker_client_url:
-              example: https://<broker.client.hostname>:<port>
-              type: string
-          required:
-          - azure_repos_host
-          - azure_repos_org
-          - azure_repos_token
-          - broker_client_url
-          type: object
-        type:
-          enum:
-          - azure-repos
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
-    NexusCrAttributes:
-      properties:
-        required:
-          properties:
-            broker_client_url:
-              example: https://<broker.client.hostname>:<port>
-              type: string
-            cr_agent_url:
-              example: https://<agent-host>:<agent-port>
-              type: string
-            cr_base:
-              type: string
-            cr_password:
-              format: uuid
-              type: string
-            cr_username:
-              type: string
-          required:
-          - cr_base
-          - cr_username
-          - cr_password
-          - broker_client_url
-          - cr_agent_url
-          type: object
-        type:
-          enum:
-          - nexus-cr
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
-    CreateBrokerConnectionIntegration:
-      additionalProperties: false
-      properties:
-        data:
-          $ref: '#/components/schemas/IntegrationResource'
-      required:
-      - data
-      type: object
-    CommonConnectionAttributes:
-      allOf:
-      - $ref: '#/components/schemas/ConnectionAttributes'
-      - $ref: '#/components/schemas/ConfigurationAttributes'
-    LinkProperty:
-      example: https://example.com/api/resource
-      oneOf:
-      - description: A string containing the link’s URL.
-        example: https://example.com/api/resource
-        type: string
-      - additionalProperties: false
-        example:
-          href: https://example.com/api/resource
-        properties:
-          href:
-            description: A string containing the link’s URL.
-            example: https://example.com/api/resource
-            type: string
-          meta:
-            additionalProperties: true
-            description: Free-form object that may contain non-standard information.
-            example:
-              key1: value1
-              key2:
-                sub_key: sub_value
-              key3:
-              - array_value1
-              - array_value2
-            type: object
-        required:
-        - href
-        type: object
-    SecretAttributes:
-      additionalProperties: false
-      properties:
-        encrypted:
-          type: string
-        expires_at:
-          format: date-time
-          type: string
-        nonce:
-          type: string
-      required:
-      - nonce
-      - encrypted
-      - expires_at
-      type: object
-    UpdateBrokerConnectionRequest:
-      additionalProperties: false
-      properties:
-        data:
-          additionalProperties: false
           properties:
             attributes:
-              $ref: '#/components/schemas/CommonConnectionAttributes'
+              properties:
+                status:
+                  type: string
+              type: object
             id:
               format: uuid
-              readOnly: true
               type: string
             type:
               enum:
-              - broker_connection
+              - broker_migration
               type: string
           required:
           - attributes
           - id
           - type
           type: object
-      required:
-      - data
-      type: object
-    ConnectionRelationships__0:
-      additionalProperties: true
-      properties:
-        broker_connections:
-          items:
-            $ref: '#/components/schemas/ConnectionRelationship'
-          type: array
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-      required:
-      - broker_connections
-      type: object
-    AppRiskAttributes:
-      properties:
-        required:
-          oneOf:
-          - $ref: '#/components/schemas/CheckmarxAttributes'
-          - $ref: '#/components/schemas/SonarqubeAttributes'
-          - $ref: '#/components/schemas/AllAppRiskAttributes'
-          type: object
-        type:
-          enum:
-          - apprisk
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
-    CreateBrokerConnectionRequest:
-      additionalProperties: false
-      properties:
-        data:
-          properties:
-            attributes:
-              $ref: '#/components/schemas/CommonConnectionAttributes'
-            type:
-              enum:
-              - broker_connection
-              type: string
-          required:
-          - attributes
-          - type
-          type: object
-      required:
-      - data
-      type: object
-    GetBrokerConnectionIntegrationResponse:
-      additionalProperties: false
-      properties:
-        data:
-          $ref: '#/components/schemas/OrgIntegrationResource'
         jsonapi:
           $ref: '#/components/schemas/JsonApi'
         links:
           $ref: '#/components/schemas/PaginatedLinks'
       required:
       - data
-      type: object
-    GetBrokerConnectionResponse:
-      additionalProperties: false
-      properties:
-        data:
-          $ref: '#/components/schemas/BrokerConnectionResponseResource'
-        jsonapi:
-          $ref: '#/components/schemas/JsonApi'
-        links:
-          $ref: '#/components/schemas/PaginatedLinks'
-      required:
-      - data
-      type: object
-    CommonConnectionResponseAttributes:
-      allOf:
-      - $ref: '#/components/schemas/ConnectionAttributes'
-      - $ref: '#/components/schemas/ConfigurationResponseAttributes'
-    WorkloadAttributes:
-      properties:
-        required:
-          properties:
-            workload_internal_uri:
-              type: string
-            workload_type_id:
-              format: uuid
-              type: string
-          required:
-          - workload_type_id
-          - workload_internal_uri
-          type: object
-        type:
-          enum:
-          - workload
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
-    HarborCrAttributes:
-      properties:
-        required:
-          properties:
-            broker_client_url:
-              example: https://<broker.client.hostname>:<port>
-              type: string
-            cr_agent_url:
-              example: https://<agent-host>:<agent-port>
-              type: string
-            cr_base:
-              type: string
-            cr_password:
-              format: uuid
-              type: string
-            cr_username:
-              type: string
-          required:
-          - cr_base
-          - cr_username
-          - cr_password
-          - broker_client_url
-          - cr_agent_url
-          type: object
-        type:
-          enum:
-          - harbor-cr
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
-    GitLabAttributes:
-      properties:
-        required:
-          properties:
-            broker_client_url:
-              example: https://<broker.client.hostname>:<port>
-              type: string
-            gitlab:
-              example: gitlab.yourdomain.com
-              type: string
-            gitlab_token:
-              format: uuid
-              type: string
-          required:
-          - broker_client_url
-          - gitlab
-          - gitlab_token
-          type: object
-        type:
-          enum:
-          - gitlab
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
-    ConnectionAttributes:
-      properties:
-        deployment_id:
-          description: Associated Deployment ID
-          format: uuid
-          type: string
-        identifier:
-          description: Broker identifier
-          format: uuid
-          type: string
-        name:
-          description: Associated name
-          type: string
-        secrets:
-          properties:
-            primary:
-              $ref: '#/components/schemas/SecretAttributes'
-            secondary:
-              $ref: '#/components/schemas/SecretAttributes'
-          required:
-          - primary
-          - secondary
-          type: object
-      required:
-      - deployment_id
-      - name
       type: object
     GitHubCloudAppAttributes:
       properties:
@@ -10363,28 +10055,36 @@ components:
       - type
       - required
       type: object
-    BulkMigrationCreateResponse:
+    CommonConnectionResponseAttributes:
+      allOf:
+      - $ref: '#/components/schemas/ConnectionAttributes'
+      - $ref: '#/components/schemas/ConfigurationResponseAttributes'
+    ConnectionSummaryAttributes:
+      properties:
+        connection_type:
+          description: Connection type
+          type: string
+        context:
+          description: Broker Context
+          format: uuid
+          type: string
+        deployment_id:
+          description: Associated Deployment ID
+          format: uuid
+          type: string
+        name:
+          description: Associated name
+          type: string
+      required:
+      - deployment_id
+      - name
+      - connection_type
+      type: object
+    GetBrokerConnectionIntegrationResponse:
       additionalProperties: false
       properties:
         data:
-          properties:
-            attributes:
-              properties:
-                status:
-                  type: string
-              type: object
-            id:
-              format: uuid
-              type: string
-            type:
-              enum:
-              - broker_migration
-              type: string
-          required:
-          - attributes
-          - id
-          - type
-          type: object
+          $ref: '#/components/schemas/OrgIntegrationResource'
         jsonapi:
           $ref: '#/components/schemas/JsonApi'
         links:
@@ -10392,12 +10092,16 @@ components:
       required:
       - data
       type: object
-    GetBrokerOrganizationsForBulkMigrationResponse:
+    AllAppRiskAttributes:
+      allOf:
+      - $ref: '#/components/schemas/CheckmarxAttributes'
+      - $ref: '#/components/schemas/SonarqubeAttributes'
+    ListBrokerConnectionsSummaryResponse:
       additionalProperties: false
       properties:
         data:
           items:
-            $ref: '#/components/schemas/OrganizationResource'
+            $ref: '#/components/schemas/BrokerConnectionSummaryResponseResource'
           type: array
         jsonapi:
           $ref: '#/components/schemas/JsonApi'
@@ -10405,6 +10109,285 @@ components:
           $ref: '#/components/schemas/PaginatedLinks'
       required:
       - data
+      type: object
+    HarborCrAttributes:
+      properties:
+        required:
+          properties:
+            broker_client_url:
+              example: https://<broker.client.hostname>:<port>
+              type: string
+            cr_agent_url:
+              example: https://<agent-host>:<agent-port>
+              type: string
+            cr_base:
+              type: string
+            cr_password:
+              format: uuid
+              type: string
+            cr_username:
+              type: string
+          required:
+          - cr_base
+          - cr_username
+          - cr_password
+          - broker_client_url
+          - cr_agent_url
+          type: object
+        type:
+          enum:
+          - harbor-cr
+          type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
+      type: object
+    JsonApi:
+      additionalProperties: false
+      example:
+        version: '1.0'
+      properties:
+        version:
+          description: Version of the JSON API specification this server supports.
+          example: '1.0'
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
+          type: string
+      required:
+      - version
+      type: object
+    GoogleArtifactCrAttributes:
+      properties:
+        required:
+          properties:
+            broker_client_url:
+              example: https://<broker.client.hostname>:<port>
+              type: string
+            cr_agent_url:
+              example: https://<agent-host>:<agent-port>
+              type: string
+            cr_base:
+              type: string
+            cr_password:
+              format: uuid
+              type: string
+            cr_username:
+              type: string
+          required:
+          - cr_base
+          - cr_username
+          - cr_password
+          - broker_client_url
+          - cr_agent_url
+          type: object
+        type:
+          enum:
+          - google-artifact-cr
+          type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
+      type: object
+    GitHubEnterpriseAttributes:
+      properties:
+        required:
+          properties:
+            broker_client_url:
+              example: https://<broker.client.hostname>:<port>
+              type: string
+            github:
+              example: ghe.yourdomain.com
+              type: string
+            github_token:
+              format: uuid
+              type: string
+          required:
+          - broker_client_url
+          - github
+          - github_token
+          type: object
+        type:
+          enum:
+          - github-enterprise
+          type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
+      type: object
+    GetBrokerConnectionResponse:
+      additionalProperties: false
+      properties:
+        data:
+          $ref: '#/components/schemas/BrokerConnectionResponseResource'
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+      required:
+      - data
+      type: object
+    PaginatedLinks:
+      additionalProperties: false
+      example:
+        first: https://example.com/api/resource?ending_before=v1.eyJpZCI6IjExIn0K
+        last: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjMwIn0K
+        next: https://example.com/api/resource?starting_after=v1.eyJpZCI6IjEwIn0K
+      properties:
+        first:
+          $ref: '#/components/schemas/LinkProperty'
+        last:
+          $ref: '#/components/schemas/LinkProperty'
+        next:
+          $ref: '#/components/schemas/LinkProperty'
+        prev:
+          $ref: '#/components/schemas/LinkProperty'
+        self:
+          $ref: '#/components/schemas/LinkProperty'
+      type: object
+    QuayCrAttributes:
+      properties:
+        required:
+          properties:
+            broker_client_url:
+              example: https://<broker.client.hostname>:<port>
+              type: string
+            cr_agent_url:
+              example: https://<agent-host>:<agent-port>
+              type: string
+            cr_base:
+              type: string
+            cr_password:
+              format: uuid
+              type: string
+            cr_username:
+              type: string
+          required:
+          - cr_base
+          - cr_username
+          - cr_password
+          - broker_client_url
+          - cr_agent_url
+          type: object
+        type:
+          enum:
+          - quay-cr
+          type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
+      type: object
+    GenericConfigurationAttributes:
+      properties:
+        configuration:
+          properties:
+            required:
+              additionalProperties:
+                type: string
+              type: object
+            type:
+              type: string
+            validations:
+              items:
+                type: object
+              type: array
+          required:
+          - type
+          - required
+          type: object
+      required:
+      - configuration
+      type: object
+    IntegrationResource:
+      additionalProperties: false
+      properties:
+        integration_id:
+          format: uuid
+          type: string
+        type:
+          description: Connection type
+          example: github
+          type: string
+      required:
+      - type
+      type: object
+    ListBrokerConnectionsResponse:
+      additionalProperties: false
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/BrokerConnectionResponseResource'
+          type: array
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+      required:
+      - data
+      type: object
+    BrokerContextAttributes:
+      additionalProperties: false
+      properties:
+        context:
+          additionalProperties:
+            type: string
+          type: object
+      required:
+      - context
+      type: object
+    CommonConnectionAttributes:
+      allOf:
+      - $ref: '#/components/schemas/ConnectionAttributes'
+      - $ref: '#/components/schemas/ConfigurationAttributes'
+    NexusCrAttributes:
+      properties:
+        required:
+          properties:
+            broker_client_url:
+              example: https://<broker.client.hostname>:<port>
+              type: string
+            cr_agent_url:
+              example: https://<agent-host>:<agent-port>
+              type: string
+            cr_base:
+              type: string
+            cr_password:
+              format: uuid
+              type: string
+            cr_username:
+              type: string
+          required:
+          - cr_base
+          - cr_username
+          - cr_password
+          - broker_client_url
+          - cr_agent_url
+          type: object
+        type:
+          enum:
+          - nexus-cr
+          type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
       type: object
     GitlabCrAttributes:
       properties:
@@ -10442,6 +10425,72 @@ components:
       - type
       - required
       type: object
+    ConnectionRelationship:
+      additionalProperties: false
+      properties:
+        data:
+          properties:
+            id:
+              description: Associated item id
+              type: string
+            type:
+              description: Associated item type
+              type: string
+          required:
+          - id
+          - type
+          type: object
+      required:
+      - data
+      type: object
+    AppliedIntegrationsRelationships:
+      additionalProperties: true
+      properties:
+        applied_integrations:
+          items:
+            $ref: '#/components/schemas/AppliedIntegrationRelationship'
+          type: array
+        jsonapi:
+          $ref: '#/components/schemas/JsonApi'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+      required:
+      - applied_integrations
+      type: object
+    CheckmarxAttributes:
+      properties:
+        checkmarx:
+          example: checkmarx.customer.com
+          type: string
+        checkmarx_password:
+          format: uuid
+          type: string
+        checkmarx_username:
+          example: <username>
+          type: string
+      required:
+      - checkmarx
+      - checkmarx_password
+      - checkmarx_username
+      type: object
+    JiraAttributes:
+      properties:
+        required:
+          oneOf:
+          - $ref: '#/components/schemas/Jira'
+          - $ref: '#/components/schemas/JiraBearerAuth'
+        type:
+          enum:
+          - jira
+          type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
+      type: object
     BrokerContextResource:
       additionalProperties: true
       properties:
@@ -10464,36 +10513,33 @@ components:
       - id
       - type
       type: object
-    JsonApi:
-      additionalProperties: false
-      example:
-        version: '1.0'
-      properties:
-        version:
-          description: Version of the JSON API specification this server supports.
-          example: '1.0'
-          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)$
-          type: string
-      required:
-      - version
-      type: object
-    GitHubAttributes:
+    ArtifactoryCrAttributes:
       properties:
         required:
           properties:
             broker_client_url:
               example: https://<broker.client.hostname>:<port>
               type: string
-            github_token:
+            cr_agent_url:
+              example: https://<agent-host>:<agent-port>
+              type: string
+            cr_base:
+              type: string
+            cr_password:
               format: uuid
               type: string
+            cr_username:
+              type: string
           required:
+          - cr_base
+          - cr_username
+          - cr_password
           - broker_client_url
-          - github_token
+          - cr_agent_url
           type: object
         type:
           enum:
-          - github
+          - artifactory-cr
           type: string
         validations:
           items:
@@ -10503,27 +10549,63 @@ components:
       - type
       - required
       type: object
-    BrokerContextAttributes:
-      additionalProperties: false
+    NexusAttributes:
       properties:
-        context:
-          additionalProperties:
-            type: string
+        required:
+          properties:
+            base_nexus_url:
+              format: uuid
+              type: string
+          required:
+          - base_nexus_url
           type: object
-      required:
-      - context
-      type: object
-    OrganizationResource:
-      additionalProperties: false
-      properties:
-        id:
-          description: The organization ID associated with the bulk migration.
-          format: uuid
-          type: string
         type:
           enum:
-          - broker_organization
+          - nexus
           type: string
+        validations:
+          items:
+            type: object
+          type: array
+      required:
+      - type
+      - required
+      type: object
+    BitbucketServer:
+      properties:
+        bitbucket:
+          example: bitbucket.yourdomain.com
+          type: string
+        bitbucket_password:
+          format: uuid
+          type: string
+        bitbucket_username:
+          example: <username>
+          type: string
+        broker_client_url:
+          example: https://<broker.client.hostname>:<port>
+          type: string
+      required:
+      - bitbucket
+      - bitbucket_password
+      - bitbucket_username
+      - broker_client_url
+      type: object
+    Jira:
+      properties:
+        jira_hostname:
+          example: jira.yourdomain.com
+          type: string
+        jira_password:
+          format: uuid
+          type: string
+        jira_username:
+          example: <jira-username>
+          type: string
+      required:
+      - jira_hostname
+      - jira_password
+      - jira_username
       type: object
     BrokerConnectionResponseResource:
       additionalProperties: false
@@ -10547,120 +10629,7 @@ components:
       - id
       - type
       type: object
-    JiraAttributes:
-      properties:
-        required:
-          oneOf:
-          - $ref: '#/components/schemas/Jira'
-          - $ref: '#/components/schemas/JiraBearerAuth'
-        type:
-          enum:
-          - jira
-          type: string
-        validations:
-          items:
-            type: object
-          type: array
-      required:
-      - type
-      - required
-      type: object
-    BitbucketServerBearerAuth:
-      properties:
-        bitbucket:
-          example: bitbucket.yourdomain.com
-          type: string
-        bitbucket_pat:
-          format: uuid
-          type: string
-        broker_client_url:
-          example: https://<broker.client.hostname>:<port>
-          type: string
-      required:
-      - bitbucket
-      - bitbucket_pat
-      - broker_client_url
-      type: object
-    OrgIntegrationResource:
-      additionalProperties: false
-      properties:
-        id:
-          format: uuid
-          type: string
-        integration_type:
-          type: string
-        org_id:
-          format: uuid
-          type: string
-        type:
-          type: string
-      type: object
-    JiraBearerAuth:
-      properties:
-        jira_hostname:
-          example: jira.yourdomain.com
-          type: string
-        jira_pat:
-          format: uuid
-          type: string
-      required:
-      - jira_hostname
-      - jira_pat
-      type: object
-    AppliedIntegrationRelationship:
-      additionalProperties: false
-      properties:
-        data:
-          properties:
-            id:
-              description: Associated item id
-              type: string
-            org_id:
-              description: Associated org id
-              type: string
-            type:
-              description: Associated item type
-              type: string
-          required:
-          - id
-          - org_id
-          - type
-          type: object
-      required:
-      - data
-      type: object
   parameters:
-    IntegrationId:
-      description: Integration ID
-      in: path
-      name: integration_id
-      required: true
-      schema:
-        format: uuid
-        type: string
-    ConnectionId:
-      description: Connection ID
-      in: path
-      name: connection_id
-      required: true
-      schema:
-        format: uuid
-        type: string
-    EndingBefore:
-      description: Return the page of results immediately before this cursor
-      example: v1.eyJpZCI6IjExMDAifQo=
-      in: query
-      name: ending_before
-      schema:
-        type: string
-    InstallId:
-      description: Install ID
-      in: path
-      name: install_id
-      required: true
-      schema:
-        format: uuid
-        type: string
     StartingAfter:
       description: Return the page of results immediately after this cursor
       example: v1.eyJpZCI6IjEwMDAifQo=
@@ -10676,10 +10645,41 @@ components:
       schema:
         format: uuid
         type: string
+    IntegrationId:
+      description: Integration ID
+      in: path
+      name: integration_id
+      required: true
+      schema:
+        format: uuid
+        type: string
     TenantId:
       description: Tenant ID
       in: path
       name: tenant_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    EndingBefore:
+      description: Return the page of results immediately before this cursor
+      example: v1.eyJpZCI6IjExMDAifQo=
+      in: query
+      name: ending_before
+      schema:
+        type: string
+    ConnectionId:
+      description: Connection ID
+      in: path
+      name: connection_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+    InstallId:
+      description: Install ID
+      in: path
+      name: install_id
       required: true
       schema:
         format: uuid

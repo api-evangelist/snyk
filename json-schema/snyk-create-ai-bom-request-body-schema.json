@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-create-ai-bom-request-body-schema.json",
+  "title": "CreateAiBomRequestBody",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-aibom-api-openapi.yml#/components/schemas/CreateAiBomRequestBody",
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/CreateAiBomRequestData"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "type": "object",
+  "$defs": {
+    "CreateAiBomRequestData": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/FileBundleStoreData"
+        },
+        {
+          "$ref": "#/$defs/ScmBundleStoreData"
+        },
+        {
+          "$ref": "#/$defs/FileUploadApiData"
+        }
+      ]
+    },
+    "FileBundleStoreAttributes": {
+      "properties": {
+        "bundle_id": {
+          "description": "The id of the bundle that has been uploaded by the user, sha256 hash",
+          "pattern": "^[0-9a-fA-F]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "bundle_id"
+      ],
+      "type": "object"
+    },
+    "FileBundleStoreData": {
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/FileBundleStoreAttributes"
+        },
+        "type": {
+          "enum": [
+            "ai_bom_file_bundle"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "attributes"
+      ],
+      "type": "object"
+    },
+    "FileUploadApiAttributes": {
+      "properties": {
+        "upload_revision_id": {
+          "description": "The id of the upload revision the has been created by the user",
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "upload_revision_id"
+      ],
+      "type": "object"
+    },
+    "FileUploadApiData": {
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/FileUploadApiAttributes"
+        },
+        "type": {
+          "enum": [
+            "ai_bom_file_upload"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "attributes"
+      ],
+      "type": "object"
+    },
+    "ScmBundleStoreAttributes": {
+      "properties": {
+        "target_id": {
+          "description": "The id of the target which has been imported into Snyk.",
+          "format": "uuid",
+          "type": "string"
+        },
+        "target_version": {
+          "description": "The branch or commit hash to scan",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_id"
+      ],
+      "type": "object"
+    },
+    "ScmBundleStoreData": {
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/ScmBundleStoreAttributes"
+        },
+        "type": {
+          "enum": [
+            "ai_bom_scm_bundle"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "attributes"
+      ],
+      "type": "object"
+    }
+  }
+}

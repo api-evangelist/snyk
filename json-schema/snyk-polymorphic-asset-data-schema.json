@@ -1,0 +1,625 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-polymorphic-asset-data-schema.json",
+  "title": "PolymorphicAssetData",
+  "description": "JSON:API data for any asset type (polymorphic)",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-inventory-assets-api-openapi.yml#/components/schemas/PolymorphicAssetData",
+  "properties": {
+    "attributes": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ContainerImageAttributesResponse"
+        }
+      ]
+    },
+    "id": {
+      "description": "The unique identifier of the asset",
+      "format": "uuid",
+      "type": "string"
+    },
+    "links": {
+      "description": "Self-referencing link",
+      "properties": {
+        "self": {
+          "description": "Link to the current resource",
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "self"
+      ],
+      "type": "object"
+    },
+    "relationships": {
+      "description": "JSON:API relationships linking to related resources",
+      "properties": {
+        "projects": {
+          "description": "Link to the asset's related projects",
+          "properties": {
+            "links": {
+              "properties": {
+                "related": {
+                  "description": "URL to the related projects endpoint",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "targets": {
+          "description": "Link to the asset's related targets",
+          "properties": {
+            "links": {
+              "properties": {
+                "related": {
+                  "description": "URL to the related targets endpoint",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "type": {
+      "description": "The JSON:API resource type",
+      "enum": [
+        "container_images"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "id"
+  ],
+  "type": "object",
+  "$defs": {
+    "Architecture": {
+      "description": "CPU architecture for container images (Go GOARCH conventions)",
+      "enum": [
+        "386",
+        "amd64",
+        "arm",
+        "arm64",
+        "loong64",
+        "mips",
+        "mips64",
+        "mips64le",
+        "mipsle",
+        "ppc64",
+        "ppc64le",
+        "riscv64",
+        "s390x",
+        "wasm",
+        "other"
+      ],
+      "type": "string"
+    },
+    "AssetBaseAttributes": {
+      "description": "Asset-level fields shared across all asset types.",
+      "properties": {
+        "class": {
+          "$ref": "#/$defs/ClassResponse"
+        },
+        "created_at": {
+          "description": "When the asset was created",
+          "format": "date-time",
+          "type": "string"
+        },
+        "issues": {
+          "$ref": "#/$defs/IssueCounts"
+        },
+        "labels": {
+          "description": "Labels associated with the asset",
+          "items": {
+            "maxLength": 40,
+            "type": "string"
+          },
+          "maxItems": 50,
+          "type": "array"
+        },
+        "last_scan": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "last_seen_at": {
+          "description": "When the asset was last seen (i.e., confirmed to exist) via any discovery source.\nUpdated on every upsert operation.\n",
+          "format": "date-time",
+          "type": "string"
+        },
+        "risk_score": {
+          "description": "Risk score for the asset",
+          "format": "int32",
+          "type": "integer"
+        },
+        "scan_engines": {
+          "description": "Scan engines applied to the asset",
+          "items": {
+            "$ref": "#/$defs/ScanEngine"
+          },
+          "maxItems": 50,
+          "type": "array"
+        },
+        "tags": {
+          "additionalProperties": {
+            "maxLength": 40,
+            "type": "string"
+          },
+          "description": "Key-value tags for the asset",
+          "maxProperties": 100,
+          "type": "object"
+        },
+        "teams": {
+          "description": "Teams associated with the asset",
+          "items": {
+            "maxLength": 64,
+            "type": "string"
+          },
+          "maxItems": 20,
+          "type": "array"
+        },
+        "test_surfaces": {
+          "description": "Test surfaces for the asset",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "type": "array"
+        },
+        "updated_at": {
+          "description": "When the asset was last updated",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ClassResponse": {
+      "additionalProperties": false,
+      "description": "Asset classification in response",
+      "properties": {
+        "display_name": {
+          "enum": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "type": "string"
+        },
+        "locked": {
+          "default": false,
+          "type": "boolean"
+        },
+        "rank": {
+          "enum": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "type": "integer"
+        }
+      },
+      "required": [
+        "display_name",
+        "rank"
+      ],
+      "type": "object"
+    },
+    "ContainerImageAttributesResponse": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/AssetBaseAttributes"
+        },
+        {
+          "description": "Attributes specific to container image assets.",
+          "properties": {
+            "architecture": {
+              "$ref": "#/$defs/Architecture"
+            },
+            "author": {
+              "description": "Author of the image",
+              "maxLength": 256,
+              "type": "string"
+            },
+            "built_at": {
+              "description": "When the image was built",
+              "format": "date-time",
+              "type": "string"
+            },
+            "config": {
+              "$ref": "#/$defs/ImageConfig"
+            },
+            "config_digest": {
+              "description": "Image config digest",
+              "maxLength": 256,
+              "type": "string"
+            },
+            "distribution_digests": {
+              "description": "Distribution digests (manifest/index pairs)",
+              "items": {
+                "$ref": "#/$defs/DistributionDigest"
+              },
+              "maxItems": 100,
+              "type": "array"
+            },
+            "history": {
+              "description": "Image build history",
+              "items": {
+                "$ref": "#/$defs/History"
+              },
+              "maxItems": 1000,
+              "type": "array"
+            },
+            "image_tags": {
+              "description": "Distinct image tags across all discovery sources",
+              "items": {
+                "maxLength": 256,
+                "type": "string"
+              },
+              "maxItems": 20,
+              "type": "array"
+            },
+            "inferred_base_images": {
+              "description": "Inferred base images",
+              "items": {
+                "maxLength": 512,
+                "type": "string"
+              },
+              "maxItems": 100,
+              "type": "array"
+            },
+            "os": {
+              "$ref": "#/$defs/OperatingSystem"
+            },
+            "os_features": {
+              "description": "OS features",
+              "items": {
+                "maxLength": 256,
+                "type": "string"
+              },
+              "maxItems": 100,
+              "type": "array"
+            },
+            "os_version": {
+              "description": "Operating system version",
+              "maxLength": 256,
+              "type": "string"
+            },
+            "registry": {
+              "description": "Container registry hostname",
+              "maxLength": 256,
+              "type": "string"
+            },
+            "repository": {
+              "description": "Repository path, e.g. \"library/nginx\"",
+              "maxLength": 256,
+              "type": "string"
+            },
+            "root_fs": {
+              "$ref": "#/$defs/RootFs"
+            },
+            "size_bytes": {
+              "description": "Size of the image in bytes",
+              "format": "int64",
+              "type": "integer"
+            },
+            "total_image_tags": {
+              "description": "Total count of distinct image tags across all discovery sources",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "variant": {
+              "description": "Variant of the CPU architecture",
+              "maxLength": 64,
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "DistributionDigest": {
+      "description": "Distribution digest information for a container image",
+      "properties": {
+        "index_digest": {
+          "description": "Index digest",
+          "maxLength": 256,
+          "type": "string"
+        },
+        "manifest_digest": {
+          "description": "Manifest digest",
+          "maxLength": 256,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "History": {
+      "description": "A single entry in the container image build history",
+      "properties": {
+        "author": {
+          "description": "Author of the layer",
+          "maxLength": 128,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "comment": {
+          "description": "Comment for the layer",
+          "maxLength": 4096,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "created_at": {
+          "description": "When the layer was created",
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "created_by": {
+          "description": "Command that created the layer",
+          "maxLength": 4096,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "empty_layer": {
+          "description": "Whether this is an empty layer (metadata-only)",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "ImageConfig": {
+      "description": "Runtime configuration for the container (OCI image config).\nContains entrypoint, environment, exposed ports, volumes, labels, etc.\n",
+      "properties": {
+        "args_escaped": {
+          "description": "Whether args are escaped (Windows)",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "cmd": {
+          "description": "Command to run",
+          "items": {
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "maxItems": 500,
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "entry_point": {
+          "description": "Entry point command",
+          "items": {
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "maxItems": 500,
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "env": {
+          "description": "Environment variables",
+          "items": {
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "maxItems": 500,
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "exposed_ports": {
+          "description": "Exposed ports in format \"port/protocol\" (e.g., \"8080/tcp\", \"53/udp\").\nPort is 0-65535, protocol is tcp or udp.\n",
+          "items": {
+            "maxLength": 64,
+            "pattern": "^\\d{1,5}/(tcp|udp)$",
+            "type": "string"
+          },
+          "maxItems": 500,
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "labels": {
+          "additionalProperties": {
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "description": "Key-value labels from the image configuration",
+          "type": "object"
+        },
+        "stop_signal": {
+          "description": "Signal to stop the container",
+          "maxLength": 128,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "user": {
+          "description": "User that runs the container",
+          "maxLength": 1024,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "volumes": {
+          "description": "Volume mount points",
+          "items": {
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "maxItems": 500,
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "working_dir": {
+          "description": "Working directory",
+          "maxLength": 1024,
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IssueCounts": {
+      "description": "Issue counts by severity",
+      "properties": {
+        "critical": {
+          "description": "Count of critical severity issues",
+          "format": "int32",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "high": {
+          "description": "Count of high severity issues",
+          "format": "int32",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "low": {
+          "description": "Count of low severity issues",
+          "format": "int32",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "medium": {
+          "description": "Count of medium severity issues",
+          "format": "int32",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "critical",
+        "high",
+        "medium",
+        "low"
+      ],
+      "type": "object"
+    },
+    "OperatingSystem": {
+      "description": "Operating system for container images (Go GOOS conventions)",
+      "enum": [
+        "aix",
+        "android",
+        "darwin",
+        "dragonfly",
+        "freebsd",
+        "illumos",
+        "ios",
+        "js",
+        "linux",
+        "netbsd",
+        "openbsd",
+        "plan9",
+        "solaris",
+        "wasip1",
+        "windows",
+        "other"
+      ],
+      "type": "string"
+    },
+    "RootFs": {
+      "description": "Root filesystem information with ordered layer diff IDs.\nEach diff_id is a SHA256 digest of the uncompressed layer content.\n",
+      "properties": {
+        "diff_ids": {
+          "description": "Diff IDs for each layer (SHA256 of uncompressed content)",
+          "items": {
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "maxItems": 256,
+          "type": "array"
+        },
+        "type": {
+          "description": "Root filesystem type (e.g., \"layers\")",
+          "maxLength": 128,
+          "type": "string"
+        }
+      },
+      "required": [
+        "diff_ids",
+        "type"
+      ],
+      "type": "object"
+    },
+    "ScanEngine": {
+      "description": "Scan engine information associated with an asset",
+      "properties": {
+        "issues": {
+          "$ref": "#/$defs/IssueCounts"
+        },
+        "last_seen": {
+          "description": "When the scan engine was last seen",
+          "format": "date-time",
+          "type": "string"
+        },
+        "link": {
+          "description": "Link to the scan engine details",
+          "format": "uri",
+          "maxLength": 1024,
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the scan engine",
+          "maxLength": 256,
+          "type": "string"
+        },
+        "type": {
+          "description": "Type of scan engine",
+          "enum": [
+            "sca",
+            "sast",
+            "container",
+            "iac",
+            "secrets"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "name",
+        "last_seen",
+        "issues"
+      ],
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-user-schema.json",
+  "title": "User",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-groups-api-openapi.yml#/components/schemas/User",
+  "additionalProperties": false,
+  "properties": {
+    "attributes": {
+      "additionalProperties": false,
+      "properties": {
+        "active": {
+          "description": "Whether the user status is enabled or not",
+          "type": "boolean"
+        },
+        "email": {
+          "description": "The email of the user.",
+          "type": "string"
+        },
+        "membership": {
+          "properties": {
+            "created_at": {
+              "description": "The date the membership was established.",
+              "format": "date-time",
+              "type": "string"
+            },
+            "strategy": {
+              "description": "Whether the membership is a direct, or indirect membership.",
+              "enum": [
+                "direct",
+                "indirect"
+              ],
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "name": {
+          "description": "The name of the user.",
+          "type": "string"
+        },
+        "username": {
+          "description": "The username of the user.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "id": {
+      "description": "The Snyk ID corresponding to this user",
+      "format": "uuid",
+      "type": "string"
+    },
+    "type": {
+      "description": "Content type.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "id",
+    "attributes"
+  ],
+  "type": "object"
+}

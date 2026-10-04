@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-group-membership-org-membership-schema.json",
+  "title": "GroupMembershipOrgMembership",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-groups-api-openapi.yml#/components/schemas/GroupMembershipOrgMembership",
+  "additionalProperties": false,
+  "properties": {
+    "attributes": {
+      "properties": {
+        "created_at": {
+          "description": "The date that the org membership was created on",
+          "format": "date-time"
+        }
+      },
+      "type": "object"
+    },
+    "id": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "org_membership_count": {
+      "description": "Org memberships for this user within this group.",
+      "type": "number"
+    },
+    "relationships": {
+      "$ref": "#/$defs/GroupMembershipOrgMembershipRelationships"
+    },
+    "type": {
+      "description": "Content type.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "id",
+    "attributes",
+    "relationships"
+  ],
+  "type": "object",
+  "$defs": {
+    "GroupMembershipOrgMembershipOrgData": {
+      "properties": {
+        "data": {
+          "additionalProperties": false,
+          "properties": {
+            "attributes": {
+              "properties": {
+                "name": {
+                  "description": "The name of the prg",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": "object"
+            },
+            "id": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "attributes"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GroupMembershipOrgMembershipRelationships": {
+      "additionalProperties": false,
+      "properties": {
+        "org": {
+          "$ref": "#/$defs/GroupMembershipOrgMembershipOrgData"
+        },
+        "role": {
+          "$ref": "#/$defs/GroupMembershipOrgMembershipRoleData"
+        },
+        "user": {
+          "$ref": "#/$defs/GroupMembershipOrgMembershipUserData"
+        }
+      },
+      "required": [
+        "role",
+        "org",
+        "user"
+      ],
+      "type": "object"
+    },
+    "GroupMembershipOrgMembershipRoleData": {
+      "properties": {
+        "data": {
+          "additionalProperties": false,
+          "properties": {
+            "attributes": {
+              "properties": {
+                "name": {
+                  "description": "The name of the role",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": "object"
+            },
+            "id": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "attributes"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GroupMembershipOrgMembershipUserData": {
+      "properties": {
+        "data": {
+          "additionalProperties": false,
+          "properties": {
+            "attributes": {
+              "properties": {
+                "email": {
+                  "description": "The eamil of the user",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The name of the user",
+                  "type": "string"
+                },
+                "username": {
+                  "description": "The username of the user",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "username",
+                "email"
+              ],
+              "type": "object"
+            },
+            "id": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "attributes"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

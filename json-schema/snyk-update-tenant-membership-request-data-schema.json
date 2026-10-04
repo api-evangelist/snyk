@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-update-tenant-membership-request-data-schema.json",
+  "title": "UpdateTenantMembershipRequestData",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-tenants-api-openapi.yml#/components/schemas/UpdateTenantMembershipRequestData",
+  "additionalProperties": false,
+  "properties": {
+    "attributes": {
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "id": {
+      "$ref": "#/$defs/TenantMembershipId"
+    },
+    "relationships": {
+      "$ref": "#/$defs/UpdateTenantMembershipRequestRelationships"
+    },
+    "type": {
+      "$ref": "#/$defs/TenantMembershipType"
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "relationships"
+  ],
+  "type": "object",
+  "$defs": {
+    "TenantMembershipId": {
+      "description": "Unique identifier for a tenant membership.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "TenantMembershipTenantRoleRelationshipBasic": {
+      "additionalProperties": false,
+      "description": "The role held by the user in the tenant.",
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/TenantMembershipTenantRoleRelationshipDataBasic"
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "type": "object"
+    },
+    "TenantMembershipTenantRoleRelationshipDataBasic": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/TenantRoleId"
+        },
+        "type": {
+          "$ref": "#/$defs/TenantRoleType"
+        }
+      },
+      "required": [
+        "id",
+        "type"
+      ],
+      "type": "object"
+    },
+    "TenantMembershipType": {
+      "description": "Resource type for tenant memberships.",
+      "enum": [
+        "tenant_membership"
+      ],
+      "type": "string"
+    },
+    "TenantRoleId": {
+      "description": "Unique identifier for a tenant role.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "TenantRoleType": {
+      "description": "Resource type for tenant roles.",
+      "enum": [
+        "tenant_role"
+      ],
+      "type": "string"
+    },
+    "UpdateTenantMembershipRequestRelationships": {
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "$ref": "#/$defs/TenantMembershipTenantRoleRelationshipBasic"
+        }
+      },
+      "required": [
+        "role"
+      ],
+      "type": "object"
+    }
+  }
+}

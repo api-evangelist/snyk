@@ -1,0 +1,406 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-asset-response-data-schema.json",
+  "title": "AssetResponseData",
+  "description": "asset resource object",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-asset-api-openapi.yml#/components/schemas/AssetResponseData",
+  "properties": {
+    "attributes": {
+      "$ref": "#/$defs/AssetAttributes"
+    },
+    "id": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "relationships": {
+      "$ref": "#/$defs/AssetRelationships"
+    },
+    "removed": {
+      "type": "boolean"
+    },
+    "type": {
+      "enum": [
+        "repository",
+        "image",
+        "package"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "type"
+  ],
+  "type": "object",
+  "$defs": {
+    "AssetAttributes": {
+      "properties": {
+        "app_context": {
+          "description": "asset metadata from App Context integrations",
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "archived": {
+          "description": "Indicates if the asset is archived",
+          "type": "boolean"
+        },
+        "base_image": {
+          "description": "Base image of the container image",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "browse_url": {
+          "description": "URL to browse the asset",
+          "format": "uri",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "class": {
+          "$ref": "#/$defs/AssetClassAttributes"
+        },
+        "coverage_controls": {
+          "items": {
+            "$ref": "#/$defs/CoverageControlAttributes"
+          },
+          "type": "array"
+        },
+        "created_at": {
+          "description": "Creation timestamp",
+          "format": "date-time",
+          "type": "string"
+        },
+        "default_branch_name": {
+          "description": "Default branch name of the repository",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "developers": {
+          "description": "List of developers associated with the asset",
+          "items": {
+            "$ref": "#/$defs/DeveloperAttributes"
+          },
+          "type": "array"
+        },
+        "file_path": {
+          "description": "File path of the asset",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "image_digests": {
+          "description": "List of digests for the container image",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "image_id": {
+          "description": "ID of the container image",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "image_registries": {
+          "description": "List of registries containing the container image",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "image_repositories": {
+          "description": "List of repositories containing the container image",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "image_tags": {
+          "description": "List of tags for the container image",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "labels": {
+          "description": "Unstructured, simple text strings that can be applied to an asset",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "languages": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "description": "Languages used in the asset with usage counts",
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "Name of the asset of the file path",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "removed_reasons": {
+          "description": "List of reasons for removal",
+          "items": {
+            "properties": {
+              "reason": {
+                "description": "Reason for removal:\n- repo-archived - The asset was archived on the SCM.\n- repo-deleted - The asset was deleted on the SCM.\n- org-level-inactive - The Org-Level integration/profile is inactive.\n- snyk-project-deleted - The associated Snyk Project was deleted and Snyk was the only source.\n- deleted-profile - The integration profile was deleted.\n",
+                "enum": [
+                  "deleted-profile",
+                  "org-level-inactive",
+                  "repo-archived",
+                  "repo-deleted",
+                  "snyk-project-deleted"
+                ]
+              },
+              "removed_at": {
+                "format": "date-time",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "repository_freshness": {
+          "description": "Indicating the activity level of the repository",
+          "format": "byte",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "repository_url": {
+          "description": "URL to the asset's repository",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "risk_factors": {
+          "description": "Runtime context that indicates increased asset risk",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "sources": {
+          "description": "List of source identifiers for the asset",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Explicitly defined, key:value pairs that are associated with an asset",
+          "type": "object"
+        },
+        "updated_at": {
+          "description": "Last update timestamp",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AssetClassAttributes": {
+      "additionalProperties": false,
+      "description": "Mandated, hierarchical attribute that provides a standardized measure of an asset's importance to the business. It can be a number from 1-4 or a display name (e.g \"A\", \"B\", \"C\" or \"D\").\nThe locked status is a boolean flag that, when true, prevents automated policy-driven actions from overriding the manually set Business Criticality (Class) value.\n",
+      "properties": {
+        "display_name": {
+          "description": "class name of the asset",
+          "type": "string"
+        },
+        "locked": {
+          "description": "Whether the asset class is locked",
+          "type": "boolean"
+        },
+        "rank": {
+          "description": "Rank associated with the asset class",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "AssetRelationships": {
+      "properties": {
+        "assets": {
+          "properties": {
+            "links": {
+              "properties": {
+                "related": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "organizations": {
+          "description": "Snyk Organizations with Projects that map to this asset",
+          "properties": {
+            "data": {
+              "items": {
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "name": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "projects": {
+          "properties": {
+            "links": {
+              "properties": {
+                "related": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "CoverageControlAttributes": {
+      "properties": {
+        "category": {
+          "description": "Category of the control",
+          "type": "string"
+        },
+        "gap": {
+          "description": "indicates if there is a coverage gap",
+          "type": "boolean"
+        },
+        "issues_count": {
+          "$ref": "#/$defs/IssuesCountAttributes"
+        },
+        "last_scan": {
+          "description": "Last scan date for this control",
+          "format": "date-time",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the control",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DeveloperAttributes": {
+      "properties": {
+        "discovered_by": {
+          "description": "The SCM integration that was discovered by the developer",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "email": {
+          "description": "Email address of the developer",
+          "format": "email",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "description": "URL of the developer's profile",
+          "format": "uri",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "username": {
+          "description": "Username of the developer",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IssuesCountAttributes": {
+      "properties": {
+        "critical": {
+          "description": "Number of critical issues",
+          "type": "integer"
+        },
+        "high": {
+          "description": "Number of high-severity issues",
+          "type": "integer"
+        },
+        "low": {
+          "description": "Number of low-severity issues",
+          "type": "integer"
+        },
+        "medium": {
+          "description": "Number of medium-severity issues",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

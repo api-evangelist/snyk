@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-io-snyk-api-common-link-property-schema.json",
+  "title": "io.snyk.api.common.LinkProperty",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-tests-api-openapi.yml#/components/schemas/io.snyk.api.common.LinkProperty",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/io.snyk.api.common.LinkString"
+    },
+    {
+      "$ref": "#/$defs/io.snyk.api.common.LinkObject"
+    }
+  ],
+  "$defs": {
+    "io.snyk.api.common.LinkObject": {
+      "properties": {
+        "href": {
+          "$ref": "#/$defs/io.snyk.api.common.LinkString"
+        },
+        "meta": {
+          "$ref": "#/$defs/io.snyk.api.common.Meta"
+        }
+      },
+      "required": [
+        "href"
+      ],
+      "type": "object"
+    },
+    "io.snyk.api.common.LinkString": {
+      "format": "uri",
+      "type": "string"
+    },
+    "io.snyk.api.common.Meta": {
+      "additionalProperties": {},
+      "description": "Free-form object that may contain non-standard information.",
+      "type": "object"
+    }
+  }
+}

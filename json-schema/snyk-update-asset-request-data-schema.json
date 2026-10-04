@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-update-asset-request-data-schema.json",
+  "title": "UpdateAssetRequestData",
+  "description": "Asset update request data",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-asset-api-openapi.yml#/components/schemas/UpdateAssetRequestData",
+  "properties": {
+    "attributes": {
+      "$ref": "#/$defs/UpdateAssetAttributes"
+    },
+    "id": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "type": {
+      "enum": [
+        "repository",
+        "image",
+        "package"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "id",
+    "attributes"
+  ],
+  "type": "object",
+  "$defs": {
+    "AssetClass": {
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "display_name"
+          ]
+        },
+        {
+          "required": [
+            "rank"
+          ]
+        }
+      ],
+      "description": "Sets the asset's class using either a rank (a number between 1 and 4) or a display name (e.g., \"A,\" \"B,\" \"C,\" or \"D\"). If both rank and name are provided, rank takes precedence.\n* This attribute accepts a single value. It can be locked: When a class attribute is \"locked\", this attribute will not be affected by any policy.\n  * UI: When the user changes the asset class, by default is \"locked\".\n  * API: The user will need to indicate wether they want to \"lock\" the class attribute.\n",
+      "properties": {
+        "display_name": {
+          "description": "Asset class display name",
+          "enum": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "type": "string"
+        },
+        "locked": {
+          "description": "Whether the asset class is locked",
+          "type": "boolean"
+        },
+        "rank": {
+          "description": "Asset class rank (1-4)",
+          "enum": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "AssetLabelsUpdate": {
+      "additionalProperties": false,
+      "description": "Updates the asset's labels by adding or removing label values.\n",
+      "properties": {
+        "add": {
+          "description": "Labels to add to the asset",
+          "items": {
+            "maxLength": 40,
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "remove": {
+          "description": "Labels to remove from the asset",
+          "items": {
+            "maxLength": 40,
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "AssetTagsUpdate": {
+      "additionalProperties": false,
+      "description": "Updates the asset's custom tags by adding or removing tag key-value pairs.\n",
+      "properties": {
+        "add": {
+          "additionalProperties": {
+            "maxLength": 40,
+            "pattern": "^[a-zA-Z0-9_/:?#@&=+%~-]+$",
+            "type": "string"
+          },
+          "description": "Tags to add to the asset (key-value pairs). Tag keys must be 1-30 characters long and contain only alphanumeric characters, underscores, and hyphens.\n",
+          "type": "object"
+        },
+        "remove": {
+          "description": "Tag keys to remove from the asset",
+          "items": {
+            "maxLength": 30,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "UpdateAssetAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "class": {
+          "$ref": "#/$defs/AssetClass"
+        },
+        "labels": {
+          "$ref": "#/$defs/AssetLabelsUpdate"
+        },
+        "tags": {
+          "$ref": "#/$defs/AssetTagsUpdate"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

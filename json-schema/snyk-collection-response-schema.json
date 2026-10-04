@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-collection-response-schema.json",
+  "title": "CollectionResponse",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-collection-api-openapi.yml#/components/schemas/CollectionResponse",
+  "additionalProperties": false,
+  "properties": {
+    "attributes": {
+      "$ref": "#/$defs/CollectionAttributes"
+    },
+    "id": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "meta": {
+      "$ref": "#/$defs/CollectionMeta"
+    },
+    "relationships": {
+      "$ref": "#/$defs/CollectionRelationships"
+    },
+    "type": {
+      "$ref": "#/$defs/Types"
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "meta",
+    "attributes",
+    "relationships"
+  ],
+  "type": "object",
+  "$defs": {
+    "CollectionAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "is_generated": {
+          "type": "boolean"
+        },
+        "name": {
+          "description": "User-defined name of the collection",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "CollectionMeta": {
+      "additionalProperties": false,
+      "properties": {
+        "issues_critical_count": {
+          "description": "The sum of critical severity issues of the collection's projects",
+          "type": "number"
+        },
+        "issues_high_count": {
+          "description": "The sum of high severity issues of the collection's projects",
+          "type": "number"
+        },
+        "issues_low_count": {
+          "description": "The sum of low severity issues of the collection's projects",
+          "type": "number"
+        },
+        "issues_medium_count": {
+          "description": "The sum of medium severity issues of the collection's projects",
+          "type": "number"
+        },
+        "projects_count": {
+          "description": "The amount of projects belonging to this collection",
+          "type": "number"
+        }
+      },
+      "required": [
+        "projects_count",
+        "issues_critical_count",
+        "issues_high_count",
+        "issues_medium_count",
+        "issues_low_count"
+      ],
+      "type": "object"
+    },
+    "CollectionRelationships": {
+      "additionalProperties": false,
+      "properties": {
+        "created_by_user": {
+          "properties": {
+            "data": {
+              "properties": {
+                "id": {
+                  "description": "ID of the user that created the collection. Null for auto-collections.",
+                  "format": "uuid",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "type": {
+                  "enum": [
+                    "user"
+                  ]
+                }
+              },
+              "required": [
+                "type",
+                "id"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "data"
+          ],
+          "type": "object"
+        },
+        "org": {
+          "properties": {
+            "data": {
+              "properties": {
+                "id": {
+                  "description": "ID of the org that this collection belongs to",
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "type": {
+                  "enum": [
+                    "org"
+                  ]
+                }
+              },
+              "required": [
+                "type",
+                "id"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "data"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "org",
+        "created_by_user"
+      ],
+      "type": "object"
+    },
+    "Types": {
+      "pattern": "^[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*$",
+      "type": "string"
+    }
+  }
+}

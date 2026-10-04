@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-remove-repository-alias-request-data-schema.json",
+  "title": "RemoveRepositoryAliasRequestData",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-asset-api-openapi.yml#/components/schemas/RemoveRepositoryAliasRequestData",
+  "properties": {
+    "attributes": {
+      "$ref": "#/$defs/RemoveRepositoryAliasAttributes"
+    },
+    "id": {
+      "description": "The _id of the canonical reference document in the asset-reference collection",
+      "format": "uuid",
+      "type": "string"
+    },
+    "type": {
+      "enum": [
+        "asset_aliases"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "id",
+    "attributes"
+  ],
+  "type": "object",
+  "$defs": {
+    "RemoveRepositoryAliasAttributes": {
+      "properties": {
+        "new_url": {
+          "description": "The aliased URL to detach from its canonical asset",
+          "type": "string"
+        },
+        "url": {
+          "description": "The primary URL of the canonical document that owns the alias. Used to verify the request targets the correct document.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url",
+        "new_url"
+      ],
+      "type": "object"
+    }
+  }
+}

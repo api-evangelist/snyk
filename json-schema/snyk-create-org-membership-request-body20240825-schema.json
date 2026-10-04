@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-create-org-membership-request-body20240825-schema.json",
+  "title": "CreateOrgMembershipRequestBody20240825",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-orgs-api-openapi.yml#/components/schemas/CreateOrgMembershipRequestBody20240825",
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "relationships": {
+          "additionalProperties": false,
+          "properties": {
+            "org": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "properties": {
+                    "id": {
+                      "format": "uuid",
+                      "type": "string"
+                    },
+                    "type": {
+                      "description": "Always \"org\"",
+                      "enum": [
+                        "org"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "id"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "data"
+              ],
+              "type": "object"
+            },
+            "role": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "properties": {
+                    "id": {
+                      "format": "uuid",
+                      "type": "string"
+                    },
+                    "type": {
+                      "description": "Always \"org_role\"",
+                      "enum": [
+                        "org_role"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "id"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "data"
+              ],
+              "type": "object"
+            },
+            "user": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "properties": {
+                    "id": {
+                      "format": "uuid",
+                      "type": "string"
+                    },
+                    "type": {
+                      "description": "Always \"user\"",
+                      "enum": [
+                        "user"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "id"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "role",
+            "user",
+            "org"
+          ],
+          "type": "object"
+        },
+        "type": {
+          "description": "type of membership according to its entity",
+          "enum": [
+            "org_membership"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "relationships"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snyk/main/json-schema/snyk-tenant-role-response-data-schema.json",
+  "title": "TenantRoleResponseData",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/snyk-tenantrole-api-openapi.yml#/components/schemas/TenantRoleResponseData",
+  "properties": {
+    "attributes": {
+      "$ref": "#/$defs/TenantRoleResponseAttributes"
+    },
+    "id": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "meta": {
+      "$ref": "#/$defs/TenantRoleMeta"
+    },
+    "relationships": {
+      "properties": {
+        "tenant": {
+          "$ref": "#/$defs/Tenant"
+        }
+      },
+      "type": "object"
+    },
+    "type": {
+      "$ref": "#/$defs/TenantRoleType20241015"
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "attributes"
+  ],
+  "type": "object",
+  "$defs": {
+    "Tenant": {
+      "properties": {
+        "data": {
+          "properties": {
+            "id": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "type": {
+              "enum": [
+                "tenant"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "type"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "TenantRoleMeta": {
+      "additionalProperties": false,
+      "properties": {
+        "app_count": {
+          "type": "integer"
+        },
+        "service_account_count": {
+          "type": "integer"
+        },
+        "user_count": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "TenantRoleResponseAttributes": {
+      "additionalProperties": false,
+      "properties": {
+        "custom": {
+          "default": false,
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "normalized_name": {
+          "type": "string"
+        },
+        "permissions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "permissions",
+        "custom"
+      ],
+      "type": "object"
+    },
+    "TenantRoleType20241015": {
+      "description": "The type of the resource for tenant role operations",
+      "enum": [
+        "tenant_role"
+      ],
+      "type": "string"
+    }
+  }
+}
