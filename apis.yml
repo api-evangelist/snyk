@@ -2,9 +2,10 @@ aid: snyk
 url: https://raw.githubusercontent.com/api-evangelist/snyk/refs/heads/main/apis.yml
 name: Snyk
 kind: company
-description: Snyk is a developer-first security platform covering code, open-source dependencies, container images, and infrastructure-as-code.
-  The Snyk REST API and V1 API expose groups, organizations, projects, issues, targets, integrations, audit logs, SBOMs, container images, custom
-  base images, webhooks, and exports for application-security teams.
+description: Snyk is a developer-first security platform covering code, open-source dependencies, container
+  images, and infrastructure-as-code. The Snyk REST API and V1 API expose groups, organizations, projects,
+  issues, targets, integrations, audit logs, SBOMs, container images, custom base images, webhooks, and
+  exports for application-security teams.
 deliveryModel:
   model: unknown
   open_source: unknown
@@ -177,9 +178,8 @@ common:
 apis:
 - aid: snyk:rest-apps
   name: Snyk REST API - Apps (OAuth)
-  description: >-
-    Manages Snyk Apps, the OAuth2-based extensibility surface that lets third-party applications act on
-    behalf of Snyk users, organizations, and groups.
+  description: Manages Snyk Apps, the OAuth2-based extensibility surface that lets third-party applications
+    act on behalf of Snyk users, organizations, and groups.
   humanURL: https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/snyk-apps-apis
   baseURL: https://api.snyk.io/rest
   tags:
@@ -197,9 +197,8 @@ apis:
     url: https://docs.snyk.io/developer-tools/snyk-api/using-specific-snyk-apis/snyk-apps-apis
 - aid: snyk:v1
   name: Snyk V1 API (Legacy)
-  description: >-
-    The original Snyk REST API. Still in use for project import, monitor, test, and certain reporting
-    endpoints not yet ported to the dated REST API. Subject to end-of-life migration; new integrations
+  description: The original Snyk REST API. Still in use for project import, monitor, test, and certain
+    reporting endpoints not yet ported to the dated REST API. Subject to end-of-life migration; new integrations
     should prefer the REST API where coverage exists.
   humanURL: https://docs.snyk.io/developer-tools/snyk-api/v1-api
   baseURL: https://api.snyk.io/v1
@@ -217,13 +216,11 @@ apis:
     url: https://docs.snyk.io/developer-tools/snyk-api/v1-api
 - aid: snyk:mcp
   name: Snyk MCP Server (Snyk Studio)
-  description: >-
-    Snyk's first-party Model Context Protocol server, shipped inside the Snyk CLI and run locally over
-    stdio (`npx -y snyk@latest mcp -t stdio`). Twelve security tools - code, dependency, container, IaC,
-    SBOM and AI-BOM scanning plus package health checks - exposed to coding agents. Snyk states it offers
-    no hosted remote MCP server.
-  humanURL: >-
-    https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/getting-started-with-snyk-studio
+  description: Snyk's first-party Model Context Protocol server, shipped inside the Snyk CLI and run locally
+    over stdio (`npx -y snyk@latest mcp -t stdio`). Twelve security tools - code, dependency, container,
+    IaC, SBOM and AI-BOM scanning plus package health checks - exposed to coding agents. Snyk states it
+    offers no hosted remote MCP server.
+  humanURL: https://docs.snyk.io/agent-security/agentic-security-with-snyk-studio/getting-started-with-snyk-studio
   tags:
   - MCP
   - Agents
@@ -708,8 +705,7 @@ apis:
     url: json-schema/snyk-update-collection-request-schema.json
 - aid: snyk:snyk-containerregistryimportpolicy-api
   name: Snyk ContainerRegistryImportPolicy API
-  description: >-
-    The ContainerRegistryImportPolicy API from Snyk — 3 operation(s) for containerregistryimportpolicy.
+  description: The ContainerRegistryImportPolicy API from Snyk — 3 operation(s) for containerregistryimportpolicy.
   humanURL: https://apidocs.snyk.io/?version=2024-10-15
   baseURL: https://api.snyk.io/rest
   tags:
