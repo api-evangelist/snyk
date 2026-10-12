@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/snyk/integrations
+- https://n8n.io/integrations/snyk/
+- https://composio.dev/toolkits/snyk
+- https://monid.ai/tools/snyk
+checked:
+- https://composio.dev/toolkits/snyk
+- https://monid.ai/tools/snyk
+- https://n8n.io/integrations/snyk/
+- https://zapier.com/apps/snyk/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
