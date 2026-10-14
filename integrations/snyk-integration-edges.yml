@@ -1,5 +1,5 @@
 generated: '2026-10-12'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/snyk/integrations
 - https://n8n.io/integrations/snyk/
@@ -7,10 +7,106 @@ source:
 - https://monid.ai/tools/snyk
 checked:
 - https://composio.dev/toolkits/snyk
+- https://github.com/marketplace?type=actions
+- https://github.com/marketplace?type=apps
+- https://marketplace.atlassian.com/
+- https://marketplace.visualstudio.com/vscode
 - https://monid.ai/tools/snyk
 - https://n8n.io/integrations/snyk/
+- https://plugins.jetbrains.com/
 - https://zapier.com/apps/snyk/integrations
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: GitHub Marketplace (apps)
+  partner: github
+  partner_match: aggregator
+  type: marketplace
+  marketplace: github-apps
+  channel: partner-built
+  relationship: platform-app
+  direction: third-party
+  evidence: https://github.com/marketplace/snyk
+  listing_count: 1
+  apps:
+  - Snyk
+  publisher_name: Snyk
+  badges:
+  - Verified domain
+  detected_by: sweep-devtools.py
+  detected: '2026-10-14'
+- partner_name: GitHub Marketplace (actions)
+  partner: github-actions
+  partner_match: aggregator
+  type: marketplace
+  marketplace: github-actions
+  channel: partner-built
+  relationship: platform-app
+  direction: third-party
+  evidence: https://github.com/marketplace/actions/snyk
+  listing_count: 2
+  apps:
+  - Snyk
+  - driftctl-action
+  publisher_name: Snyk
+  badges:
+  - Verified creator
+  detected_by: sweep-devtools.py
+  detected: '2026-10-14'
+- partner_name: Atlassian Marketplace
+  partner: atlassian
+  partner_match: aggregator
+  type: marketplace
+  marketplace: atlassian
+  channel: partner-built
+  relationship: platform-app
+  direction: third-party
+  evidence: https://marketplace.atlassian.com/vendors/1214912/snyk-io
+  listing_count: 10
+  apps:
+  - Snyk Security in Jira Cloud
+  - Snyk API & Web in Jira
+  - Snyk Security in Jira Cloud (SNYK-US-02)
+  - Snyk Security in Jira Cloud (EU)
+  - Snyk Security in Jira Cloud (AU)
+  publisher_name: Snyk.io
+  detected_by: sweep-devtools.py
+  detected: '2026-10-14'
+- partner_name: JetBrains Marketplace
+  partner: jetbrains
+  partner_match: aggregator
+  type: marketplace
+  marketplace: jetbrains
+  channel: partner-built
+  relationship: platform-app
+  direction: third-party
+  evidence: https://plugins.jetbrains.com/vendor/5409d2e6-f7fc-46ce-9cc3-e582b0e4eefa
+  listing_count: 1
+  apps:
+  - Snyk Security
+  publisher_name: Snyk Ltd
+  badges:
+  - Verified vendor
+  detected_by: sweep-devtools.py
+  detected: '2026-10-14'
+- partner_name: Visual Studio Code Marketplace
+  partner: vs-code-marketplace
+  partner_match: aggregator
+  type: marketplace
+  marketplace: vscode
+  channel: partner-built
+  relationship: platform-app
+  direction: third-party
+  evidence: https://marketplace.visualstudio.com/publishers/snyk-security
+  listing_count: 3
+  apps:
+  - Snyk Security
+  - Vuln Cost - Security Scanner
+  - (Preview) Snyk Security
+  publisher_name: Snyk
+  badges:
+  - Verified publisher
+  - Verified domain
+  detected_by: sweep-devtools.py
+  detected: '2026-10-14'
 templates: []
