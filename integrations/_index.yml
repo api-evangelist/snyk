@@ -179,3 +179,64 @@
     detected: '2026-10-15'
   status: not-a-workflow
   arazzo: null
+- slug: snyk-openssf-open-source-security-foundation
+  label: OpenSSF (Open Source Security Foundation)
+  partner_name: OpenSSF (Open Source Security Foundation)
+  category: Open source security foundation membership
+  type: register
+  channel: standard-directory
+  evidence: https://github.com/ossf/ossf-landscape/blob/0c5085851606608158f3adb796e5c22265ee174d/landscape.yml
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: OpenSSF Landscape (github.com/ossf/ossf-landscape landscape.yml @0c50858516), OpenSSF Members
+    standard: OpenSSF
+    spec_file: null
+    role: openssf-member (General)
+    registered_name: Snyk Limited
+    website: https://snyk.io/
+    matched_domain: snyk.io
+    matched_by: domain+name-among-holders
+    member_tier: General
+    in_market_tags:
+    - application-security
+    - container-security
+    - devsecops
+    - sast
+    - security
+    signal_note: 'participation only: foundation membership is standard-participant evidence, never depth; the tier
+      is context. Members outside the market''s business are held (out-of-market)'
+    detected_by: sweep-software-supply-chain.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: snyk-cyclonedx-owasp
+  label: CycloneDX (OWASP)
+  partner_name: CycloneDX (OWASP)
+  category: SBOM standard (CycloneDX)
+  type: register
+  channel: standard-directory
+  evidence: https://cyclonedx.org/tool-center/#toolCard-evo_by_snyk
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: CycloneDX Tool Center (cyclonedx.org/tool-center)
+    standard: CycloneDX (ECMA-424)
+    spec_file: null
+    role: cyclonedx-tool
+    registered_name: Snyk
+    tools:
+    - Evo by Snyk
+    - Snyk
+    website: https://evo.ai.snyk.io
+    matched_domain: snyk.io
+    matched_by: domain+name-among-holders
+    availability:
+    - FREEMIUM
+    - SUBSCRIPTION
+    signal_note: 'participation only: a Tool Center listing means the publisher ships CycloneDX support; tools,
+      capabilities and their count are context, never read (breadth is not credit)'
+    detected_by: sweep-software-supply-chain.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
