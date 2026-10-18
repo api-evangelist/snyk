@@ -264,7 +264,7 @@
     - connectors/applications/snyk
     vendor_link: https://snyk.io/fr/
     builder: Fivetran
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: snyk-slack-own
   label: Slack (own)
