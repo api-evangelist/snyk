@@ -279,3 +279,92 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: snyk-maven-central
+  label: Maven Central
+  partner: maven-central
+  partner_name: Maven Central
+  category: official SDK (Java/JVM)
+  type: register
+  channel: package-registry
+  evidence: https://central.sonatype.com/artifact/io.snyk/snyk-maven-plugin
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Maven Central (public registry JSON)
+    spec_file: null
+    language: Java/JVM
+    packages:
+    - name: io.snyk:snyk-maven-plugin
+      version: 2.3.0
+      released: '2024-08-14'
+      released_field: lastUpdated
+      lapsed: true
+      page: https://central.sonatype.com/artifact/io.snyk/snyk-maven-plugin
+      repo_leg: domain:snyk.io
+      publisher_leg: groupId:snyk.io
+      matched_by: domain+name-among-holders
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: snyk-npm-registry
+  label: npm registry
+  partner: npm
+  partner_name: npm registry
+  category: official SDK (JavaScript/TypeScript)
+  type: register
+  channel: package-registry
+  evidence: https://www.npmjs.com/package/@snyk/protect
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@snyk/protect'
+      version: 1.1308.1
+      released: '2026-10-16'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@snyk/protect
+      repo_leg: shared-github-org:snyk
+      publisher_leg: email:snyk.io
+      matched_by: domain+name-among-holders
+    - name: snyk
+      version: 1.1308.1
+      released: '2026-10-16'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/snyk
+      repo_leg: shared-github-org:snyk
+      publisher_leg: email:snyk.io
+      matched_by: domain+name-among-holders
+    - name: snyk-api-import
+      version: 2.24.1
+      released: '2026-09-24'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/snyk-api-import
+      repo_leg: shared-github-org:snyk
+      publisher_leg: email:snyk.io
+      matched_by: domain+name-among-holders
+    - name: snyk-to-html
+      version: 3.7.11
+      released: '2026-10-07'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/snyk-to-html
+      repo_leg: shared-github-org:snyk
+      publisher_leg: email:snyk.io
+      matched_by: domain+name-among-holders
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
