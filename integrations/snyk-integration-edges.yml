@@ -44,6 +44,7 @@ checked:
 - https://cloudsecurityalliance.org/membership/current
 - https://fidoalliance.org/certification/fido-certified-products/
 - https://www.cisa.gov/securebydesign/pledge/secure-design-pledge-signers
+- eclipse/integrations/eclipse-integration-edges.yml
 summary: null
 marketplace_apps: []
 edges:
@@ -199,23 +200,6 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-software-supply-chain.py
   first_seen: '2026-10-18'
-- partner_name: Slack (own)
-  partner: slack
-  partner_match: mirror
-  mirror_match: domain+name-among-holders
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://slack.com/marketplace/A04NXBUEC0P-snyk-for-slack
-  mirror_of: slack/integrations/slack-integration-edges.yml
-  apps:
-  - Snyk for Slack
-  listing_count: 1
-  detected: '2026-10-18'
-  detected_by: mirror-platform-listings.py
-  category: Slack app
 - partner_name: Maven Central
   partner: maven-central
   partner_match: register
@@ -542,4 +526,42 @@ edges:
     identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
   detected_by: sweep-cloud-security-star.py
   first_seen: '2026-10-20'
+- partner_name: Slack (own)
+  partner: slack
+  partner_match: mirror
+  mirror_match: domain+name-among-holders
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://slack.com/marketplace/A04NXBUEC0P-snyk-for-slack
+  mirror_of: slack/integrations/slack-integration-edges.yml
+  apps:
+  - Snyk for Slack
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Slack app
+- partner_name: Eclipse Foundation (open-vsx)
+  partner: eclipse
+  partner_match: mirror
+  mirror_match: domain+name-among-holders
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: open-vsx
+  evidence: https://open-vsx.org/namespace/snyk-security
+  mirror_of: eclipse/integrations/eclipse-integration-edges.yml
+  apps:
+  - Snyk Security
+  - (Preview) Snyk Security
+  - Vuln Cost - Security Scanner
+  listing_count: 1
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
+  category: IDE / developer extension marketplace listing
+  badges:
+  - Verified namespace
 templates: []
