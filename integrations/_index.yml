@@ -411,6 +411,45 @@
     identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
   status: not-a-workflow
   arazzo: null
+- slug: snyk-cve-program-cve-numbering-authorities
+  label: CVE Program (CVE Numbering Authorities)
+  partner_name: CVE Program (CVE Numbering Authorities)
+  category: Vulnerability disclosure (CVE Numbering Authority)
+  type: register
+  channel: standard-directory
+  evidence: https://www.cve.org/PartnerInformation/ListofPartners/partner/snyk
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: CVE Program CNA list (github.com/CVEProject/cve-website CNAsList.json @ 239d3d9b68e0)
+    standard: CVE Program CNA Operational Rules (CVE Numbering Authority)
+    spec_file: null
+    role: cve-numbering-authority
+    registered_name: Snyk
+    matched_domain: snyk.io
+    matched_by: domain+name-among-holders
+    cna_id: CNA-2017-0029
+    cna_short_name: snyk
+    cna_types:
+    - Open Source
+    - Researcher
+    cna_roles:
+    - CNA
+    scope: Vulnerabilities in Snyk products and vulnerabilities discovered by, or reported to, Snyk that are not
+      in another CNA’s scope.
+    top_level_root: MITRE Corporation
+    root: n/a
+    security_advisories:
+    - https://snyk.io/vuln/
+    disclosure_policy:
+    - https://snyk.io/vulnerability-disclosure/
+    country: UK
+    signal_note: listing as a CVE Numbering Authority = participation (a public commitment to assign CVE IDs and
+      publish advisories for its scope); never a count of CVEs
+    detected_by: sweep-vulnerability-disclosure-cna.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
 - slug: snyk-slack-own
   label: Slack (own)
   partner: slack
@@ -450,42 +489,16 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
-- slug: snyk-cve-program-cve-numbering-authorities
-  label: CVE Program (CVE Numbering Authorities)
-  partner_name: CVE Program (CVE Numbering Authorities)
-  category: Vulnerability disclosure (CVE Numbering Authority)
-  type: register
-  channel: standard-directory
-  evidence: https://www.cve.org/PartnerInformation/ListofPartners/partner/snyk
+- slug: snyk-backstage-own
+  label: Backstage (own)
+  partner: backstage
+  partner_name: Backstage (own)
+  category: Security
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://github.com/backstage/backstage/tree/d72327203d5d0812bee2eace8688fa5ab22867be/microsite/data/plugins/snyk-security.yaml
   source: edge
-  relationship: standard-participant
-  contract_reference:
-    register: CVE Program CNA list (github.com/CVEProject/cve-website CNAsList.json @ 239d3d9b68e0)
-    standard: CVE Program CNA Operational Rules (CVE Numbering Authority)
-    spec_file: null
-    role: cve-numbering-authority
-    registered_name: Snyk
-    matched_domain: snyk.io
-    matched_by: domain+name-among-holders
-    cna_id: CNA-2017-0029
-    cna_short_name: snyk
-    cna_types:
-    - Open Source
-    - Researcher
-    cna_roles:
-    - CNA
-    scope: Vulnerabilities in Snyk products and vulnerabilities discovered by, or reported to, Snyk that are not
-      in another CNA’s scope.
-    top_level_root: MITRE Corporation
-    root: n/a
-    security_advisories:
-    - https://snyk.io/vuln/
-    disclosure_policy:
-    - https://snyk.io/vulnerability-disclosure/
-    country: UK
-    signal_note: listing as a CVE Numbering Authority = participation (a public commitment to assign CVE IDs and
-      publish advisories for its scope); never a count of CVEs
-    detected_by: sweep-vulnerability-disclosure-cna.py
-    detected: '2026-10-22'
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null
