@@ -450,58 +450,6 @@
     detected: '2026-10-22'
   status: not-a-workflow
   arazzo: null
-- slug: snyk-slack-own
-  label: Slack (own)
-  partner: slack
-  partner_name: Slack (own)
-  category: Slack app
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://slack.com/marketplace/A04NXBUEC0P-snyk-for-slack
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: snyk-eclipse-foundation-open-vsx
-  label: Eclipse Foundation (open-vsx)
-  partner: eclipse
-  partner_name: Eclipse Foundation (open-vsx)
-  category: IDE / developer extension marketplace listing
-  type: marketplace
-  marketplace: open-vsx
-  channel: partner-built
-  evidence: https://open-vsx.org/namespace/snyk-security
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: snyk-netlify-own
-  label: Netlify (own)
-  partner: netlify
-  partner_name: Netlify (own)
-  category: Search
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://www.netlify.com/integrations/snyk/
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: snyk-backstage-own
-  label: Backstage (own)
-  partner: backstage
-  partner_name: Backstage (own)
-  category: Security
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://github.com/backstage/backstage/tree/d72327203d5d0812bee2eace8688fa5ab22867be/microsite/data/plugins/snyk-security.yaml
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
 - slug: snyk-apis-guru-openapi-directory
   label: APIs.guru OpenAPI Directory
   partner: apis-guru
@@ -590,5 +538,101 @@
       and package counts are context, never counted'
     detected_by: sweep-red-hat-certified-ecosystem.py
     detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
+- slug: snyk-cd-foundation-continuous-delivery-foundation-landscape
+  label: CD Foundation (Continuous Delivery Foundation landscape)
+  partner: continuous-delivery-foundation
+  partner_name: CD Foundation (Continuous Delivery Foundation landscape)
+  category: Continuous delivery foundation membership / landscape
+  type: register
+  channel: standard-directory
+  evidence: https://landscape.cd.foundation/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: CD Foundation landscape (landscape.cd.foundation/data/full.json)
+    spec_file: null
+    standard: Continuous Delivery Foundation
+    role: cdf-landscape-listed
+    registered_name: Snyk
+    registered_names:
+    - Snyk
+    website: https://snyk.io/
+    matched_domain: snyk.io
+    matched_by: domain+name-among-holders
+    member_tier: null
+    landscape_categories:
+    - DevSecOps / Container Security
+    cdf_projects: []
+    signal_note: 'participation only: CDF membership or a landscape listing is standard-participant evidence, never
+      depth; tier, categories and entries are context, never counted'
+    detected_by: sweep-jenkins-cd-foundation-plugins.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
+- slug: snyk-slack-own
+  label: Slack (own)
+  partner: slack
+  partner_name: Slack (own)
+  category: Slack app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://slack.com/marketplace/A04NXBUEC0P-snyk-for-slack
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: snyk-eclipse-foundation-open-vsx
+  label: Eclipse Foundation (open-vsx)
+  partner: eclipse
+  partner_name: Eclipse Foundation (open-vsx)
+  category: IDE / developer extension marketplace listing
+  type: marketplace
+  marketplace: open-vsx
+  channel: partner-built
+  evidence: https://open-vsx.org/namespace/snyk-security
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: snyk-netlify-own
+  label: Netlify (own)
+  partner: netlify
+  partner_name: Netlify (own)
+  category: Search
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.netlify.com/integrations/snyk/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: snyk-backstage-own
+  label: Backstage (own)
+  partner: backstage
+  partner_name: Backstage (own)
+  category: Security
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://github.com/backstage/backstage/tree/d72327203d5d0812bee2eace8688fa5ab22867be/microsite/data/plugins/snyk-security.yaml
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: snyk-jenkins-own
+  label: Jenkins (own)
+  partner: jenkins
+  partner_name: Jenkins (own)
+  category: Jenkins plugin
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://plugins.jenkins.io/snyk-security-scanner/
+  source: edge
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null

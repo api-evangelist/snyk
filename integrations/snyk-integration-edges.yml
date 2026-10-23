@@ -56,6 +56,11 @@ checked:
 - https://catalog.redhat.com/api/containers/v1/repositories?page_size=100
 - https://catalog.redhat.com/api/containers/v1/vendors/label/
 - https://catalog.redhat.com/software/partners
+- https://landscape.cd.foundation/data/full.json
+- https://plugins.jenkins.io/api/plugin/
+- https://plugins.jenkins.io/api/plugins
+- jenkins/integrations/jenkins-integration-edges.yml
+- https://dir.texas.gov/resource-library-item/tx-ramp-certified-cloud-products
 summary: null
 marketplace_apps: []
 edges:
@@ -175,8 +180,8 @@ edges:
     - devsecops
     - sast
     - security
-    signal_note: 'participation only: foundation membership is standard-participant evidence, never depth; the tier
-      is context. Members outside the market''s business are held (out-of-market)'
+    signal_note: 'participation only: foundation membership is standard-participant evidence, never depth; the tier is context.
+      Members outside the market''s business are held (out-of-market)'
     detected_by: sweep-software-supply-chain.py
     detected: '2026-10-18'
   detected_by: sweep-software-supply-chain.py
@@ -205,8 +210,8 @@ edges:
     availability:
     - FREEMIUM
     - SUBSCRIPTION
-    signal_note: 'participation only: a Tool Center listing means the publisher ships CycloneDX support; tools,
-      capabilities and their count are context, never read (breadth is not credit)'
+    signal_note: 'participation only: a Tool Center listing means the publisher ships CycloneDX support; tools, capabilities
+      and their count are context, never read (breadth is not credit)'
     detected_by: sweep-software-supply-chain.py
     detected: '2026-10-18'
   detected_by: sweep-software-supply-chain.py
@@ -235,8 +240,7 @@ edges:
       publisher_leg: groupId:snyk.io
       matched_by: domain+name-among-holders
     current: false
-    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
-      24 months'
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in 24 months'
     detected_by: sweep-official-sdks.py
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
@@ -292,8 +296,7 @@ edges:
       publisher_leg: email:snyk.io
       matched_by: domain+name-among-holders
     current: true
-    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
-      24 months'
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in 24 months'
     detected_by: sweep-official-sdks.py
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
@@ -382,9 +385,9 @@ edges:
     - SaaS
     paths:
     - Agency
-    signal_note: certified_products = one entry per AUTHORIZED impact level, never per package; packages, service
-      models, paths and leveraging agencies are context, never counted. The register lists current designations
-      only (revoked / expired are removed), so lapsed is always false
+    signal_note: certified_products = one entry per AUTHORIZED impact level, never per package; packages, service models,
+      paths and leveraging agencies are context, never counted. The register lists current designations only (revoked / expired
+      are removed), so lapsed is always false
     detected_by: sweep-gov-cloud.py
     detected: '2026-10-15'
   detected_by: sweep-gov-cloud.py
@@ -412,8 +415,8 @@ edges:
     - Pending
     offerings:
     - Snyk for Government
-    signal_note: certified_products = one entry per AUTHORIZED impact level (Authorized / Provisionally Authorized),
-      never per offering; Progressing / Pending / Ready / Core are participation only
+    signal_note: certified_products = one entry per AUTHORIZED impact level (Authorized / Provisionally Authorized), never
+      per offering; Progressing / Pending / Ready / Core are participation only
     detected_by: sweep-gov-cloud.py
     detected: '2026-10-15'
   detected_by: sweep-gov-cloud.py
@@ -445,8 +448,8 @@ edges:
     landscape_categories:
     - Provisioning / Security & Compliance
     landscape_entries: 1
-    signal_note: 'participation only: a landscape listing is standard-participant evidence, not depth. Entries,
-      categories, tier and projects are CONTEXT, never read (breadth is not credit)'
+    signal_note: 'participation only: a landscape listing is standard-participant evidence, not depth. Entries, categories,
+      tier and projects are CONTEXT, never read (breadth is not credit)'
     detected_by: sweep-cloud-native.py
     detected: '2026-10-19'
   detected_by: sweep-cloud-native.py
@@ -475,8 +478,8 @@ edges:
       publisher_leg: email:snyk.io
       matched_by: domain+name-among-holders
     current: true
-    signal_note: 'the provider''s own command-line tool on a package manager: distribution, not an integration;
-      lapsed = no release in 24 months or deprecated / disabled by the manager'
+    signal_note: 'the provider''s own command-line tool on a package manager: distribution, not an integration; lapsed = no
+      release in 24 months or deprecated / disabled by the manager'
     detected_by: sweep-official-clis.py
     detected: '2026-10-20'
   detected_by: sweep-official-clis.py
@@ -505,8 +508,8 @@ edges:
       publisher_leg: artifact-shared-github-org:snyk
       matched_by: domain+name-among-holders
     current: true
-    signal_note: 'the provider''s own command-line tool on a package manager: distribution, not an integration;
-      lapsed = no release in 24 months or deprecated / disabled by the manager'
+    signal_note: 'the provider''s own command-line tool on a package manager: distribution, not an integration; lapsed = no
+      release in 24 months or deprecated / disabled by the manager'
     detected_by: sweep-official-clis.py
     detected: '2026-10-20'
   detected_by: sweep-official-clis.py
@@ -522,15 +525,15 @@ edges:
   category: secure-by-design software pledge
   contract_reference:
     register: CISA Secure by Design Pledge signers (cisa.gov/securebydesign/pledge)
-    standard: 'CISA Secure by Design Pledge (seven goals: MFA, default passwords, vulnerability classes, patches,
-      disclosure policy, CVEs, evidence of intrusions)'
+    standard: 'CISA Secure by Design Pledge (seven goals: MFA, default passwords, vulnerability classes, patches, disclosure
+      policy, CVEs, evidence of intrusions)'
     spec_file: null
     role: secure-by-design-pledge-signer
     registered_name: Snyk
     matched_domain: snyk.io
     matched_by: domain+name-among-holders
-    signal_note: 'participation only: a voluntary public pledge listed by CISA; not an audit or conformance result
-      (no certified_products, no tier)'
+    signal_note: 'participation only: a voluntary public pledge listed by CISA; not an audit or conformance result (no certified_products,
+      no tier)'
     detected_by: sweep-cloud-security-star.py
     detected: '2026-10-20'
     identity: wikidata Q108282404 'Snyk' P856 https://snyk.io/
@@ -561,8 +564,8 @@ edges:
     - Researcher
     cna_roles:
     - CNA
-    scope: Vulnerabilities in Snyk products and vulnerabilities discovered by, or reported to, Snyk that are not
-      in another CNA’s scope.
+    scope: Vulnerabilities in Snyk products and vulnerabilities discovered by, or reported to, Snyk that are not in another
+      CNA’s scope.
     top_level_root: MITRE Corporation
     root: n/a
     security_advisories:
@@ -570,11 +573,129 @@ edges:
     disclosure_policy:
     - https://snyk.io/vulnerability-disclosure/
     country: UK
-    signal_note: listing as a CVE Numbering Authority = participation (a public commitment to assign CVE IDs and
-      publish advisories for its scope); never a count of CVEs
+    signal_note: listing as a CVE Numbering Authority = participation (a public commitment to assign CVE IDs and publish advisories
+      for its scope); never a count of CVEs
     detected_by: sweep-vulnerability-disclosure-cna.py
     detected: '2026-10-22'
   detected_by: sweep-vulnerability-disclosure-cna.py
+  first_seen: '2026-10-22'
+- partner_name: APIs.guru OpenAPI Directory
+  partner: apis-guru
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: third-party
+  evidence: https://apis.guru/
+  category: API definition directory listing (OpenAPI)
+  contract_reference:
+    register: APIs.guru OpenAPI Directory
+    spec_file: null
+    standard: APIs.guru OpenAPI Directory
+    role: listed-in-directory
+    directory_provider: snyk.io
+    matched_domain: snyk.io
+    matched_by: domain+name-among-holders
+    apis_listed: 1
+    version_count: 1
+    first_added: '2021-01-18'
+    last_updated: '2023-03-06'
+    origin_publisher_hosted: false
+    origin_hosts:
+    - snyk.docs.apiary.io
+    categories:
+    - developer_tools
+    own_openapi_files: 47
+    listings:
+    - key: snyk.io
+      title: Snyk API
+      preferred: 1.0.0
+      versions: 1
+      swagger_url: https://api.apis.guru/v2/specs/snyk.io/1.0.0/openapi.json
+      origin_url: https://snyk.docs.apiary.io/api-description-document
+      openapi_version: 3.0.0
+    signal_note: 'participation only: a community directory listing (APIs.guru collects definitions; the provider did not
+      file them). Signals: version_count, apis_listed, origin_publisher_hosted.'
+    detected_by: sweep-openapi-directory-apis-guru.py
+    detected: '2026-10-22'
+  detected_by: sweep-openapi-directory-apis-guru.py
+  first_seen: '2026-10-22'
+- partner_name: Red Hat Ecosystem Catalog (certified partners)
+  partner: red-hat
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://catalog.redhat.com/software/containers/search?p=1&vendor_name=Snyk%20Ltd.
+  category: Red Hat OpenShift / RHEL software certification
+  contract_reference:
+    register: 'Red Hat Ecosystem Catalog (catalog.redhat.com/api/containers/v1: repositories, vendors, certified operator
+      bundles)'
+    standard: Red Hat Container Certification (Red Hat Ecosystem Catalog, registry.connect.redhat.com)
+    spec_file: null
+    role: red-hat-certified-partner
+    registered_name: Snyk Ltd.
+    register_id: snyk
+    matched_domain: snyk.io
+    matched_by: domain+name-among-holders
+    identity_source: the register's own company_url for the vendor (no lookup)
+    certified_products:
+    - product: Red Hat certified container image
+      product_type: container-image
+      standard: Red Hat Container Certification (Red Hat Ecosystem Catalog, registry.connect.redhat.com)
+      lapsed: false
+      repositories_listed: 3
+      products_sample:
+      - snyk/kubernetes-monitor
+      - snyk/kubernetes-operator
+      - snyk/kubernetes-operator-bundle
+    - product: Red Hat certified OpenShift operator
+      product_type: openshift-operator
+      standard: Red Hat OpenShift Operator Certification (certified-operator-index)
+      lapsed: true
+      operator_packages: 1
+      products_sample:
+      - snyk-operator-certified
+      ocp_versions:
+      - '4.5'
+    signal_note: 'certified_products = one entry per certified product TYPE (container image, OpenShift operator), standard
+      named on each; lapsed: true when no certified item of that type is current (containers: all Deprecated / past EOL /
+      unpublished; operators: absent from the three newest certified-operator indexes); repository and package counts are
+      context, never counted'
+    detected_by: sweep-red-hat-certified-ecosystem.py
+    detected: '2026-10-22'
+  detected_by: sweep-red-hat-certified-ecosystem.py
+  first_seen: '2026-10-22'
+- partner_name: CD Foundation (Continuous Delivery Foundation landscape)
+  partner: continuous-delivery-foundation
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  category: Continuous delivery foundation membership / landscape
+  evidence: https://landscape.cd.foundation/
+  contract_reference:
+    register: CD Foundation landscape (landscape.cd.foundation/data/full.json)
+    spec_file: null
+    standard: Continuous Delivery Foundation
+    role: cdf-landscape-listed
+    registered_name: Snyk
+    registered_names:
+    - Snyk
+    website: https://snyk.io/
+    matched_domain: snyk.io
+    matched_by: domain+name-among-holders
+    member_tier: null
+    landscape_categories:
+    - DevSecOps / Container Security
+    cdf_projects: []
+    signal_note: 'participation only: CDF membership or a landscape listing is standard-participant evidence, never depth;
+      tier, categories and entries are context, never counted'
+    detected_by: sweep-jenkins-cd-foundation-plugins.py
+    detected: '2026-10-22'
+  detected_by: sweep-jenkins-cd-foundation-plugins.py
   first_seen: '2026-10-22'
 - partner_name: Slack (own)
   partner: slack
@@ -650,92 +771,22 @@ edges:
   detected: '2026-10-22'
   detected_by: mirror-platform-listings.py
   category: Security
-- partner_name: APIs.guru OpenAPI Directory
-  partner: apis-guru
-  partner_match: register
-  type: register
-  channel: standard-directory
-  relationship: standard-participant
+- partner_name: Jenkins (own)
+  partner: jenkins
+  partner_match: mirror
+  mirror_match: domain+name-among-holders
+  type: marketplace
+  relationship: platform-app
   direction: third-party
-  evidence: https://apis.guru/
-  category: API definition directory listing (OpenAPI)
-  contract_reference:
-    register: APIs.guru OpenAPI Directory
-    spec_file: null
-    standard: APIs.guru OpenAPI Directory
-    role: listed-in-directory
-    directory_provider: snyk.io
-    matched_domain: snyk.io
-    matched_by: domain+name-among-holders
-    apis_listed: 1
-    version_count: 1
-    first_added: '2021-01-18'
-    last_updated: '2023-03-06'
-    origin_publisher_hosted: false
-    origin_hosts:
-    - snyk.docs.apiary.io
-    categories:
-    - developer_tools
-    own_openapi_files: 47
-    listings:
-    - key: snyk.io
-      title: Snyk API
-      preferred: 1.0.0
-      versions: 1
-      swagger_url: https://api.apis.guru/v2/specs/snyk.io/1.0.0/openapi.json
-      origin_url: https://snyk.docs.apiary.io/api-description-document
-      openapi_version: 3.0.0
-    signal_note: 'participation only: a community directory listing (APIs.guru collects definitions; the provider
-      did not file them). Signals: version_count, apis_listed, origin_publisher_hosted.'
-    detected_by: sweep-openapi-directory-apis-guru.py
-    detected: '2026-10-22'
-  detected_by: sweep-openapi-directory-apis-guru.py
-  first_seen: '2026-10-22'
-- partner_name: Red Hat Ecosystem Catalog (certified partners)
-  partner: red-hat
-  partner_match: register
-  type: register
-  channel: standard-directory
-  relationship: standard-participant
-  direction: partner-built
-  evidence: https://catalog.redhat.com/software/containers/search?p=1&vendor_name=Snyk%20Ltd.
-  category: Red Hat OpenShift / RHEL software certification
-  contract_reference:
-    register: 'Red Hat Ecosystem Catalog (catalog.redhat.com/api/containers/v1: repositories, vendors, certified
-      operator bundles)'
-    standard: Red Hat Container Certification (Red Hat Ecosystem Catalog, registry.connect.redhat.com)
-    spec_file: null
-    role: red-hat-certified-partner
-    registered_name: Snyk Ltd.
-    register_id: snyk
-    matched_domain: snyk.io
-    matched_by: domain+name-among-holders
-    identity_source: the register's own company_url for the vendor (no lookup)
-    certified_products:
-    - product: Red Hat certified container image
-      product_type: container-image
-      standard: Red Hat Container Certification (Red Hat Ecosystem Catalog, registry.connect.redhat.com)
-      lapsed: false
-      repositories_listed: 3
-      products_sample:
-      - snyk/kubernetes-monitor
-      - snyk/kubernetes-operator
-      - snyk/kubernetes-operator-bundle
-    - product: Red Hat certified OpenShift operator
-      product_type: openshift-operator
-      standard: Red Hat OpenShift Operator Certification (certified-operator-index)
-      lapsed: true
-      operator_packages: 1
-      products_sample:
-      - snyk-operator-certified
-      ocp_versions:
-      - '4.5'
-    signal_note: 'certified_products = one entry per certified product TYPE (container image, OpenShift operator),
-      standard named on each; lapsed: true when no certified item of that type is current (containers: all Deprecated
-      / past EOL / unpublished; operators: absent from the three newest certified-operator indexes); repository
-      and package counts are context, never counted'
-    detected_by: sweep-red-hat-certified-ecosystem.py
-    detected: '2026-10-22'
-  detected_by: sweep-red-hat-certified-ecosystem.py
-  first_seen: '2026-10-22'
+  channel: partner-built
+  marketplace: own
+  evidence: https://plugins.jenkins.io/snyk-security-scanner/
+  mirror_of: jenkins/integrations/jenkins-integration-edges.yml
+  apps:
+  - Snyk Security
+  - Snyk Security (snyk-security-scanner)
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Jenkins plugin
 templates: []
